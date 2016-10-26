@@ -1,0 +1,15 @@
+title: 'lovata.shopaholic::lang.title.category_list'
+modelClass: Lovata\Shopaholic\Models\Category
+list: $/lovata/shopaholic/models/category/columns.yaml
+recordUrl: 'lovata/shopaholic/categories/update/:id'
+noRecordsMessage: 'lovata.shopaholic::lang.message.category_delete'
+recordsPerPage: '25'
+showSetup: true
+showCheckboxes: true
+showSorting: 1
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: 'backend::lang.list.search_prompt'
+showTree: 1
+filter: _config_filter.yaml

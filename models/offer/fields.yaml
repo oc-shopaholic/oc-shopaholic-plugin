@@ -1,0 +1,57 @@
+fields:
+    active:
+        label: 'lovata.shopaholic::lang.fields.active'
+        span: left
+        default: 1
+        type: switch
+    name:
+        label: 'lovata.shopaholic::lang.fields.name'
+        span: left
+        required: 1
+        type: text
+    quantity:
+        label: 'lovata.shopaholic::lang.fields.quantity'
+        span: right
+        type: text
+tabs:
+    fields:
+        code:
+            label: 'lovata.shopaholic::lang.fields.vendor_code'
+            span: left
+            type: text
+            tab: 'lovata.shopaholic::lang.tabs.settings'
+        external_id:
+            label: 'lovata.shopaholic::lang.fields.external_id'
+            span: right
+            type: text
+            tab: 'lovata.shopaholic::lang.tabs.settings'
+        price:
+            label: 'lovata.shopaholic::lang.fields.price'
+            span: left
+            type: text
+            tab: 'lovata.shopaholic::lang.tabs.settings'
+        old_price:
+            label: 'lovata.shopaholic::lang.fields.old_price'
+            span: right
+            type: text
+            tab: 'lovata.shopaholic::lang.tabs.settings'
+        preview_image:
+                label: 'lovata.shopaholic::lang.fields.preview_image'
+                mode: image
+                useCaption: true
+                thumbOptions:
+                    mode: crop
+                    extension: auto
+                span: left
+                type: fileupload
+                tab: 'lovata.shopaholic::lang.tabs.images'
+        images:
+            label: 'lovata.shopaholic::lang.fields.product_images'
+            mode: image
+            useCaption: true
+            thumbOptions:
+                mode: crop
+                extension: auto
+            span: left
+            type: fileupload
+            tab: 'lovata.shopaholic::lang.tabs.images'

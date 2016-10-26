@@ -1,0 +1,29 @@
+{
+  "name": "kharanenka/laravel-cache-helper",
+  "description": "Cache helper for default laravel cache class",
+  "license": "GPL-3.0",
+  "keywords": [
+    "php",
+    "laravel",
+    "OctoberCMS",
+    "cache"
+  ],
+  "authors": [
+    {
+      "name": "Andrey Kharanenka",
+      "email": "kharanenka@gmail.com"
+    }
+  ],
+  "version": "1.0.0",
+  "require": {
+    "php": ">=5.6"
+  },
+  "autoload": {
+    "classmap": [
+      "src/Kharanenka/Helper"
+    ],
+    "psr-0": {
+      "Kharanenka\\Helper\\": "src/"
+    }
+  }
+}

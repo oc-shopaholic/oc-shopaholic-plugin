@@ -1,0 +1,24 @@
+# ===================================
+# Filter Scope Definitions
+# ===================================
+
+scopes:
+    active:
+        label: 'lovata.shopaholic::lang.fields.active'
+        type: checkbox
+        conditions: active = 1
+    category:
+        label: 'lovata.shopaholic::lang.fields.category'
+        modelClass: Lovata\Shopaholic\Models\Category
+        nameFrom: name
+        conditions: category_id in (:filtered)
+    brand:
+        label: 'lovata.shopaholic::lang.fields.brand'
+        modelClass: Lovata\Shopaholic\Models\Brand
+        nameFrom: name
+        conditions: brand_id in (:filtered)
+    deleted:
+        label: 'lovata.shopaholic::lang.fields.deleted'
+        type: checkbox
+        modelClass: Lovata\Shopaholic\Models\Product
+        scope: deleted

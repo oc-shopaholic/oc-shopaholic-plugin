@@ -1,0 +1,32 @@
+{
+  "name": "kharanenka/laravel-scope-active",
+  "description": "Scope for field 'active' (bool)",
+  "license": "GPL-3.0",
+  "keywords": [
+    "php",
+    "laravel",
+    "OctoberCMS",
+    "model",
+    "scope",
+    "active",
+    "field"
+  ],
+  "authors": [
+    {
+      "name": "Andrey Kharanenka",
+      "email": "kharanenka@gmail.com"
+    }
+  ],
+  "version": "1.0.0",
+  "require": {
+    "php": ">=5.6"
+  },
+  "autoload": {
+    "classmap": [
+      "src/Kharanenka/Scope"
+    ],
+    "psr-0": {
+      "Kharanenka\\Scope\\": "src/"
+    }
+  }
+}

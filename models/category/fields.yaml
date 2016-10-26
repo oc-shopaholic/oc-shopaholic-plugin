@@ -1,0 +1,58 @@
+fields:
+    active:
+        label: 'lovata.shopaholic::lang.fields.active'
+        span: left
+        default: 1
+        type: switch
+    name:
+        label: 'lovata.shopaholic::lang.fields.name'
+        span: left
+        required: 1
+        type: text
+    slug:
+        label: 'lovata.shopaholic::lang.fields.slug'
+        span: auto
+        required: 1
+        preset:
+            field: name
+            type: slug
+        type: text
+tabs:
+    fields:
+        code:
+            label: 'lovata.shopaholic::lang.fields.code'
+            oc.commentPosition: ''
+            span: auto
+            type: text
+            tab: 'lovata.shopaholic::lang.tabs.settings'
+        external_id:
+            label: 'lovata.shopaholic::lang.fields.external_id'
+            oc.commentPosition: ''
+            span: right
+            type: text
+            tab: 'lovata.shopaholic::lang.tabs.settings'
+        preview_text:
+            label: 'lovata.shopaholic::lang.fields.preview_text'
+            size: large
+            oc.commentPosition: ''
+            span: full
+            type: textarea
+            tab: 'lovata.shopaholic::lang.tabs.description'
+        description:
+            label: 'lovata.shopaholic::lang.fields.description'
+            size: giant
+            oc.commentPosition: ''
+            span: full
+            type: richeditor
+            tab: 'lovata.shopaholic::lang.tabs.description'
+        preview_image:
+            label: 'lovata.shopaholic::lang.fields.preview_image'
+            oc.commentPosition: ''
+            mode: image
+            useCaption: true
+            thumbOptions:
+                mode: crop
+                extension: auto
+            span: left
+            type: fileupload
+            tab: 'lovata.shopaholic::lang.tabs.images'

@@ -1,0 +1,46 @@
+tabs:
+    fields:
+        cache_time_category:
+            tab: lovata.shopaholic::lang.tabs.cache_settings
+            span: left
+            label: lovata.shopaholic::lang.fields.cache_time_category
+            default: 1440
+            type: number
+        cache_time_product:
+            tab: lovata.shopaholic::lang.tabs.cache_settings
+            span: left
+            label: lovata.shopaholic::lang.fields.cache_time_product
+            default: 1440
+            type: number
+        cache_time_product_list:
+            tab: lovata.shopaholic::lang.tabs.cache_settings
+            span: left
+            label: lovata.shopaholic::lang.fields.cache_time_product_list
+            default: 1440
+            type: number
+        decimals:
+            tab: lovata.shopaholic::lang.tabs.prices_format
+            span: left
+            label: lovata.shopaholic::lang.fields.decimals
+        dec_point:
+            tab: lovata.shopaholic::lang.tabs.prices_format
+            span: left
+            label: lovata.shopaholic::lang.fields.dec_point
+            type: dropdown
+            options:
+                dot: lovata.shopaholic::lang.fields.dot
+                comma: lovata.shopaholic::lang.fields.comma
+        thousands_sep:
+            tab: lovata.shopaholic::lang.tabs.prices_format
+            span: left
+            label: lovata.shopaholic::lang.fields.thousands_sep
+            type: dropdown
+            options:
+                together: lovata.shopaholic::lang.fields.together
+                space: lovata.shopaholic::lang.fields.space
+                double_space: lovata.shopaholic::lang.fields.double_space
+                hyphen: lovata.shopaholic::lang.fields.hyphen
+        currency:
+            tab: lovata.shopaholic::lang.tabs.prices_format
+            span: left
+            label: lovata.shopaholic::lang.fields.currency

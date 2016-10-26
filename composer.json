@@ -1,0 +1,8 @@
+{
+  "require-dev": {
+    "kharanenka/php-result-store": "1.0.*",
+    "kharanenka/php-pagination": "1.0.*",
+    "kharanenka/laravel-cache-helper": "1.0.*",
+    "kharanenka/laravel-scope-active": "1.0.*"
+  }
+}

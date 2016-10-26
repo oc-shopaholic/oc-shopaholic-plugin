@@ -1,0 +1,9 @@
+# ===================================
+# Filter Scope Definitions
+# ===================================
+
+scopes:
+    active:
+        label: 'lovata.shopaholic::lang.fields.active'
+        type: checkbox
+        conditions: active = 1

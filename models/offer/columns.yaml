@@ -1,0 +1,52 @@
+columns:
+    name:
+        label: 'lovata.shopaholic::lang.fields.name'
+        type: text
+        searchable: true
+        sortable: true
+    active:
+        label: 'lovata.shopaholic::lang.fields.active'
+        type: switch
+        sortable: true
+    code:
+        label: 'lovata.shopaholic::lang.fields.vendor_code'
+        type: text
+        searchable: true
+        sortable: true
+    price:
+        label: 'lovata.shopaholic::lang.fields.price'
+        type: text
+        searchable: false
+        sortable: true
+    old_price:
+        label: 'lovata.shopaholic::lang.fields.old_price'
+        type: text
+        searchable: false
+        sortable: true
+    quantity:
+        label: 'lovata.shopaholic::lang.fields.quantity'
+        type: text
+        sortable: true
+    id:
+        label: 'lovata.shopaholic::lang.fields.id'
+        type: text
+        searchable: true
+        sortable: true
+        width: 100px
+    external_id:
+        label: 'lovata.shopaholic::lang.fields.external_id'
+        type: text
+        searchable: true
+        sortable: true
+    created_at:
+        label: 'lovata.shopaholic::lang.fields.created_at'
+        type: datetime
+        sortable: true
+        format: Y-m-d H:i:s
+        invisible: true
+    updated_at:
+        label: 'lovata.shopaholic::lang.fields.updated_at'
+        type: datetime
+        sortable: true
+        format: Y-m-d H:i:s
+        invisible: true

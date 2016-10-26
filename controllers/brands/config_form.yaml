@@ -1,0 +1,13 @@
+name: 'lovata.shopaholic::lang.breadcrumbs.brands'
+modelClass: Lovata\Shopaholic\Models\Brand
+form: $/lovata/shopaholic/models/brand/fields.yaml
+defaultRedirect: lovata/shopaholic/brands
+create:
+    title: 'lovata.shopaholic::lang.title.brand_create'
+    redirect: 'lovata/shopaholic/brands/update/:id'
+    redirectClose: lovata/shopaholic/brands
+update:
+    title: 'lovata.shopaholic::lang.title.brand_update'
+    redirect: lovata/shopaholic/brands
+    redirectClose: lovata/shopaholic/brands
+preview: {  }

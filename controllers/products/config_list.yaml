@@ -1,0 +1,14 @@
+title: 'lovata.shopaholic::lang.title.product_list'
+modelClass: Lovata\Shopaholic\Models\Product
+list: $/lovata/shopaholic/models/product/columns.yaml
+recordUrl: 'lovata/shopaholic/products/update/:id'
+noRecordsMessage: 'backend::lang.list.no_records'
+recordsPerPage: '25'
+showSetup: true
+showCheckboxes: true
+showSorting: 1
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: 'backend::lang.list.search_prompt'
+filter: config_filter.yaml

@@ -1,0 +1,16 @@
+name: 'lovata.shopaholic::lang.breadcrumbs.categories'
+modelClass: Lovata\Shopaholic\Models\Category
+form: $/lovata/shopaholic/models/category/fields.yaml
+defaultRedirect: lovata/shopaholic/categories
+create:
+    title: 'lovata.shopaholic::lang.title.category_create'
+    redirect: 'lovata/shopaholic/categories/update/:id'
+    redirectClose: lovata/shopaholic/categories
+    flashSave: 'lovata.shopaholic::lang.message.category_create'
+update:
+    title: 'lovata.shopaholic::lang.title.category_update'
+    redirect: lovata/shopaholic/categories
+    redirectClose: lovata/shopaholic/categories
+    flashSave: 'lovata.shopaholic::lang.message.category_update'
+    flashDelete: 'lovata.shopaholic::lang.message.category_delete'
+preview: {  }

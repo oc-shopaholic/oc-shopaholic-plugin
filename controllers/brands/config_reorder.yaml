@@ -1,0 +1,5 @@
+title: 'lovata.shopaholic::lang.title.brand_reorder'
+modelClass: Lovata\Shopaholic\Models\Brand
+nameFrom: name
+toolbar:
+    buttons: reorder_toolbar

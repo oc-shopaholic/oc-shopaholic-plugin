@@ -1,0 +1,28 @@
+{
+  "name": "kharanenka/php-result-store",
+  "description": "Universal result store",
+  "license": "GPL-3.0",
+  "keywords": [
+    "php",
+    "result",
+    "store"
+  ],
+  "authors": [
+    {
+      "name": "Andrey Kharanenka",
+      "email": "kharanenka@gmail.com"
+    }
+  ],
+  "version": "1.0.4",
+  "require": {
+    "php": ">=5.5"
+  },
+  "autoload": {
+    "classmap": [
+      "src/Kharanenka/Helper"
+    ],
+    "psr-0": {
+      "Kharanenka\\Result\\": "src/"
+    }
+  }
+}

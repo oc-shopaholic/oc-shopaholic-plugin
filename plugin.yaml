@@ -1,0 +1,59 @@
+plugin:
+    name: 'lovata.shopaholic::lang.plugin.name'
+    description: 'lovata.shopaholic::lang.plugin.description'
+    author: Lovata
+    icon: oc-icon-book
+    homepage: ''
+navigation:
+    shopaholic-menu-main:
+        label: 'lovata.shopaholic::lang.menu.main'
+        url: lovata/shopaholic/categories
+        icon: icon-th-large
+        permissions:
+            - 'shopaholic-menu-*'
+        sideMenu:
+            shopaholic-menu-categories:
+                label: 'lovata.shopaholic::lang.menu.categories'
+                url: lovata/shopaholic/categories
+                icon: icon-sitemap
+                order: 100
+                permissions:
+                    - shopaholic-menu-category
+            shopaholic-menu-brands:
+                label: 'lovata.shopaholic::lang.menu.brands'
+                url: lovata/shopaholic/brands
+                icon: icon-star-o
+                order: 200
+                permissions:
+                    - shopaholic-menu-brand
+            shopaholic-menu-products:
+                label: 'lovata.shopaholic::lang.menu.product'
+                url: lovata/shopaholic/products
+                icon: icon-book
+                order: 300
+                permissions:
+                    - shopaholic-menu-product
+            shopaholic-menu-offers:
+                label: 'lovata.shopaholic::lang.menu.offers_archive'
+                url: lovata/shopaholic/offers
+                icon: icon-trash-o
+                order: 1000
+                permissions:
+                    - shopaholic-menu-offers
+permissions:
+    shopaholic-menu-category:
+        tab: 'lovata.shopaholic::lang.tabs.permissions'
+        label: 'lovata.shopaholic::lang.permission.category'
+        order: 100
+    shopaholic-menu-brand:
+        tab: 'lovata.shopaholic::lang.tabs.permissions'
+        label: 'lovata.shopaholic::lang.permission.brand'
+        order: 200
+    shopaholic-menu-product:
+        tab: 'lovata.shopaholic::lang.tabs.permissions'
+        label: 'lovata.shopaholic::lang.permission.product'
+        order: 300
+    shopaholic-menu-offers:
+        tab: 'lovata.shopaholic::lang.tabs.permissions'
+        label: 'lovata.shopaholic::lang.permission.offers'
+        order: 1000

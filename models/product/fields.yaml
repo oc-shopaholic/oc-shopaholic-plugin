@@ -1,0 +1,88 @@
+fields:
+    active:
+        label: 'lovata.shopaholic::lang.fields.active'
+        span: left
+        default: 1
+        type: switch
+    name:
+        label: 'lovata.shopaholic::lang.fields.name'
+        oc.commentPosition: ''
+        span: left
+        required: 1
+        type: text
+    slug:
+        label: 'lovata.shopaholic::lang.fields.slug'
+        span: right
+        required: 1
+        preset:
+            field: name
+            type: slug
+        type: text
+tabs:
+    fields:
+        code:
+            label: 'lovata.shopaholic::lang.fields.vendor_code'
+            span: left
+            type: text
+            tab: 'lovata.shopaholic::lang.tabs.settings'
+        external_id:
+            label: 'lovata.shopaholic::lang.fields.external_id'
+            oc.commentPosition: ''
+            span: right
+            type: text
+            tab: 'lovata.shopaholic::lang.tabs.settings'
+        category:
+            label: 'lovata.shopaholic::lang.fields.category'
+            oc.commentPosition: ''
+            nameFrom: name
+            descriptionFrom: description
+            span: left
+            type: relation
+            tab: 'lovata.shopaholic::lang.tabs.settings'
+            emptyOption: 'lovata.shopaholic::lang.fields.empty'
+        brand:
+            label: 'lovata.shopaholic::lang.fields.brand'
+            span: right
+            type: relation
+            tab: 'lovata.shopaholic::lang.tabs.settings'
+            emptyOption: 'lovata.shopaholic::lang.fields.empty'
+        preview_text:
+            label: 'lovata.shopaholic::lang.fields.preview_text'
+            size: large
+            span: full
+            type: textarea
+            tab: 'lovata.shopaholic::lang.tabs.description'
+        description:
+            label: 'lovata.shopaholic::lang.fields.description'
+            size: giant
+            span: full
+            type: richeditor
+            tab: 'lovata.shopaholic::lang.tabs.description'
+        preview_image:
+                label: 'lovata.shopaholic::lang.fields.preview_image'
+                mode: image
+                useCaption: true
+                thumbOptions:
+                    mode: crop
+                    extension: auto
+                span: left
+                type: fileupload
+                tab: 'lovata.shopaholic::lang.tabs.images'
+        images:
+            label: 'lovata.shopaholic::lang.fields.product_images'
+            mode: image
+            useCaption: true
+            thumbOptions:
+                mode: crop
+                extension: auto
+            span: left
+            type: fileupload
+            tab: 'lovata.shopaholic::lang.tabs.images'
+        offers:
+            label: 'lovata.shopaholic::lang.fields.offers'
+            span: full
+            context:
+                - update
+                - preview
+            type: partial
+            tab: 'lovata.shopaholic::lang.tabs.offers'
