@@ -19,18 +19,3 @@
     </button>
 </div>
 </div>
-<script>
-    
-    setInterval(function () {
-        $.request('onGetQueueLength', {success: function(data) {
-            
-            var iCount = data.result;
-            if(parseInt(iCount) > 0) {
-                $('.shopaholic-import-button span').html(' (Отсталось обработать операций: <strong>' + iCount + '</strong>)');
-            } else {
-                $('.shopaholic-import-button span').html('');
-            }
-        }});
-    }, 10000);
-    
-</script>
