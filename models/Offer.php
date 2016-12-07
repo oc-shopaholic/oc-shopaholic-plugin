@@ -1,28 +1,33 @@
 <?php namespace Lovata\Shopaholic\Models;
 
 use Carbon\Carbon;
-use Lang;
+use Kharanenka\Helper\CustomValidationMessage;
+use Kharanenka\Helper\DataFileModel;
+use Kharanenka\Scope\ActiveField;
+use Kharanenka\Scope\CodeField;
+use Kharanenka\Scope\ExternalIDField;
+use Kharanenka\Scope\NameField;
+use Kharanenka\Scope\SlugField;
 use Lovata\Shopaholic\Classes\CPrice;
 use Model;
 
 use Kharanenka\Helper\CCache;
 use Lovata\Shopaholic\Plugin;
+use Lovata\Toolbox\Plugin as ToolboxPlugin;
 use October\Rain\Database\Builder;
 use October\Rain\Database\Collection;
-use October\Rain\Database\QueryBuilder;
 use October\Rain\Database\Traits\SoftDelete;
 use System\Classes\PluginManager;
-use Lovata\Shopaholic\Classes\CommonTrait;
 use Event;
 
 /**
  * Class Offer
  * @package Lovata\Shopaholic\Models
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
- * @author Denis Plisko, d.plisko@lovata.com, LOVATA Group
  * 
  * @mixin Builder
  * @mixin \Eloquent
+ * @mixin \Lovata\CustomShopaholic\Classes\OfferExtend
  * 
  * @property $id
  * @property bool $active
@@ -42,12 +47,9 @@ use Event;
  * @property Collection $images
  * @property \Lovata\Shopaholic\Models\Product $product
  *
- * @method static $this deleted()
- * @method static $this withDeleted()
  * @method static $this hasActiveProduct()
  * @method static $this getByCategory(int $iCategoryID)
  * @method static $this getByProduct(int $iProductID)
- * @method static $this likeByCode(string $sCode)
  * @method static $this getByMinQuantity(int $iCount, bool $bFlag = false)
  * @method static $this getByMinPrice(int $iPrice, bool $bFlag = false)
  * @method static $this getByMaxPrice(int $iPrice, bool $bFlag = false)
@@ -57,7 +59,13 @@ class Offer extends Model
 {
     use \October\Rain\Database\Traits\Validation;
     use SoftDelete;
-    use CommonTrait;
+    use ActiveField;
+    use NameField;
+    use SlugField;
+    use CodeField;
+    use ExternalIDField;
+    use CustomValidationMessage;
+    use DataFileModel;
 
     const CACHE_TAG_ELEMENT = 'shopaholic-offer-element';
     const CACHE_TAG_LIST = 'shopaholic-offer-list';
@@ -77,7 +85,7 @@ class Offer extends Model
         'images' => 'System\Models\File'
     ];
 
-    protected $fillable = [
+    public $fillable = [
         'name',
         'product_id',
         'active',
@@ -92,26 +100,26 @@ class Offer extends Model
         'product' => ['Lovata\Shopaholic\Models\Product'],
     ];
 
-    protected $dates = ['created_at', 'updated_at', 'deleted_at'];
+    public $dates = ['created_at', 'updated_at', 'deleted_at'];
     public $appends = ['category'];
+    public $casts = [];
 
     public function __construct(array $attributes = [])
     {
-        //TODO: Перенести в пакет
-        //Set validation custom messages
-        $this->customMessages = [
-            'required' => Lang::get('lovata.shopaholic::lang.validation.required'),
-            'unique' => Lang::get('lovata.shopaholic::lang.validation.unique'),
-        ];
+        $iPreviewTextMaxLength = (int) Settings::getValue('offer_preview_limit_max');
+        if($iPreviewTextMaxLength > 0) {
+            $this->rules['preview_text'] = 'max:'.$iPreviewTextMaxLength;
+        }
 
-        //Set validation custom attributes name
-        $this->attributeNames = [
-            'name' => Lang::get('lovata.shopaholic::lang.fields.name'),
-            'slug' => Lang::get('lovata.shopaholic::lang.fields.slug'),
-        ];
+        $this->setCustomMessage(ToolboxPlugin::NAME, ['required', 'max.string']);
+        $this->setCustomAttributeName(ToolboxPlugin::NAME, ['name', 'preview_text']);
 
+        if(PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic')) {
+            \Lovata\CustomShopaholic\Classes\OfferExtend::constructExtend($this);
+        }
+        
         if(PluginManager::instance()->hasPlugin('Lovata.PropertiesShopaholic')) {
-            $this->appends[] = 'property';
+            \Lovata\PropertiesShopaholic\Classes\OfferExtend::constructExtend($this);
         }
 
         parent::__construct($attributes);
@@ -127,6 +135,32 @@ class Offer extends Model
     {
         $this->clearCache();
         Event::fire(self::CACHE_TAG_ELEMENT.'.after.delete', [$this]);
+    }
+
+    /**
+     * Clear cache
+     */
+    public function clearCache() {
+
+        $this->checkActiveProduct();
+        
+        //Clear product cache
+        $iOriginalProductID = $this->getOriginal('product_id');
+        $iProductID = $this->getAttribute('product_id');
+        if($iOriginalProductID != $iProductID) {
+
+            if(!empty($iOriginalProductID)) {
+                CCache::clear([Plugin::CACHE_TAG, Product::CACHE_TAG_ELEMENT], $iOriginalProductID);
+            }
+            
+            if(!empty($iProductID)) {
+                CCache::clear([Plugin::CACHE_TAG, Product::CACHE_TAG_ELEMENT], $iProductID);
+            }
+        }
+
+        //Clear offer data
+        CCache::clear([Plugin::CACHE_TAG, self::CACHE_TAG_ELEMENT], $this->id);
+        Event::fire(self::CACHE_TAG_ELEMENT.'.cache.clear', [$this]);
     }
 
     /**
@@ -150,17 +184,7 @@ class Offer extends Model
             $obProduct->save();
         }
     }
-
-    public function scopeDeleted($query)
-    {
-        return $query->onlyTrashed();
-    }
-
-    public function scopeWithDeleted($query)
-    {
-        return $query->withTrashed();
-    }
-
+    
     /**
      * Get addition property values
      * @return array
@@ -196,7 +220,6 @@ class Offer extends Model
      */
     public function scopeHasActiveProduct($obQuery)
     {
-
         $obQuery->whereHas('product', function($obQuery) {
             /** @var Product $obQuery */
             $obQuery->active();
@@ -326,22 +349,6 @@ class Offer extends Model
     }
 
     /**
-     * Get by code (LIKE)
-     * @param \Illuminate\Database\Eloquent\Builder $obQuery
-     * @param $sData
-     * @return mixed
-     */
-    public function scopeLikeByCode($obQuery, $sData)
-    {
-
-        if(!empty($sData)) {
-            $obQuery->where('code', 'like', $sData.'%');
-        }
-
-        return $obQuery;
-    }
-
-    /**
      * Get offer data
      * @return  array|void
      */
@@ -352,25 +359,22 @@ class Offer extends Model
             'name' => $this->name,
             'code' => $this->code,
             'preview_text' => $this->preview_text,
-            'preview_image' => $this->getImage($this->preview_image),
+            'preview_image' => $this->getFileData('preview_image'),
             'description' => $this->description,
-            'images' => $this->getImageList($this->images),
+            'images' => $this->getFileListData('images'),
             'price' => $this->price,
             'old_price' => $this->old_price,
             'price_value' => $this->getPriceValue(),
             'old_price_value' => $this->getOldPriceValue(),
             'quantity' => $this->quantity,
-            'product_id' => $this->product->id,
-            'product_name' => $this->product->name,
-            'product_slug' => $this->product->slug,
         ];
 
         if(PluginManager::instance()->hasPlugin('Lovata.PropertiesShopaholic')) {
-            $arResult['properties'] = \Lovata\PropertiesShopaholic\Classes\CProperty::getOfferPropertiesList($this);
+            $arResult['property'] = \Lovata\PropertiesShopaholic\Classes\CProperty::getOfferPropertiesList($this);
         }
 
         if(PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic')) {
-            \Lovata\CustomShopaholic\Plugin::addOfferData($arResult, $this);
+            \Lovata\CustomShopaholic\Classes\OfferExtend::getDataExtend($arResult, $this);
         }
 
         return $arResult;
@@ -378,40 +382,46 @@ class Offer extends Model
 
     /**
      * Get cached product data
-     * @param int $iOfferID
-     * @param Offer $obOffer
+     * @param int $iElementID
+     * @param Offer $obElement
      * @return array|null|string|void
      */
-    public static function getCacheData($iOfferID, $obOffer = null) {
+    public static function getCacheData($iElementID, $obElement = null) {
 
-        if(empty($iOfferID)) {
-            return [];
+        if(empty($iElementID)) {
+            return null;
         }
 
         //Get cache data
         $arCacheTags = [Plugin::CACHE_TAG, self::CACHE_TAG_ELEMENT];
-        $sCacheKey = $iOfferID;
+        $sCacheKey = $iElementID;
 
         $arResult = CCache::get($arCacheTags, $sCacheKey);
-        if(!empty($arResult)) {
-            return $arResult;
+        if(empty($arResult)) {
+            
+            //Get offer object
+            if(empty($obElement)) {
+                $obElement = self::active()->find($iElementID);
+            }
+
+            if(empty($obElement)) {
+                return null;
+            }
+
+            $arResult = $obElement->getData();
+
+            //Set cache data
+            CCache::forever($arCacheTags, $sCacheKey, $arResult);
         }
 
-        //Get offer object
-        if(empty($obOffer)) {
-            $obOffer = Offer::find($iOfferID);
+        if(empty($arResult)) {
+            return null;
         }
 
-        if(empty($obOffer)) {
-            return [];
+        if(PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic')) {
+            \Lovata\CustomShopaholic\Classes\OfferExtend::getCachedDataExtend($arResult);
         }
-
-        $arResult = $obOffer->getData();
-
-        //Set cache data
-        $iCacheTime = Settings::getCacheTime('cache_time_product');
-        CCache::put($arCacheTags, $sCacheKey, $arResult, $iCacheTime);
-
+        
         return $arResult;
     }
 
@@ -482,21 +492,20 @@ class Offer extends Model
     }
 
     /**
-     * Clear cache
+     * Get fields list for backend interface with switching visibility
+     * @return array
      */
-    public function clearCache() {
-
-        $this->checkActiveProduct();
-        
-        //Clear offer data
-        CCache::clear([Plugin::CACHE_TAG, self::CACHE_TAG_ELEMENT], $this->id);
-
-        //Clear product data
-        $obProduct = $this->product;
-        if(!empty($obProduct)) {
-            $obProduct->clearCache();
-        }
-        
-        Event::fire(self::CACHE_TAG_ELEMENT.'.cache.clear', [$this]);
+    public static function getConfiguredBackendFields() {
+        return [
+            'quantity'              => 'lovata.shopaholic::lang.field.quantity',
+            'price'                 => 'lovata.shopaholic::lang.field.price',
+            'old_price'             => 'lovata.shopaholic::lang.field.old_price',
+            'code'                  => 'lovata.toolbox::lang.field.code',
+            'external_id'           => 'lovata.toolbox::lang.field.external_id',
+            'preview_text'          => 'lovata.toolbox::lang.field.preview_text',
+            'description'           => 'lovata.toolbox::lang.field.description',
+            'preview_image'         => 'lovata.toolbox::lang.field.preview_image',
+            'images'                => 'lovata.toolbox::lang.field.images',
+        ];
     }
 }

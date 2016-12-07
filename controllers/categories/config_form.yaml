@@ -1,16 +1,16 @@
-name: 'lovata.shopaholic::lang.breadcrumbs.categories'
+name: 'lovata.shopaholic::lang.category.name'
 modelClass: Lovata\Shopaholic\Models\Category
 form: $/lovata/shopaholic/models/category/fields.yaml
 defaultRedirect: lovata/shopaholic/categories
 create:
-    title: 'lovata.shopaholic::lang.title.category_create'
+    title: 'backend::lang.form.create_title'
     redirect: 'lovata/shopaholic/categories/update/:id'
     redirectClose: lovata/shopaholic/categories
-    flashSave: 'lovata.shopaholic::lang.message.category_create'
+    flashSave: 'lovata.toolbox::lang.message.create_success'
 update:
-    title: 'lovata.shopaholic::lang.title.category_update'
+    title: 'backend::lang.form.update_title'
     redirect: lovata/shopaholic/categories
     redirectClose: lovata/shopaholic/categories
-    flashSave: 'lovata.shopaholic::lang.message.category_update'
-    flashDelete: 'lovata.shopaholic::lang.message.category_delete'
+    flashSave: 'lovata.toolbox::lang.message.update_success'
+    flashDelete: 'lovata.toolbox::lang.message.delete_success'
 preview: {  }

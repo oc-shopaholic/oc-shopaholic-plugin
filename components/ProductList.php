@@ -3,14 +3,14 @@
 use Input;
 use Lang;
 use Cms\Classes\ComponentBase;
-use Lovata\Shopaholic\Classes\Pagination;
+use Kharanenka\Helper\Pagination;
+use Lovata\Shopaholic\Classes\ProductListStore;
 use Lovata\Shopaholic\Models\Category;
-use Lovata\Shopaholic\Models\Offer;
 use Lovata\Shopaholic\Models\Product;
-use Lovata\Shopaholic\Models\Settings;
 use System\Classes\PluginManager;
 use Kharanenka\Helper\CCache;
 use Lovata\Shopaholic\Plugin;
+use Lovata\Toolbox\Plugin as ToolboxPlugin;
 
 /**
  * Class ProductList
@@ -20,168 +20,165 @@ use Lovata\Shopaholic\Plugin;
 class ProductList extends ComponentBase
 {
     
-    const SORT_NO = 'no';
-    const SORT_PRICE_ASC = 'price|asc';
-    const SORT_PRICE_DESC = 'price|desc';
-    const SORT_NEW = 'new';
-    const SORT_POPULARITY_DESC = 'popularity|desc';
-    
     protected $iProductOnPage = 10;
-    protected $arResult = [];
+    protected static $arResult = [];
+    protected static $arProductIDList = [];
     protected $iProductId;
-    
+
+    /**
+     * @return array
+     */
     public function componentDetails()
     {
         return [
-            'name' => Lang::get('lovata.shopaholic::lang.component.product_list_name'),
-            'description' => Lang::get('lovata.shopaholic::lang.component.product_list_description'),
+            'name'          => 'lovata.shopaholic::lang.component.product_list_name',
+            'description'   => 'lovata.shopaholic::lang.component.product_list_description',
         ];
     }
 
+    /**
+     * @return array
+     */
     public function defineProperties()
     {
         $arProperties = [
             'sorting' => [
-                'title' => Lang::get('lovata.shopaholic::lang.component.product_list_sorting'),
-                'type' => 'dropdown',
-                'default' => self::SORT_NO,
-                'options' => [
-                    self::SORT_NO => Lang::get('lovata.shopaholic::lang.component.sorting_no'),
-                    self::SORT_PRICE_ASC => Lang::get('lovata.shopaholic::lang.component.sorting_price_asc'),
-                    self::SORT_PRICE_DESC => Lang::get('lovata.shopaholic::lang.component.sorting_price_desc'),
-                    self::SORT_NEW => Lang::get('lovata.shopaholic::lang.component.sorting_new'),
+                'title'     => Lang::get('lovata.shopaholic::lang.component.product_list_sorting'),
+                'type'      => 'dropdown',
+                'default'   => ProductListStore::SORT_NO,
+                'options'   => [
+                    ProductListStore::SORT_NO           => Lang::get('lovata.shopaholic::lang.component.sorting_no'),
+                    ProductListStore::SORT_PRICE_ASC    => Lang::get('lovata.shopaholic::lang.component.sorting_price_asc'),
+                    ProductListStore::SORT_PRICE_DESC   => Lang::get('lovata.shopaholic::lang.component.sorting_price_desc'),
+                    ProductListStore::SORT_NEW          => Lang::get('lovata.shopaholic::lang.component.sorting_new'),
                 ],
 
             ],
         ];
 
         if(PluginManager::instance()->hasPlugin('Lovata.PopularityShopaholic')) {
-            $arProperties['sorting']['options'][self::SORT_POPULARITY_DESC] = Lang::get('lovata.shopaholic::lang.component.sorting_popularity_desc');
+            $arProperties['sorting']['options'][ProductListStore::SORT_POPULARITY_DESC] = Lang::get('lovata.shopaholic::lang.component.sorting_popularity_desc');
         }
         
-        $arProperties = array_merge($arProperties, Pagination::getProperties());
-        
+        $arProperties = array_merge($arProperties, Pagination::getProperties(ToolboxPlugin::NAME));
         return $arProperties;
     }
-    
+
     public function onRun()
     {
-        $iProductOnPage = $this->property('countPerPage');
-        if($iProductOnPage > 0) {
-            $this->iProductOnPage = $iProductOnPage;
-        }
-
+        $this->initData();
         if(!\Request::ajax()) {
             $this->addJs('/plugins/lovata/shopaholic/assets/js/main.js');
         }
     }
 
     /**
+     * Init start component data
+     */
+    protected function initData() {
+
+        $iProductOnPage = $this->property('count_per_page');
+        if($iProductOnPage > 0) {
+            $this->iProductOnPage = $iProductOnPage;
+        }
+    }
+
+    /**
      * Get product list by page number
-     * @param $sCategorySlug
+     * @param int $iCategoryID
      * @param int $iPage
      * @param string $sTag
+     * @param bool $bPageFromRequest
      * @return array
      */
-    public function get($sCategorySlug, $iPage = 1, $sTag = null) {
-        
+    public function get($iPage = 1, $iCategoryID = 0, $sTag = null, $bPageFromRequest = true) {
+
+        if(empty($iCategoryID)) {
+            $iCategoryID = 0;
+        }
+
         $arResult = [
             'list' => [],
             'pagination' => [],
             'page' => $iPage,
             'count' => 0,
-            'category_id' => null,
+            'category_id' => $iCategoryID,
         ];
-        
-        if(empty($sCategorySlug)) {
-            return $arResult;
-        }
 
+        //Get page from request
         $iRequestPage = Input::get('page');
-        if(!empty($iRequestPage)) {
+        if(!empty($iRequestPage) && $bPageFromRequest) {
             $iPage = $iRequestPage;
         }
 
-        //Set page default value
-        if($iPage < 1 && $iPage != -1) {
+        //Check page value
+        if($iPage < 1) {
             $iPage = 1;
-            $arResult['page'] = $iPage;
         }
-        
-        if(isset($this->arResult[$sCategorySlug]) && isset($this->arResult[$sCategorySlug][$iPage])) {
-            return $this->arResult[$sCategorySlug][$iPage];
+
+        if(isset(self::$arResult[$iCategoryID]) && isset(self::$arResult[$iCategoryID][$iPage])) {
+            return self::$arResult[$iCategoryID][$iPage];
         }
-        
-        //Get category object
-        /** @var Category $obCategory */
-        $obCategory = Category::active()->slug($sCategorySlug)->first();
-        if(empty($obCategory)) {
-            return $arResult;
-        }
-        
-        //Add category ID
-        $arResult['category_id'] = $obCategory->id;
-        
+
+        //Get sorting
         $sSorting = $this->getSorting();
         $arResult['sort'] = $sSorting;
 
-        //Get cache data
-        $arCacheTags = [Plugin::CACHE_TAG, Product::CACHE_TAG_LIST, Category::CACHE_TAG_ELEMENT.'_'.$obCategory->id];
-        $sCacheKey = $sSorting;
+        if(isset(self::$arProductIDList[$iCategoryID])) {
+            $arProductIDList = self::$arProductIDList[$iCategoryID];
+        } else {
 
-        $arProductIDList = CCache::get($arCacheTags, $sCacheKey);
-        if(empty($arProductIDList)) {
-            
-            //Get product ID list
-            $arProductIDList = $this->getProductList($sSorting, $obCategory->id);
+            //Get cached product list by category filter and sorting by $sSorting
+            $arProductIDList = ProductListStore::getSortingByCategory($sSorting, $iCategoryID);
             if(empty($arProductIDList)) {
                 return $arResult;
             }
 
-            //Set cache data
-            $iCacheTime = Settings::getCacheTime('cache_time_product_list');
-            CCache::put($arCacheTags, $sCacheKey, $arProductIDList, $iCacheTime);
-        }
+            //Apply tag filter
+            if(PluginManager::instance()->hasPlugin('Lovata.TagsShopaholic') && !empty($sTag)) {
 
-        //Apply tag filter
-        if(PluginManager::instance()->hasPlugin('Lovata.TagsShopaholic') && !empty($sTag)) {
+                //TODO: Перенести в плагин тегов и обратить внимание на категорию 0
+                //Get cache data
+                $arCacheTags = [Plugin::CACHE_TAG, Product::CACHE_TAG_LIST, \Lovata\TagsShopaholic\Models\Tag::CACHE_TAG_ELEMENT, Category::CACHE_TAG_ELEMENT.'_'.$iCategoryID];
+                $sCacheKey = $sTag;
 
-            //Get cache data
-            $arCacheTags = [Plugin::CACHE_TAG, Product::CACHE_TAG_LIST, \Lovata\TagsShopaholic\Models\Tag::CACHE_TAG_ELEMENT, Category::CACHE_TAG_ELEMENT.'_'.$obCategory->id];
-            $sCacheKey = $sTag;
+                $arProductListTag = CCache::get($arCacheTags, $sCacheKey);
+                if(empty($arProductListTag)) {
 
-            $arProductListTag = CCache::get($arCacheTags, $sCacheKey);
-            if(empty($arProductListTag)) {
-                
-                $arProductListTag = \Lovata\TagsShopaholic\Models\Tag::getProductList($sTag);
+                    $arProductListTag = \Lovata\TagsShopaholic\Models\Tag::getProductList($sTag);
 
-                //Set cache data
-                $iCacheTime = Settings::getCacheTime('cache_time_product_list');
-                CCache::put($arCacheTags, $sCacheKey, $arProductListTag, $iCacheTime);
+                    //Set cache data
+                    CCache::forever($arCacheTags, $sCacheKey, $arProductListTag);
+                }
+
+                if(!empty($arProductListTag)) {
+                    $arProductIDList = array_intersect($arProductIDList, $arProductListTag);
+                }
             }
-            
-            if(!empty($arProductListTag)) {
-                $arProductIDList = array_intersect($arProductIDList, $arProductListTag);
+
+            //Apply filter
+            if(PluginManager::instance()->hasPlugin('Lovata.FilterShopaholic')) {
+                \Lovata\FilterShopaholic\Classes\CProductFilter::getList($arProductIDList, $iCategoryID);
+                if(empty($arProductIDList)) {
+                    return $arResult;
+                }
             }
-        }
-        
-        //Apply filter
-        if(PluginManager::instance()->hasPlugin('Lovata.FilterShopaholic')) {
-            \Lovata\FilterShopaholic\Classes\CProductFilter::getList($arProductIDList, $obCategory);
+
+            //Apply custom filter
+            if(PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic')) {
+                \Lovata\CustomShopaholic\Classes\ProductListExtend::getCachedProductList($arProductIDList, $iCategoryID);
+                if(empty($arProductIDList)) {
+                    return $arResult;
+                }
+            }
         }
 
         //Apply pagination
         $arResult['count'] = count($arProductIDList);
         $arResult['max_page'] = ceil($arResult['count'] / $this->iProductOnPage);
         
-        //Get last page number
-        if($iPage == -1) {
-            $iPage = $arResult['max_page'];
-        }
-        
         $arResult['page'] = $iPage;
-        //TODO: Переделать пагинацию
-        $arResult['pagination'] = Pagination::getPagination($iPage, $arResult['count'], $this->properties);
+        $arResult['pagination'] = Pagination::get($iPage, $arResult['count'], $this->properties);
         
         //Get product ID list for page
         $arProductIDList = array_slice($arProductIDList, $this->iProductOnPage * ($iPage - 1), $this->iProductOnPage);
@@ -191,12 +188,14 @@ class ProductList extends ComponentBase
 
             //Get product data
             $arProductData = Product::getCacheData($iProductID);
-            if(!empty($arProductData)) {
-                $arResult['list'][$iProductID] = $arProductData;
+            if(empty($arProductData)) {
+                continue;
             }
+
+            $arResult['list'][$iProductID] = $arProductData;
         }
 
-        $this->arResult[$sCategorySlug][$iPage] = $arResult;
+        self::$arResult[$iCategoryID][$iPage] = $arResult;
         return $arResult;
     }
 
@@ -206,24 +205,39 @@ class ProductList extends ComponentBase
      */
     public function onAjaxRequest() {
 
-        $iProductOnPage = $this->property('countPerPage');
-        if($iProductOnPage > 0) {
-            $this->iProductOnPage = $iProductOnPage;
+        $this->initData();
+
+        //Get response type from request
+        $sResponseType = Input::get('response_type');
+
+        $iCategoryID = Input::get('category_id');
+        $iTagID = Input::get('tag_id');
+
+        //Get 'QUERY_STRING'
+        $sQueryString = urldecode(Input::server('QUERY_STRING'));
+
+        switch($sResponseType) {
+            case 'full':
+
+                $arResult = $this->get(1, $iCategoryID, $iTagID);
+                $arResult['query_string'] = $sQueryString;
+                return $arResult;
+            default:
+                return $sQueryString;
         }
-        
-        return urldecode(Input::server('QUERY_STRING'));
     }
 
     /**
      * Get pagination data
-     * @param string $sCategorySlug
+     * @param int $iCategoryID
      * @param int $iPage
      * @param string $sTag
+     * @param bool $bPageFromRequest
      * @return array|mixed
      */
-    public function getPagination($sCategorySlug, $iPage = 1, $sTag = null) {
+    public function getPagination($iPage = 1, $iCategoryID = 0, $sTag = null, $bPageFromRequest = true) {
         
-        $arResult = $this->get($sCategorySlug, $iPage, $sTag);
+        $arResult = $this->get($iPage, $iCategoryID, $sTag, $bPageFromRequest);
         if(isset($arResult['pagination'])) {
             return $arResult['pagination'];
         }
@@ -233,14 +247,15 @@ class ProductList extends ComponentBase
 
     /**
      * Get count products
-     * @param string $sCategorySlug
+     * @param int $iCategoryID
      * @param int $iPage
      * @param string $sTag
+     * @param bool $bPageFromRequest
      * @return array|mixed
      */
-    public function getCount($sCategorySlug, $iPage = 1, $sTag = null) {
+    public function getCount($iPage = 1, $iCategoryID = 0, $sTag = null, $bPageFromRequest = true) {
 
-        $arResult = $this->get($sCategorySlug, $iPage, $sTag);
+        $arResult = $this->get($iPage, $iCategoryID, $sTag, $bPageFromRequest);
         if(isset($arResult['count'])) {
             return $arResult['count'];
         }
@@ -250,19 +265,20 @@ class ProductList extends ComponentBase
     
     /**
      * Get active sort
-     * @param string $sCategorySlug
+     * @param int $iCategoryID
      * @param int $iPage
      * @param string $sTag
+     * @param bool $bPageFromRequest
      * @return array|mixed
      */
-    public function getActiveSort($sCategorySlug, $iPage = 1, $sTag = null) {
+    public function getActiveSort($iPage = 1, $iCategoryID = 0, $sTag = null, $bPageFromRequest = true) {
 
-        $arResult = $this->get($sCategorySlug, $iPage, $sTag);
+        $arResult = $this->get($iPage, $iCategoryID, $sTag, $bPageFromRequest);
         if(isset($arResult['sort'])) {
             return $arResult['sort'];
         }
 
-        return '';
+        return null;
     }
 
     /**
@@ -276,47 +292,10 @@ class ProductList extends ComponentBase
             $sSorting = $this->property('sorting');
         }
         
-        if(!in_array($sSorting, [self::SORT_NO, self::SORT_PRICE_ASC, self::SORT_PRICE_DESC, self::SORT_NEW])) {
+        if(!in_array($sSorting, ProductListStore::getAvailableSorting()) && !preg_match('%^'.ProductListStore::SORT_CUSTOM.'%', $sSorting)) {
             $sSorting = $this->property('sorting');
         }
         
         return $sSorting;
-    }
-    
-    /**
-     * Get product ID list
-     * @param string $sSorting
-     * @param int $iCategoryID
-     * @return array
-     */
-    protected function getProductList($sSorting, $iCategoryID) {
-
-        $arProductIDList = [];
-        if(empty($iCategoryID)) {
-            return $arProductIDList;
-        }
-        
-        switch($sSorting) {
-            case self::SORT_PRICE_ASC :
-                $arProductIDList = Offer::active()->hasActiveProduct()->getByCategory($iCategoryID)->groupBy('product_id')->orderBy('price', 'asc')->lists('product_id');
-                break;
-            case self::SORT_PRICE_DESC :
-                $arProductIDList = Offer::active()->hasActiveProduct()->getByCategory($iCategoryID)->groupBy('product_id')->orderBy('price', 'desc')->lists('product_id');
-                break;
-            case self::SORT_POPULARITY_DESC :
-
-                if(PluginManager::instance()->hasPlugin('Lovata.PopularityShopaholic')) {
-                    $arProductIDList = Product::active()->getByCategory($iCategoryID)->orderBy('popularity', 'desc')->lists('id');
-                } else {
-                    $arProductIDList = Product::active()->getByCategory($iCategoryID)->lists('id');
-                }
-                
-                break;
-            default:
-                $arProductIDList = Product::active()->getByCategory($iCategoryID)->orderBy('id', 'desc')->lists('id');
-                break;
-        }
-        
-        return $arProductIDList;
     }
 }

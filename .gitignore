@@ -1,15 +1,5 @@
-#laravel
-/bower_components
+/node_modules
 Homestead.yaml
-
-#vagrant
-.vagrant/
-/bootstrap.sh
-/Vagrantfile
-
-#service
-/redisadmin
-/beanstalkd
 
 #site
 pdf/
@@ -52,7 +42,7 @@ local.properties
 nbproject/
 build/
 nbbuild/
-/dist/
+dist/
 nbdist/
 nbactions.xml
 nb-configuration.xml
@@ -91,11 +81,8 @@ build/
 png/
 psd/
 doc/
-/svg/
+svg/
+vendors/
 pixelPerfect/
 node_modules/
 docs/
-
-# Logs
-logs
-*.log

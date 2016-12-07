@@ -5,7 +5,7 @@ use Lovata\Shopaholic\Models\Settings;
 /**
  * Class CPrice
  * @package Lovata\Shopaholic\Classes
- * @author Denis Plisko, d.plisko@lovata.com, LOVATA Group
+ * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
 class CPrice {
 
@@ -20,16 +20,15 @@ class CPrice {
      */
     public static function getPriceInFormat($dPrice)
     {
-        
         $iDecimals = (int)Settings::getValue('decimals');
-        if ($iDecimals == null) {
+        if($iDecimals == null) {
             self::$iDecimals = $iDecimals;
         }
         
         $sDecPoint = Settings::getValue('dec_point');
-        if (!empty($sDecPoint)) {
+        if(!empty($sDecPoint)) {
             self::$sDecPoint = $sDecPoint;
-            switch ($sDecPoint) {
+            switch($sDecPoint) {
                 case 'dot':
                     self::$sDecPoint = '.';
                     break;
@@ -42,9 +41,9 @@ class CPrice {
         }
         
         $sThousandsSep = Settings::getValue('thousands_sep');
-        if (!empty($sThousandsSep)) {
+        if(!empty($sThousandsSep)) {
             self::$sThousandsSep = $sThousandsSep;
-            switch ($sThousandsSep) {
+            switch($sThousandsSep) {
                 case 'together':
                     self::$sThousandsSep = '';
                     break;
@@ -64,4 +63,4 @@ class CPrice {
         
         return number_format($dPrice, self::$iDecimals, self::$sDecPoint, self::$sThousandsSep);
     }
-} 
+}

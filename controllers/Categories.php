@@ -1,20 +1,15 @@
 <?php namespace Lovata\Shopaholic\Controllers;
 
-use Lovata\Import1cShopaholic\Classes\Import;
-use Lovata\Import1cShopaholic\Classes\ImportCatalog;
-use Queue;
+use Lovata\Shopaholic\Models\Category;
+use Lovata\Shopaholic\Models\Settings;
+use Yaml;
 use Backend\Classes\Controller;
 use BackendMenu;
-use Flash;
-use Illuminate\Http\Request;
-use Lang;
-use Lovata\Shopaholic\Models\Category;
 use System\Classes\PluginManager;
 
 /**
  * Class Categories
  * @package Lovata\Shopaholic\Controllers
- * @author Denis Plisko, d.plisko@lovata.com, LOVATA Group
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
 class Categories extends Controller
@@ -26,25 +21,70 @@ class Categories extends Controller
         'Backend.Behaviors.RelationController',
     ];
     
-    public $listConfig = 'config_list.yaml';
-    public $formConfig = 'config_form.yaml';
+    public $listConfig;
+    public $formConfig;
     public $reorderConfig = 'config_reorder.yaml';
     public $relationConfig = [];
-
-    /** @var Request */
-    protected $obRequest;
     
-    public function __construct(Request $obRequest)
+    public function __construct()
     {
-        $this->obRequest = $obRequest;
+        $this->getListConfig();
+        $this->getFormConfig();
 
         //Add relation config for properties
         if(PluginManager::instance()->hasPlugin('Lovata.PropertiesShopaholic')) {
-            $this->relationConfig['product_property'] = \Lovata\PropertiesShopaholic\Models\Property::getRelationConfig();
-            $this->relationConfig['offer_property'] = \Lovata\PropertiesShopaholic\Models\Property::getRelationConfig();
+            \Lovata\PropertiesShopaholic\Classes\CategoryExtend::relationConfigExtend($this);
         }
 
         parent::__construct();
         BackendMenu::setContext('Lovata.Shopaholic', 'shopaholic-menu-main', 'shopaholic-menu-categories');
+    }
+
+    /**
+     * Get $listConfig
+     */
+    protected function getListConfig()
+    {
+        //Get controller config
+        $arConfig = Yaml::parseFile(__DIR__.'/categories/config_list.yaml');
+
+        //Get model config
+        $arConfig['list'] = Yaml::parseFile(base_path().'/plugins/lovata/shopaholic/models/category/columns.yaml');
+
+        //Hide fields
+        $arConfiguredViewFields = Category::getConfiguredBackendFields();
+        if(!empty($arConfiguredViewFields)) {
+            foreach($arConfiguredViewFields as $sFieldKey => $sFieldName) {
+                if(isset($arConfig['list']['columns'][$sFieldKey]) && Settings::getValue('brand_'.$sFieldKey)) {
+                    unset($arConfig['list']['columns'][$sFieldKey]);
+                }
+            }
+        }
+
+        $this->listConfig = ['list' => $arConfig];
+    }
+
+    /**
+     * Get $formConfig
+     */
+    protected function getFormConfig()
+    {
+        //Get controller config
+        $arConfig = Yaml::parseFile(__DIR__.'/categories/config_form.yaml');
+
+        //Get model config
+        $arConfig['form'] = Yaml::parseFile(base_path().'/plugins/lovata/shopaholic/models/category/fields.yaml');
+
+        //Hide fields
+        $arConfiguredViewFields = Category::getConfiguredBackendFields();
+        if(!empty($arConfiguredViewFields)) {
+            foreach($arConfiguredViewFields as $sFieldKey => $sFieldName) {
+                if(isset($arConfig['form']['tabs']['fields'][$sFieldKey]) && Settings::getValue('brand_'.$sFieldKey)) {
+                    unset($arConfig['form']['tabs']['fields'][$sFieldKey]);
+                }
+            }
+        }
+
+        $this->formConfig = $arConfig;
     }
 }

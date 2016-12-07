@@ -1,51 +1,49 @@
 columns:
     name:
-        label: 'lovata.shopaholic::lang.fields.name'
+        label: 'lovata.toolbox::lang.field.name'
         type: text
         searchable: true
         sortable: true
     active:
-        label: 'lovata.shopaholic::lang.fields.active'
+        label: 'lovata.toolbox::lang.field.active'
         type: switch
         sortable: true
     category_id:
-        label: 'lovata.shopaholic::lang.fields.category'
+        label: 'lovata.toolbox::lang.field.category'
         type: text
         searchable: true
         sortable: true
         relation: category
         select: name
     brand_id:
-        label: 'lovata.shopaholic::lang.fields.brand'
+        label: 'lovata.shopaholic::lang.field.brand'
         type: text
         sortable: true
         relation: brand
         select: name
     code:
-        label: 'lovata.shopaholic::lang.fields.vendor_code'
+        label: 'lovata.shopaholic::lang.field.vendor_code'
         type: text
         searchable: true
         sortable: true
     id:
-        label: 'lovata.shopaholic::lang.fields.id'
+        label: 'lovata.toolbox::lang.field.id'
         type: text
         searchable: true
         sortable: true
         width: 100px
     external_id:
-        label: 'lovata.shopaholic::lang.fields.external_id'
+        label: 'lovata.toolbox::lang.field.external_id'
         type: text
         searchable: true
         sortable: true
     created_at:
-        label: 'lovata.shopaholic::lang.fields.created_at'
-        type: datetime
+        label: 'lovata.toolbox::lang.field.created_at'
+        type: timetense
         sortable: true
-        format: Y-m-d H:i:s
         invisible: true
     updated_at:
-        label: 'lovata.shopaholic::lang.fields.updated_at'
-        type: datetime
+        label: 'lovata.toolbox::lang.field.updated_at'
+        type: timetense
         sortable: true
-        format: Y-m-d H:i:s
         invisible: true

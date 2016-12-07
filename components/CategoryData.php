@@ -1,6 +1,5 @@
 <?php namespace Lovata\Shopaholic\Components;
 
-use Lang;
 use Cms\Classes\ComponentBase;
 use Lovata\Shopaholic\Models\Category;
 
@@ -11,12 +10,14 @@ use Lovata\Shopaholic\Models\Category;
  */
 class CategoryData extends ComponentBase
 {
-    
+    /**
+     * @return array
+     */
     public function componentDetails()
     {
         return [
-            'name' => Lang::get('lovata.shopaholic::lang.component.category_data_name'),
-            'description' => Lang::get('lovata.shopaholic::lang.component.get_category_data_description'),
+            'name'          => 'lovata.shopaholic::lang.component.category_data_name',
+            'description'   => 'lovata.shopaholic::lang.component.category_data_description',
         ];
     }
 

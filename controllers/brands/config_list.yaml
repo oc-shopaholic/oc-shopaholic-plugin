@@ -1,9 +1,9 @@
-title: 'lovata.shopaholic::lang.title.brand_list'
+title: 'lovata.shopaholic::lang.brand.list_title'
 modelClass: Lovata\Shopaholic\Models\Brand
 list: $/lovata/shopaholic/models/brand/columns.yaml
 recordUrl: 'lovata/shopaholic/brands/update/:id'
 noRecordsMessage: 'backend::lang.list.no_records'
-recordsPerPage: '25'
+recordsPerPage: '10'
 showSetup: true
 showCheckboxes: true
 showSorting: 1

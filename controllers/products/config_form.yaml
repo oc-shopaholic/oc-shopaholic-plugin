@@ -1,16 +1,16 @@
-name: 'lovata.shopaholic::lang.breadcrumbs.products'
+name: 'lovata.shopaholic::lang.product.name'
 modelClass: Lovata\Shopaholic\Models\Product
 form: $/lovata/shopaholic/models/product/fields.yaml
 defaultRedirect: lovata/shopaholic/products
 create:
-    title: 'lovata.shopaholic::lang.title.product_create'
+    title: 'backend::lang.form.create_title'
     redirect: 'lovata/shopaholic/products/update/:id'
     redirectClose: lovata/shopaholic/products
-    flashSave: 'lovata.shopaholic::lang.message.product_create'
+    flashSave: 'lovata.toolbox::lang.message.create_success'
 update:
-    title: 'lovata.shopaholic::lang.title.product_update'
+    title: 'backend::lang.form.update_title'
     redirect: lovata/shopaholic/products
     redirectClose: lovata/shopaholic/products
-    flashSave: 'lovata.shopaholic::lang.message.product_update'
-    flashDelete: 'lovata.shopaholic::lang.message.product_delete'
+    flashSave: 'lovata.toolbox::lang.message.update_success'
+    flashDelete: 'lovata.toolbox::lang.message.delete_success'
 preview: {  }

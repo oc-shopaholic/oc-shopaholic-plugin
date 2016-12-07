@@ -1,5 +1,3 @@
-title: 'lovata.shopaholic::lang.title.category_reorder'
+title: 'backend::lang.reorder.default_title'
 modelClass: Lovata\Shopaholic\Models\Category
 nameFrom: name
-toolbar:
-    buttons: reorder_toolbar

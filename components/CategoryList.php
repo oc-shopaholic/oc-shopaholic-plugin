@@ -1,10 +1,8 @@
 <?php namespace Lovata\Shopaholic\Components;
 
-use Lang;
 use Cms\Classes\ComponentBase;
 use Kharanenka\Helper\CCache;
 use Lovata\Shopaholic\Models\Category;
-use Lovata\Shopaholic\Models\Settings;
 use October\Rain\Database\Collection;
 use Lovata\Shopaholic\Plugin;
 
@@ -16,11 +14,14 @@ use Lovata\Shopaholic\Plugin;
 class CategoryList extends ComponentBase
 {
 
+    /**
+     * @return array
+     */
     public function componentDetails()
     {
         return [
-            'name' => Lang::get('lovata.shopaholic::lang.component.category_list_name'),
-            'description' => Lang::get('lovata.shopaholic::lang.component.category_list_description'),
+            'name'          => 'lovata.shopaholic::lang.component.category_list_name',
+            'description'   => 'lovata.shopaholic::lang.component.category_list_description',
         ];
     }
 
@@ -28,7 +29,7 @@ class CategoryList extends ComponentBase
      * Get category tree
      * @return array
      */
-    public function getTree() {
+    public function get() {
 
         //Get cache data
         $arCacheTags = [Plugin::CACHE_TAG, Category::CACHE_TAG_LIST];
@@ -48,12 +49,11 @@ class CategoryList extends ComponentBase
         }
         
         foreach($arCategories as $obCategory) {
-            $arResult[$obCategory->id] = $obCategory->getData();
+            $arResult[$obCategory->id] = Category::getCacheData($obCategory->id, $obCategory);
         }
 
         //Set cache data
-        $iCacheTime = Settings::getCacheTime('cache_time_category');
-        CCache::put($arCacheTags, $sCacheKey, $arResult, $iCacheTime);
+        CCache::forever($arCacheTags, $sCacheKey, $arResult);
         return $arResult;
     }
 }

@@ -1,4 +1,0 @@
-title: Products
-modelClass: Lovata\Shopaholic\Models\Product
-toolbar:
-    buttons: reorder_toolbar

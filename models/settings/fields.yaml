@@ -1,46 +1,43 @@
 tabs:
     fields:
-        cache_time_category:
-            tab: lovata.shopaholic::lang.tabs.cache_settings
+        category_preview_limit_max:
+            tab: lovata.toolbox::lang.tab.settings
             span: left
-            label: lovata.shopaholic::lang.fields.cache_time_category
-            default: 1440
+            label: lovata.shopaholic::lang.field.category_preview_limit_max
             type: number
-        cache_time_product:
-            tab: lovata.shopaholic::lang.tabs.cache_settings
+        product_preview_limit_max:
+            tab: lovata.toolbox::lang.tab.settings
             span: left
-            label: lovata.shopaholic::lang.fields.cache_time_product
-            default: 1440
+            label: lovata.shopaholic::lang.field.product_preview_limit_max
             type: number
-        cache_time_product_list:
-            tab: lovata.shopaholic::lang.tabs.cache_settings
+        offer_preview_limit_max:
+            tab: lovata.toolbox::lang.tab.settings
             span: left
-            label: lovata.shopaholic::lang.fields.cache_time_product_list
-            default: 1440
+            label: lovata.shopaholic::lang.field.offer_preview_limit_max
             type: number
         decimals:
-            tab: lovata.shopaholic::lang.tabs.prices_format
+            tab: lovata.shopaholic::lang.tab.prices_format
             span: left
-            label: lovata.shopaholic::lang.fields.decimals
+            label: lovata.shopaholic::lang.field.decimals
         dec_point:
-            tab: lovata.shopaholic::lang.tabs.prices_format
+            tab: lovata.shopaholic::lang.tab.prices_format
             span: left
-            label: lovata.shopaholic::lang.fields.dec_point
+            label: lovata.shopaholic::lang.field.dec_point
             type: dropdown
             options:
-                dot: lovata.shopaholic::lang.fields.dot
-                comma: lovata.shopaholic::lang.fields.comma
+                dot: lovata.shopaholic::lang.field.dot
+                comma: lovata.shopaholic::lang.field.comma
         thousands_sep:
-            tab: lovata.shopaholic::lang.tabs.prices_format
+            tab: lovata.shopaholic::lang.tab.prices_format
             span: left
-            label: lovata.shopaholic::lang.fields.thousands_sep
+            label: lovata.shopaholic::lang.field.thousands_sep
             type: dropdown
             options:
-                together: lovata.shopaholic::lang.fields.together
-                space: lovata.shopaholic::lang.fields.space
-                double_space: lovata.shopaholic::lang.fields.double_space
-                hyphen: lovata.shopaholic::lang.fields.hyphen
+                together: lovata.shopaholic::lang.field.together
+                space: lovata.shopaholic::lang.field.space
+                double_space: lovata.shopaholic::lang.field.double_space
+                hyphen: lovata.shopaholic::lang.field.hyphen
         currency:
-            tab: lovata.shopaholic::lang.tabs.prices_format
+            tab: lovata.shopaholic::lang.tab.prices_format
             span: left
-            label: lovata.shopaholic::lang.fields.currency
+            label: lovata.shopaholic::lang.field.currency

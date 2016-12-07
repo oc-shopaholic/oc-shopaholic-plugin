@@ -1,24 +1,32 @@
 <?php namespace Lovata\Shopaholic\Models;
 
-use Lang;
+use Kharanenka\Helper\CustomValidationMessage;
+use Kharanenka\Helper\DataFileModel;
+use Kharanenka\Scope\ActiveField;
+use Kharanenka\Scope\CodeField;
+use Kharanenka\Scope\ExternalIDField;
+use Kharanenka\Scope\NameField;
+use Kharanenka\Scope\SlugField;
 use Lovata\Shopaholic\Components\Breadcrumbs;
 use Model;
 use Event;
 use Kharanenka\Helper\CCache;
 use October\Rain\Database\Builder;
 use October\Rain\Database\Collection;
-use October\Rain\Database\Relations\BelongsToMany;
 use System\Classes\PluginManager;
-use Lovata\Shopaholic\Classes\CommonTrait;
 use Lovata\Shopaholic\Plugin;
+use Lovata\Toolbox\Plugin as ToolboxPlugin;
 
 /**
  * Class Category
  * @package Lovata\Shopaholic\Models
- * @author Denis Plisko, d.plisko@lovata.com, LOVATA Group
+ * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  * 
  * @mixin Builder
  * @mixin \Eloquent
+ * @mixin \Lovata\SeoShopaholic\Classes\ModelExtend
+ * @mixin \Lovata\PropertiesShopaholic\Classes\CategoryExtend
+ * @mixin \Lovata\CustomShopaholic\Classes\CategoryExtend
  * 
  * @property $id
  * @property bool $active
@@ -29,6 +37,7 @@ use Lovata\Shopaholic\Plugin;
  * @property string $preview_text
  * @property string $description
  * @property \System\Models\File $preview_image
+ * @property Collection|\System\Models\File[] $images
  * @property Collection|Product[] $products
  * @property int $parent_id
  * @property int $nest_left
@@ -37,25 +46,19 @@ use Lovata\Shopaholic\Plugin;
  * @property Category $parent
  * @property Collection|Category[] $children
  *
- * "Properties for Shopaholic" plugin fields
- * @property Collection|Lovata\PropertiesShopaholic\Models\Property[] $product_property
- * @property Collection|Lovata\PropertiesShopaholic\Models\Property[] $offer_property
- * @method Builder|\Eloquent|BelongsToMany product_property()
- * @method Builder|\Eloquent|BelongsToMany offer_property()
- * 
- * "SEO for Shopaholic" plugin fields
- * @property string $seo_title
- * @property string $seo_description
- * @property string $seo_keywords
- * 
- * @method static $this likeByName(string $sName)
  * @method static $this getByParentID(int $iParentID)
  */
 class Category extends Model
 {
     use \October\Rain\Database\Traits\Validation;
     use \October\Rain\Database\Traits\NestedTree;
-    use CommonTrait;
+    use ActiveField;
+    use NameField;
+    use SlugField;
+    use CodeField;
+    use ExternalIDField;
+    use CustomValidationMessage;
+    use DataFileModel;
     
     const CACHE_TAG_ELEMENT = 'shopaholic-category-element';
     const CACHE_TAG_LIST = 'shopaholic-category-list';
@@ -74,7 +77,11 @@ class Category extends Model
         'preview_image' => 'System\Models\File'
     ];
 
-    protected $fillable = [
+    public $attachMany = [
+        'images' => 'System\Models\File'
+    ];
+
+    public $fillable = [
         'name',
         'slug',
         'active',
@@ -84,6 +91,8 @@ class Category extends Model
         'description',
     ];
 
+    public $casts = [];
+    
     public $belongsToMany = [];
     public $hasMany = [
         'products' => 'Lovata\Shopaholic\Models\Product'
@@ -91,56 +100,31 @@ class Category extends Model
     
     public function __construct(array $attributes = [])
     {
+        $iPreviewTextMaxLength = (int) Settings::getValue('category_preview_limit_max');
+        if($iPreviewTextMaxLength > 0) {
+            $this->rules['preview_text'] = 'max:'.$iPreviewTextMaxLength;
+        }
 
-        //TODO: Перенести в пакет
-        //Set validation custom messages
-        $this->customMessages = [
-            'required' => Lang::get('lovata.shopaholic::lang.validation.required'),
-            'unique' => Lang::get('lovata.shopaholic::lang.validation.unique'),
-        ];
-
-        //Set validation custom attributes name
-        $this->attributeNames = [
-            'name' => Lang::get('lovata.shopaholic::lang.fields.name'),
-            'slug' => Lang::get('lovata.shopaholic::lang.fields.slug'),
-        ];
+        $this->setCustomMessage(ToolboxPlugin::NAME, ['required', 'unique', 'max.string']);
+        $this->setCustomAttributeName(ToolboxPlugin::NAME, ['name', 'slug', 'preview_text']);
         
         if(PluginManager::instance()->hasPlugin('Lovata.PropertiesShopaholic')) {
-            
-            $arPivotData = ['groups'];
-            if(PluginManager::instance()->hasPlugin('Lovata.FilterShopaholic')) {
-                $arPivotData = array_merge($arPivotData, \Lovata\FilterShopaholic\Classes\CFilter::getPivotList());
-            }
-            
-            //TODO: Перенести логику в плагины
-            //Add relation with addition property
-            $this->belongsToMany['product_property'] = [
-                'Lovata\PropertiesShopaholic\Models\Property',
-                'table'     => 'lovata_propertiesshopaholic_product_link',
-                'key'       => 'category_id',
-                'otherKey'  => 'property_id',
-                'delete'    => true,
-                'order'     => 'sort_order asc',
-                'pivot'     => $arPivotData,
-                'pivotModel'=> 'Lovata\PropertiesShopaholic\Models\PropertyProductLink',
-            ];
-
-            $this->belongsToMany['offer_property'] = [
-                'Lovata\PropertiesShopaholic\Models\Property',
-                'table'     => 'lovata_propertiesshopaholic_offer_link',
-                'key'       => 'category_id',
-                'otherKey'  => 'property_id',
-                'delete'    => true,
-                'order'     => 'sort_order asc',
-                'pivot'     => $arPivotData,
-                'pivotModel'=> 'Lovata\PropertiesShopaholic\Models\PropertyOfferLink',
-            ];
+            \Lovata\PropertiesShopaholic\Classes\CategoryExtend::constructExtend($this);
         }
 
-        if(PluginManager::instance()->hasPlugin('Lovata.SeoShopaholic')){
-            $this->fillable = array_merge($this->fillable, \Lovata\SeoShopaholic\Plugin::getSEOFieldsList());
+        if(PluginManager::instance()->hasPlugin('Lovata.SeoShopaholic')) {
+            \Lovata\SeoShopaholic\Classes\ModelExtend::constructExtend($this);
         }
 
+        if(PluginManager::instance()->hasPlugin('Lovata.GoodNewsShopaholic')) {
+            \Lovata\GoodNewsShopaholic\Classes\CategoryExtend::constructExtend($this);
+        }
+
+        if(PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic')) {
+            \Lovata\CustomShopaholic\Classes\CategoryExtend::constructExtend($this);
+        }
+
+        //TODO: Перенести в плагин тегов
         if(PluginManager::instance()->hasPlugin('Lovata.TagsShopaholic')) {
             $this->hasMany['tags'] = [
                 'Lovata\TagsShopaholic\Models\Tag',
@@ -154,17 +138,35 @@ class Category extends Model
     public function beforeDelete() {
 
         if(PluginManager::instance()->hasPlugin('Lovata.PropertiesShopaholic')) {
-            $this->product_property()->detach();
-            $this->offer_property()->detach();
+            \Lovata\PropertiesShopaholic\Classes\CategoryExtend::beforeDeleteExtend($this);
         }
     }
     
     public function afterSave() {
         $this->cacheClear();
+        Event::fire(self::CACHE_TAG_ELEMENT.'.after.save', [$this]);
     }
 
     public function afterDelete() {
         $this->cacheClear();
+        Event::fire(self::CACHE_TAG_ELEMENT.'.after.delete', [$this]);
+    }
+
+    /**
+     * Clear cache
+     */
+    protected function cacheClear() {
+
+        //Clear breadcrumbs
+        CCache::clear([Plugin::CACHE_TAG, Breadcrumbs::CACHE_TAG, self::CACHE_TAG_ELEMENT]);
+        CCache::clear([Plugin::CACHE_TAG, Breadcrumbs::CACHE_TAG, Product::CACHE_TAG_ELEMENT, self::CACHE_TAG_ELEMENT.'_'.$this->id]);
+
+        //Clear category data
+        CCache::clear([Plugin::CACHE_TAG, self::CACHE_TAG_ELEMENT], $this->id);
+
+        //Clear category list
+        CCache::clear([Plugin::CACHE_TAG], self::CACHE_TAG_LIST);
+        Event::fire(self::CACHE_TAG_ELEMENT.'.cache.clear', [$this]);
     }
 
     /**
@@ -175,26 +177,10 @@ class Category extends Model
     public function scopeGetByParentID($obQuery, $sData) {
         return $obQuery->where('parent_id', $sData);
     }
-    
-    /**
-     * Get by name (LIKE)
-     * @param \Illuminate\Database\Eloquent\Builder $obQuery
-     * @param $sData
-     * @return mixed
-     */
-    public function scopeLikeByName($obQuery, $sData)
-    {
-
-        if(!empty($sData)) {
-            $obQuery->where('name', 'like', '%'.$sData.'%');
-        }
-
-        return $obQuery;
-    }
 
     /**
      * Get category data
-     * @return array|null|string
+     * @return array
      */
     public function getData() {
         
@@ -205,11 +191,15 @@ class Category extends Model
             'code' => $this->code,
             'preview_text' => $this->preview_text,
             'description' => $this->description,
-            'image' => self::getImage($this->preview_image),
+            'nest_depth' => $this->getDepth(),
+            'preview_image' => $this->getFileData('preview_image'),
+            'images' => $this->getFileListData('images'),
             'children' => $this->getChildrenCategories(),
-            'slug_full' => self::getFullSlug($this),
-            'count_product' => Product::active()->getByCategory($this->id)->count(),
         ];
+
+        if(PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic')) {
+            \Lovata\CustomShopaholic\Classes\CategoryExtend::getDataExtend($arResult, $this);
+        }
         
         return $arResult;
     }
@@ -238,77 +228,57 @@ class Category extends Model
 
     /**
      * Get category data from cache
-     * @param int $iCategoryID
-     * @param null|Category $obCategory
-     * @return array|null|string
+     * @param int $iElementID
+     * @param null|Category $obElement
+     * @return array|null
      */
-    public static function getCacheData($iCategoryID, $obCategory = null) {
+    public static function getCacheData($iElementID, $obElement = null) {
 
         //Get cache data
         $arCacheTags = [Plugin::CACHE_TAG, self::CACHE_TAG_ELEMENT];
-        $sCacheKey = $iCategoryID;
+        $sCacheKey = $iElementID;
 
         $arResult = CCache::get($arCacheTags, $sCacheKey);
-        if(!empty($arResult)) {
-            return $arResult;
+        if(empty($arResult)) {
+
+            //Get category object
+            if(empty($obElement)) {
+                $obElement = self::active()->find($iElementID);
+            }
+
+            if(empty($obElement)) {
+                return null;
+            }
+
+            $arResult = $obElement->getData();
+
+            //Set cache data
+            CCache::forever($arCacheTags, $sCacheKey, $arResult);
+        }
+        
+        if(empty($arResult)) {
+            return null;
         }
 
-        //Get category object
-        if(empty($obCategory)) {
-            $obCategory = Category::find($iCategoryID);
+        if(PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic')) {
+            \Lovata\CustomShopaholic\Classes\CategoryExtend::getCachedDataExtend($arResult);
         }
-
-        if(empty($obCategory)) {
-            return [];
-        }
-
-        $arResult = $obCategory->getData();
-
-        //Set cache data
-        $iCacheTime = Settings::getCacheTime('cache_time_category');
-        CCache::put($arCacheTags, $sCacheKey, $arResult, $iCacheTime);
-
+        
         return $arResult;
     }
-    
-    /**
-     * Get full slug for category
-     * @param Category $obCategory
-     * @param null $sSlug
-     * @return string
-     */
-    public static function getFullSlug($obCategory, $sSlug = null) {
-
-        if(empty($obCategory) || !$obCategory instanceof  Category) {
-            return $sSlug;
-        }
-
-        $sSlug = $obCategory->slug.'/'.$sSlug;
-
-        /** @var Category $obParentCategory */
-        $obParentCategory = $obCategory->parent;
-        if(!empty($obParentCategory)) {
-            $sSlug = self::getFullSlug($obParentCategory, $sSlug);
-        }
-
-        return $sSlug;
-    }
 
     /**
-     * Clear cache
+     * Get fields list for backend interface with switching visibility
+     * @return array
      */
-    protected function cacheClear() {
-        
-        //Clear breadcrumbs
-        CCache::clear([Plugin::CACHE_TAG, Breadcrumbs::CACHE_TAG, self::CACHE_TAG_ELEMENT]);
-        CCache::clear([Plugin::CACHE_TAG, Breadcrumbs::CACHE_TAG, Product::CACHE_TAG_ELEMENT, self::CACHE_TAG_ELEMENT.'_'.$this->id]);
-        
-        //Clear category data
-        CCache::clear([Plugin::CACHE_TAG, self::CACHE_TAG_ELEMENT], $this->id);
-        
-        //Clear category list
-        CCache::clear([Plugin::CACHE_TAG], self::CACHE_TAG_LIST);
-
-        Event::fire(self::CACHE_TAG_ELEMENT.'.cache.clear', [$this]);
+    public static function getConfiguredBackendFields() {
+        return [
+            'code'                  => 'lovata.toolbox::lang.field.code',
+            'external_id'           => 'lovata.toolbox::lang.field.external_id',
+            'preview_text'          => 'lovata.toolbox::lang.field.preview_text',
+            'description'           => 'lovata.toolbox::lang.field.description',
+            'preview_image'         => 'lovata.toolbox::lang.field.preview_image',
+            'images'                => 'lovata.toolbox::lang.field.images',
+        ];
     }
 }

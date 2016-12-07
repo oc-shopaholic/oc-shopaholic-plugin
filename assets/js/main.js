@@ -26,8 +26,8 @@ $(document).ready(function() {
         searchStrGen('sort', _val);
 
         //send ajax request
-        if(typeof paginationShopaholicAjaxRequest == 'function') {
-            paginationShopaholicAjaxRequest(_this);
+        if(typeof sortingShopaholicAjaxRequest == 'function') {
+            sortingShopaholicAjaxRequest(_this);
         }
     });
 

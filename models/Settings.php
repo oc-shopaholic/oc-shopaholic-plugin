@@ -1,5 +1,6 @@
 <?php namespace Lovata\Shopaholic\Models;
 
+use Yaml;
 use Lovata\Shopaholic\Plugin;
 use Kharanenka\Helper\CCache;
 use October\Rain\Database\Model;
@@ -8,19 +9,25 @@ use October\Rain\Database\Model;
  * Class Settings
  * @package Lovata\Shopaholic\Models
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
- * @author Denis Plisko, d.plisko@lovata.com, LOVATA Group
- * 
- * @see Lovata\FilterShopaholic\Plugin::boot() - Extend columns (filter config)
  */
 class Settings extends Model {
-    
-    protected static $arCacheTime = [];
+
     const CACHE_TAG = 'shopaholic-settings';
-    const CACHE_TIME = 10080;
-    
+
+    protected static $arFields = null;
     public $implement = ['System.Behaviors.SettingsModel'];
     public $settingsCode = 'lovata_shopaholic_settings';
     public $settingsFields = 'fields.yaml';
+
+    public function __construct(array $attributes = [])
+    {
+        if(empty(self::$arFields)) {
+            $this->initFieldsConfig();
+        }
+
+        $this->settingsFields = self::$arFields;
+        parent::__construct($attributes);
+    }
 
     /**
      * Get setting value from cache
@@ -45,7 +52,7 @@ class Settings extends Model {
         $sResult = self::get($sCode);
         
         //Set cache data
-        CCache::put($arTags, $sCode, $sResult, self::CACHE_TIME);
+        CCache::forever($arTags, $sCode, $sResult);
 
         return $sResult;
     }
@@ -59,28 +66,46 @@ class Settings extends Model {
         }
     }
 
-    /**
-     * Get cache time
-     * @param string $sKey
-     * @return int|mixed
-     */
-    public static function getCacheTime($sKey) {
+    protected function initFieldsConfig() {
 
-        if(empty($sKey)) {
-            return Plugin::CACHE_TIME_DEFAULT;
+        $arConfig = Yaml::parseFile(__DIR__.'/settings/fields.yaml');
+        if(empty($arConfig)) {
+            return;
         }
 
-        if(isset(self::$arCacheTime[$sKey])) {
-            return self::$arCacheTime[$sKey];
+        self::$arFields = $arConfig;
+
+        $this->addConfiguredFields(Product::getConfiguredBackendFields(), 'product');
+        $this->addConfiguredFields(Offer::getConfiguredBackendFields(), 'offer');
+        $this->addConfiguredFields(Category::getConfiguredBackendFields(), 'category');
+        $this->addConfiguredFields(Brand::getConfiguredBackendFields(), 'brand');
+    }
+
+    protected function addConfiguredFields($arFields, $sName) {
+
+        if(empty($arFields) || empty($sName)) {
+            return;
         }
 
-        //Set cache data
-        $iCacheTime = Settings::getValue($sKey);
-        if(empty($iCacheTime) || $iCacheTime < 1) {
-            $iCacheTime = Plugin::CACHE_TIME_DEFAULT;
-        }
+        self::$arFields['tabs']['fields'][$sName.'_view_off'] = [
+            'tab' => 'lovata.shopaholic::lang.tab.field_view',
+            'label' => 'lovata.shopaholic::lang.settings.'.$sName,
+            'span' => 'left',
+            'type' => 'section',
+        ];
 
-        self::$arCacheTime[$sKey] = $iCacheTime;
-        return self::$arCacheTime[$sKey];
+        foreach($arFields as $sFieldName => $sFieldLabel) {
+
+            if(empty($sFieldName)) {
+                continue;
+            }
+
+            self::$arFields['tabs']['fields'][$sName.'_'.$sFieldName] = [
+                'tab' => 'lovata.shopaholic::lang.tab.field_view',
+                'label' => $sFieldLabel,
+                'type' => 'checkbox',
+                'span' => 'left',
+            ];
+        }
     }
 }

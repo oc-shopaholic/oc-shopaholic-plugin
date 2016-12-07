@@ -1,5 +1,9 @@
 <?php namespace Lovata\Shopaholic;
 
+use Event;
+use Lovata\Shopaholic\Classes\ProductListStore;
+use Lovata\Shopaholic\Models\Offer;
+use Lovata\Shopaholic\Models\Product;
 use System\Classes\PluginBase;
 
 /**
@@ -11,6 +15,7 @@ use System\Classes\PluginBase;
 class Plugin extends PluginBase
 {
 
+    const NAME = 'shopaholic';
     const CACHE_TAG = 'shopaholic';
     const CACHE_TIME_DEFAULT = 10080;
     
@@ -24,6 +29,7 @@ class Plugin extends PluginBase
             'Lovata\Shopaholic\Components\Breadcrumbs' => 'CatalogBreadcrumbs',
             'Lovata\Shopaholic\Components\ProductData' => 'ProductData',
             'Lovata\Shopaholic\Components\ProductPage' => 'ProductPage',
+            'Lovata\Shopaholic\Components\Currency' => 'Currency',
         ];
     }
 
@@ -38,5 +44,74 @@ class Plugin extends PluginBase
                 'order'       => 100
             ]
         ];
+    }
+
+    public function boot()
+    {
+        $this->eventUpdateProduct();
+        $this->eventDeleteProduct();
+
+        $this->eventUpdateOffer();
+        $this->eventDeleteOffer();
+    }
+
+    /**
+     * Update active property value
+     */
+    protected function eventUpdateProduct() {
+
+        Event::listen(Product::CACHE_TAG_ELEMENT.'.after.save', function($obProduct) {
+
+            if(empty($obProduct) || !$obProduct instanceof Product) {
+                return;
+            }
+            
+            ProductListStore::updateCacheAfterSave($obProduct);
+        });
+    }
+
+    /**
+     * Delete property value
+     */
+    protected function eventDeleteProduct() {
+
+        Event::listen(Product::CACHE_TAG_ELEMENT.'.after.delete', function($obProduct) {
+
+            if(empty($obProduct) || !$obProduct instanceof Product) {
+                return;
+            }
+            
+            ProductListStore::updateCacheAfterDelete($obProduct);
+        });
+    }
+
+    /**
+     * Update active property value
+     */
+    protected function eventUpdateOffer() {
+
+        Event::listen(Offer::CACHE_TAG_ELEMENT.'.after.save', function($obOffer) {
+
+            if(empty($obOffer) || !$obOffer instanceof Offer) {
+                return;
+            }
+
+            ProductListStore::updateCacheAfterOfferSave($obOffer);
+        });
+    }
+
+    /**
+     * Delete property value
+     */
+    protected function eventDeleteOffer() {
+
+        Event::listen(Offer::CACHE_TAG_ELEMENT.'.after.delete', function($obOffer) {
+
+            if(empty($obOffer) || !$obOffer instanceof Offer) {
+                return;
+            }
+            
+            ProductListStore::updateCacheAfterOfferDelete($obOffer);
+        });
     }
 }

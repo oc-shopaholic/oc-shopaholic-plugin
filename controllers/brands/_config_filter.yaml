@@ -4,6 +4,6 @@
 
 scopes:
     active:
-        label: 'lovata.shopaholic::lang.fields.active'
+        label: 'lovata.toolbox::lang.field.active'
         type: checkbox
         conditions: active = 1

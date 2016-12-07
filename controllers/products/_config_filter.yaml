@@ -4,21 +4,16 @@
 
 scopes:
     active:
-        label: 'lovata.shopaholic::lang.fields.active'
+        label: 'lovata.toolbox::lang.field.active'
         type: checkbox
         conditions: active = 1
     category:
-        label: 'lovata.shopaholic::lang.fields.category'
+        label: 'lovata.toolbox::lang.field.category'
         modelClass: Lovata\Shopaholic\Models\Category
         nameFrom: name
         conditions: category_id in (:filtered)
     brand:
-        label: 'lovata.shopaholic::lang.fields.brand'
+        label: 'lovata.shopaholic::lang.field.brand'
         modelClass: Lovata\Shopaholic\Models\Brand
         nameFrom: name
         conditions: brand_id in (:filtered)
-    deleted:
-        label: 'lovata.shopaholic::lang.fields.deleted'
-        type: checkbox
-        modelClass: Lovata\Shopaholic\Models\Product
-        scope: deleted

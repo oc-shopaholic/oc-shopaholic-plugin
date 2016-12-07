@@ -1,57 +1,70 @@
 fields:
     active:
-        label: 'lovata.shopaholic::lang.fields.active'
+        label: 'lovata.toolbox::lang.field.active'
         span: left
         default: 1
         type: switch
     name:
-        label: 'lovata.shopaholic::lang.fields.name'
-        span: left
+        label: 'lovata.toolbox::lang.field.name'
+        span: full
         required: 1
-        type: text
-    quantity:
-        label: 'lovata.shopaholic::lang.fields.quantity'
-        span: right
         type: text
 tabs:
     fields:
-        code:
-            label: 'lovata.shopaholic::lang.fields.vendor_code'
-            span: left
+        quantity:
+            label: 'lovata.shopaholic::lang.field.quantity'
+            span: full
             type: text
-            tab: 'lovata.shopaholic::lang.tabs.settings'
-        external_id:
-            label: 'lovata.shopaholic::lang.fields.external_id'
-            span: right
-            type: text
-            tab: 'lovata.shopaholic::lang.tabs.settings'
+            tab: 'lovata.toolbox::lang.tab.settings'
         price:
-            label: 'lovata.shopaholic::lang.fields.price'
-            span: left
+            label: 'lovata.shopaholic::lang.field.price'
+            span: full
             type: text
-            tab: 'lovata.shopaholic::lang.tabs.settings'
+            tab: 'lovata.toolbox::lang.tab.settings'
         old_price:
-            label: 'lovata.shopaholic::lang.fields.old_price'
-            span: right
+            label: 'lovata.shopaholic::lang.field.old_price'
+            span: full
             type: text
-            tab: 'lovata.shopaholic::lang.tabs.settings'
+            tab: 'lovata.toolbox::lang.tab.settings'
+        code:
+            label: 'lovata.shopaholic::lang.field.vendor_code'
+            span: full
+            type: text
+            tab: 'lovata.toolbox::lang.tab.settings'
+        external_id:
+            label: 'lovata.toolbox::lang.field.external_id'
+            span: full
+            type: text
+            tab: 'lovata.toolbox::lang.tab.settings'
+        preview_text:
+            label: 'lovata.toolbox::lang.field.preview_text'
+            size: large
+            span: full
+            type: textarea
+            tab: 'lovata.toolbox::lang.tab.description'
+        description:
+            label: 'lovata.toolbox::lang.field.description'
+            size: giant
+            span: full
+            type: richeditor
+            tab: 'lovata.toolbox::lang.tab.description'
         preview_image:
-                label: 'lovata.shopaholic::lang.fields.preview_image'
-                mode: image
-                useCaption: true
-                thumbOptions:
-                    mode: crop
-                    extension: auto
-                span: left
-                type: fileupload
-                tab: 'lovata.shopaholic::lang.tabs.images'
-        images:
-            label: 'lovata.shopaholic::lang.fields.product_images'
+            label: 'lovata.toolbox::lang.field.preview_image'
             mode: image
             useCaption: true
             thumbOptions:
                 mode: crop
                 extension: auto
-            span: left
+            span: full
             type: fileupload
-            tab: 'lovata.shopaholic::lang.tabs.images'
+            tab: 'lovata.toolbox::lang.tab.images'
+        images:
+            label: 'lovata.toolbox::lang.field.images'
+            mode: image
+            useCaption: true
+            thumbOptions:
+                mode: crop
+                extension: auto
+            span: full
+            type: fileupload
+            tab: 'lovata.toolbox::lang.tab.images'

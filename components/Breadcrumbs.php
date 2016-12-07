@@ -1,11 +1,9 @@
 <?php namespace Lovata\Shopaholic\Components;
 
-use Lang;
 use Cms\Classes\ComponentBase;
 use Kharanenka\Helper\CCache;
 use Lovata\Shopaholic\Models\Category;
 use Lovata\Shopaholic\Models\Product;
-use Lovata\Shopaholic\Models\Settings;
 use Lovata\Shopaholic\Plugin;
 use System\Classes\PluginManager;
 
@@ -18,16 +16,19 @@ class Breadcrumbs extends ComponentBase
 {
     const CACHE_TAG = 'shopaholic-breadcrumbs';
 
+    /**
+     * @return array
+     */
     public function componentDetails()
     {
         return [
-            'name' => Lang::get('lovata.shopaholic::lang.component.breadcumps_name'),
-            'description' => Lang::get('lovata.shopaholic::lang.component.breadcumps_description'),
+            'name'          => 'lovata.shopaholic::lang.component.breadcrumbs_name',
+            'description'   => 'lovata.shopaholic::lang.component.breadcrumbs_description',
         ];
     }
 
     /**
-     * Get breadcrumps by category id
+     * Get breadcrumbs by category id
      * @param int $iCategoryID
      * @param int $iTagID
      * @return array
@@ -50,7 +51,7 @@ class Breadcrumbs extends ComponentBase
         $arResult = [];
         $bActiveCategory = true;
         
-        //Apply tag filter
+        //Get tag element
         if(PluginManager::instance()->hasPlugin('Lovata.TagsShopaholic') && !empty($iTagID)) {
             $arTagData = \Lovata\TagsShopaholic\Models\Tag::getCacheData($iTagID);
             if(!empty($arTagData)) {
@@ -72,27 +73,25 @@ class Breadcrumbs extends ComponentBase
         $arResult = array_reverse($arResult);
 
         //Set cache data
-        $iCacheTime = Settings::getCacheTime('cache_time_category');
-        CCache::put($arCacheTags, $sCacheKey, $arResult, $iCacheTime);
+        CCache::forever($arCacheTags, $sCacheKey, $arResult);
         
         return $arResult;
     }
 
 
     /**
-     * Get breadcrumps by product ID
+     * Get breadcrumbs by product ID
      * @param int $iProductID
-     * @param int $iCategoryID
      * @return array
      */
-    public function getByProductID($iProductID, $iCategoryID = 0) {
+    public function getByProductID($iProductID) {
 
         if(empty($iProductID)) {
             return [];
         }
         
         //Get cache data
-        $arCacheTags = [Plugin::CACHE_TAG, self::CACHE_TAG, Product::CACHE_TAG_ELEMENT, Category::CACHE_TAG_ELEMENT.'_'.$iCategoryID];
+        $arCacheTags = [Plugin::CACHE_TAG, self::CACHE_TAG, Product::CACHE_TAG_ELEMENT];
         $sCacheKey = $iProductID;
 
         $arResult = CCache::get($arCacheTags, $sCacheKey);
@@ -123,9 +122,7 @@ class Breadcrumbs extends ComponentBase
         if(empty($obCategory)) {
             
             //Set cache data
-            $iCacheTime = Settings::getCacheTime('cache_time_category');
-            CCache::put($arCacheTags, $sCacheKey, $arResult, $iCacheTime);
-            
+            CCache::forever($arCacheTags, $sCacheKey, $arResult);
             return $arResult;
         }
 
@@ -134,8 +131,7 @@ class Breadcrumbs extends ComponentBase
         $arResult = array_reverse($arResult);
 
         //Set cache data
-        $iCacheTime = Settings::getCacheTime('cache_time_category');
-        CCache::put($arCacheTags, $sCacheKey, $arResult, $iCacheTime);
+        CCache::forever($arCacheTags, $sCacheKey, $arResult);
 
         return $arResult;
     }
@@ -156,11 +152,9 @@ class Breadcrumbs extends ComponentBase
             'id' => $obCategory->id,
             'name' => $obCategory->name,
             'slug' => $obCategory->slug,
-            'slug_full' => Category::getFullSlug($obCategory->parent, $obCategory->slug),
             'active' => $bActiveCategory,
         ];
 
-        /** @var Category $obParentCategory */
         $obParentCategory = $obCategory->parent;
         if(!empty($obParentCategory)) {
             $this->getCategoryData($arResult, $obParentCategory);
