@@ -29,31 +29,38 @@ class CategoryList extends ComponentBase
      * Get category tree
      * @return array
      */
-    public function get() {
-
+    public function get()
+    {
         //Get cache data
         $arCacheTags = [Plugin::CACHE_TAG, Category::CACHE_TAG_LIST];
         $sCacheKey = Category::CACHE_TAG_LIST;
 
-        $arResult = CCache::get($arCacheTags, $sCacheKey);
-        if(!empty($arResult)) {
-            return $arResult;
+        $arCategoryListID = CCache::get($arCacheTags, $sCacheKey);
+        if(empty($arCategoryListID)) {
+
+            /** @var Collection|Category[] $arCategories */
+            $arCategories = Category::active()->orderBy('nest_left', 'asc')->get()->toNested();
+            if($arCategories->isEmpty()) {
+                return [];
+            }
+
+            foreach($arCategories as $obCategory) {
+                $arCategoryListID[] = $obCategory->id;
+            }
+
+            //Set cache data
+            CCache::forever($arCacheTags, $sCacheKey, $arCategoryListID);
+        }
+
+        if(empty($arCategoryListID)) {
+            return [];
         }
 
         $arResult = [];
-        
-        /** @var Collection|Category[] $arCategories */
-        $arCategories = Category::active()->orderBy('nest_left', 'asc')->get()->toNested();
-        if($arCategories->isEmpty()) {
-            return $arResult;
-        }
-        
-        foreach($arCategories as $obCategory) {
-            $arResult[$obCategory->id] = Category::getCacheData($obCategory->id, $obCategory);
+        foreach($arCategoryListID as $iCategoryID) {
+            $arResult[$iCategoryID] = Category::getCacheData($iCategoryID);
         }
 
-        //Set cache data
-        CCache::forever($arCacheTags, $sCacheKey, $arResult);
         return $arResult;
     }
 }

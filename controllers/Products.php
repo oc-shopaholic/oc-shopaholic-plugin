@@ -30,7 +30,11 @@ class Products extends Controller
 
     /** @var Request */
     protected $obRequest;
-    
+
+    /**
+     * Products constructor.
+     * @param Request $obRequest
+     */
     public function __construct(Request $obRequest)
     {
         $this->obRequest = $obRequest;
@@ -54,10 +58,10 @@ class Products extends Controller
      * Save product data
      * @param null|integer $recordId
      * @param null $context
-     * @return bool
+     * @return bool|void
      */
-    public function update_onSave($recordId = null, $context = null) {
-        
+    public function update_onSave($recordId = null, $context = null)
+    {
         $arProductData = $this->obRequest->get('Product');
         $bProductActive = $arProductData['active'];
         

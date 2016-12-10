@@ -9,6 +9,8 @@ use Kharanenka\Scope\ExternalIDField;
 use Kharanenka\Scope\NameField;
 use Kharanenka\Scope\SlugField;
 use Lovata\Shopaholic\Classes\CPrice;
+use Lovata\Shopaholic\Classes\ProductListStore;
+use \October\Rain\Database\Traits\Validation;
 use Model;
 
 use Kharanenka\Helper\CCache;
@@ -50,14 +52,13 @@ use Event;
  * @method static $this hasActiveProduct()
  * @method static $this getByCategory(int $iCategoryID)
  * @method static $this getByProduct(int $iProductID)
- * @method static $this getByMinQuantity(int $iCount, bool $bFlag = false)
- * @method static $this getByMinPrice(int $iPrice, bool $bFlag = false)
- * @method static $this getByMaxPrice(int $iPrice, bool $bFlag = false)
- * @method static $this getByMinOldPrice(int $iPrice, bool $bFlag = false)
+ * @method static $this getByQuantity(int $iCount, string $sCondition = '=')
+ * @method static $this getByPrice(int $iPrice, string $sCondition = '=')
+ * @method static $this getByOldPrice(int $iPrice, string $sCondition = '=')
  */
 class Offer extends Model
 {
-    use \October\Rain\Database\Traits\Validation;
+    use Validation;
     use SoftDelete;
     use ActiveField;
     use NameField;
@@ -104,6 +105,10 @@ class Offer extends Model
     public $appends = ['category'];
     public $casts = [];
 
+    /**
+     * Offer constructor.
+     * @param array $attributes
+     */
     public function __construct(array $attributes = [])
     {
         $iPreviewTextMaxLength = (int) Settings::getValue('offer_preview_limit_max');
@@ -128,20 +133,22 @@ class Offer extends Model
     public function afterSave()
     {
         $this->clearCache();
+        ProductListStore::updateCacheAfterOfferSave($this);
         Event::fire(self::CACHE_TAG_ELEMENT.'.after.save', [$this]);
     }
 
     public function afterDelete()
     {
         $this->clearCache();
+        ProductListStore::updateCacheAfterOfferDelete($this);
         Event::fire(self::CACHE_TAG_ELEMENT.'.after.delete', [$this]);
     }
 
     /**
      * Clear cache
      */
-    public function clearCache() {
-
+    public function clearCache()
+    {
         $this->checkActiveProduct();
         
         //Clear product cache
@@ -166,8 +173,8 @@ class Offer extends Model
     /**
      * Check active product
      */
-    protected function checkActiveProduct() {
-
+    protected function checkActiveProduct()
+    {
         //Get product ID
         $iProductID = $this->getOriginal('product_id');
         if(empty($iProductID)) {
@@ -189,8 +196,8 @@ class Offer extends Model
      * Get addition property values
      * @return array
      */
-    public function getPropertyAttribute() {
-
+    public function getPropertyAttribute()
+    {
         $arResult = [];
         if(PluginManager::instance()->hasPlugin('Lovata.PropertiesShopaholic')) {
             $arResult = \Lovata\PropertiesShopaholic\Classes\CProperty::getOfferPropertiesValues($this);
@@ -203,13 +210,14 @@ class Offer extends Model
      * Set addition property values
      * @param $arProperties
      */
-    public function setPropertyAttribute($arProperties) {
-
+    public function setPropertyAttribute($arProperties)
+    {
         if(PluginManager::instance()->hasPlugin('Lovata.PropertiesShopaholic')) {
             \Lovata\PropertiesShopaholic\Classes\CProperty::setOfferPropertiesValues($arProperties, $this);
         }
     }
-    
+
+    //TODO: Удалить методы и проверить новую фишку с полями _category в клнфиге
     public function setCategoryAttribute($sValue) {}
     public function getCategoryAttribute() {}
 
@@ -261,88 +269,60 @@ class Offer extends Model
     }
 
     /**
-     * Get by min count
+     * Get by quantity
      * @param \Illuminate\Database\Eloquent\Builder $obQuery
      * @param $sData
-     * @param $bFlag
+     * @param string $sCondition
      * @return mixed
      */
-    public function scopeGetByMinQuantity($obQuery, $sData, $bFlag = false)
+    public function scopeGetByQuantity($obQuery, $sData, $sCondition = '=')
     {
         if(empty($sData)) {
             $sData = 0;
         }
 
-        if ($bFlag) {
-            $obQuery->where('quantity', '>=', $sData);
-        } else {
-            $obQuery->where('quantity', '>', $sData);
+        if(!empty($sCondition)) {
+            $obQuery->where('quantity', $sCondition, $sData);
         }
 
         return $obQuery;
     }
 
     /**
-     * Get by min price
+     * Get by price
      * @param \Illuminate\Database\Eloquent\Builder $obQuery
      * @param $sData
-     * @param $bFlag
+     * @param string $sCondition
      * @return mixed
      */
-    public function scopeGetByMinPrice($obQuery, $sData, $bFlag = false)
+    public function scopeGetByPrice($obQuery, $sData, $sCondition = '=')
     {
         if(empty($sData)) {
             $sData = 0;
         }
 
-        if ($bFlag) {
-            $obQuery->where('price', '>=', $sData);
-        } else {
-            $obQuery->where('price', '>', $sData);
+        if(!empty($sCondition)) {
+            $obQuery->where('price', $sCondition, $sData);
         }
 
         return $obQuery;
     }
 
     /**
-     * Get by min old price
+     * Get by old price
      * @param \Illuminate\Database\Eloquent\Builder $obQuery
      * @param $sData
-     * @param $bFlag
+     * @param string $sCondition
      * @return mixed
      */
-    public function scopeGetByMinOldPrice($obQuery, $sData, $bFlag = false)
+    public function scopeGetByOldPrice($obQuery, $sData, $sCondition = '=')
     {
         if(empty($sData)) {
             $sData = 0;
         }
 
-        if ($bFlag) {
-            $obQuery->where('old_price', '>=', $sData);
-        } else {
-            $obQuery->where('old_price', '>', $sData);
-        }
-
-        return $obQuery;
-    }
-
-    /**
-     * Get by max price
-     * @param \Illuminate\Database\Eloquent\Builder $obQuery
-     * @param $sData
-     * @param $bFlag
-     * @return mixed
-     */
-    public function scopeGetByMaxPrice($obQuery, $sData, $bFlag = false)
-    {
-        if(empty($sData)) {
-            $sData = 0;
-        }
-
-        if ($bFlag) {
-            $obQuery->where('price', '<=', $sData);
-        } else {
-            $obQuery->where('price', '<', $sData);
+        if(!empty($sCondition)) {
+            $obQuery->where('old_price', $sCondition, $sData);
         }
 
         return $obQuery;
@@ -355,18 +335,18 @@ class Offer extends Model
     public function getData() {
 
         $arResult = [
-            'id' => $this->id,
-            'name' => $this->name,
-            'code' => $this->code,
-            'preview_text' => $this->preview_text,
-            'preview_image' => $this->getFileData('preview_image'),
-            'description' => $this->description,
-            'images' => $this->getFileListData('images'),
-            'price' => $this->price,
-            'old_price' => $this->old_price,
-            'price_value' => $this->getPriceValue(),
-            'old_price_value' => $this->getOldPriceValue(),
-            'quantity' => $this->quantity,
+            'id'                => $this->id,
+            'name'              => $this->name,
+            'code'              => $this->code,
+            'preview_text'      => $this->preview_text,
+            'preview_image'     => $this->getFileData('preview_image'),
+            'description'       => $this->description,
+            'images'            => $this->getFileListData('images'),
+            'price'             => $this->price,
+            'old_price'         => $this->old_price,
+            'price_value'       => $this->getPriceValue(),
+            'old_price_value'   => $this->getOldPriceValue(),
+            'quantity'          => $this->quantity,
         ];
 
         if(PluginManager::instance()->hasPlugin('Lovata.PropertiesShopaholic')) {
@@ -374,7 +354,7 @@ class Offer extends Model
         }
 
         if(PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic')) {
-            \Lovata\CustomShopaholic\Classes\OfferExtend::getDataExtend($arResult, $this);
+            \Lovata\CustomShopaholic\Classes\OfferExtend::getData($arResult, $this);
         }
 
         return $arResult;
@@ -386,8 +366,8 @@ class Offer extends Model
      * @param Offer $obElement
      * @return array|null|string|void
      */
-    public static function getCacheData($iElementID, $obElement = null) {
-
+    public static function getCacheData($iElementID, $obElement = null)
+    {
         if(empty($iElementID)) {
             return null;
         }
@@ -419,7 +399,7 @@ class Offer extends Model
         }
 
         if(PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic')) {
-            \Lovata\CustomShopaholic\Classes\OfferExtend::getCachedDataExtend($arResult);
+            \Lovata\CustomShopaholic\Classes\OfferExtend::getCachedData($arResult);
         }
         
         return $arResult;

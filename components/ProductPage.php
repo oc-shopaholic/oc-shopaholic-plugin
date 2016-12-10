@@ -14,9 +14,7 @@ class ProductPage extends ComponentBase
 {
     use ComponentTraitNotFoundResponse;
 
-    /**
-     * @var null|Product
-     */
+    /** @var null|Product */
     protected $obProduct = null;
 
     /**

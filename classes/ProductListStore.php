@@ -12,8 +12,8 @@ use System\Classes\PluginManager;
  * @package Lovata\Shopaholic\Classes
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
-class ProductListStore {
-
+class ProductListStore
+{
     const SORT_NO = 'no';
     const SORT_PRICE_ASC = 'price|asc';
     const SORT_PRICE_DESC = 'price|desc';
@@ -25,7 +25,8 @@ class ProductListStore {
      * Get available sorting value list
      * @return array
      */
-    public static function getAvailableSorting() {
+    public static function getAvailableSorting()
+    {
         return [self::SORT_NO, self::SORT_PRICE_ASC, self::SORT_PRICE_DESC, self::SORT_NEW, self::SORT_POPULARITY_DESC, self::SORT_CUSTOM];
     }
 
@@ -34,10 +35,10 @@ class ProductListStore {
      * @param string $sSorting
      * @return array
      */
-    public static function getBySorting($sSorting) {
-
+    public static function getBySorting($sSorting)
+    {
         if(preg_match('%^'.self::SORT_CUSTOM.'%', $sSorting) && PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic')) {
-            return \Lovata\CustomShopaholic\Classes\ProductListExtend::getCustomBySorting($sSorting);
+            return \Lovata\CustomShopaholic\Classes\ProductListExtend::getBySorting($sSorting);
         }
 
         //Get cache data
@@ -57,8 +58,8 @@ class ProductListStore {
      * @param string $sSorting
      * @return array|null
      */
-    private static function _updateCacheBySorting($sSorting) {
-
+    private static function _updateCacheBySorting($sSorting)
+    {
         //Get cache data
         $arCacheTags = [Plugin::CACHE_TAG, Product::CACHE_TAG_LIST];
         $sCacheKey = $sSorting;
@@ -146,8 +147,8 @@ class ProductListStore {
      * @param int $iCategoryID
      * @return array|null
      */
-    public static function getByCategory($iCategoryID) {
-
+    public static function getByCategory($iCategoryID)
+    {
         if(empty($iCategoryID)) {
             $iCategoryID = 0;
         }
@@ -184,15 +185,15 @@ class ProductListStore {
      * @param int $iCategoryID
      * @return array|null
      */
-    public static function getSortingByCategory($sSorting, $iCategoryID) {
-
+    public static function getSortingByCategory($sSorting, $iCategoryID)
+    {
         if(empty($iCategoryID)) {
             $iCategoryID = 0;
         }
 
 
         if(PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic')) {
-            $arProductIDList = \Lovata\CustomShopaholic\Classes\ProductListExtend::getCustomSortingByCategory($sSorting, $iCategoryID);
+            $arProductIDList = \Lovata\CustomShopaholic\Classes\ProductListExtend::getSortingByCategory($sSorting, $iCategoryID);
             if($arProductIDList !== false) {
                 return $arProductIDList;
             }
@@ -235,8 +236,8 @@ class ProductListStore {
      * Get active product ID list
      * @return array|null
      */
-    public static function getActiveList() {
-
+    public static function getActiveList()
+    {
         //Get cache data
         $arCacheTags = [Plugin::CACHE_TAG, Product::CACHE_TAG_LIST];
         $sCacheKey = Product::CACHE_TAG_LIST;
@@ -261,12 +262,13 @@ class ProductListStore {
      * Update cache product lists after save
      * @param Product $obProduct
      */
-    public static function updateCacheAfterSave($obProduct) {
-
+    public static function updateCacheAfterSave($obProduct)
+    {
         if(empty($obProduct) || !$obProduct instanceof Product) {
             return;
         }
-        
+
+        //If change product "active"
         if($obProduct->getOriginal('active') != $obProduct->active) {
             if($obProduct->active) {
                 
@@ -339,8 +341,8 @@ class ProductListStore {
      * Update cache product lists after delete
      * @param Product $obProduct
      */
-    public static function updateCacheAfterDelete($obProduct) {
-
+    public static function updateCacheAfterDelete($obProduct)
+    {
         if(empty($obProduct) || !$obProduct instanceof Product) {
             return;
         }
@@ -367,8 +369,8 @@ class ProductListStore {
      * Update cache product lists after save
      * @param Offer $obOffer
      */
-    public static function updateCacheAfterOfferSave($obOffer) {
-
+    public static function updateCacheAfterOfferSave($obOffer)
+    {
         if(empty($obOffer) || !$obOffer instanceof Offer) {
             return;
         }
@@ -394,8 +396,8 @@ class ProductListStore {
      * Update cache product lists after offer delete
      * @param Offer $obOffer
      */
-    public static function updateCacheAfterOfferDelete($obOffer) {
-
+    public static function updateCacheAfterOfferDelete($obOffer)
+    {
         if(empty($obOffer) || !$obOffer instanceof Offer) {
             return;
         }
@@ -421,8 +423,8 @@ class ProductListStore {
      * Add product in active product ID list
      * @param Product $obProduct
      */
-    private static function _addToActiveList($obProduct) {
-
+    private static function _addToActiveList($obProduct)
+    {
         //Get cache data
         $arCacheTags = [Plugin::CACHE_TAG, Product::CACHE_TAG_LIST];
         $sCacheKey = Product::CACHE_TAG_LIST;
@@ -449,8 +451,8 @@ class ProductListStore {
      * Remove product from active product ID list
      * @param Product $obProduct
      */
-    private static function _removeFromActiveList($obProduct) {
-
+    private static function _removeFromActiveList($obProduct)
+    {
         //Get cache data
         $arCacheTags = [Plugin::CACHE_TAG, Product::CACHE_TAG_LIST];
         $sCacheKey = Product::CACHE_TAG_LIST;
@@ -483,8 +485,8 @@ class ProductListStore {
      * @param Product $obProduct
      * @param int $iCategoryID
      */
-    private static function _addToCategoryList($obProduct, $iCategoryID) {
-        
+    private static function _addToCategoryList($obProduct, $iCategoryID)
+    {
         if(empty($iCategoryID)) {
             return;
         }
@@ -516,8 +518,8 @@ class ProductListStore {
      * @param Product $obProduct
      * @param int $iCategoryID
      */
-    private static function _removeFromCategoryList($obProduct, $iCategoryID) {
-
+    private static function _removeFromCategoryList($obProduct, $iCategoryID)
+    {
         if(empty($iCategoryID)) {
             return;
         }
@@ -554,8 +556,8 @@ class ProductListStore {
      * @param Product $obProduct
      * @param string $sSorting
      */
-    private static function _removeFromSortingList($obProduct, $sSorting) {
-
+    private static function _removeFromSortingList($obProduct, $sSorting)
+    {
         if(empty($sSorting)) {
             return;
         }
@@ -591,8 +593,8 @@ class ProductListStore {
      * Clear sorting product ID list by category ID
      * @param int $iCategoryID
      */
-    private static function _clearSortingListByCategory($iCategoryID) {
-
+    private static function _clearSortingListByCategory($iCategoryID)
+    {
         if(empty($iCategoryID)) {
             return;
         }

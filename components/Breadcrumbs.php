@@ -33,8 +33,8 @@ class Breadcrumbs extends ComponentBase
      * @param int $iTagID
      * @return array
      */
-    public function getByCategoryID($iCategoryID, $iTagID = null) {
-
+    public function getByCategoryID($iCategoryID, $iTagID = null)
+    {
         if(empty($iCategoryID)) {
             return [];
         }
@@ -84,8 +84,8 @@ class Breadcrumbs extends ComponentBase
      * @param int $iProductID
      * @return array
      */
-    public function getByProductID($iProductID) {
-
+    public function getByProductID($iProductID)
+    {
         if(empty($iProductID)) {
             return [];
         }
@@ -142,8 +142,8 @@ class Breadcrumbs extends ComponentBase
      * @param Category $obCategory
      * @param bool $bActiveCategory
      */
-    protected function getCategoryData(&$arResult, $obCategory, $bActiveCategory = false) {
-
+    protected function getCategoryData(&$arResult, $obCategory, $bActiveCategory = false)
+    {
         if(empty($obCategory)) {
             return;
         }

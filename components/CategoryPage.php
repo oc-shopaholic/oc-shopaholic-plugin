@@ -14,9 +14,7 @@ class CategoryPage extends ComponentBase
 {
     use ComponentTraitNotFoundResponse;
 
-    /**
-     * @var null|Category
-     */
+    /** @var null|Category */
     protected $obCategory = null;
 
     /**

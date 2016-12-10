@@ -19,11 +19,11 @@ use Lovata\Toolbox\Plugin as ToolboxPlugin;
  */
 class ProductList extends ComponentBase
 {
-    
     protected $iProductOnPage = 10;
+    protected $iProductId;
+
     protected static $arResult = [];
     protected static $arProductIDList = [];
-    protected $iProductId;
 
     /**
      * @return array
@@ -75,8 +75,8 @@ class ProductList extends ComponentBase
     /**
      * Init start component data
      */
-    protected function initData() {
-
+    protected function initData()
+    {
         $iProductOnPage = $this->property('count_per_page');
         if($iProductOnPage > 0) {
             $this->iProductOnPage = $iProductOnPage;
@@ -91,8 +91,8 @@ class ProductList extends ComponentBase
      * @param bool $bPageFromRequest
      * @return array
      */
-    public function get($iPage = 1, $iCategoryID = 0, $sTag = null, $bPageFromRequest = true) {
-
+    public function get($iPage = 1, $iCategoryID = 0, $sTag = null, $bPageFromRequest = true)
+    {
         if(empty($iCategoryID)) {
             $iCategoryID = 0;
         }
@@ -156,17 +156,17 @@ class ProductList extends ComponentBase
                 }
             }
 
-            //Apply filter
-            if(PluginManager::instance()->hasPlugin('Lovata.FilterShopaholic')) {
-                \Lovata\FilterShopaholic\Classes\CProductFilter::getList($arProductIDList, $iCategoryID);
+            //Apply custom filter
+            if(PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic')) {
+                \Lovata\CustomShopaholic\Classes\ProductListExtend::applyCustomFilter($arProductIDList, $iCategoryID);
                 if(empty($arProductIDList)) {
                     return $arResult;
                 }
             }
 
-            //Apply custom filter
-            if(PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic')) {
-                \Lovata\CustomShopaholic\Classes\ProductListExtend::getCachedProductList($arProductIDList, $iCategoryID);
+            //Apply filter
+            if(PluginManager::instance()->hasPlugin('Lovata.FilterShopaholic')) {
+                \Lovata\FilterShopaholic\Classes\CProductFilter::getList($arProductIDList, $iCategoryID);
                 if(empty($arProductIDList)) {
                     return $arResult;
                 }
@@ -203,8 +203,8 @@ class ProductList extends ComponentBase
      * Get ajax product list
      * @return string
      */
-    public function onAjaxRequest() {
-
+    public function onAjaxRequest()
+    {
         $this->initData();
 
         //Get response type from request
@@ -235,8 +235,8 @@ class ProductList extends ComponentBase
      * @param bool $bPageFromRequest
      * @return array|mixed
      */
-    public function getPagination($iPage = 1, $iCategoryID = 0, $sTag = null, $bPageFromRequest = true) {
-        
+    public function getPagination($iPage = 1, $iCategoryID = 0, $sTag = null, $bPageFromRequest = true)
+    {
         $arResult = $this->get($iPage, $iCategoryID, $sTag, $bPageFromRequest);
         if(isset($arResult['pagination'])) {
             return $arResult['pagination'];
@@ -253,8 +253,8 @@ class ProductList extends ComponentBase
      * @param bool $bPageFromRequest
      * @return array|mixed
      */
-    public function getCount($iPage = 1, $iCategoryID = 0, $sTag = null, $bPageFromRequest = true) {
-
+    public function getCount($iPage = 1, $iCategoryID = 0, $sTag = null, $bPageFromRequest = true)
+    {
         $arResult = $this->get($iPage, $iCategoryID, $sTag, $bPageFromRequest);
         if(isset($arResult['count'])) {
             return $arResult['count'];
@@ -271,8 +271,8 @@ class ProductList extends ComponentBase
      * @param bool $bPageFromRequest
      * @return array|mixed
      */
-    public function getActiveSort($iPage = 1, $iCategoryID = 0, $sTag = null, $bPageFromRequest = true) {
-
+    public function getActiveSort($iPage = 1, $iCategoryID = 0, $sTag = null, $bPageFromRequest = true)
+    {
         $arResult = $this->get($iPage, $iCategoryID, $sTag, $bPageFromRequest);
         if(isset($arResult['sort'])) {
             return $arResult['sort'];
@@ -285,8 +285,8 @@ class ProductList extends ComponentBase
      * Get sorting
      * @return mixed|string
      */
-    protected function getSorting() {
-        
+    protected function getSorting()
+    {
         $sSorting = Input::get('sort');
         if(empty($sSorting)) {
             $sSorting = $this->property('sorting');

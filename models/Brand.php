@@ -13,6 +13,8 @@ use October\Rain\Database\Builder;
 use October\Rain\Database\Collection;
 use October\Rain\Database\Relations\HasMany;
 use System\Classes\PluginManager;
+use \October\Rain\Database\Traits\Validation;
+use \October\Rain\Database\Traits\Sortable;
 
 use Lovata\Shopaholic\Plugin;
 use Lovata\Toolbox\Plugin as ToolboxPlugin;
@@ -26,7 +28,8 @@ use Event;
  * @mixin Builder
  * @mixin \Eloquent
  * @mixin \Lovata\SeoShopaholic\Classes\ModelExtend
- * 
+ * @mixin \Lovata\CustomShopaholic\Classes\BrandExtend
+ *
  * @property $id
  * @property bool $active
  * @property string $name
@@ -45,8 +48,8 @@ use Event;
  */
 class Brand extends Model
 {
-    use \October\Rain\Database\Traits\Validation;
-    use \October\Rain\Database\Traits\Sortable;
+    use Validation;
+    use Sortable;
     use ActiveField;
     use NameField;
     use CodeField;
@@ -90,7 +93,11 @@ class Brand extends Model
     public $hasMany = [
         'products' => 'Lovata\Shopaholic\Models\Product'
     ];
-    
+
+    /**
+     * Brand constructor.
+     * @param array $attributes
+     */
     public function __construct(array $attributes = [])
     {
         $this->setCustomMessage(ToolboxPlugin::NAME, ['required', 'unique']);
@@ -107,11 +114,17 @@ class Brand extends Model
         parent::__construct($attributes);
     }
 
+    /**
+     * After save method
+     */
     public function afterSave()
     {
         $this->clearCache();
     }
 
+    /**
+     * After delete method
+     */
     public function afterDelete()
     {
         $this->clearCache();
@@ -148,21 +161,21 @@ class Brand extends Model
      * Get brand data
      * @return array
      */
-    public function getData() {
-        
+    public function getData()
+    {
         $arResult = [
-            'id' => $this->id,
-            'name' => $this->name,
-            'slug' => $this->slug,
-            'code' => $this->code,
-            'preview_text' => $this->preview_text,
-            'description' => $this->description,
-            'preview_image' => $this->getFileData('preview_image'),
-            'images' => $this->getFileListData('images'),
+            'id'                => $this->id,
+            'name'              => $this->name,
+            'slug'              => $this->slug,
+            'code'              => $this->code,
+            'preview_text'      => $this->preview_text,
+            'description'       => $this->description,
+            'preview_image'     => $this->getFileData('preview_image'),
+            'images'            => $this->getFileListData('images'),
         ];
 
         if(PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic')) {
-            \Lovata\CustomShopaholic\Classes\BrandExtend::getDataExtend($arResult, $this);
+            \Lovata\CustomShopaholic\Classes\BrandExtend::getData($arResult, $this);
         }
 
         return $arResult;
@@ -203,7 +216,7 @@ class Brand extends Model
         }
 
         if(PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic')) {
-            \Lovata\CustomShopaholic\Classes\BrandExtend::getCachedDataExtend($arResult);
+            \Lovata\CustomShopaholic\Classes\BrandExtend::getCacheData($arResult);
         }
 
         return $arResult;
@@ -213,7 +226,8 @@ class Brand extends Model
      * Get fields list for backend interface with switching visibility
      * @return array
      */
-    public static function getConfiguredBackendFields() {
+    public static function getConfiguredBackendFields()
+    {
         return [
             'code'                  => 'lovata.toolbox::lang.field.code',
             'external_id'           => 'lovata.toolbox::lang.field.external_id',

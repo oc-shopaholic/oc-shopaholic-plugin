@@ -16,6 +16,8 @@ use October\Rain\Database\Collection;
 use System\Classes\PluginManager;
 use Lovata\Shopaholic\Plugin;
 use Lovata\Toolbox\Plugin as ToolboxPlugin;
+use \October\Rain\Database\Traits\Validation;
+use \October\Rain\Database\Traits\NestedTree;
 
 /**
  * Class Category
@@ -50,8 +52,8 @@ use Lovata\Toolbox\Plugin as ToolboxPlugin;
  */
 class Category extends Model
 {
-    use \October\Rain\Database\Traits\Validation;
-    use \October\Rain\Database\Traits\NestedTree;
+    use Validation;
+    use NestedTree;
     use ActiveField;
     use NameField;
     use SlugField;
@@ -97,7 +99,11 @@ class Category extends Model
     public $hasMany = [
         'products' => 'Lovata\Shopaholic\Models\Product'
     ];
-    
+
+    /**
+     * Category constructor.
+     * @param array $attributes
+     */
     public function __construct(array $attributes = [])
     {
         $iPreviewTextMaxLength = (int) Settings::getValue('category_preview_limit_max');
@@ -135,19 +141,21 @@ class Category extends Model
         parent::__construct($attributes);
     }
     
-    public function beforeDelete() {
-
+    public function beforeDelete()
+    {
         if(PluginManager::instance()->hasPlugin('Lovata.PropertiesShopaholic')) {
             \Lovata\PropertiesShopaholic\Classes\CategoryExtend::beforeDeleteExtend($this);
         }
     }
     
-    public function afterSave() {
+    public function afterSave()
+    {
         $this->cacheClear();
         Event::fire(self::CACHE_TAG_ELEMENT.'.after.save', [$this]);
     }
 
-    public function afterDelete() {
+    public function afterDelete()
+    {
         $this->cacheClear();
         Event::fire(self::CACHE_TAG_ELEMENT.'.after.delete', [$this]);
     }
@@ -155,8 +163,8 @@ class Category extends Model
     /**
      * Clear cache
      */
-    protected function cacheClear() {
-
+    protected function cacheClear()
+    {
         //Clear breadcrumbs
         CCache::clear([Plugin::CACHE_TAG, Breadcrumbs::CACHE_TAG, self::CACHE_TAG_ELEMENT]);
         CCache::clear([Plugin::CACHE_TAG, Breadcrumbs::CACHE_TAG, Product::CACHE_TAG_ELEMENT, self::CACHE_TAG_ELEMENT.'_'.$this->id]);
@@ -172,9 +180,11 @@ class Category extends Model
     /**
      * Get by parent ID
      * @param \Illuminate\Database\Eloquent\Builder $obQuery
+     * @param $sData
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeGetByParentID($obQuery, $sData) {
+    public function scopeGetByParentID($obQuery, $sData)
+    {
         return $obQuery->where('parent_id', $sData);
     }
 
@@ -182,23 +192,23 @@ class Category extends Model
      * Get category data
      * @return array
      */
-    public function getData() {
-        
+    public function getData()
+    {
         $arResult = [
-            'id' => $this->id,
-            'name' => $this->name,
-            'slug' => $this->slug,
-            'code' => $this->code,
-            'preview_text' => $this->preview_text,
-            'description' => $this->description,
-            'nest_depth' => $this->getDepth(),
-            'preview_image' => $this->getFileData('preview_image'),
-            'images' => $this->getFileListData('images'),
-            'children' => $this->getChildrenCategories(),
+            'id'                => $this->id,
+            'name'              => $this->name,
+            'slug'              => $this->slug,
+            'code'              => $this->code,
+            'preview_text'      => $this->preview_text,
+            'description'       => $this->description,
+            'nest_depth'        => $this->getDepth(),
+            'preview_image'     => $this->getFileData('preview_image'),
+            'images'            => $this->getFileListData('images'),
+            'children'          => $this->getChildrenCategories(),
         ];
 
         if(PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic')) {
-            \Lovata\CustomShopaholic\Classes\CategoryExtend::getDataExtend($arResult, $this);
+            \Lovata\CustomShopaholic\Classes\CategoryExtend::getData($arResult, $this);
         }
         
         return $arResult;
@@ -208,8 +218,8 @@ class Category extends Model
      * Get children categories
      * @return array
      */
-    protected function getChildrenCategories() {
-
+    protected function getChildrenCategories()
+    {
         $arChildrenData = [];
 
         //Get children category
@@ -232,8 +242,8 @@ class Category extends Model
      * @param null|Category $obElement
      * @return array|null
      */
-    public static function getCacheData($iElementID, $obElement = null) {
-
+    public static function getCacheData($iElementID, $obElement = null)
+    {
         //Get cache data
         $arCacheTags = [Plugin::CACHE_TAG, self::CACHE_TAG_ELEMENT];
         $sCacheKey = $iElementID;
@@ -261,7 +271,7 @@ class Category extends Model
         }
 
         if(PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic')) {
-            \Lovata\CustomShopaholic\Classes\CategoryExtend::getCachedDataExtend($arResult);
+            \Lovata\CustomShopaholic\Classes\CategoryExtend::getCachedData($arResult);
         }
         
         return $arResult;
@@ -271,7 +281,8 @@ class Category extends Model
      * Get fields list for backend interface with switching visibility
      * @return array
      */
-    public static function getConfiguredBackendFields() {
+    public static function getConfiguredBackendFields()
+    {
         return [
             'code'                  => 'lovata.toolbox::lang.field.code',
             'external_id'           => 'lovata.toolbox::lang.field.external_id',

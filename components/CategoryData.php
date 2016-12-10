@@ -26,7 +26,8 @@ class CategoryData extends ComponentBase
      * @param int $iCategoryID
      * @return array
      */
-    public function get($iCategoryID) {
+    public function get($iCategoryID)
+    {
         return Category::getCacheData($iCategoryID);
     }
 }

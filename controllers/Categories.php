@@ -25,7 +25,10 @@ class Categories extends Controller
     public $formConfig;
     public $reorderConfig = 'config_reorder.yaml';
     public $relationConfig = [];
-    
+
+    /**
+     * Categories constructor.
+     */
     public function __construct()
     {
         $this->getListConfig();

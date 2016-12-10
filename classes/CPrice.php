@@ -7,8 +7,8 @@ use Lovata\Shopaholic\Models\Settings;
  * @package Lovata\Shopaholic\Classes
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
-class CPrice {
-
+class CPrice
+{
     protected static $iDecimals = 2;
     protected static $sDecPoint = '.';
     protected static $sThousandsSep = ' ';

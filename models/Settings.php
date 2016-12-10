@@ -1,6 +1,6 @@
 <?php namespace Lovata\Shopaholic\Models;
 
-use Yaml;
+use October\Rain\Database\Builder;
 use Lovata\Shopaholic\Plugin;
 use Kharanenka\Helper\CCache;
 use October\Rain\Database\Model;
@@ -9,33 +9,28 @@ use October\Rain\Database\Model;
  * Class Settings
  * @package Lovata\Shopaholic\Models
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ *
+ * @mixin Builder
+ * @mixin \Eloquent
+ * @mixin \System\Behaviors\SettingsModel
  */
-class Settings extends Model {
-
+class Settings extends Model
+{
     const CACHE_TAG = 'shopaholic-settings';
 
-    protected static $arFields = null;
     public $implement = ['System.Behaviors.SettingsModel'];
     public $settingsCode = 'lovata_shopaholic_settings';
     public $settingsFields = 'fields.yaml';
 
-    public function __construct(array $attributes = [])
-    {
-        if(empty(self::$arFields)) {
-            $this->initFieldsConfig();
-        }
-
-        $this->settingsFields = self::$arFields;
-        parent::__construct($attributes);
-    }
+    protected static $arFields = [];
 
     /**
      * Get setting value from cache
      * @param string $sCode
      * @return null|string
      */
-    public static function getValue($sCode) {
-        
+    public static function getValue($sCode)
+    {
         if(empty($sCode)) {
             return '';
         }
@@ -57,8 +52,8 @@ class Settings extends Model {
         return $sResult;
     }
     
-    public function afterSave() {
-        
+    public function afterSave()
+    {
         //Clear cache data
         $arValue = $this->value;
         foreach($arValue as $sKey => $sValue) {
@@ -66,32 +61,35 @@ class Settings extends Model {
         }
     }
 
-    protected function initFieldsConfig() {
+    /**
+     * Init addition fields config
+     * @return array
+     */
+    public static function getAdditionFields()
+    {
+        self::addConfiguredFields(Product::getConfiguredBackendFields(), 'product');
+        self::addConfiguredFields(Offer::getConfiguredBackendFields(), 'offer');
+        self::addConfiguredFields(Category::getConfiguredBackendFields(), 'category');
+        self::addConfiguredFields(Brand::getConfiguredBackendFields(), 'brand');
 
-        $arConfig = Yaml::parseFile(__DIR__.'/settings/fields.yaml');
-        if(empty($arConfig)) {
-            return;
-        }
-
-        self::$arFields = $arConfig;
-
-        $this->addConfiguredFields(Product::getConfiguredBackendFields(), 'product');
-        $this->addConfiguredFields(Offer::getConfiguredBackendFields(), 'offer');
-        $this->addConfiguredFields(Category::getConfiguredBackendFields(), 'category');
-        $this->addConfiguredFields(Brand::getConfiguredBackendFields(), 'brand');
+        return self::$arFields;
     }
 
-    protected function addConfiguredFields($arFields, $sName) {
-
+    /**
+     * @param array $arFields
+     * @param string $sName
+     */
+    protected static function addConfiguredFields($arFields, $sName)
+    {
         if(empty($arFields) || empty($sName)) {
             return;
         }
 
-        self::$arFields['tabs']['fields'][$sName.'_view_off'] = [
-            'tab' => 'lovata.shopaholic::lang.tab.field_view',
-            'label' => 'lovata.shopaholic::lang.settings.'.$sName,
-            'span' => 'left',
-            'type' => 'section',
+        self::$arFields[$sName.'_view_off'] = [
+            'tab'       => 'lovata.shopaholic::lang.tab.field_view',
+            'label'     => 'lovata.shopaholic::lang.settings.'.$sName,
+            'span'      => 'left',
+            'type'      => 'section',
         ];
 
         foreach($arFields as $sFieldName => $sFieldLabel) {
@@ -100,11 +98,11 @@ class Settings extends Model {
                 continue;
             }
 
-            self::$arFields['tabs']['fields'][$sName.'_'.$sFieldName] = [
-                'tab' => 'lovata.shopaholic::lang.tab.field_view',
-                'label' => $sFieldLabel,
-                'type' => 'checkbox',
-                'span' => 'left',
+            self::$arFields[$sName.'_'.$sFieldName] = [
+                'tab'       => 'lovata.shopaholic::lang.tab.field_view',
+                'label'     => $sFieldLabel,
+                'type'      => 'checkbox',
+                'span'      => 'left',
             ];
         }
     }

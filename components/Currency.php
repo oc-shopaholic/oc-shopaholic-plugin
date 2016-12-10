@@ -24,7 +24,8 @@ class Currency extends ComponentBase
     /**
      * @return null|string
      */
-    public function get() {
+    public function get()
+    {
         return Settings::getValue('currency');
     }
 }

@@ -23,6 +23,9 @@ class Brands extends Controller
     public $formConfig;
     public $reorderConfig = 'config_reorder.yaml';
 
+    /**
+     * Brands constructor.
+     */
     public function __construct()
     {
         $this->getListConfig();
