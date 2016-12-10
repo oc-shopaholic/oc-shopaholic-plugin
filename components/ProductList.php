@@ -43,7 +43,7 @@ class ProductList extends ComponentBase
     {
         $arProperties = [
             'sorting' => [
-                'title'     => Lang::get('lovata.shopaholic::lang.component.product_list_sorting'),
+                'title'     => 'lovata.shopaholic::lang.component.product_list_sorting',
                 'type'      => 'dropdown',
                 'default'   => ProductListStore::SORT_NO,
                 'options'   => [
