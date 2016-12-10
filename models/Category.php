@@ -271,7 +271,7 @@ class Category extends Model
         }
 
         if(PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic')) {
-            \Lovata\CustomShopaholic\Classes\CategoryExtend::getCachedData($arResult);
+            \Lovata\CustomShopaholic\Classes\CategoryExtend::getCacheData($arResult);
         }
         
         return $arResult;

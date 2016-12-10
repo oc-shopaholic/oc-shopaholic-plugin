@@ -399,7 +399,7 @@ class Offer extends Model
         }
 
         if(PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic')) {
-            \Lovata\CustomShopaholic\Classes\OfferExtend::getCachedData($arResult);
+            \Lovata\CustomShopaholic\Classes\OfferExtend::getCacheData($arResult);
         }
         
         return $arResult;

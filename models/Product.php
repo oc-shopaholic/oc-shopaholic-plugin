@@ -377,7 +377,7 @@ class Product extends Model
 
         if(PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic'))
         {
-            \Lovata\CustomShopaholic\Classes\ProductExtend::getCachedData($arResult);
+            \Lovata\CustomShopaholic\Classes\ProductExtend::getCacheData($arResult);
         }
 
         return $arResult;
