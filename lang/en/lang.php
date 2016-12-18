@@ -36,6 +36,7 @@
         'main'                  => 'Catalog',
         'categories'            => 'Categories',
         'product'               => 'Products',
+        'offers_archive'        => 'Удаленные предложения',
         'brands'                => 'Brands',
     ],
     'tab' => [
@@ -88,7 +89,7 @@
         'currency_description'              => 'Получение значение валюты',
 
         //Components settings
-        'product_list_sorting'              => 'Default sorting',
+        'product_list_sorting'               => 'Default sorting',
         'sorting_no'                        => 'Without sorting',
         'sorting_price_desc'                => 'Дорогие',
         'sorting_price_asc'                 => 'Дешевые',
@@ -106,6 +107,7 @@
         'category'              => 'Manage categories',
         'brand'                 => 'Manage brands',
         'product'               => 'Manage products',
+        'offers'                => 'Управление удаленными предложениями',
     ],
     'buttons' => [
         'restore_selected'      => 'Restore',
