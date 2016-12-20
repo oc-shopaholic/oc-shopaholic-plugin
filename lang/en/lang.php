@@ -50,49 +50,49 @@
     ],
     'category' => [
         'name'                      => 'categories',
-        'list_title'                => 'Список категорий',
+        'list_title'                => 'Category List',
     ],
     'brand' => [
-        'name'                      => 'бренда',
-        'list_title'                => 'Список брендов',
+        'name'                      => 'brand',
+        'list_title'                => 'List of brands',
     ],
     'product' => [
-        'name'                      => 'товара',
-        'list_title'                => 'Список товаров',
+        'name'                      => 'products',
+        'list_title'                => 'Product List',
     ],
     'offer' => [
-        'name'                      => 'предложения',
-        'list_title'                => 'Список предложений',
+        'name'                      => 'offers',
+        'list_title'                => 'List of proposals',
     ],
     'component' => [
 
         //Product components
-        'product_page_name'                 => 'Страница товара',
-        'product_page_description'          => 'Получение данных для страницы товара',
-        'product_data_name'                 => 'Данные товара',
-        'product_data_description'          => 'Получение данных товара',
-        'product_list_name'                 => 'Список товаров',
-        'product_list_description'          => 'Получение списка товаров',
+        'product_page_name'                 => 'Product page',
+        'product_page_description'          => 'Retrieving data for product page',
+        'product_data_name'                 => 'Product data',
+        'product_data_description'          => 'Data acquisition product',
+        'product_list_name'                 => 'Product List',
+        'product_list_description'          => 'Receiving the list of the goods',
 
         //Category components
-        'category_page_name'                => 'Страница категории',
-        'category_page_description'         => 'Вывод данных на странице категории',
-        'category_data_name'                => 'Данные категории',
-        'category_data_description'         => 'Получение данных категории',
-        'category_list_name'                => 'Список категорий',
-        'category_list_description'         => 'Получение дерева категорий',
+        'category_page_name'                => 'Pages/Categories',
+        'category_page_description'         => 'Data output on category page',
+        'category_data_name'                => 'Data category',
+        'category_data_description'         => 'Retrieving data categories',
+        'category_list_name'                => 'Category List',
+        'category_list_description'         => 'Getting the catalog',
 
         //Common components
-        'breadcrumbs_name'                  => 'Хлебные крошки',
-        'breadcrumbs_description'           => 'Получение данных для формирования хлебных крошек каталога',
-        'currency_name'                     => 'Валюта',
-        'currency_description'              => 'Получение значение валюты',
+        'breadcrumbs_name'                  => 'Bread crumbs',
+        'breadcrumbs_description'           => 'Retrieving data for the formation of crumbs directory',
+        'currency_name'                     => 'Currency',
+        'currency_description'              => 'Getting the value of the currency',
 
         //Components settings
         'product_list_sorting'               => 'Default sorting',
         'sorting_no'                        => 'Without sorting',
-        'sorting_price_desc'                => 'Дорогие',
-        'sorting_price_asc'                 => 'Дешевые',
+        'sorting_price_desc'                => 'Dear',
+        'sorting_price_asc'                 => 'Cheap',
         'sorting_new'                       => 'New',
         'sorting_popularity_desc'           => 'More popular',
     ],
@@ -107,7 +107,7 @@
         'category'              => 'Manage categories',
         'brand'                 => 'Manage brands',
         'product'               => 'Manage products',
-        'offers'                => 'Управление удаленными предложениями',
+        'offers'                => 'Remote management proposals',
     ],
     'buttons' => [
         'restore_selected'      => 'Restore',
