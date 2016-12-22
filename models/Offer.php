@@ -149,8 +149,6 @@ class Offer extends Model
      */
     public function clearCache()
     {
-        $this->checkActiveProduct();
-        
         //Clear product cache
         $iOriginalProductID = $this->getOriginal('product_id');
         $iProductID = $this->getAttribute('product_id');
@@ -168,28 +166,6 @@ class Offer extends Model
         //Clear offer data
         CCache::clear([Plugin::CACHE_TAG, self::CACHE_TAG_ELEMENT], $this->id);
         Event::fire(self::CACHE_TAG_ELEMENT.'.cache.clear', [$this]);
-    }
-
-    /**
-     * Check active product
-     */
-    protected function checkActiveProduct()
-    {
-        //Get product ID
-        $iProductID = $this->getOriginal('product_id');
-        if(empty($iProductID)) {
-            return;
-        }
-        
-        //Get product
-        /** @var Product $obProduct */
-        $obProduct = Product::find($iProductID);
-        $bActive = $obProduct->checkActiveOffers();
-        
-        if($obProduct->active && !$bActive) {
-            $obProduct->active = false;
-            $obProduct->save();
-        }
     }
     
     /**
@@ -338,6 +314,7 @@ class Offer extends Model
             'id'                => $this->id,
             'name'              => $this->name,
             'code'              => $this->code,
+            'product_id'        => $this->product_id,
             'preview_text'      => $this->preview_text,
             'preview_image'     => $this->getFileData('preview_image'),
             'description'       => $this->description,
@@ -364,9 +341,10 @@ class Offer extends Model
      * Get cached product data
      * @param int $iElementID
      * @param Offer $obElement
+     * @param bool $bCheckActive
      * @return array|null|string|void
      */
-    public static function getCacheData($iElementID, $obElement = null)
+    public static function getCacheData($iElementID, $obElement = null, $bCheckActive = true)
     {
         if(empty($iElementID)) {
             return null;
@@ -381,7 +359,11 @@ class Offer extends Model
             
             //Get offer object
             if(empty($obElement)) {
-                $obElement = self::active()->find($iElementID);
+                if($bCheckActive) {
+                    $obElement = self::active()->find($iElementID);
+                } else {
+                    $obElement = self::find($iElementID);
+                }
             }
 
             if(empty($obElement)) {

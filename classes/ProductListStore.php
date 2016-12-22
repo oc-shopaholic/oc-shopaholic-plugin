@@ -4,6 +4,7 @@ use Kharanenka\Helper\CCache;
 use Lovata\Shopaholic\Models\Category;
 use Lovata\Shopaholic\Models\Offer;
 use Lovata\Shopaholic\Models\Product;
+use Lovata\Shopaholic\Models\Settings;
 use Lovata\Shopaholic\Plugin;
 use System\Classes\PluginManager;
 
@@ -111,12 +112,20 @@ class ProductListStore
                 if(PluginManager::instance()->hasPlugin('Lovata.PopularityShopaholic')) {
                     $arProductIDList = Product::active()->orderBy('popularity', 'desc')->lists('id');
                 } else {
-                    $arProductIDList = Product::active()->lists('id');
+                    $arProductIDList = Product::active()->orderBy('id', 'desc')->lists('id');
                 }
 
                 if(empty($arProductIDList)) {
                     return null;
                 }
+
+                //Filter product list by active flag
+                $arActiveProductIDList = self::getActiveList();
+                if(empty($arActiveProductIDList)) {
+                    return null;
+                }
+
+                $arProductIDList = array_intersect($arProductIDList, $arActiveProductIDList);
 
                 //Set cache data
                 $iCacheTime = 1440;
@@ -125,7 +134,8 @@ class ProductListStore
 
                 break;
             case self::SORT_NEW :
-                $arProductIDList = Product::active()->orderBy('id', 'desc')->lists('id');
+                $arProductIDList = self::getActiveList();
+                $arProductIDList = array_reverse($arProductIDList);
                 break;
             default:
                 $arProductIDList = self::getActiveList();
@@ -169,6 +179,17 @@ class ProductListStore
             $arProductIDList = Product::active()->whereNull('category_id')->lists('id');
         }
 
+        if(empty($arProductIDList)) {
+            return null;
+        }
+        
+        //Filter product list by active flag
+        $arActiveProductIDList = self::getActiveList();
+        if(empty($arActiveProductIDList)) {
+            return null;
+        }
+
+        $arProductIDList = array_intersect($arProductIDList, $arActiveProductIDList);
         if(empty($arProductIDList)) {
             return null;
         }
@@ -250,6 +271,21 @@ class ProductListStore
             if(empty($arProductIDList)) {
                 return null;
             }
+            
+            //Check active offers
+            if(Settings::getValue('check_offer_active')) {
+                
+                //Get product list with active offers
+                $arProductIDListWithOffers = Offer::active()->groupBy('product_id')->lists('product_id');
+                if(empty($arProductIDListWithOffers)) {
+                    return null;
+                }
+                
+                $arProductIDList = array_intersect($arProductIDList, $arProductIDListWithOffers);
+                if(empty($arProductIDList)) {
+                    return null;
+                }
+            }
 
             //Set cache data
             CCache::forever($arCacheTags, $sCacheKey, $arProductIDList);
@@ -273,7 +309,7 @@ class ProductListStore
             if($obProduct->active) {
                 
                 //Update active product ID list
-                self::_addToActiveList($obProduct);
+                self::_updateActiveList();
 
                 //Update active product ID list by category filter
                 self::_addToCategoryList($obProduct, $obProduct->category_id);
@@ -420,31 +456,17 @@ class ProductListStore
     }
 
     /**
-     * Add product in active product ID list
-     * @param Product $obProduct
+     * Update product in active product ID list
      */
-    private static function _addToActiveList($obProduct)
+    private static function _updateActiveList()
     {
         //Get cache data
         $arCacheTags = [Plugin::CACHE_TAG, Product::CACHE_TAG_LIST];
         $sCacheKey = Product::CACHE_TAG_LIST;
 
-        //Check cache array
-        $arProductIDList = CCache::get($arCacheTags, $sCacheKey);
-        if(empty($arProductIDList)) {
-            self::getActiveList();
-            return;
-        }
-        
-        if(in_array($obProduct->id, $arProductIDList)) {
-            return;
-        }
-        
-        //Add element to cache array and save
-        $arProductIDList[] = $obProduct->id;
-
-        //Set cache data
-        CCache::forever($arCacheTags, $sCacheKey, $arProductIDList);
+        //Clear cache data
+        CCache::clear($arCacheTags, $sCacheKey);
+        self::getActiveList();
     }
 
     /**

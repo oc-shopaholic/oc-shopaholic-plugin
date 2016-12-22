@@ -1,5 +1,10 @@
 tabs:
     fields:
+        check_offer_active:
+            tab: lovata.toolbox::lang.tab.settings
+            span: left
+            label: lovata.shopaholic::lang.field.check_offer_active
+            type: checkbox
         category_preview_limit_max:
             tab: lovata.toolbox::lang.tab.settings
             span: left

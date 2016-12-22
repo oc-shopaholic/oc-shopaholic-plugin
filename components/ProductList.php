@@ -171,6 +171,8 @@ class ProductList extends ComponentBase
                     return $arResult;
                 }
             }
+
+            self::$arProductIDList[$iCategoryID] = $arProductIDList;
         }
 
         //Apply pagination
@@ -220,6 +222,18 @@ class ProductList extends ComponentBase
             case 'full':
 
                 $arResult = $this->get(1, $iCategoryID, $iTagID);
+                $arResult['query_string'] = $sQueryString;
+                return $arResult;
+            case 'id_list':
+
+                $this->get(1, $iCategoryID, $iTagID);
+                
+                //Set product ID list
+                $arResult = ['list' => null];
+                if(isset(self::$arProductIDList[$iCategoryID]) && !empty(self::$arProductIDList[$iCategoryID])) {
+                    $arResult = ['list' => array_values(self::$arProductIDList[$iCategoryID])];
+                }
+                
                 $arResult['query_string'] = $sQueryString;
                 return $arResult;
             default:

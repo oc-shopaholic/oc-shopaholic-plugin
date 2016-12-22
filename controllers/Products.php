@@ -55,32 +55,6 @@ class Products extends Controller
     }
 
     /**
-     * Save product data
-     * @param null|integer $recordId
-     * @param null $context
-     * @return bool|void
-     */
-    public function update_onSave($recordId = null, $context = null)
-    {
-        $arProductData = $this->obRequest->get('Product');
-        $bProductActive = $arProductData['active'];
-        
-        //Check active product
-        /** @var Product $obProduct */
-        $obProduct = Product::find($recordId);
-        if(!empty($obProduct)) {
-            $bActive = $obProduct->checkActiveOffers();
-
-            if($bProductActive && !$bActive) {
-                Flash::error(Lang::get('lovata.shopaholic::lang.message.not_active_product'));
-                return;
-            }
-        }
-        
-        return parent::update_onSave($recordId, $context);
-    }
-
-    /**
      * Get $listConfig
      */
     protected function getListConfig()

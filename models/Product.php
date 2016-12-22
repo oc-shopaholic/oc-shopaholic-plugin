@@ -52,7 +52,7 @@ use \October\Rain\Database\Traits\Validation;
  * @property Category $category
  * @property Brand $brand
  * @property Collection|Offer[] $offers
- * @method Builder|\Eloquent|HasMany offers()
+ * @method Offer|HasMany offers()
  * 
  * //TODO: Перенести описание свойств
  * "Related products for shopaholic"
@@ -212,27 +212,6 @@ class Product extends Model
 
         return $obQuery;
     }
-
-    /**
-     * Check active offers
-     * @return bool
-     */
-    public function checkActiveOffers()
-    {
-        //Check active offers
-        $arOffers = $this->offers;
-        
-        if(!$arOffers->isEmpty()) {
-            /** @var Offer $obOffer */
-            foreach($arOffers as $obOffer) {
-                if($obOffer->active) {
-                    return true;
-                }
-            }
-        }
-        
-        return false;
-    }
     
     public function afterSave()
     {
@@ -328,9 +307,11 @@ class Product extends Model
      * Get cached product data
      * @param $iElementID
      * @param null|Product $obElement
+     * @param bool $bCacheActive
+     * @param bool $bCheckOfferActive
      * @return array|null
      */
-    public static function getCacheData($iElementID, $obElement = null)
+    public static function getCacheData($iElementID, $obElement = null, $bCacheActive = true, $bCheckOfferActive = true)
     {
         if(empty($iElementID)) {
             return null;
@@ -345,7 +326,11 @@ class Product extends Model
             
             //Get product object
             if(empty($obElement)) {
-                $obElement = self::active()->find($iElementID);
+                if($bCacheActive) {
+                    $obElement = self::active()->find($iElementID);
+                } else {
+                    $obElement = self::find($iElementID);
+                }
             }
 
             if(empty($obElement)) {
@@ -366,7 +351,7 @@ class Product extends Model
         if(!empty($arResult['offer_id'])) {
             foreach($arResult['offer_id'] as $iOfferID) {
                 
-                $arOfferData = Offer::getCacheData($iOfferID);
+                $arOfferData = Offer::getCacheData($iOfferID, null, $bCheckOfferActive);
                 if(empty($arOfferData)) {
                     continue;
                 }
@@ -375,8 +360,7 @@ class Product extends Model
             }
         }
 
-        if(PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic'))
-        {
+        if(PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic')) {
             \Lovata\CustomShopaholic\Classes\ProductExtend::getCacheData($arResult);
         }
 
