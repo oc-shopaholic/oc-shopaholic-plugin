@@ -39,7 +39,7 @@
 ...
  
 <div>{{ obProduct.name }}</div>
-<div>{{ obProperty.description }}</div>
+<div>{{ obProduct.description }}</div>
 ```
 
 Данные о товаре можно получить ajax-запросом:
@@ -67,7 +67,7 @@ $.request('ProductData::onAjaxRequest', {
 ...
  
 <div>{{ obProduct.name }}</div>
-<div>{{ obProperty.description }}</div>
+<div>{{ obProduct.description }}</div>
 ```
 
 # Product data
@@ -135,5 +135,104 @@ $.request('ProductData::onAjaxRequest', {
     'price_value'       => '1250.5',
     'old_price_value'   => '1350',
     'quantity'          => '4',
+]
+```
+
+# Компонент "Currency"
+
+**Использование:**
+Компонент предназначен для получение значения валюты из настроек плагина:
+
+```html
+<div>{{ Currency.get }}</div>
+```
+
+# Компонент "CategoryPage"
+**Настройки компонента:**
+  - Отображать 404 страницу, если категория не была найдена.
+  - Значение поля "slug" для поиска категории. Использование: если URL страницы "/catalog/:slug", то необходимо указать в настройках компонента: slug = "{{ :slug }}"
+
+**Использование:**
+Компонент удобно использовать для отображения страницы категори. Поиск категории будет производится по значению поля "slug". Пример получения данных категории:
+
+```html
+{% set obCategory = CategoryPage.get %}
+...
+ 
+<div>{{ obCategory.name }}</div>
+<div>{{ obCategory.description }}</div>
+```
+
+# Компонент "CategoryData"
+**Использование:**
+Компонент удобно использовать для получения данных категории по ID.
+
+```html
+{% set obCategory = CategoryData.get(10) %}
+...
+ 
+<div>{{ obCategory.name }}</div>
+<div>{{ obCategory.description }}</div>
+```
+
+Данные о категории можно получить ajax-запросом:
+
+**Example 1**
+
+```js
+$.request('CategoryData::onGetCategoryData', {
+    data: {'category_id': 10},
+    success: function(data) {
+        //do something with category data (id=10)
+    }
+});
+```
+**Example 2**
+
+```js
+$.request('CategoryData::onAjaxRequest', {
+    data: {'category_id': 10},
+    update: {'category-data': '.category-data-wrapper'}
+});
+```
+```html 
+{% set obCategory = CategoryData.get() %}
+...
+ 
+<div>{{ obCategory.name }}</div>
+<div>{{ obCategory.description }}</div>
+```
+
+# Category data
+```php
+[
+    'id'                => 10,
+    'name'              => 'category name',
+    'slug'              => 'category_name',
+    'code'              => 'vendor code',
+    'nest_depth'        => 1,
+    'preview_text'      => 'preview text about category',
+    'preview_image'     => [
+        'path'  => '/storage/app/upload/...',
+        'title' => 'image title',
+        'alt'   => 'image alt',
+    ],
+    'description'       => 'category description',
+    'images'            => [
+        [
+            'path'  => '/storage/app/upload/...',
+            'title' => 'image title',
+            'alt'   => 'image alt',
+        ],[
+            'path'  => '/storage/app/upload/...',
+            'title' => 'image title',
+            'alt'   => 'image alt',
+        ],
+    ],
+    'children'      => [            //Array with children category data
+        1 => [...],                 //Array with children category data (id=1)
+        6 => [...],                 //Array with children category data (id=6)
+        18 => [...],                //Array with children category data (id=18)
+    ],
 ]
 ```

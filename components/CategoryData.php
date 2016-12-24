@@ -1,5 +1,7 @@
 <?php namespace Lovata\Shopaholic\Components;
 
+use Input;
+use Request;
 use Cms\Classes\ComponentBase;
 use Lovata\Shopaholic\Models\Category;
 
@@ -10,6 +12,8 @@ use Lovata\Shopaholic\Models\Category;
  */
 class CategoryData extends ComponentBase
 {
+    protected $iCategoryID = null;
+
     /**
      * @return array
      */
@@ -22,12 +26,36 @@ class CategoryData extends ComponentBase
     }
 
     /**
+     * Ajax listener
+     * @return array|null
+     */
+    public function onGetProductData()
+    {
+        $this->iCategoryID = Input::get('category_id');
+        return Category::getCacheData($this->iCategoryID);
+    }
+
+    /**
+     * Ajax listener
+     */
+    public function onAjaxRequest()
+    {
+        $this->iCategoryID = Input::get('category_id');
+    }
+
+    /**
      * Get category data with children
      * @param int $iCategoryID
-     * @return array
+     * @return array|null
      */
-    public function get($iCategoryID)
+    public function get($iCategoryID = null)
     {
-        return Category::getCacheData($iCategoryID);
+        if(Request::ajax() && empty($iCategoryID)) {
+            $arResult = Category::getCacheData($this->iCategoryID);
+        } else {
+            $arResult = Category::getCacheData($iCategoryID);
+        }
+
+        return $arResult;
     }
 }
