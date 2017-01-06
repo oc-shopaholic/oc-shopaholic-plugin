@@ -37,7 +37,6 @@
         'main'                  => 'Каталог товаров',
         'categories'            => 'Категории товаров',
         'product'               => 'Товары',
-        'offers_archive'        => 'Удаленные предложения',
         'brands'                => 'Бренды',
     ],
     'tab' => [
@@ -45,9 +44,6 @@
         'field_view'            => 'Отображение полей',
         'prices_format'         => 'Формат цен',
         'permissions'           => 'Shopaholic',
-    ],
-    'message' => [
-        'not_active_product'        => 'Нельзя сделать товар активным, если нет активных товарных предложений',
     ],
     'category' => [
         'name'                      => 'категории',
@@ -90,7 +86,7 @@
         'currency_description'              => 'Получение значение валюты',
 
         //Components settings
-        'product_list_sorting'               => 'Сортировка по умолчанию',
+        'product_list_sorting'              => 'Сортировка по умолчанию',
         'sorting_no'                        => 'Без сортировки',
         'sorting_price_desc'                => 'Дорогие',
         'sorting_price_asc'                 => 'Дешевые',

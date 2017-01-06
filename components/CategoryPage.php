@@ -38,7 +38,7 @@ class CategoryPage extends ComponentBase
     }
 
     /**
-     * @return \Illuminate\Http\Response|void
+     * @return \Illuminate\Http\Response|null
      */
     public function onRun()
     {
@@ -60,7 +60,7 @@ class CategoryPage extends ComponentBase
         //Send event
         Event::fire('shopaholic.category.open', [$obCategory]);
 
-        return;
+        return null;
     }
 
     /**

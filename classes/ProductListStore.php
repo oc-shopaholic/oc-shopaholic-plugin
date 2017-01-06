@@ -212,7 +212,6 @@ class ProductListStore
             $iCategoryID = 0;
         }
 
-
         if(PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic')) {
             $arProductIDList = \Lovata\CustomShopaholic\Classes\ProductListExtend::getSortingByCategory($sSorting, $iCategoryID);
             if($arProductIDList !== false) {

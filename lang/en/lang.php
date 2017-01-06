@@ -44,9 +44,6 @@
         'prices_format'         => 'Формат цен',
         'permissions'           => 'Shopaholic',
     ],
-    'message' => [
-        'not_active_product'        => 'Нельзя сделать товар активным, если нет активных товарных предложений',
-    ],
     'category' => [
         'name'                      => 'категории',
         'list_title'                => 'Список категорий',

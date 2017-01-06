@@ -38,7 +38,7 @@ class ProductPage extends ComponentBase
     }
 
     /**
-     * @return \Illuminate\Http\Response|void
+     * @return \Illuminate\Http\Response|null
      */
     public function onRun()
     {
@@ -62,7 +62,7 @@ class ProductPage extends ComponentBase
         //Send event
         Event::fire('shopaholic.product.open', [$obProduct]);
 
-        return;
+        return null;
     }
 
     /**

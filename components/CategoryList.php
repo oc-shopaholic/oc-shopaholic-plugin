@@ -13,7 +13,6 @@ use Lovata\Shopaholic\Plugin;
  */
 class CategoryList extends ComponentBase
 {
-
     /**
      * @return array
      */
