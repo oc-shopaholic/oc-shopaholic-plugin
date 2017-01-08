@@ -3,18 +3,12 @@
 1.0.2:
     - 'Created table lovata_shopaholic_categories'
     - builder_table_create_lovata_shopaholic_categories.php
-1.0.5:
+1.0.3:
     - 'Created table lovata_shopaholic_product'
     - builder_table_create_lovata_shopaholic_products.php
-1.0.6:
+1.0.4:
     - 'Created table lovata_shopaholic_offers'
     - builder_table_create_lovata_shopaholic_offers.php
-1.0.7:
+1.0.5:
     - 'Created table lovata_shopaholic_brands'
     - builder_table_create_lovata_shopaholic_brands.php
-1.0.8:
-    - 'Updated table lovata_shopaholic_offers'
-    - builder_table_update_lovata_shopaholic_offers.php
-1.0.9:
-    - 'Updated table lovata_shopaholic_products'
-    - builder_table_update_lovata_shopaholic_products.php

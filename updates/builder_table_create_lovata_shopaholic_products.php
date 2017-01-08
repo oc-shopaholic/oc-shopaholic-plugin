@@ -18,7 +18,7 @@ class BuilderTableCreateLovataShopaholicProducts extends Migration
             $table->integer('category_id')->nullable()->unsigned();
             $table->string('external_id')->nullable();
             $table->string('code')->nullable();
-            $table->string('preview_text')->nullable();
+            $table->text('preview_text')->nullable();
             $table->text('description')->nullable();
             $table->softDeletes();
             $table->timestamps();
