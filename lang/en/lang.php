@@ -27,10 +27,11 @@
         'space'                             => 'Пробел',
         'double_space'                      => 'Двойной пробел',
         'hyphen'                            => 'Дефис',
-        'currency'                          => 'Валюта',
+        'currency'                          => 'Currency',
         'category_preview_limit_max'        => 'Ограничение на длинну краткого описания категории (max)',
         'product_preview_limit_max'         => 'Ограничение на длинну краткого описания товара (max)',
         'offer_preview_limit_max'           => 'Ограничение на длинну краткого описания товарного предложения (max)',
+        'check_offer_active'                => 'При получении списка активных товаров проверять наличие активных предложений',
     ],
     'menu' => [
         'main'                  => 'Catalog',
@@ -39,50 +40,50 @@
         'brands'                => 'Brands',
     ],
     'tab' => [
-        'offers'                => 'Товарные предложения',
+        'offers'                => 'Offers',
         'field_view'            => 'Отображение полей',
         'prices_format'         => 'Формат цен',
         'permissions'           => 'Shopaholic',
     ],
     'category' => [
-        'name'                      => 'категории',
-        'list_title'                => 'Список категорий',
+        'name'                      => 'category',
+        'list_title'                => 'Category list',
     ],
     'brand' => [
-        'name'                      => 'бренда',
-        'list_title'                => 'Список брендов',
+        'name'                      => 'brand',
+        'list_title'                => 'Brand list',
     ],
     'product' => [
-        'name'                      => 'товара',
-        'list_title'                => 'Список товаров',
+        'name'                      => 'product',
+        'list_title'                => 'Product list',
     ],
     'offer' => [
-        'name'                      => 'предложения',
-        'list_title'                => 'Список предложений',
+        'name'                      => 'offer',
+        'list_title'                => 'Offer list',
     ],
     'component' => [
 
         //Product components
-        'product_page_name'                 => 'Страница товара',
-        'product_page_description'          => 'Получение данных для страницы товара',
-        'product_data_name'                 => 'Данные товара',
-        'product_data_description'          => 'Получение данных товара',
-        'product_list_name'                 => 'Список товаров',
-        'product_list_description'          => 'Получение списка товаров',
+        'product_page_name'                 => 'Product page',
+        'product_page_description'          => 'Get data for product page',
+        'product_data_name'                 => 'Product data',
+        'product_data_description'          => 'Get product data by ID',
+        'product_list_name'                 => 'Product list',
+        'product_list_description'          => 'Get sorting product list',
 
         //Category components
-        'category_page_name'                => 'Страница категории',
-        'category_page_description'         => 'Вывод данных на странице категории',
-        'category_data_name'                => 'Данные категории',
-        'category_data_description'         => 'Получение данных категории',
-        'category_list_name'                => 'Список категорий',
-        'category_list_description'         => 'Получение дерева категорий',
+        'category_page_name'                => 'Category page',
+        'category_page_description'         => 'Get data for category page',
+        'category_data_name'                => 'Category data',
+        'category_data_description'         => 'Get category data by ID',
+        'category_list_name'                => 'Category list',
+        'category_list_description'         => 'Get category tree',
 
         //Common components
-        'breadcrumbs_name'                  => 'Хлебные крошки',
-        'breadcrumbs_description'           => 'Получение данных для формирования хлебных крошек каталога',
-        'currency_name'                     => 'Валюта',
-        'currency_description'              => 'Получение значение валюты',
+        'breadcrumbs_name'                  => 'Breadcrumbs',
+        'breadcrumbs_description'           => 'Get data for catalog breadcrumbs',
+        'currency_name'                     => 'Currency',
+        'currency_description'              => 'Get default currency value',
 
         //Components settings
         'product_list_sorting'              => 'Default sorting',
@@ -103,8 +104,5 @@
         'category'              => 'Manage categories',
         'brand'                 => 'Manage brands',
         'product'               => 'Manage products',
-    ],
-    'buttons' => [
-        'restore_selected'      => 'Restore',
     ],
 ];
