@@ -1,6 +1,6 @@
 # Plugin settings
     Backend -> Settings -> Shopaholic:
- 1. **Настройки валидации:**
+ 1. **Validation settings:**
     - Ограничение максимальной длинны превью-текста для категории. Для категорий будет добавлено правило валидации для поля "preview_text".
     - Ограничение максимальной длинны превью-текста для товаров. Для товаров будет добавлено правило валидации для поля "preview_text".
     - Ограничение максимальной длинны превью-текста для товарных предложений. Для товарных предложений будет добавлено правило валидации для поля "preview_text".
@@ -14,13 +14,13 @@
     - Скрыть/отобразить поля  для товаров: category, brand, preview_text, description, preview_image, images, code, external_id.
     - Скрыть/отобразить поля  для товарных предложений: quantity, price, old_price, preview_text, description, preview_image, images, code, external_id.
 
-# Компонент "ProductPage"
-**Настройки компонента:**
+# Component "ProductPage"
+**Component properties:**
   - Отображать 404 страницу, если товар не был найден.
-  - Значение поля "slug" для поиска товара. Использование: если URL страницы "/product/:slug", то необходимо указать в настройках компонента: slug = "{{ :slug }}"
+  - Значение поля "slug" для поиска товара. Usage: если URL страницы "/product/:slug", то необходимо указать в настройках компонента: slug = "{{ :slug }}"
 
-**Использование:**
-Компонент удобно использовать для отображения страницы товара. Поиск товара будет производится по значению поля "slug". Пример получения данных товара:
+**Usage:**
+Component удобно использовать для отображения страницы товара. Поиск товара будет производится по значению поля "slug". Пример получения данных товара:
 
 ```html
 {% set obProduct = ProductPage.get %}
@@ -30,9 +30,9 @@
 <div>{{ obProperty.description }}</div>
 ```
 
-# Компонент "ProductData"
-**Использование:**
-Компонент удобно использовать для получения данных товара по ID.
+# Component "ProductData"
+**Usage:**
+Component удобно использовать для получения данных товара по ID.
 
 ```html
 {% set obProduct = ProductData.get(10) %}
@@ -138,22 +138,22 @@ $.request('ProductData::onAjaxRequest', {
 ]
 ```
 
-# Компонент "Currency"
+# Component "Currency"
 
-**Использование:**
-Компонент предназначен для получение значения валюты из настроек плагина:
+**Usage:**
+Component предназначен для получение значения валюты из настроек плагина:
 
 ```html
 <div>{{ Currency.get }}</div>
 ```
 
-# Компонент "CategoryPage"
-**Настройки компонента:**
+# Component "CategoryPage"
+**Component properties:**
   - Отображать 404 страницу, если категория не была найдена.
-  - Значение поля "slug" для поиска категории. Использование: если URL страницы "/catalog/:slug", то необходимо указать в настройках компонента: slug = "{{ :slug }}"
+  - Значение поля "slug" для поиска категории. Usage: если URL страницы "/catalog/:slug", то необходимо указать в настройках компонента: slug = "{{ :slug }}"
 
-**Использование:**
-Компонент удобно использовать для отображения страницы категори. Поиск категории будет производится по значению поля "slug". Пример получения данных категории:
+**Usage:**
+Component удобно использовать для отображения страницы категори. Поиск категории будет производится по значению поля "slug". Пример получения данных категории:
 
 ```html
 {% set obCategory = CategoryPage.get %}
@@ -163,9 +163,9 @@ $.request('ProductData::onAjaxRequest', {
 <div>{{ obCategory.description }}</div>
 ```
 
-# Компонент "CategoryData"
-**Использование:**
-Компонент удобно использовать для получения данных категории по ID.
+# Component "CategoryData"
+**Usage:**
+Component удобно использовать для получения данных категории по ID.
 
 ```html
 {% set obCategory = CategoryData.get(10) %}
@@ -236,3 +236,150 @@ $.request('CategoryData::onAjaxRequest', {
     ],
 ]
 ```
+
+# Component "ProductList"
+**Usage:**
+Component используется для отображения постраничного списка отсортированных товаров.
+
+**Component properties:**
+  - Default sorting.
+  - Pagination settings.
+  
+**Example 1 (Get product list)**
+
+```html
+{# 10 - category ID #}
+{# 1 - page number (default = 1) #}
+{# true - учитывать номер страницы из запроса (default = true) #}
+{% set arProductList = ProductList.get(10, 1) %}
+{% if arProductList is not empty %}
+    {% for obProduct in arProductList %}
+        <div>{{ obProduct.name }}</div>
+        <div>{{ obProduct.description }}</div>
+    {% endfor %}
+{% endif %}
+```
+
+**Example 2 (Get pagination elements)**
+
+```html
+{# 10 - category ID #}
+{# 1 - page number (default = 1) #}
+{# true - учитывать номер страницы из запроса (default = true) #}
+{% set arPaginationList = ProductList.getPagination(10, 1) %}
+{% if arPaginationList is not empty %}
+<ul class="pagination-wrapper">
+    {% for obPagination in arPaginationList %}
+        <li  class="pagination-element {{ obPagination.class }}">
+            <a data-page="{{ obPagination.value }}">{{ obPagination.name }}</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endif %}
+```
+
+**Example 3 (Get product count)**
+
+```html
+{# 10 - category ID #}
+{% set iProductCount = ProductList.getCount(10) %}
+<div>Product count: {{ iProductCount }}</div>
+```
+
+**Example 4 (Get full data)**
+
+```html
+{# 10 - category ID #}
+{# 1 - page number (default = 1) #}
+{# true - учитывать номер страницы из запроса (default = true) #}
+{% set arProductList = ProductList.getData(10, 1) %}
+{% if arProductList.list is not empty %}
+    {% for obProduct in arProductList.list %}
+        <div>{{ obProduct.name }}</div>
+        <div>{{ obProduct.description }}</div>
+    {% endfor %}
+{% endif %}
+...
+{% if arProductList.pagination is not empty %}
+<ul class="pagination-wrapper">
+    {% for obPagination in arProductList.pagination %}
+        <li  class="pagination-element {{ obPagination.class }}">
+            <a data-page="{{ obPagination.value }}">{{ obPagination.name }}</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endif %}
+...
+<div>Product count: {{ arProductList.count }}</div>
+```
+
+**Example 5 (Get active sorting)**
+
+```html
+{% set sActiveSorting = ProductList.getSorting() %}
+<select name="sort">
+    <option {% if sActiveSorting == 'no' %}selected{% endif %}>Without sorting</option>
+    <option {% if sActiveSorting == 'new' %}selected{% endif %}>New</option>
+    <option {% if sActiveSorting == 'price|asc' %}selected{% endif %}>Price asc</option>
+    <option {% if sActiveSorting == 'price|desc' %}selected{% endif %}>Price desc</option>
+</select>
+```
+
+**Example 6 (Usage plugin javascript with pagination)**
+Если ваш список товаров работает без перезагрузки страниц для отображения следующей страницы, вы можите использовать
+функции плагина для изменения URL страницы: /catalog/category_slug -> /catalog/category_slug?page=2
+-> /catalog/category_slug?page=3. Для этого вам необходимо:
+  - Добавить класс "oc-shopaholic-pagination" для обертки списка элементов пагинации
+  - Объявить функцию windows.paginationShopaholicAjaxRequest(_this) для отправки ajax-запроса
+
+```html
+<div class="oc-shopaholic-pagination">
+    <ul class="pagination-wrapper">
+        {% for obPagination in arPaginationList %}
+            <li  class="pagination-element {{ obPagination.class }}">
+                <a data-page="{{ obPagination.value }}">{{ obPagination.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+```
+
+```js
+window.paginationShopaholicAjaxRequest = function(_this) {
+    $.request('ProductList::onAjaxRequest', {
+        data: {/*...*/},
+        update: {'product-list': '.product-list-wrapper'}
+    });
+}
+```
+
+**Example 7 (Usage plugin javascript with sorting)**
+Если ваш список товаров работает без перезагрузки страниц для отображения страниц, вы можите использовать
+функции плагина для изменения URL страницы: /catalog/category_slug -> /catalog/category_slug?sort=new
+-> /catalog/category_slug?sort=price|asc. Для этого вам необходимо:
+  - Добавить класс "oc-shopaholic-sorting" для элемента сортировки
+  - Объявить функцию windows.sortingShopaholicAjaxRequest(_this) для отправки ajax-запроса
+
+```html
+<select name="sort" class="oc-shopaholic-sorting">
+    <option {% if sActiveSorting == 'no' %}selected{% endif %}>Without sorting</option>
+    <option {% if sActiveSorting == 'new' %}selected{% endif %}>New</option>
+    <option {% if sActiveSorting == 'price|asc' %}selected{% endif %}>Price asc</option>
+    <option {% if sActiveSorting == 'price|desc' %}selected{% endif %}>Price desc</option>
+</select>
+```
+
+```js
+window.sortingShopaholicAjaxRequest = function(_this) {
+    $.request('ProductList::onAjaxRequest', {
+        data: {/*...*/},
+        update: {'product-list': '.product-list-wrapper'}
+    });
+}
+```
+
+**Example 8 (Usage onAjaxRequest)**
+ - По-умолчанию метод onAjaxRequest возвращает строку запроса ('sort=price|asc&page=3')
+ - Если отправить 'response_type' == 'full', то метод вернет результат выполнения метода компонента getData
+ - Если отправить 'response_type' == 'id_list', то метод вернет отсортированный список ID товаров
+

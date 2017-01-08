@@ -89,16 +89,12 @@ class ProductList extends ComponentBase
      * Get product list by page number
      * @param int $iCategoryID
      * @param int $iPage
-     * @param string $iTagID
      * @param bool $bPageFromRequest
+     * @param string $iTagID
      * @return array
      */
-    public function getData($iPage = 1, $iCategoryID = 0, $iTagID = null, $bPageFromRequest = true)
+    public function getData($iCategoryID, $iPage = 1, $bPageFromRequest = true, $iTagID = null)
     {
-        if(empty($iCategoryID)) {
-            $iCategoryID = 0;
-        }
-
         $arResult = [
             'list' => [],
             'pagination' => [],
@@ -106,6 +102,10 @@ class ProductList extends ComponentBase
             'count' => 0,
             'category_id' => $iCategoryID,
         ];
+
+        if(empty($iCategoryID)) {
+            return $arResult;
+        }
 
         //Get page from request
         $iRequestPage = Input::get('page');
@@ -160,8 +160,12 @@ class ProductList extends ComponentBase
      * @param int $iTagID
      * @return array
      */
-    public function getProductIDList($iCategoryID, $iTagID)
+    public function getProductIDList($iCategoryID, $iTagID = null)
     {
+        if(empty($iCategoryID)) {
+            return null;
+        }
+
         if(isset(self::$arProductIDList[$iCategoryID])) {
             return self::$arProductIDList[$iCategoryID];
         }
@@ -234,7 +238,7 @@ class ProductList extends ComponentBase
         switch($sResponseType) {
             case 'full':
 
-                $arResult = $this->getData(1, $iCategoryID, $iTagID);
+                $arResult = $this->getData($iCategoryID, 1, true, $iTagID);
                 $arResult['query_string'] = $sQueryString;
                 return $arResult;
             case 'id_list':
@@ -257,13 +261,13 @@ class ProductList extends ComponentBase
      * Get product list
      * @param int $iCategoryID
      * @param int $iPage
-     * @param string $sTag
      * @param bool $bPageFromRequest
+     * @param string $iTagID
      * @return array|mixed
      */
-    public function get($iPage = 1, $iCategoryID = 0, $sTag = null, $bPageFromRequest = true)
+    public function get($iCategoryID, $iPage = 1, $bPageFromRequest = true, $iTagID = null)
     {
-        $arResult = $this->getData($iPage, $iCategoryID, $sTag, $bPageFromRequest);
+        $arResult = $this->getData($iCategoryID, $iPage, $bPageFromRequest, $iTagID);
         if(isset($arResult['list'])) {
             return $arResult['list'];
         }
@@ -275,13 +279,13 @@ class ProductList extends ComponentBase
      * Get pagination data
      * @param int $iCategoryID
      * @param int $iPage
-     * @param string $sTag
      * @param bool $bPageFromRequest
+     * @param string $iTagID
      * @return array|mixed
      */
-    public function getPagination($iPage = 1, $iCategoryID = 0, $sTag = null, $bPageFromRequest = true)
+    public function getPagination($iCategoryID, $iPage = 1, $bPageFromRequest = true, $iTagID = null)
     {
-        $arResult = $this->getData($iPage, $iCategoryID, $sTag, $bPageFromRequest);
+        $arResult = $this->getData($iCategoryID, $iPage, $bPageFromRequest, $iTagID);
         if(isset($arResult['pagination'])) {
             return $arResult['pagination'];
         }
@@ -290,21 +294,19 @@ class ProductList extends ComponentBase
     }
 
     /**
-     * Get count products
+     * Get product count
      * @param int $iCategoryID
-     * @param int $iPage
-     * @param string $sTag
-     * @param bool $bPageFromRequest
+     * @param string $iTagID
      * @return array|mixed
      */
-    public function getCount($iPage = 1, $iCategoryID = 0, $sTag = null, $bPageFromRequest = true)
+    public function getCount($iCategoryID, $iTagID = null)
     {
-        $arResult = $this->getData($iPage, $iCategoryID, $sTag, $bPageFromRequest);
-        if(isset($arResult['count'])) {
-            return $arResult['count'];
+        $arProductIDList = $this->getProductIDList($iCategoryID, $iTagID);
+        if(empty($arProductIDList)) {
+            return 0;
         }
         
-        return 0;
+        return count($arProductIDList);
     }
 
     /**

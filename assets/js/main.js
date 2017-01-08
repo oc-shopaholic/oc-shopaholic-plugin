@@ -18,7 +18,7 @@ $(document).ready(function() {
         }
     });
 
-    // sort
+    // sorting
     $('body').on('change', '.oc-shopaholic-sorting', function() {
         var _this = $(this),
             _val = _this.val();
@@ -32,9 +32,9 @@ $(document).ready(function() {
     });
 
     /**
-     * Составляем строку после "?" при изменении сортировки и перехода на другую страницу
-     * @param name - имя get параметра "name=val"
-     * @param val - значение, которое передается в поисковую строку
+     * Generate search string
+     * @param name
+     * @param val
      */
     function searchStrGen(name, val) {
         var _searchResult = '',

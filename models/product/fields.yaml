@@ -31,7 +31,6 @@ tabs:
             span: left
             type: relation
             tab: 'lovata.toolbox::lang.tab.settings'
-            emptyOption: 'lovata.toolbox::lang.field.empty'
         brand:
             label: 'lovata.shopaholic::lang.field.brand'
             span: left

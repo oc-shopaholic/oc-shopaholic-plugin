@@ -38,6 +38,7 @@ class ProductListStore
      */
     public static function getBySorting($sSorting)
     {
+        //Apply custom sorting
         if(preg_match('%^'.self::SORT_CUSTOM.'%', $sSorting) && PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic')) {
             return \Lovata\CustomShopaholic\Classes\ProductListExtend::getBySorting($sSorting);
         }
@@ -160,7 +161,7 @@ class ProductListStore
     public static function getByCategory($iCategoryID)
     {
         if(empty($iCategoryID)) {
-            $iCategoryID = 0;
+            return null;
         }
         
         //Get cache data
@@ -173,12 +174,7 @@ class ProductListStore
         }
 
         //Get product ID list
-        if(!empty($iCategoryID)) {
-            $arProductIDList = Product::active()->getByCategory($iCategoryID)->lists('id');
-        } else {
-            $arProductIDList = Product::active()->whereNull('category_id')->lists('id');
-        }
-
+        $arProductIDList = Product::active()->getByCategory($iCategoryID)->lists('id');
         if(empty($arProductIDList)) {
             return null;
         }
@@ -209,7 +205,7 @@ class ProductListStore
     public static function getSortingByCategory($sSorting, $iCategoryID)
     {
         if(empty($iCategoryID)) {
-            $iCategoryID = 0;
+            return null;
         }
 
         if(PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic')) {
@@ -632,6 +628,5 @@ class ProductListStore
             $sCacheKey = implode('_', [$sSorting, $iCategoryID]);
             CCache::clear($arCacheTags, $sCacheKey);
         }
-        
     }
 } 
