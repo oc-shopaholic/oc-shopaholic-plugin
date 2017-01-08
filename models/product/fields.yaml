@@ -3,9 +3,6 @@ fields:
         label: 'lovata.toolbox::lang.field.active'
         span: left
         default: 0
-        context:
-            - update
-            - preview
         type: switch
     name:
         label: 'lovata.toolbox::lang.field.name'
