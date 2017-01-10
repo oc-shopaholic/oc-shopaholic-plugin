@@ -136,7 +136,10 @@ class ProductListStore
                 break;
             case self::SORT_NEW :
                 $arProductIDList = self::getActiveList();
-                $arProductIDList = array_reverse($arProductIDList);
+                if(!empty($arProductIDList)) {
+                    $arProductIDList = array_reverse($arProductIDList);
+                }
+
                 break;
             default:
                 $arProductIDList = self::getActiveList();

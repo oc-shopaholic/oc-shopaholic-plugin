@@ -28,17 +28,11 @@ class Products extends Controller
     public $formConfig;
     public $relationConfig = [];
 
-    /** @var Request */
-    protected $obRequest;
-
     /**
      * Products constructor.
-     * @param Request $obRequest
      */
-    public function __construct(Request $obRequest)
+    public function __construct()
     {
-        $this->obRequest = $obRequest;
-
         $this->getListConfig();
         $this->getFormConfig();
         $this->getRelationConfig();
