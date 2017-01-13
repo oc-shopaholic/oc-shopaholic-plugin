@@ -35,14 +35,14 @@ navigation:
                     - shopaholic-menu-brand
 permissions:
     shopaholic-menu-category:
-        tab: 'lovata.shopaholic::lang.tabs.permissions'
+        tab: 'lovata.shopaholic::lang.tab.permissions'
         label: 'lovata.shopaholic::lang.permission.category'
         order: 100
     shopaholic-menu-brand:
-        tab: 'lovata.shopaholic::lang.tabs.permissions'
+        tab: 'lovata.shopaholic::lang.tab.permissions'
         label: 'lovata.shopaholic::lang.permission.brand'
         order: 200
     shopaholic-menu-product:
-        tab: 'lovata.shopaholic::lang.tabs.permissions'
+        tab: 'lovata.shopaholic::lang.tab.permissions'
         label: 'lovata.shopaholic::lang.permission.product'
         order: 300

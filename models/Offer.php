@@ -95,6 +95,7 @@ class Offer extends Model
         'price',
         'old_price',
         'quantity',
+        'preview_text',
     ];
 
     public $belongsTo = [

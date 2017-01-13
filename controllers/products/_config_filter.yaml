@@ -5,8 +5,10 @@
 scopes:
     active:
         label: 'lovata.toolbox::lang.field.active'
-        type: checkbox
-        conditions: active = 1
+        type: switch
+        conditions:
+            - active <> true
+            - active = true
     category:
         label: 'lovata.toolbox::lang.field.category'
         modelClass: Lovata\Shopaholic\Models\Category

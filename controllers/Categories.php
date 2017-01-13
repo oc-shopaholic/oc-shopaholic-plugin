@@ -58,7 +58,7 @@ class Categories extends Controller
         $arConfiguredViewFields = Category::getConfiguredBackendFields();
         if(!empty($arConfiguredViewFields)) {
             foreach($arConfiguredViewFields as $sFieldKey => $sFieldName) {
-                if(isset($arConfig['list']['columns'][$sFieldKey]) && Settings::getValue('brand_'.$sFieldKey)) {
+                if(isset($arConfig['list']['columns'][$sFieldKey]) && Settings::getValue('category_'.$sFieldKey)) {
                     unset($arConfig['list']['columns'][$sFieldKey]);
                 }
             }
@@ -82,7 +82,7 @@ class Categories extends Controller
         $arConfiguredViewFields = Category::getConfiguredBackendFields();
         if(!empty($arConfiguredViewFields)) {
             foreach($arConfiguredViewFields as $sFieldKey => $sFieldName) {
-                if(isset($arConfig['form']['tabs']['fields'][$sFieldKey]) && Settings::getValue('brand_'.$sFieldKey)) {
+                if(isset($arConfig['form']['tabs']['fields'][$sFieldKey]) && Settings::getValue('category_'.$sFieldKey)) {
                     unset($arConfig['form']['tabs']['fields'][$sFieldKey]);
                 }
             }

@@ -139,7 +139,6 @@ class ProductListStore
                 if(!empty($arProductIDList)) {
                     $arProductIDList = array_reverse($arProductIDList);
                 }
-
                 break;
             default:
                 $arProductIDList = self::getActiveList();
