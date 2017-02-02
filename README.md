@@ -237,6 +237,26 @@ $.request('CategoryData::onAjaxRequest', {
 ]
 ```
 
+# Component "CategoryList"
+**Usage:**
+Component используется для отображения категорий в виде дерева.
+
+```html 
+{% set obCategoryList = CategoryList.get() %}
+...
+ 
+<ul>
+    {% for obCategory in obCategoryList %}
+        <li>{{ obCategory.name }}</li>
+        <ul>
+            {% for obChildren in obCategory.children %}
+                <li>{{ obChildren.name }}</li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+</ul>
+```
+
 # Component "ProductList"
 **Usage:**
 Component используется для отображения постраничного списка отсортированных товаров.
