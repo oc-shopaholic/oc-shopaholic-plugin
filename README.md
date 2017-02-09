@@ -239,7 +239,8 @@ $.request('CategoryData::onAjaxRequest', {
 
 # Component "CategoryList"
 **Usage:**
-Component используется для отображения категорий в виде дерева.
+Component используется для отображения категорий в виде дерева. 
+Дерево возвращается начиная с первого уровня вложенности.
 
 ```html 
 {% set obCategoryList = CategoryList.get() %}
@@ -248,11 +249,13 @@ Component используется для отображения категор�
 <ul>
     {% for obCategory in obCategoryList %}
         <li>{{ obCategory.name }}</li>
-        <ul>
-            {% for obChildren in obCategory.children %}
-                <li>{{ obChildren.name }}</li>
-            {% endfor %}
-        </ul>
+        {% if obCategory.children is not empty %}
+            <ul>
+                {% for obChildrenCategory in obCategory.children %}
+                    <li>{{ obChildrenCategory.name }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
     {% endfor %}
 </ul>
 ```
