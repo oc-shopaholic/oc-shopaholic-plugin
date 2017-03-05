@@ -139,7 +139,18 @@ class Product extends Model
         $this->setCustomAttributeName(ToolboxPlugin::NAME, ['name', 'slug', 'preview_text']);
 
         if(PluginManager::instance()->hasPlugin('Lovata.PropertiesShopaholic')) {
-            \Lovata\PropertiesShopaholic\Classes\ProductExtend::constructExtend($this);
+            /** @var Product $obProduct */
+            Product::extend(function($obProduct) {
+                $obProduct->appends[] = 'property';
+
+                $obProduct->addDynamicMethod('getProductPropertiesValues', function() use($obProduct) {
+                    return \Lovata\PropertiesShopaholic\Classes\CProperty::getProductPropertiesValues($obProduct);
+                });
+
+                $obProduct->addDynamicMethod('setProductPropertiesValues', function() use($obProduct) {
+                    return \Lovata\PropertiesShopaholic\Classes\CProperty::setProductPropertiesValues($arProperties, $obProduct);
+                });
+            });
         }
 
         if(PluginManager::instance()->hasPlugin('Lovata.SeoShopaholic')) {
