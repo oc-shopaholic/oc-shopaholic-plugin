@@ -1,14 +1,6 @@
 1.0.1:
     - 'Initialize plugin.'
-1.0.2:
-    - 'Created table lovata_shopaholic_categories'
-    - builder_table_create_lovata_shopaholic_categories.php
-1.0.3:
-    - 'Created table lovata_shopaholic_product'
-    - builder_table_create_lovata_shopaholic_products.php
-1.0.4:
-    - 'Created table lovata_shopaholic_offers'
-    - builder_table_create_lovata_shopaholic_offers.php
-1.0.5:
-    - 'Created table lovata_shopaholic_brands'
-    - builder_table_create_lovata_shopaholic_brands.php
+    - create_table_categories.php
+    - create_table_products.php
+    - create_table_offers.php
+    - create_table_brands.php

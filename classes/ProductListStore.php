@@ -28,7 +28,14 @@ class ProductListStore
      */
     public static function getAvailableSorting()
     {
-        return [self::SORT_NO, self::SORT_PRICE_ASC, self::SORT_PRICE_DESC, self::SORT_NEW, self::SORT_POPULARITY_DESC, self::SORT_CUSTOM];
+        return [
+            self::SORT_NO,
+            self::SORT_PRICE_ASC,
+            self::SORT_PRICE_DESC,
+            self::SORT_NEW,
+            self::SORT_POPULARITY_DESC,
+            self::SORT_CUSTOM
+        ];
     }
 
     /**
@@ -38,11 +45,6 @@ class ProductListStore
      */
     public static function getBySorting($sSorting)
     {
-        //Apply custom sorting
-        if(preg_match('%^'.self::SORT_CUSTOM.'%', $sSorting) && PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic')) {
-            return \Lovata\CustomShopaholic\Classes\ProductListExtend::getBySorting($sSorting);
-        }
-
         //Get cache data
         $arCacheTags = [Plugin::CACHE_TAG, Product::CACHE_TAG_LIST];
         $sCacheKey = $sSorting;
@@ -71,6 +73,7 @@ class ProductListStore
 
                 //Get product ID list (sort by offer price)
                 //We can not use groupBy() in this place
+                /** @var array $arProductIDList */
                 $arProductIDList = Offer::active()->orderBy('price', 'asc')->lists('product_id');
                 if(empty($arProductIDList)) {
                     return null;
@@ -78,62 +81,45 @@ class ProductListStore
 
                 $arProductIDList = array_unique($arProductIDList);
 
-                //Filter product list by active flag
-                $arActiveProductIDList = self::getActiveList();
-                if(empty($arActiveProductIDList)) {
-                    return null;
-                }
-
-                $arProductIDList = array_intersect($arProductIDList, $arActiveProductIDList);
+                //Apply filter by product active
+                $arProductIDList = self::applyActiveFilter($arProductIDList);
 
                 break;
             case self::SORT_PRICE_DESC :
 
                 //Get product ID list (sort by offer price)
                 //We can not use groupBy() in this place
-                $arProductIDList = Offer::active()->orderBy('price', 'asc')->lists('product_id');
+                /** @var array $arProductIDList */
+                $arProductIDList = Offer::active()->orderBy('price', 'desc')->lists('product_id');
                 if(empty($arProductIDList)) {
                     return null;
                 }
 
                 $arProductIDList = array_unique($arProductIDList);
-                $arProductIDList = array_reverse($arProductIDList);
 
-                //Filter product list by active flag
-                $arActiveProductIDList = self::getActiveList();
-                if(empty($arActiveProductIDList)) {
-                    return null;
-                }
-
-                $arProductIDList = array_intersect($arProductIDList, $arActiveProductIDList);
+                //Apply filter by product active
+                $arProductIDList = self::applyActiveFilter($arProductIDList);
 
                 break;
             case self::SORT_POPULARITY_DESC :
 
-                if(PluginManager::instance()->hasPlugin('Lovata.PopularityShopaholic')) {
-                    $arProductIDList = Product::active()->orderBy('popularity', 'desc')->lists('id');
-                } else {
-                    $arProductIDList = Product::active()->orderBy('id', 'desc')->lists('id');
+                if(!PluginManager::instance()->hasPlugin('Lovata.PopularityShopaholic')) {
+                    return self::getActiveList();
                 }
 
+                /** @var array $arProductIDList */
+                $arProductIDList = Product::orderBy('popularity', 'desc')->lists('id');
                 if(empty($arProductIDList)) {
                     return null;
                 }
 
-                //Filter product list by active flag
-                $arActiveProductIDList = self::getActiveList();
-                if(empty($arActiveProductIDList)) {
-                    return null;
-                }
-
-                $arProductIDList = array_intersect($arProductIDList, $arActiveProductIDList);
+                //Apply filter by product active
+                $arProductIDList = self::applyActiveFilter($arProductIDList);
 
                 //Set cache data
                 $iCacheTime = 1440;
                 CCache::put($arCacheTags, $sCacheKey, $arProductIDList, $iCacheTime);
                 return $arProductIDList;
-
-                break;
             case self::SORT_NEW :
                 $arProductIDList = self::getActiveList();
                 if(!empty($arProductIDList)) {
@@ -176,21 +162,8 @@ class ProductListStore
         }
 
         //Get product ID list
+        /** @var array $arProductIDList */
         $arProductIDList = Product::active()->getByCategory($iCategoryID)->lists('id');
-        if(empty($arProductIDList)) {
-            return null;
-        }
-        
-        //Filter product list by active flag
-        $arActiveProductIDList = self::getActiveList();
-        if(empty($arActiveProductIDList)) {
-            return null;
-        }
-
-        $arProductIDList = array_intersect($arProductIDList, $arActiveProductIDList);
-        if(empty($arProductIDList)) {
-            return null;
-        }
 
         //Set cache data
         CCache::forever($arCacheTags, $sCacheKey, $arProductIDList);
@@ -208,13 +181,6 @@ class ProductListStore
     {
         if(empty($iCategoryID)) {
             return null;
-        }
-
-        if(PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic')) {
-            $arProductIDList = \Lovata\CustomShopaholic\Classes\ProductListExtend::getSortingByCategory($sSorting, $iCategoryID);
-            if($arProductIDList !== false) {
-                return $arProductIDList;
-            }
         }
         
         //Get cache data
@@ -261,34 +227,57 @@ class ProductListStore
         $sCacheKey = Product::CACHE_TAG_LIST;
 
         $arProductIDList = CCache::get($arCacheTags, $sCacheKey);
-        if(empty($arProductIDList)) {
+        if(!empty($arProductIDList)) {
+            return $arProductIDList;
+        }
 
-            //Get product ID list
-            $arProductIDList = Product::active()->lists('id');
+        //Get product ID list
+        /** @var array $arProductIDList */
+        $arProductIDList = Product::active()->lists('id');
+        if(empty($arProductIDList)) {
+            return null;
+        }
+
+        //Check active offers
+        if(Settings::getValue('check_offer_active')) {
+
+            //Get product list with active offers
+            /** @var array $arProductIDListWithOffers */
+            $arProductIDListWithOffers = Offer::active()->groupBy('product_id')->lists('product_id');
+            if(empty($arProductIDListWithOffers)) {
+                return null;
+            }
+
+            $arProductIDList = array_intersect($arProductIDList, $arProductIDListWithOffers);
             if(empty($arProductIDList)) {
                 return null;
             }
-            
-            //Check active offers
-            if(Settings::getValue('check_offer_active')) {
-                
-                //Get product list with active offers
-                $arProductIDListWithOffers = Offer::active()->groupBy('product_id')->lists('product_id');
-                if(empty($arProductIDListWithOffers)) {
-                    return null;
-                }
-                
-                $arProductIDList = array_intersect($arProductIDList, $arProductIDListWithOffers);
-                if(empty($arProductIDList)) {
-                    return null;
-                }
-            }
-
-            //Set cache data
-            CCache::forever($arCacheTags, $sCacheKey, $arProductIDList);
         }
 
+        //Set cache data
+        CCache::forever($arCacheTags, $sCacheKey, $arProductIDList);
+
         return $arProductIDList;
+    }
+
+    /**
+     * Apply filter by product active
+     * @param array $arProductIDList
+     * @return array|null
+     */
+    public static function applyActiveFilter($arProductIDList)
+    {
+        if(empty($arProductIDList)) {
+            return null;
+        }
+
+        //Get active product list
+        $arActiveProductList = self::getActiveList();
+        if(empty($arActiveProductList)) {
+            return null;
+        }
+
+        return array_intersect($arProductIDList, $arActiveProductList);
     }
 
     /**
@@ -301,73 +290,14 @@ class ProductListStore
             return;
         }
 
-        //If change product "active"
-        if($obProduct->getOriginal('active') != $obProduct->active) {
-            if($obProduct->active) {
-                
-                //Update active product ID list
-                self::_updateActiveList();
+        //Check "active" flag
+        self::_checkChangeProductActive($obProduct);
 
-                //Update active product ID list by category filter
-                self::_addToCategoryList($obProduct, $obProduct->category_id);
-                self::_clearSortingListByCategory($obProduct->category_id);
+        //Check "category_id" field
+        self::_checkChangeProductCategory($obProduct);
 
-                //Update active product ID list with sorting
-                self::_updateCacheBySorting(self::SORT_PRICE_ASC);
-                self::_updateCacheBySorting(self::SORT_PRICE_DESC);
-                self::_updateCacheBySorting(self::SORT_NEW);
-                self::_updateCacheBySorting(self::SORT_NO);
-
-                if(PluginManager::instance()->hasPlugin('Lovata.PopularityShopaholic')) {
-                    self::_updateCacheBySorting(self::SORT_POPULARITY_DESC);
-                }
-                
-            } else {
-                //Update active product ID list
-                self::_removeFromActiveList($obProduct);
-
-                //Update active product ID list by category filter
-                if($obProduct->getOriginal('category_id') != $obProduct->category_id) {
-                    self::_removeFromCategoryList($obProduct, $obProduct->getOriginal('category_id'));
-                    self::_clearSortingListByCategory($obProduct->getOriginal('category_id'));
-                } else {
-                    self::_removeFromCategoryList($obProduct, $obProduct->category_id);
-                    self::_clearSortingListByCategory($obProduct->category_id);
-                }
-
-                //Update active product ID list with sorting
-                self::_removeFromSortingList($obProduct, self::SORT_PRICE_ASC);
-                self::_removeFromSortingList($obProduct, self::SORT_PRICE_DESC);
-                self::_removeFromSortingList($obProduct, self::SORT_NEW);
-                self::_removeFromSortingList($obProduct, self::SORT_NO);
-                
-                if(PluginManager::instance()->hasPlugin('Lovata.PopularityShopaholic')) {
-                    self::_removeFromSortingList($obProduct, self::SORT_POPULARITY_DESC);
-                }
-            }
-        }
-
-        //Update active product ID list by category filter
-        if($obProduct->getOriginal('category_id') != $obProduct->category_id && $obProduct->getOriginal('active') == $obProduct->active && $obProduct->active) {
-            self::_addToCategoryList($obProduct, $obProduct->category_id);
-            self::_removeFromCategoryList($obProduct, $obProduct->getOriginal('category_id'));
-            
-            self::_clearSortingListByCategory($obProduct->category_id);
-            self::_clearSortingListByCategory($obProduct->getOriginal('category_id'));
-        }
-
-        if($obProduct->active && PluginManager::instance()->hasPlugin('Lovata.PopularityShopaholic') && $obProduct->getOriginal('popularity') != $obProduct->popularity) {
-            self::_updateCacheBySorting(self::SORT_POPULARITY_DESC);
-
-            self::_clearSortingListByCategory($obProduct->category_id);
-            if($obProduct->getOriginal('category_id') != $obProduct->category_id) {
-                self::_clearSortingListByCategory($obProduct->getOriginal('category_id'));
-            }
-        }
-
-        if(PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic')) {
-            \Lovata\CustomShopaholic\Classes\ProductListExtend::updateCacheAfterSave($obProduct);
-        }
+        //Check "popularity" field
+        self::_checkChangeProductPopularity($obProduct);
     }
 
     /**
@@ -380,22 +310,20 @@ class ProductListStore
             return;
         }
         
-        if($obProduct->active) {
-            self::_removeFromActiveList($obProduct);
-            self::_removeFromCategoryList($obProduct, $obProduct->category_id);
-            
-            self::_removeFromSortingList($obProduct, self::SORT_PRICE_ASC);
-            self::_removeFromSortingList($obProduct, self::SORT_PRICE_DESC);
-            self::_removeFromSortingList($obProduct, self::SORT_NEW);
-            self::_removeFromSortingList($obProduct, self::SORT_POPULARITY_DESC);
-            self::_removeFromSortingList($obProduct, self::SORT_NO);
-            
-            self::_clearSortingListByCategory($obProduct->category_id);
+        if(!$obProduct->active) {
+            return;
         }
 
-        if(PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic')) {
-            \Lovata\CustomShopaholic\Classes\ProductListExtend::updateCacheAfterDelete($obProduct);
-        }
+        self::_removeFromActiveList($obProduct);
+        self::_removeFromCategoryList($obProduct, $obProduct->category_id);
+
+        self::_removeFromSortingList($obProduct, self::SORT_PRICE_ASC);
+        self::_removeFromSortingList($obProduct, self::SORT_PRICE_DESC);
+        self::_removeFromSortingList($obProduct, self::SORT_NEW);
+        self::_removeFromSortingList($obProduct, self::SORT_POPULARITY_DESC);
+        self::_removeFromSortingList($obProduct, self::SORT_NO);
+
+        self::_clearSortingListByCategory($obProduct->category_id);
     }
 
     /**
@@ -408,21 +336,25 @@ class ProductListStore
             return;
         }
 
+        //Get product object
         $obProduct = $obOffer->product;
         if(empty($obProduct)) {
             return;
         }
 
-        if($obProduct->active && ($obOffer->getOriginal('active') != $obOffer->active || $obOffer->getOriginal('price') != $obOffer->price)) {
-            self::_updateCacheBySorting(self::SORT_PRICE_ASC);
-            self::_updateCacheBySorting(self::SORT_PRICE_DESC);
-            
-            self::_clearSortingListByCategory($obProduct->category_id);
+        $bCacheClear = $obProduct->active && (
+            $obOffer->getOriginal('active') != $obOffer->active
+            || $obOffer->getOriginal('price') != $obOffer->price
+        );
+
+        if($bCacheClear) {
+            return;
         }
 
-        if(PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic')) {
-            \Lovata\CustomShopaholic\Classes\ProductListExtend::updateCacheAfterOfferSave($obOffer);
-        }
+        self::_updateCacheBySorting(self::SORT_PRICE_ASC);
+        self::_updateCacheBySorting(self::SORT_PRICE_DESC);
+
+        self::_clearSortingListByCategory($obProduct->category_id);
     }
 
     /**
@@ -435,20 +367,138 @@ class ProductListStore
             return;
         }
 
+        //Get product object
         $obProduct = $obOffer->product;
         if(empty($obProduct)) {
             return;
         }
         
-        if($obOffer->active && $obProduct->active) {
-            self::_updateCacheBySorting(self::SORT_PRICE_ASC);
-            self::_updateCacheBySorting(self::SORT_PRICE_DESC);
-            
+        if(!$obOffer->active || !$obProduct->active) {
+            return;
+        }
+
+        self::_updateCacheBySorting(self::SORT_PRICE_ASC);
+        self::_updateCacheBySorting(self::SORT_PRICE_DESC);
+
+        self::_clearSortingListByCategory($obProduct->category_id);
+    }
+
+    /**
+     * Check product "active" flag, if it was changed, then clear cache
+     * @param Product $obProduct
+     */
+    private static function _checkChangeProductActive($obProduct)
+    {
+        //check product "active" flag
+        if($obProduct->getOriginal('active') == $obProduct->active) {
+            return;
+        }
+
+        if($obProduct->active) {
+            self::_addActiveProductToCache($obProduct);
+            return;
+        }
+
+        self::_removeNotActiveProductFromCache($obProduct);
+    }
+
+    /**
+     * Add active product to cache list (not active -> active)
+     * @param Product $obProduct
+     */
+    private static function _addActiveProductToCache($obProduct)
+    {
+        //Update active product ID list
+        self::_updateActiveList();
+
+        //Update active product ID list by category filter
+        self::_addToCategoryList($obProduct, $obProduct->category_id);
+        self::_clearSortingListByCategory($obProduct->category_id);
+
+        //Update active product ID list with sorting
+        self::_updateCacheBySorting(self::SORT_PRICE_ASC);
+        self::_updateCacheBySorting(self::SORT_PRICE_DESC);
+        self::_updateCacheBySorting(self::SORT_NEW);
+        self::_updateCacheBySorting(self::SORT_NO);
+
+        if(PluginManager::instance()->hasPlugin('Lovata.PopularityShopaholic')) {
+            self::_updateCacheBySorting(self::SORT_POPULARITY_DESC);
+        }
+    }
+
+    /**
+     * Remove not active product from cache (active -> not active)
+     * @param Product $obProduct
+     */
+    private function _removeNotActiveProductFromCache($obProduct)
+    {
+        //Update active product ID list
+        self::_removeFromActiveList($obProduct);
+
+        //Update active product ID list by category filter
+        if($obProduct->getOriginal('category_id') != $obProduct->category_id) {
+            self::_removeFromCategoryList($obProduct, (int) $obProduct->getOriginal('category_id'));
+            self::_clearSortingListByCategory((int) $obProduct->getOriginal('category_id'));
+        } else {
+            self::_removeFromCategoryList($obProduct, $obProduct->category_id);
             self::_clearSortingListByCategory($obProduct->category_id);
         }
 
-        if(PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic')) {
-            \Lovata\CustomShopaholic\Classes\ProductListExtend::updateCacheAfterOfferDelete($obOffer);
+        //Update active product ID list with sorting
+        self::_removeFromSortingList($obProduct, self::SORT_PRICE_ASC);
+        self::_removeFromSortingList($obProduct, self::SORT_PRICE_DESC);
+        self::_removeFromSortingList($obProduct, self::SORT_NEW);
+        self::_removeFromSortingList($obProduct, self::SORT_NO);
+
+        if(PluginManager::instance()->hasPlugin('Lovata.PopularityShopaholic')) {
+            self::_removeFromSortingList($obProduct, self::SORT_POPULARITY_DESC);
+        }
+    }
+
+    /**
+     * Check product "category_id" field, if it was changed, then clear cache
+     * @param Product $obProduct
+     */
+    private static function _checkChangeProductCategory($obProduct)
+    {
+        //Check "category_id" field
+        $bClearCache = $obProduct->getOriginal('category_id') != $obProduct->category_id
+            && $obProduct->getOriginal('active') == $obProduct->active
+            && $obProduct->active;
+
+        if(!$bClearCache) {
+            return;
+        }
+
+        //Update product cache list with category
+        self::_addToCategoryList($obProduct, $obProduct->category_id);
+        self::_removeFromCategoryList($obProduct, (int) $obProduct->getOriginal('category_id'));
+
+        self::_clearSortingListByCategory($obProduct->category_id);
+        self::_clearSortingListByCategory((int) $obProduct->getOriginal('category_id'));
+    }
+
+    /**
+     * Check product "popularity" field, if it was changed, then clear cache
+     * @param Product $obProduct
+     */
+    private static function _checkChangeProductPopularity($obProduct)
+    {
+        //Check "popularity" flag
+        $bCacheClear = $obProduct->active
+            && PluginManager::instance()->hasPlugin('Lovata.PopularityShopaholic')
+            && $obProduct->getOriginal('popularity') != $obProduct->popularity;
+
+        if(!$bCacheClear) {
+            return;
+        }
+
+        //Update product list with popularity
+        self::_updateCacheBySorting(self::SORT_POPULARITY_DESC);
+
+        self::_clearSortingListByCategory($obProduct->category_id);
+        if($obProduct->getOriginal('category_id') != $obProduct->category_id) {
+            self::_clearSortingListByCategory((int) $obProduct->getOriginal('category_id'));
         }
     }
 

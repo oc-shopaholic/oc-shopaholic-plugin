@@ -1,19 +1,28 @@
 <?php namespace Lovata\Shopaholic\Updates;
 
 use Schema;
+use October\Rain\Database\Schema\Blueprint;
 use October\Rain\Database\Updates\Migration;
 
-class BuilderTableCreateLovataShopaholicOffers extends Migration
+/**
+ * Class CreateTableOffers
+ * @package Lovata\Shopaholic\Updates
+ */
+class CreateTableOffers extends Migration
 {
     public function up()
     {
-        Schema::create('lovata_shopaholic_offers', function($table)
+        if(Schema::hasTable('lovata_shopaholic_offers')) {
+            return;
+        }
+
+        Schema::create('lovata_shopaholic_offers', function(Blueprint $table)
         {
             $table->engine = 'InnoDB';
             $table->increments('id')->unsigned();
-            $table->integer('product_id')->unsigned()->nullable();
             $table->boolean('active')->default(0);
-            $table->string('name')->nullable();
+            $table->integer('product_id')->unsigned()->nullable();
+            $table->string('name');
             $table->string('code')->nullable();
             $table->string('external_id')->nullable();
             $table->decimal('price', 15, 2)->nullable();
@@ -23,7 +32,14 @@ class BuilderTableCreateLovataShopaholicOffers extends Migration
             $table->text('description')->nullable();
             $table->softDeletes();
             $table->timestamps();
-            $table->index(['name', 'code']);
+
+            $table->index('name');
+            $table->index('code');
+            $table->index('external_id');
+            $table->index('product_id');
+            $table->index('price');
+            $table->index('old_price');
+            $table->index('quantity');
         });
     }
     

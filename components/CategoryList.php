@@ -3,7 +3,6 @@
 use Cms\Classes\ComponentBase;
 use Kharanenka\Helper\CCache;
 use Lovata\Shopaholic\Models\Category;
-use October\Rain\Database\Collection;
 use Lovata\Shopaholic\Plugin;
 
 /**
@@ -37,15 +36,11 @@ class CategoryList extends ComponentBase
         $arCategoryListID = CCache::get($arCacheTags, $sCacheKey);
         if(empty($arCategoryListID)) {
 
-            /** @var Collection|Category[] $arCategories */
-            $arCategories = Category::active()->orderBy('nest_left', 'asc')->get()->toNested();
-            if($arCategories->isEmpty()) {
-                return [];
-            }
-
-            foreach($arCategories as $obCategory) {
-                $arCategoryListID[] = $obCategory->id;
-            }
+            /** @var \October\Rain\Database\Collection|Category[] $arCategories */
+            $arCategoryListID = Category::active()
+                ->where('nest_depth', 0)
+                ->orderBy('nest_left', 'asc')
+                ->lists('id');
 
             //Set cache data
             CCache::forever($arCacheTags, $sCacheKey, $arCategoryListID);

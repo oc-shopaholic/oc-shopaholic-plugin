@@ -9,58 +9,78 @@ use Lovata\Shopaholic\Models\Settings;
  */
 class CPrice
 {
-    protected static $iDecimals = 2;
-    protected static $sDecPoint = '.';
-    protected static $sThousandsSep = ' ';
+    /** @var CPrice */
+    protected static $obThis = null;
+
+    /** @var int */
+    protected $iDecimals = 2;
+
+    /** @var string  */
+    protected $sDecPoint = '.';
+
+    /** @var string  */
+    protected $sThousandsSep = ' ';
 
     /**
-     * Custom format for price
-     * @param $dPrice
-     * @return mixed
+     * CPrice constructor.
      */
-    public static function getPriceInFormat($dPrice)
+    protected function __construct()
     {
-        $iDecimals = (int)Settings::getValue('decimals');
-        if($iDecimals == null) {
-            self::$iDecimals = $iDecimals;
-        }
-        
+        //Get options from settings
+        $this->iDecimals = (int) Settings::getValue('decimals');
+
         $sDecPoint = Settings::getValue('dec_point');
-        if(!empty($sDecPoint)) {
-            self::$sDecPoint = $sDecPoint;
-            switch($sDecPoint) {
-                case 'dot':
-                    self::$sDecPoint = '.';
-                    break;
-                case 'comma':
-                    self::$sDecPoint = ',';
-                    break;
-                default:
-                    self::$sDecPoint = '.';
-            }
+        switch($sDecPoint) {
+            case 'dot':
+                $this->sDecPoint = '.';
+                break;
+            case 'comma':
+                $this->sDecPoint = ',';
+                break;
+            default:
+                $this->sDecPoint = '.';
         }
-        
+
         $sThousandsSep = Settings::getValue('thousands_sep');
-        if(!empty($sThousandsSep)) {
-            self::$sThousandsSep = $sThousandsSep;
-            switch($sThousandsSep) {
-                case 'together':
-                    self::$sThousandsSep = '';
-                    break;
-                case 'space':
-                    self::$sThousandsSep = ' ';
-                    break;
-                case 'double_space':
-                    self::$sThousandsSep = '  ';
-                    break;
-                case 'hyphen':
-                    self::$sThousandsSep = '-';
-                    break;
-                default:
-                    self::$sThousandsSep = '';
-            }
+        switch($sThousandsSep) {
+            case 'together':
+                $this->sThousandsSep = '';
+                break;
+            case 'space':
+                $this->sThousandsSep = ' ';
+                break;
+            case 'double_space':
+                $this->sThousandsSep = '  ';
+                break;
+            case 'hyphen':
+                $this->sThousandsSep = '-';
+                break;
+            default:
+                $this->sThousandsSep = '';
         }
-        
-        return number_format($dPrice, self::$iDecimals, self::$sDecPoint, self::$sThousandsSep);
+    }
+
+    /**
+     * Get instance CPrice
+     * @return CPrice
+     */
+    protected static function getInstance()
+    {
+        if(self::$obThis === null) {
+            self::$obThis = new CPrice();
+        }
+
+        return self::$obThis;
+    }
+
+    /**
+     * Apply custom format for price
+     * @param float $fPrice
+     * @return string
+     */
+    public static function get($fPrice)
+    {
+        $obThis = self::getInstance();
+        return number_format($fPrice, $obThis->iDecimals, $obThis->sDecPoint, $obThis->sThousandsSep);
     }
 }

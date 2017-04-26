@@ -1,5 +1,5 @@
 offers:
-    label: 'lovata.shopaholic::lang.field.offers'
+    label: 'lovata.shopaholic::lang.offer.name'
     manage:
         form: $/lovata/shopaholic/models/offer/fields.yaml
         list: $/lovata/shopaholic/models/offer/columns.yaml

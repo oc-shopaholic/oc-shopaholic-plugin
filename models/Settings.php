@@ -1,6 +1,8 @@
 <?php namespace Lovata\Shopaholic\Models;
 
-use October\Rain\Database\Builder;
+use Lovata\Shopaholic\Controllers\Brands;
+use Lovata\Shopaholic\Controllers\Categories;
+use Lovata\Shopaholic\Controllers\Products;
 use Lovata\Shopaholic\Plugin;
 use Kharanenka\Helper\CCache;
 use October\Rain\Database\Model;
@@ -10,7 +12,7 @@ use October\Rain\Database\Model;
  * @package Lovata\Shopaholic\Models
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  *
- * @mixin Builder
+ * @mixin \October\Rain\Database\Builder
  * @mixin \Eloquent
  * @mixin \System\Behaviors\SettingsModel
  */
@@ -51,7 +53,10 @@ class Settings extends Model
 
         return $sResult;
     }
-    
+
+    /**
+     * After save method
+     */
     public function afterSave()
     {
         //Clear cache data
@@ -67,10 +72,10 @@ class Settings extends Model
      */
     public static function getAdditionFields()
     {
-        self::addConfiguredFields(Product::getConfiguredBackendFields(), 'product');
-        self::addConfiguredFields(Offer::getConfiguredBackendFields(), 'offer');
-        self::addConfiguredFields(Category::getConfiguredBackendFields(), 'category');
-        self::addConfiguredFields(Brand::getConfiguredBackendFields(), 'brand');
+        self::addConfiguredFields(Products::getConfiguredBackendFields(), 'product');
+        self::addConfiguredFields(Products::getOfferConfiguredBackendFields(), 'offer');
+        self::addConfiguredFields(Categories::getConfiguredBackendFields(), 'category');
+        self::addConfiguredFields(Brands::getConfiguredBackendFields(), 'brand');
 
         return self::$arFields;
     }

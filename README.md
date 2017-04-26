@@ -101,7 +101,7 @@ $.request('ProductData::onAjaxRequest', {
         6 => [...],                     //Array with offer data (id=6)
         18 => [...],                    //Array with offer data (id=18)
     ],
-    'offer_id'          => [1, 6, 18],  //Array with offer ID
+    'offer_list'          => [1, 6, 18],  //Array with offer ID
 ]
 ```
 

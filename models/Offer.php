@@ -1,6 +1,8 @@
 <?php namespace Lovata\Shopaholic\Models;
 
-use Carbon\Carbon;
+use Model;
+use Event;
+
 use Kharanenka\Helper\CustomValidationMessage;
 use Kharanenka\Helper\DataFileModel;
 use Kharanenka\Scope\ActiveField;
@@ -8,26 +10,23 @@ use Kharanenka\Scope\CodeField;
 use Kharanenka\Scope\ExternalIDField;
 use Kharanenka\Scope\NameField;
 use Kharanenka\Scope\SlugField;
-use Lovata\Shopaholic\Classes\CPrice;
-use Lovata\Shopaholic\Classes\ProductListStore;
-use \October\Rain\Database\Traits\Validation;
-use Model;
-
 use Kharanenka\Helper\CCache;
+
 use Lovata\Shopaholic\Plugin;
 use Lovata\Toolbox\Plugin as ToolboxPlugin;
-use October\Rain\Database\Builder;
-use October\Rain\Database\Collection;
+use Lovata\Shopaholic\Classes\CPrice;
+use Lovata\Shopaholic\Classes\ProductListStore;
+use Lovata\Toolbox\Traits\Helpers\TraitClassExtension;
+
+use October\Rain\Database\Traits\Validation;
 use October\Rain\Database\Traits\SoftDelete;
-use System\Classes\PluginManager;
-use Event;
 
 /**
  * Class Offer
  * @package Lovata\Shopaholic\Models
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  * 
- * @mixin Builder
+ * @mixin \October\Rain\Database\Builder
  * @mixin \Eloquent
  * @mixin \Lovata\CustomShopaholic\Classes\OfferExtend
  * 
@@ -43,14 +42,17 @@ use Event;
  * @property double $old_price
  * @property integer $quantity
  * @property int $product_id
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property \System\Models\File $preview_image
- * @property Collection $images
- * @property \Lovata\Shopaholic\Models\Product $product
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
  *
- * @method static $this hasActiveProduct()
- * @method static $this getByCategory(int $iCategoryID)
+ * Relations
+ * @property \System\Models\File $preview_image
+ * @property \October\Rain\Database\Collection $images
+ *
+ * @property \Lovata\Shopaholic\Models\Product $product
+ * @method $this|\October\Rain\Database\Relations\BelongsTo product()
+ *
  * @method static $this getByProduct(int $iProductID)
  * @method static $this getByQuantity(int $iCount, string $sCondition = '=')
  * @method static $this getByPrice(int $iPrice, string $sCondition = '=')
@@ -67,24 +69,20 @@ class Offer extends Model
     use ExternalIDField;
     use CustomValidationMessage;
     use DataFileModel;
+    use TraitClassExtension;
 
     const CACHE_TAG_ELEMENT = 'shopaholic-offer-element';
     const CACHE_TAG_LIST = 'shopaholic-offer-list';
 
     public $table = 'lovata_shopaholic_offers';
-    
-    //Validation
+
     public $rules = ['name' => 'required'];
     public $customMessages = [];
     public $attributeNames = [];
     
-    public $attachOne = [
-        'preview_image' => 'System\Models\File'
-    ];
-
-    public $attachMany = [
-        'images' => 'System\Models\File'
-    ];
+    public $attachOne = ['preview_image' => 'System\Models\File'];
+    public $attachMany = ['images' => 'System\Models\File'];
+    public $belongsTo = ['product' => ['Lovata\Shopaholic\Models\Product']];
 
     public $fillable = [
         'name',
@@ -96,10 +94,6 @@ class Offer extends Model
         'old_price',
         'quantity',
         'preview_text',
-    ];
-
-    public $belongsTo = [
-        'product' => ['Lovata\Shopaholic\Models\Product'],
     ];
 
     public $dates = ['created_at', 'updated_at', 'deleted_at'];
@@ -120,27 +114,27 @@ class Offer extends Model
         $this->setCustomMessage(ToolboxPlugin::NAME, ['required', 'max.string']);
         $this->setCustomAttributeName(ToolboxPlugin::NAME, ['name', 'preview_text']);
 
-        if(PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic')) {
-            \Lovata\CustomShopaholic\Classes\OfferExtend::constructExtend($this);
-        }
-        
-        if(PluginManager::instance()->hasPlugin('Lovata.PropertiesShopaholic')) {
-            \Lovata\PropertiesShopaholic\Classes\OfferExtend::constructExtend($this);
-        }
-
         parent::__construct($attributes);
     }
 
+    /**
+     * After save method
+     */
     public function afterSave()
     {
         $this->clearCache();
+
         ProductListStore::updateCacheAfterOfferSave($this);
         Event::fire(self::CACHE_TAG_ELEMENT.'.after.save', [$this]);
     }
 
+    /**
+     * After delete method
+     */
     public function afterDelete()
     {
         $this->clearCache();
+
         ProductListStore::updateCacheAfterOfferDelete($this);
         Event::fire(self::CACHE_TAG_ELEMENT.'.after.delete', [$this]);
     }
@@ -168,20 +162,6 @@ class Offer extends Model
         CCache::clear([Plugin::CACHE_TAG, self::CACHE_TAG_ELEMENT], $this->id);
         Event::fire(self::CACHE_TAG_ELEMENT.'.cache.clear', [$this]);
     }
-    
-    /**
-     * Get addition property values
-     * @return array
-     */
-    public function getPropertyAttribute()
-    {
-        $arResult = [];
-        if(PluginManager::instance()->hasPlugin('Lovata.PropertiesShopaholic')) {
-            $arResult = \Lovata\PropertiesShopaholic\Classes\CProperty::getOfferPropertiesValues($this);
-        }
-
-        return $arResult;
-    }
 
     /**
      * Set addition property values
@@ -189,6 +169,7 @@ class Offer extends Model
      */
     public function setPropertyAttribute($arProperties)
     {
+        //TODO: Перенести в плагин
         if(PluginManager::instance()->hasPlugin('Lovata.PropertiesShopaholic')) {
             \Lovata\PropertiesShopaholic\Classes\CProperty::setOfferPropertiesValues($arProperties, $this);
         }
@@ -199,115 +180,8 @@ class Offer extends Model
     public function getCategoryAttribute() {}
 
     /**
-     * Has active product
-     * @param \Illuminate\Database\Eloquent\Builder $obQuery
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeHasActiveProduct($obQuery)
-    {
-        $obQuery->whereHas('product', function($obQuery) {
-            /** @var Product $obQuery */
-            $obQuery->active();
-        });
-
-        return $obQuery;
-    }
-    
-    /**
-     * Get by category ID
-     * @param \Illuminate\Database\Eloquent\Builder $obQuery
-     * @param $sData
-     * @return mixed
-     */
-    public function scopeGetByCategory($obQuery, $sData)
-    {
-        if(!empty($sData)) {
-            $obQuery->whereHas('product', function($obQuery) use ($sData) {
-                /** @var Product $obQuery */
-                $obQuery->active()->getByCategory($sData);
-            });
-        }
-
-        return $obQuery;
-    }
-
-    /**
-     * Get element by product ID
-     * @param \October\Rain\Database\QueryBuilder $obQuery
-     * @param $sData
-     * @return \October\Rain\Database\QueryBuilder
-     */
-    public function scopeGetByProduct($obQuery, $sData)
-    {
-        if(!empty($sData)) {
-            $obQuery->where('product_id', $sData);
-        }
-        return $obQuery;
-    }
-
-    /**
-     * Get by quantity
-     * @param \Illuminate\Database\Eloquent\Builder $obQuery
-     * @param $sData
-     * @param string $sCondition
-     * @return mixed
-     */
-    public function scopeGetByQuantity($obQuery, $sData, $sCondition = '=')
-    {
-        if(empty($sData)) {
-            $sData = 0;
-        }
-
-        if(!empty($sCondition)) {
-            $obQuery->where('quantity', $sCondition, $sData);
-        }
-
-        return $obQuery;
-    }
-
-    /**
-     * Get by price
-     * @param \Illuminate\Database\Eloquent\Builder $obQuery
-     * @param $sData
-     * @param string $sCondition
-     * @return mixed
-     */
-    public function scopeGetByPrice($obQuery, $sData, $sCondition = '=')
-    {
-        if(empty($sData)) {
-            $sData = 0;
-        }
-
-        if(!empty($sCondition)) {
-            $obQuery->where('price', $sCondition, $sData);
-        }
-
-        return $obQuery;
-    }
-
-    /**
-     * Get by old price
-     * @param \Illuminate\Database\Eloquent\Builder $obQuery
-     * @param $sData
-     * @param string $sCondition
-     * @return mixed
-     */
-    public function scopeGetByOldPrice($obQuery, $sData, $sCondition = '=')
-    {
-        if(empty($sData)) {
-            $sData = 0;
-        }
-
-        if(!empty($sCondition)) {
-            $obQuery->where('old_price', $sCondition, $sData);
-        }
-
-        return $obQuery;
-    }
-
-    /**
      * Get offer data
-     * @return  array|void
+     * @return  array
      */
     public function getData() {
 
@@ -327,14 +201,7 @@ class Offer extends Model
             'quantity'          => $this->quantity,
         ];
 
-        if(PluginManager::instance()->hasPlugin('Lovata.PropertiesShopaholic')) {
-            $arResult['property'] = \Lovata\PropertiesShopaholic\Classes\CProperty::getOfferPropertiesList($this);
-        }
-
-        if(PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic')) {
-            \Lovata\CustomShopaholic\Classes\OfferExtend::getData($arResult, $this);
-        }
-
+        self::extendMethodResult(__FUNCTION__, $arResult, [$this]);
         return $arResult;
     }
 
@@ -342,10 +209,13 @@ class Offer extends Model
      * Get cached product data
      * @param int $iElementID
      * @param Offer $obElement
-     * @param bool $bCheckActive
-     * @return array|null|string|void
+     * @param \October\Rain\Database\Collection $obSettings
+     *      check_offer_active      - true|false
+     *      check_offer_trashed     - true|false
+     *
+     * @return array|null
      */
-    public static function getCacheData($iElementID, $obElement = null, $bCheckActive = true)
+    public static function getCacheData($iElementID, $obElement = null, $obSettings = null)
     {
         if(empty($iElementID)) {
             return null;
@@ -360,11 +230,7 @@ class Offer extends Model
             
             //Get offer object
             if(empty($obElement)) {
-                if($bCheckActive) {
-                    $obElement = self::active()->find($iElementID);
-                } else {
-                    $obElement = self::find($iElementID);
-                }
+                $obElement = self::withTrashed()->find($iElementID);
             }
 
             if(empty($obElement)) {
@@ -377,15 +243,35 @@ class Offer extends Model
             CCache::forever($arCacheTags, $sCacheKey, $arResult);
         }
 
-        if(empty($arResult)) {
+        if(!self::checkOfferData($arResult, $obSettings)) {
             return null;
         }
 
-        if(PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic')) {
-            \Lovata\CustomShopaholic\Classes\OfferExtend::getCacheData($arResult);
-        }
-        
+        self::extendMethodResult(__FUNCTION__, $arResult);
         return $arResult;
+    }
+
+    /**
+     * Check offer data
+     * @param array $arResult
+     * @param \October\Rain\Database\Collection $obSettings
+     * @return bool
+     */
+    protected static function checkOfferData($arResult, $obSettings)
+    {
+        if(empty($obSettings)) {
+            return $arResult['active'] && !$arResult['trashed'];
+        }
+
+        if($obSettings->get('check_offer_active') && !$arResult['active']) {
+            return false;
+        }
+
+        if($obSettings->get('check_offer_trashed') && $arResult['trashed']) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -414,7 +300,7 @@ class Offer extends Model
      */
     public function getPriceAttribute($dPrice)
     {
-        return CPrice::getPriceInFormat($dPrice);
+        return CPrice::get($dPrice);
     }
 
     /**
@@ -425,7 +311,7 @@ class Offer extends Model
      */
     public function getOldPriceAttribute($dPrice)
     {
-        return CPrice::getPriceInFormat($dPrice);
+        return CPrice::get($dPrice);
     }
 
     /**
@@ -455,20 +341,76 @@ class Offer extends Model
     }
 
     /**
-     * Get fields list for backend interface with switching visibility
-     * @return array
+     * Get element by product ID
+     * @param Offer $obQuery
+     * @param $sData
+     * @return Offer
      */
-    public static function getConfiguredBackendFields() {
-        return [
-            'quantity'              => 'lovata.shopaholic::lang.field.quantity',
-            'price'                 => 'lovata.shopaholic::lang.field.price',
-            'old_price'             => 'lovata.shopaholic::lang.field.old_price',
-            'code'                  => 'lovata.toolbox::lang.field.code',
-            'external_id'           => 'lovata.toolbox::lang.field.external_id',
-            'preview_text'          => 'lovata.toolbox::lang.field.preview_text',
-            'description'           => 'lovata.toolbox::lang.field.description',
-            'preview_image'         => 'lovata.toolbox::lang.field.preview_image',
-            'images'                => 'lovata.toolbox::lang.field.images',
-        ];
+    public function scopeGetByProduct($obQuery, $sData)
+    {
+        if(!empty($sData)) {
+            $obQuery->where('product_id', $sData);
+        }
+        return $obQuery;
+    }
+
+    /**
+     * Get by quantity
+     * @param Offer $obQuery
+     * @param $sData
+     * @param string $sCondition
+     * @return Offer
+     */
+    public function scopeGetByQuantity($obQuery, $sData, $sCondition = '=')
+    {
+        if(empty($sData)) {
+            $sData = 0;
+        }
+
+        if(!empty($sCondition)) {
+            $obQuery->where('quantity', $sCondition, $sData);
+        }
+
+        return $obQuery;
+    }
+
+    /**
+     * Get by price
+     * @param Offer $obQuery
+     * @param $sData
+     * @param string $sCondition
+     * @return Offer
+     */
+    public function scopeGetByPrice($obQuery, $sData, $sCondition = '=')
+    {
+        if(empty($sData)) {
+            $sData = 0;
+        }
+
+        if(!empty($sCondition)) {
+            $obQuery->where('price', $sCondition, $sData);
+        }
+
+        return $obQuery;
+    }
+
+    /**
+     * Get by old price
+     * @param Offer $obQuery
+     * @param $sData
+     * @param string $sCondition
+     * @return Offer
+     */
+    public function scopeGetByOldPrice($obQuery, $sData, $sCondition = '=')
+    {
+        if(empty($sData)) {
+            $sData = 0;
+        }
+
+        if(!empty($sCondition)) {
+            $obQuery->where('old_price', $sCondition, $sData);
+        }
+
+        return $obQuery;
     }
 }

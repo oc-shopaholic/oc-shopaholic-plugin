@@ -1,26 +1,38 @@
 <?php namespace Lovata\Shopaholic\Updates;
 
 use Schema;
+use October\Rain\Database\Schema\Blueprint;
 use October\Rain\Database\Updates\Migration;
 
-class BuilderTableCreateLovataShopaholicBrands extends Migration
+/**
+ * Class CreateTableBrands
+ * @package Lovata\Shopaholic\Updates
+ */
+class CreateTableBrands extends Migration
 {
     public function up()
     {
-        Schema::create('lovata_shopaholic_brands', function($table)
+        if(Schema::hasTable('lovata_shopaholic_brands')) {
+            return;
+        }
+
+        Schema::create('lovata_shopaholic_brands', function(Blueprint $table)
         {
             $table->engine = 'InnoDB';
             $table->increments('id')->unsigned();
+            $table->boolean('active')->default(0);
             $table->string('name');
             $table->string('slug');
-            $table->boolean('active')->default(0);
             $table->string('code')->nullable();
             $table->string('external_id')->nullable();
             $table->text('preview_text')->nullable();
             $table->text('description')->nullable();
             $table->integer('sort_order')->nullable();
             $table->timestamps();
-            $table->index(['name', 'code']);
+
+            $table->index('name');
+            $table->index('code');
+            $table->index('external_id');
         });
     }
     

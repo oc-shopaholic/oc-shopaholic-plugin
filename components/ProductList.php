@@ -3,11 +3,13 @@
 use Input;
 use Lang;
 use Cms\Classes\ComponentBase;
-use Kharanenka\Helper\Pagination;
+use System\Classes\PluginManager;
+
 use Lovata\Shopaholic\Classes\ProductListStore;
 use Lovata\Shopaholic\Models\Category;
 use Lovata\Shopaholic\Models\Product;
-use System\Classes\PluginManager;
+
+use Kharanenka\Helper\Pagination;
 use Kharanenka\Helper\CCache;
 use Lovata\Shopaholic\Plugin;
 use Lovata\Toolbox\Plugin as ToolboxPlugin;
@@ -64,9 +66,11 @@ class ProductList extends ComponentBase
         return $arProperties;
     }
 
+    /**
+     * Component onRun method
+     */
     public function onRun()
     {
-        $this->initData();
         if(!\Request::ajax()) {
             $this->addJs('/plugins/lovata/shopaholic/assets/js/main.js');
         }
@@ -75,7 +79,7 @@ class ProductList extends ComponentBase
     /**
      * Init start component data
      */
-    protected function initData()
+    public function init()
     {
         $iProductOnPage = $this->property('count_per_page');
         if($iProductOnPage > 0) {
@@ -96,10 +100,10 @@ class ProductList extends ComponentBase
     public function getData($iCategoryID, $iPage = 1, $bPageFromRequest = true, $iTagID = null)
     {
         $arResult = [
-            'list' => [],
-            'pagination' => [],
-            'page' => $iPage,
-            'count' => 0,
+            'list'        => [],
+            'pagination'  => [],
+            'page'        => $iPage,
+            'count'       => 0,
             'category_id' => $iCategoryID,
         ];
 
@@ -198,14 +202,6 @@ class ProductList extends ComponentBase
             }
         }
 
-        //Apply custom filter
-        if(PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic')) {
-            \Lovata\CustomShopaholic\Classes\ProductListExtend::applyCustomFilter($arProductIDList, $iCategoryID);
-            if(empty($arProductIDList)) {
-                return [];
-            }
-        }
-
         //Apply filter
         if(PluginManager::instance()->hasPlugin('Lovata.FilterShopaholic')) {
             \Lovata\FilterShopaholic\Classes\CProductFilter::getList($arProductIDList, $iCategoryID);
@@ -224,8 +220,6 @@ class ProductList extends ComponentBase
      */
     public function onAjaxRequest()
     {
-        $this->initData();
-
         //Get response type from request
         $sResponseType = Input::get('response_type');
 

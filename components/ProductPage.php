@@ -1,7 +1,7 @@
 <?php namespace Lovata\Shopaholic\Components;
 
 use Event;
-use Lovata\Toolbox\Classes\ComponentTraitNotFoundResponse;
+use Lovata\Toolbox\Traits\Helpers\TraitComponentNotFoundResponse;
 use Lovata\Shopaholic\Models\Product;
 use Cms\Classes\ComponentBase;
 
@@ -12,7 +12,7 @@ use Cms\Classes\ComponentBase;
  */
 class ProductPage extends ComponentBase
 {
-    use ComponentTraitNotFoundResponse;
+    use TraitComponentNotFoundResponse;
 
     /** @var null|Product */
     protected $obProduct = null;
@@ -42,19 +42,17 @@ class ProductPage extends ComponentBase
      */
     public function onRun()
     {
-        $bDisplayError404 = $this->property('error_404') == 'on' ? true : false;
-
         //Get product slug
         $sProductSlug = $this->property('slug');
         if (empty($sProductSlug)) {
-            return $this->getErrorResponse($bDisplayError404);
+            return $this->getErrorResponse();
         }
 
         //Get product by slug
         /** @var Product $obProduct */
         $obProduct = Product::active()->getBySlug($sProductSlug)->first();
         if (empty($obProduct)) {
-            return $this->getErrorResponse($bDisplayError404);
+            return $this->getErrorResponse();
         }
 
         $this->obProduct = $obProduct;

@@ -1,5 +1,8 @@
 <?php namespace Lovata\Shopaholic\Models;
 
+use Event;
+use Model;
+
 use Kharanenka\Helper\CustomValidationMessage;
 use Kharanenka\Helper\DataFileModel;
 use Kharanenka\Scope\ActiveField;
@@ -8,27 +11,21 @@ use Kharanenka\Scope\ExternalIDField;
 use Kharanenka\Scope\NameField;
 use Kharanenka\Helper\CCache;
 use Kharanenka\Scope\SlugField;
-use Model;
-use October\Rain\Database\Builder;
-use October\Rain\Database\Collection;
-use October\Rain\Database\Relations\HasMany;
-use System\Classes\PluginManager;
-use \October\Rain\Database\Traits\Validation;
-use \October\Rain\Database\Traits\Sortable;
+
+use October\Rain\Database\Traits\Validation;
+use October\Rain\Database\Traits\Sortable;
 
 use Lovata\Shopaholic\Plugin;
 use Lovata\Toolbox\Plugin as ToolboxPlugin;
-use Event;
+use Lovata\Toolbox\Traits\Helpers\TraitClassExtension;
 
 /**
  * Class Brand
  * @package Lovata\Shopaholic\Models
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  *
- * @mixin Builder
+ * @mixin \October\Rain\Database\Builder
  * @mixin \Eloquent
- * @mixin \Lovata\SeoShopaholic\Classes\ModelExtend
- * @mixin \Lovata\CustomShopaholic\Classes\BrandExtend
  *
  * @property $id
  * @property bool $active
@@ -38,13 +35,16 @@ use Event;
  * @property string $external_id
  * @property string $preview_text
  * @property string $description
- * @property \System\Models\File $preview_image
- * @property Collection|\System\Models\File[] $images
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
  *
- * @property Collection|Product[] $products
- * @method Builder|\Eloquent|HasMany products()
- * 
- * @method static $this getByCategory(int $iCategoryID)
+ * Relations
+ * @property \System\Models\File $preview_image
+ * @property \October\Rain\Database\Collection|\System\Models\File[] $images
+ *
+ * @property \October\Rain\Database\Collection|Product[] $products
+ * @method $this|\October\Rain\Database\Relations\HasMany products()
+ *
  */
 class Brand extends Model
 {
@@ -57,6 +57,7 @@ class Brand extends Model
     use ExternalIDField;
     use CustomValidationMessage;
     use DataFileModel;
+    use TraitClassExtension;
 
     const CACHE_TAG_ELEMENT = 'shopaholic-brand-element';
     const CACHE_TAG_LIST = 'shopaholic-brand-list';
@@ -71,14 +72,9 @@ class Brand extends Model
     public $customMessages = [];
     public $attributeNames = [];
 
-
-    public $attachOne = [
-        'preview_image' => 'System\Models\File'
-    ];
-
-    public $attachMany = [
-        'images' => 'System\Models\File'
-    ];
+    public $attachOne = ['preview_image' => 'System\Models\File'];
+    public $attachMany = ['images' => 'System\Models\File'];
+    public $hasMany = ['products' => 'Lovata\Shopaholic\Models\Product'];
 
     public $fillable = [
         'name',
@@ -90,9 +86,7 @@ class Brand extends Model
         'description',
     ];
 
-    public $hasMany = [
-        'products' => 'Lovata\Shopaholic\Models\Product'
-    ];
+    public $dates = ['created_at', 'updated_at'];
 
     /**
      * Brand constructor.
@@ -102,15 +96,6 @@ class Brand extends Model
     {
         $this->setCustomMessage(ToolboxPlugin::NAME, ['required', 'unique']);
         $this->setCustomAttributeName(ToolboxPlugin::NAME, ['name', 'slug']);
-
-        if(PluginManager::instance()->hasPlugin('Lovata.SeoShopaholic')) {
-            \Lovata\SeoShopaholic\Classes\ModelExtend::constructExtend($this);
-        }
-
-        if(PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic')) {
-            \Lovata\CustomShopaholic\Classes\BrandExtend::constructExtend($this);
-        }
-        
         parent::__construct($attributes);
     }
 
@@ -120,6 +105,7 @@ class Brand extends Model
     public function afterSave()
     {
         $this->clearCache();
+        Event::fire(self::CACHE_TAG_ELEMENT.'.after.save', [$this]);
     }
 
     /**
@@ -128,6 +114,7 @@ class Brand extends Model
     public function afterDelete()
     {
         $this->clearCache();
+        Event::fire(self::CACHE_TAG_ELEMENT.'.after.delete', [$this]);
     }
 
     /**
@@ -140,44 +127,23 @@ class Brand extends Model
     }
 
     /**
-     * Get by category ID
-     * @param \Illuminate\Database\Eloquent\Builder $obQuery
-     * @param $sData
-     * @return mixed
-     */
-    public function scopeGetByCategory($obQuery, $sData)
-    {
-        if(!empty($sData)) {
-            $obQuery->whereHas('products', function($obQuery) use ($sData) {
-                /** @var Product $obQuery */
-                $obQuery->active()->getByCategory($sData);
-            });
-        }
-
-        return $obQuery;
-    }
-
-    /**
      * Get brand data
      * @return array
      */
     public function getData()
     {
         $arResult = [
-            'id'                => $this->id,
-            'name'              => $this->name,
-            'slug'              => $this->slug,
-            'code'              => $this->code,
-            'preview_text'      => $this->preview_text,
-            'description'       => $this->description,
-            'preview_image'     => $this->getFileData('preview_image'),
-            'images'            => $this->getFileListData('images'),
+            'id'            => $this->id,
+            'name'          => $this->name,
+            'slug'          => $this->slug,
+            'code'          => $this->code,
+            'preview_text'  => $this->preview_text,
+            'description'   => $this->description,
+            'preview_image' => $this->getFileData('preview_image'),
+            'images'        => $this->getFileListData('images'),
         ];
 
-        if(PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic')) {
-            \Lovata\CustomShopaholic\Classes\BrandExtend::getData($arResult, $this);
-        }
-
+        self::extendMethodResult(__FUNCTION__, $arResult, [$this]);
         return $arResult;
     }
 
@@ -185,7 +151,7 @@ class Brand extends Model
      * Get cached brand data
      * @param int $iElementID
      * @param null|Brand $obElement
-     * @return array|null|string|void
+     * @return array|null
      */
     public static function getCacheData($iElementID, $obElement = null) {
 
@@ -200,7 +166,7 @@ class Brand extends Model
         $arResult = CCache::get($arCacheTags, $sCacheKey);
         if(empty($arResult)) {
 
-            //Get product object
+            //Get element object
             if(empty($obElement)) {
                 $obElement = self::active()->find($iElementID);
             }
@@ -215,26 +181,7 @@ class Brand extends Model
             CCache::forever($arCacheTags, $sCacheKey, $arResult);
         }
 
-        if(PluginManager::instance()->hasPlugin('Lovata.CustomShopaholic')) {
-            \Lovata\CustomShopaholic\Classes\BrandExtend::getCacheData($arResult);
-        }
-
+        self::extendMethodResult(__FUNCTION__, $arResult);
         return $arResult;
-    }
-
-    /**
-     * Get fields list for backend interface with switching visibility
-     * @return array
-     */
-    public static function getConfiguredBackendFields()
-    {
-        return [
-            'code'                  => 'lovata.toolbox::lang.field.code',
-            'external_id'           => 'lovata.toolbox::lang.field.external_id',
-            'preview_text'          => 'lovata.toolbox::lang.field.preview_text',
-            'description'           => 'lovata.toolbox::lang.field.description',
-            'preview_image'         => 'lovata.toolbox::lang.field.preview_image',
-            'images'                => 'lovata.toolbox::lang.field.images',
-        ];
     }
 }

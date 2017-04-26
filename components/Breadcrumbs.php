@@ -1,11 +1,10 @@
 <?php namespace Lovata\Shopaholic\Components;
 
+use System\Classes\PluginManager;
 use Cms\Classes\ComponentBase;
-use Kharanenka\Helper\CCache;
+
 use Lovata\Shopaholic\Models\Category;
 use Lovata\Shopaholic\Models\Product;
-use Lovata\Shopaholic\Plugin;
-use System\Classes\PluginManager;
 
 /**
  * Class Breadcrumbs
@@ -14,8 +13,6 @@ use System\Classes\PluginManager;
  */
 class Breadcrumbs extends ComponentBase
 {
-    const CACHE_TAG = 'shopaholic-breadcrumbs';
-
     /**
      * @return array
      */
@@ -28,56 +25,52 @@ class Breadcrumbs extends ComponentBase
     }
 
     /**
-     * Get breadcrumbs by category id
+     * Get breadcrumbs for category page by category id
      * @param int $iCategoryID
-     * @param int $iTagID
      * @return array
      */
-    public function getByCategoryID($iCategoryID, $iTagID = null)
+    public function getByCategoryID($iCategoryID)
     {
         if(empty($iCategoryID)) {
             return [];
         }
-        
-        //Get cache data
-        $arCacheTags = [Plugin::CACHE_TAG, self::CACHE_TAG, Category::CACHE_TAG_ELEMENT];
-        $sCacheKey = implode('_', [$iCategoryID, $iTagID]);
-
-        $arResult = CCache::get($arCacheTags, $sCacheKey);
-        if(!empty($arResult)) {
-            return $arResult;
-        }
 
         $arResult = [];
-        $bActiveCategory = true;
-        
-        //Get tag element
-        if(PluginManager::instance()->hasPlugin('Lovata.TagsShopaholic') && !empty($iTagID)) {
-            $arTagData = \Lovata\TagsShopaholic\Models\Tag::getCacheData($iTagID);
-            if(!empty($arTagData)) {
-                $arTagData['active'] = true;
-                $arResult[] = $arTagData;
-            }
-
-            $bActiveCategory = false;
-        }
-
-        /** @var Category $obCategory */
-        $obCategory = Category::find($iCategoryID);
-        if(empty($obCategory)) {
-            return $arResult;
-        }
 
         //Get category data
-        $this->getCategoryData($arResult, $obCategory, $bActiveCategory);
+        $this->getCategoryData($arResult, $iCategoryID, true);
         $arResult = array_reverse($arResult);
-
-        //Set cache data
-        CCache::forever($arCacheTags, $sCacheKey, $arResult);
         
         return $arResult;
     }
 
+    /**
+     * Get breadcrumbs for tag page by tag ID
+     * @param int $iTagID
+     * @return array
+     */
+    public function getByTagID($iTagID)
+    {
+        //Get tag element
+        if(!PluginManager::instance()->hasPlugin('Lovata.TagsShopaholic') || empty($iTagID)) {
+            return [];
+        }
+
+        $arTagData = \Lovata\TagsShopaholic\Models\Tag::getCacheData($iTagID);
+        if(empty($arTagData)) {
+            return [];
+        }
+
+        $arResult = [];
+        $arTagData['active'] = true;
+        $arResult[] = $arTagData;
+
+        //Get category data
+        $this->getCategoryData($arResult, $arTagData['category_id']);
+        $arResult = array_reverse($arResult);
+
+        return $arResult;
+    }
 
     /**
      * Get breadcrumbs by product ID
@@ -89,49 +82,26 @@ class Breadcrumbs extends ComponentBase
         if(empty($iProductID)) {
             return [];
         }
-        
-        //Get cache data
-        $arCacheTags = [Plugin::CACHE_TAG, self::CACHE_TAG, Product::CACHE_TAG_ELEMENT];
-        $sCacheKey = $iProductID;
 
-        $arResult = CCache::get($arCacheTags, $sCacheKey);
-        if(!empty($arResult)) {
-            return $arResult;
+        //Get product data
+        $arProductData = Product::getCacheData($iProductID);
+        if(empty($arProductData)) {
+            return [];
         }
 
         $arResult = [];
 
-        //Get product by slug
-        /** @var Product $obProduct */
-        $obProduct = Product::with('category')->active()->find($iProductID);
-        if(empty($obProduct)) {
-            return $arResult;
-        }
-
-        //Get product data
+        //Add product data to list
         $arResult[] = [
-            'id' => $obProduct->id,
-            'name' => $obProduct->name,
-            'slug' => $obProduct->slug,
+            'id'     => $arProductData['id'],
+            'name'   => $arProductData['name'],
+            'slug'   => $arProductData['slug'],
             'active' => true,
         ];
 
-        //Get product category
-        $obCategory = $obProduct->category;
-
-        if(empty($obCategory)) {
-            
-            //Set cache data
-            CCache::forever($arCacheTags, $sCacheKey, $arResult);
-            return $arResult;
-        }
-
         //Get category data
-        $this->getCategoryData($arResult, $obCategory);
+        $this->getCategoryData($arResult, $arProductData['category_id']);
         $arResult = array_reverse($arResult);
-
-        //Set cache data
-        CCache::forever($arCacheTags, $sCacheKey, $arResult);
 
         return $arResult;
     }
@@ -139,25 +109,25 @@ class Breadcrumbs extends ComponentBase
     /**
      * Get category data
      * @param array $arResult
-     * @param Category $obCategory
+     * @param int $iCategoryID
      * @param bool $bActiveCategory
      */
-    protected function getCategoryData(&$arResult, $obCategory, $bActiveCategory = false)
+    protected function getCategoryData(&$arResult, $iCategoryID, $bActiveCategory = false)
     {
-        if(empty($obCategory)) {
+        $arCategoryData = Category::getCacheData($iCategoryID);
+        if(empty($arCategoryData)) {
             return;
         }
 
         $arResult[] = [
-            'id' => $obCategory->id,
-            'name' => $obCategory->name,
-            'slug' => $obCategory->slug,
+            'id'     => $arCategoryData['id'],
+            'name'   => $arCategoryData['name'],
+            'slug'   => $arCategoryData['slug'],
             'active' => $bActiveCategory,
         ];
 
-        $obParentCategory = $obCategory->parent;
-        if(!empty($obParentCategory)) {
-            $this->getCategoryData($arResult, $obParentCategory);
+        if(!empty($arCategoryData['parent_id'])) {
+            $this->getCategoryData($arResult, $arCategoryData['parent_id']);
         }
     }
 }

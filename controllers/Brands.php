@@ -1,10 +1,9 @@
 <?php namespace Lovata\Shopaholic\Controllers;
 
-use Lovata\Shopaholic\Models\Brand;
-use Lovata\Shopaholic\Models\Settings;
 use Yaml;
 use Backend\Classes\Controller;
 use BackendMenu;
+use Lovata\Shopaholic\Models\Settings;
 
 /**
  * Class Brands
@@ -47,7 +46,7 @@ class Brands extends Controller
         $arConfig['list'] = Yaml::parseFile(base_path().'/plugins/lovata/shopaholic/models/brand/columns.yaml');
 
         //Hide fields
-        $arConfiguredViewFields = Brand::getConfiguredBackendFields();
+        $arConfiguredViewFields = self::getConfiguredBackendFields();
         if(!empty($arConfiguredViewFields)) {
             foreach($arConfiguredViewFields as $sFieldKey => $sFieldName) {
                 if(isset($arConfig['list']['columns'][$sFieldKey]) && Settings::getValue('brand_'.$sFieldKey)) {
@@ -71,7 +70,7 @@ class Brands extends Controller
         $arConfig['form'] = Yaml::parseFile(base_path().'/plugins/lovata/shopaholic/models/brand/fields.yaml');
 
         //Hide fields
-        $arConfiguredViewFields = Brand::getConfiguredBackendFields();
+        $arConfiguredViewFields = self::getConfiguredBackendFields();
         if(!empty($arConfiguredViewFields)) {
             foreach($arConfiguredViewFields as $sFieldKey => $sFieldName) {
                 if(isset($arConfig['form']['tabs']['fields'][$sFieldKey]) && Settings::getValue('brand_'.$sFieldKey)) {
@@ -81,5 +80,21 @@ class Brands extends Controller
         }
 
         $this->formConfig = $arConfig;
+    }
+
+    /**
+     * Get fields list for backend interface with switching visibility
+     * @return array
+     */
+    public static function getConfiguredBackendFields()
+    {
+        return [
+            'code'                  => 'lovata.toolbox::lang.field.code',
+            'external_id'           => 'lovata.toolbox::lang.field.external_id',
+            'preview_text'          => 'lovata.toolbox::lang.field.preview_text',
+            'description'           => 'lovata.toolbox::lang.field.description',
+            'preview_image'         => 'lovata.toolbox::lang.field.preview_image',
+            'images'                => 'lovata.toolbox::lang.field.images',
+        ];
     }
 }

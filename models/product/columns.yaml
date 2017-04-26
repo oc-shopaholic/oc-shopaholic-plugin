@@ -8,7 +8,7 @@ columns:
         label: 'lovata.toolbox::lang.field.active'
         type: switch
         sortable: true
-    category_id:
+    category_name:
         label: 'lovata.toolbox::lang.field.category'
         type: text
         searchable: true
