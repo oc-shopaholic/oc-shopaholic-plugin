@@ -72,7 +72,6 @@ class ProductPage extends ComponentBase
         if(empty($this->obProduct)) {
             return null;
         }
-
         return Product::getCacheData($this->obProduct->id, $this->obProduct);
     }
 }
