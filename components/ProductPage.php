@@ -1,9 +1,10 @@
 <?php namespace Lovata\Shopaholic\Components;
 
 use Event;
-use Lovata\Toolbox\Traits\Helpers\TraitComponentNotFoundResponse;
-use Lovata\Shopaholic\Models\Product;
 use Cms\Classes\ComponentBase;
+use Lovata\Shopaholic\Models\Product;
+use Lovata\Shopaholic\Classes\Item\ProductItem;
+use Lovata\Toolbox\Traits\Helpers\TraitComponentNotFoundResponse;
 
 /**
  * Class ProductPage
@@ -16,6 +17,9 @@ class ProductPage extends ComponentBase
 
     /** @var null|Product */
     protected $obProduct = null;
+
+    /** @var  ProductItem */
+    protected $obProductItem;
 
     /**
      * @return array
@@ -57,6 +61,9 @@ class ProductPage extends ComponentBase
 
         $this->obProduct = $obProduct;
 
+        //Get product item
+        $this->obProductItem = ProductItem::make($obProduct->id, $obProduct);
+
         //Send event
         Event::fire('shopaholic.product.open', [$obProduct]);
 
@@ -64,14 +71,11 @@ class ProductPage extends ComponentBase
     }
 
     /**
-     * Get product data
-     * @return array
+     * Get product item
+     * @return ProductItem
      */
     public function get()
     {
-        if(empty($this->obProduct)) {
-            return null;
-        }
-        return Product::getCacheData($this->obProduct->id, $this->obProduct);
+        return $this->obProductItem;
     }
 }

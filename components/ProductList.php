@@ -1,18 +1,15 @@
 <?php namespace Lovata\Shopaholic\Components;
 
+use App;
 use Input;
 use Lang;
 use Cms\Classes\ComponentBase;
 use System\Classes\PluginManager;
 
-use Lovata\Shopaholic\Classes\ProductListStore;
-use Lovata\Shopaholic\Models\Category;
-use Lovata\Shopaholic\Models\Product;
-
 use Kharanenka\Helper\Pagination;
-use Kharanenka\Helper\CCache;
-use Lovata\Shopaholic\Plugin;
 use Lovata\Toolbox\Plugin as ToolboxPlugin;
+use Lovata\Shopaholic\Classes\Store\ProductListStore;
+use Lovata\Shopaholic\Classes\Collection\ProductCollection;
 
 /**
  * Class ProductList
@@ -24,8 +21,10 @@ class ProductList extends ComponentBase
     protected $iProductOnPage = 10;
     protected $sSorting;
 
+    /** @var  ProductListStore */
+    protected $obProductListStore;
+
     protected static $arResult = [];
-    protected static $arProductIDList = [];
 
     /**
      * @return array
@@ -67,20 +66,12 @@ class ProductList extends ComponentBase
     }
 
     /**
-     * Component onRun method
-     */
-    public function onRun()
-    {
-        if(!\Request::ajax()) {
-            $this->addJs('/plugins/lovata/shopaholic/assets/js/main.js');
-        }
-    }
-
-    /**
      * Init start component data
      */
     public function init()
     {
+        $this->obProductListStore = App::make(ProductListStore::class);
+
         $iProductOnPage = $this->property('count_per_page');
         if($iProductOnPage > 0) {
             $this->iProductOnPage = $iProductOnPage;
@@ -93,16 +84,15 @@ class ProductList extends ComponentBase
      * Get product list by page number
      * @param int $iCategoryID
      * @param int $iPage
-     * @param bool $bPageFromRequest
-     * @param string $iTagID
      * @return array
      */
-    public function getData($iCategoryID, $iPage = 1, $bPageFromRequest = true, $iTagID = null)
+    public function getData($iCategoryID, $iPage = 1)
     {
         $arResult = [
             'list'        => [],
             'pagination'  => [],
-            'page'        => $iPage,
+            'page'        => 1,
+            'max_page'    => 1,
             'count'       => 0,
             'category_id' => $iCategoryID,
         ];
@@ -113,7 +103,7 @@ class ProductList extends ComponentBase
 
         //Get page from request
         $iRequestPage = Input::get('page');
-        if(!empty($iRequestPage) && $bPageFromRequest) {
+        if(!empty($iRequestPage)) {
             $iPage = $iRequestPage;
         }
 
@@ -126,142 +116,47 @@ class ProductList extends ComponentBase
             return self::$arResult[$iCategoryID][$iPage];
         }
 
-        //Get product ID list
-        $arProductIDList = $this->getProductIDList($iCategoryID, $iTagID);
-        if(empty($arProductIDList)) {
-            return $arResult;
-        }
+        //Get product collection
+        $obProductCollection = ProductCollection::make()
+            ->sortBy($this->sSorting)
+            ->active()
+            ->category($iCategoryID);
 
         //Apply pagination
-        $arResult['count'] = count($arProductIDList);
+        $arResult['count'] = $obProductCollection->count();
         $arResult['max_page'] = ceil($arResult['count'] / $this->iProductOnPage);
         
         $arResult['page'] = $iPage;
         $arResult['pagination'] = Pagination::get($iPage, $arResult['count'], $this->properties);
-        
-        //Get product ID list for page
-        $arProductIDList = array_slice($arProductIDList, $this->iProductOnPage * ($iPage - 1), $this->iProductOnPage);
-        
-        //Get product data
-        foreach($arProductIDList as $iProductID) {
 
-            //Get product data
-            $arProductData = Product::getCacheData($iProductID);
-            if(empty($arProductData)) {
-                continue;
-            }
+        //Apply pagination
+        $obProductCollection->pagination($iPage, $this->iProductOnPage);
 
-            $arResult['list'][$iProductID] = $arProductData;
-        }
+        //Get product item list
+        $arResult['list'] = $obProductCollection->getList();
 
         self::$arResult[$iCategoryID][$iPage] = $arResult;
         return $arResult;
     }
-
-    /**
-     * Get product ID list
-     * @param int $iCategoryID
-     * @param int $iTagID
-     * @return array
-     */
-    public function getProductIDList($iCategoryID, $iTagID = null)
-    {
-        if(empty($iCategoryID)) {
-            return null;
-        }
-
-        if(isset(self::$arProductIDList[$iCategoryID])) {
-            return self::$arProductIDList[$iCategoryID];
-        }
-
-        //Get cached product list by category filter and sorting by $this->sSorting
-        $arProductIDList = ProductListStore::getSortingByCategory($this->sSorting, $iCategoryID);
-        if(empty($arProductIDList)) {
-            return [];
-        }
-
-        //Apply tag filter
-        //TODO: Перенести в плагин тегов и обратить внимание на категорию 0
-        if(PluginManager::instance()->hasPlugin('Lovata.TagsShopaholic') && !empty($iTagID)) {
-
-            //Get cache data
-            $arCacheTags = [Plugin::CACHE_TAG, Product::CACHE_TAG_LIST, \Lovata\TagsShopaholic\Models\Tag::CACHE_TAG_ELEMENT, Category::CACHE_TAG_ELEMENT.'_'.$iCategoryID];
-            $sCacheKey = $iTagID;
-
-            $arProductListTag = CCache::get($arCacheTags, $sCacheKey);
-            if(empty($arProductListTag)) {
-
-                $arProductListTag = \Lovata\TagsShopaholic\Models\Tag::getProductList($iTagID);
-
-                //Set cache data
-                CCache::forever($arCacheTags, $sCacheKey, $arProductListTag);
-            }
-
-            if(!empty($arProductListTag)) {
-                $arProductIDList = array_intersect($arProductIDList, $arProductListTag);
-            }
-        }
-
-        //Apply filter
-        if(PluginManager::instance()->hasPlugin('Lovata.FilterShopaholic')) {
-            \Lovata\FilterShopaholic\Classes\CProductFilter::getList($arProductIDList, $iCategoryID);
-            if(empty($arProductIDList)) {
-                return [];
-            }
-        }
-
-        self::$arProductIDList[$iCategoryID] = $arProductIDList;
-        return $arProductIDList;
-    }
     
     /**
-     * Get ajax product list
-     * @return string
+     * Process ajax request
+     * @return mixed
      */
     public function onAjaxRequest()
     {
-        //Get response type from request
-        $sResponseType = Input::get('response_type');
-
-        $iCategoryID = Input::get('category_id');
-        $iTagID = Input::get('tag_id');
-
-        //Get 'QUERY_STRING'
-        $sQueryString = urldecode(Input::server('QUERY_STRING'));
-
-        switch($sResponseType) {
-            case 'full':
-
-                $arResult = $this->getData($iCategoryID, 1, true, $iTagID);
-                $arResult['query_string'] = $sQueryString;
-                return $arResult;
-            case 'id_list':
-
-                //Get product ID list
-                $arResult = ['list' => null];
-                $arProductIDList = $this->getProductIDList($iCategoryID, $iTagID);
-                if(!empty($arProductIDList)) {
-                    $arResult = ['list' => array_values($arProductIDList)];
-                }
-
-                $arResult['query_string'] = $sQueryString;
-                return $arResult;
-            default:
-                return $sQueryString;
-        }
+        return true;
     }
 
     /**
      * Get product list
      * @param int $iCategoryID
      * @param int $iPage
-     * @param bool $bPageFromRequest
-     * @param string $iTagID
-     * @return array|mixed
+     * @return array
      */
-    public function get($iCategoryID, $iPage = 1, $bPageFromRequest = true, $iTagID = null)
+    public function get($iCategoryID, $iPage = 1)
     {
-        $arResult = $this->getData($iCategoryID, $iPage, $bPageFromRequest, $iTagID);
+        $arResult = $this->getData($iCategoryID, $iPage);
         if(isset($arResult['list'])) {
             return $arResult['list'];
         }
@@ -273,13 +168,11 @@ class ProductList extends ComponentBase
      * Get pagination data
      * @param int $iCategoryID
      * @param int $iPage
-     * @param bool $bPageFromRequest
-     * @param string $iTagID
-     * @return array|mixed
+     * @return array
      */
-    public function getPagination($iCategoryID, $iPage = 1, $bPageFromRequest = true, $iTagID = null)
+    public function getPagination($iCategoryID, $iPage = 1)
     {
-        $arResult = $this->getData($iCategoryID, $iPage, $bPageFromRequest, $iTagID);
+        $arResult = $this->getData($iCategoryID, $iPage);
         if(isset($arResult['pagination'])) {
             return $arResult['pagination'];
         }
@@ -290,17 +183,16 @@ class ProductList extends ComponentBase
     /**
      * Get product count
      * @param int $iCategoryID
-     * @param string $iTagID
      * @return array|mixed
      */
-    public function getCount($iCategoryID, $iTagID = null)
+    public function getCount($iCategoryID)
     {
-        $arProductIDList = $this->getProductIDList($iCategoryID, $iTagID);
-        if(empty($arProductIDList)) {
-            return 0;
+        $arResult = $this->getData($iCategoryID);
+        if(isset($arResult['count'])) {
+            return $arResult['count'];
         }
         
-        return count($arProductIDList);
+        return 0;
     }
 
     /**
@@ -322,7 +214,7 @@ class ProductList extends ComponentBase
             $this->sSorting = $this->property('sorting');
         }
         
-        if(!in_array($this->sSorting, ProductListStore::getAvailableSorting()) && !preg_match('%^'.ProductListStore::SORT_CUSTOM.'%', $this->sSorting)) {
+        if(!in_array($this->sSorting, $this->obProductListStore->getAvailableSorting())) {
             $this->sSorting = $this->property('sorting');
         }
     }

@@ -1,9 +1,10 @@
 <?php namespace Lovata\Shopaholic\Controllers;
 
-use Lovata\Shopaholic\Models\Settings;
 use Yaml;
-use Backend\Classes\Controller;
+use Event;
 use BackendMenu;
+use Lovata\Shopaholic\Models\Settings;
+use Backend\Classes\Controller;
 use System\Classes\PluginManager;
 
 /**
@@ -104,5 +105,11 @@ class Categories extends Controller
             'preview_image'         => 'lovata.toolbox::lang.field.preview_image',
             'images'                => 'lovata.toolbox::lang.field.images',
         ];
+    }
+
+    public function onReorder()
+    {
+        parent::onReorder();
+        Event::fire('shopaholic.category.update.sorting');
     }
 }

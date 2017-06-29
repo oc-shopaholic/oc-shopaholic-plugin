@@ -1,8 +1,26 @@
 <?php namespace Lovata\Shopaholic;
 
 use Event;
-use Lovata\Shopaholic\Models\Settings;
 use System\Classes\PluginBase;
+
+use Lovata\Shopaholic\Classes\Helper\PriceHelper;
+
+use Lovata\Shopaholic\Classes\Item\BrandItem;
+use Lovata\Shopaholic\Classes\Item\CategoryItem;
+use Lovata\Shopaholic\Classes\Item\OfferItem;
+use Lovata\Shopaholic\Classes\Item\ProductItem;
+
+use Lovata\Shopaholic\Classes\Collection\CategoryCollection;
+use Lovata\Shopaholic\Classes\Collection\ProductCollection;
+
+use Lovata\Shopaholic\Classes\Store\CategoryListStore;
+use Lovata\Shopaholic\Classes\Store\ProductListStore;
+
+use Lovata\Shopaholic\Classes\Event\BrandModelHandler;
+use Lovata\Shopaholic\Classes\Event\CategoryModelHandler;
+use Lovata\Shopaholic\Classes\Event\OfferModelHandler;
+use Lovata\Shopaholic\Classes\Event\ProductModelHandler;
+use Lovata\Shopaholic\Classes\Event\SettingsModelHandler;
 
 /**
  * Class Plugin
@@ -55,35 +73,37 @@ class Plugin extends PluginBase
      */
     public function boot()
     {
-        $this->addSettingFields();
+        $this->app->singleton(PriceHelper::class, PriceHelper::class);
+
+        $this->app->bind(BrandItem::class, BrandItem::class);
+        $this->app->bind(CategoryItem::class, CategoryItem::class);
+        $this->app->bind(OfferItem::class, OfferItem::class);
+        $this->app->bind(ProductItem::class, ProductItem::class);
+
+        $this->app->bind(ProductCollection::class, ProductCollection::class);
+        $this->app->bind(CategoryCollection::class, CategoryCollection::class);
+
+        $this->app->singleton(ProductListStore::class, ProductListStore::class);
+        $this->app->singleton(CategoryListStore::class, CategoryListStore::class);
+
+        $this->app->singleton(CategoryModelHandler::class, CategoryModelHandler::class);
+        $this->app->singleton(OfferModelHandler::class, OfferModelHandler::class);
+        $this->app->singleton(ProductModelHandler::class, ProductModelHandler::class);
+        $this->app->singleton(BrandModelHandler::class, BrandModelHandler::class);
+        $this->app->singleton(SettingsModelHandler::class, SettingsModelHandler::class);
+
+        $this->addEventListener();
     }
 
     /**
-     * Add addition fields to "Setting" model
+     * Add event listeners
      */
-    protected function addSettingFields()
+    protected function addEventListener()
     {
-        // Extend "Shopaholic" settings form, add filter settings
-        Event::listen('backend.form.extendFields', function($obWidget) {
-
-            /**@var \Backend\Widgets\Form $obWidget */
-            // Only for the Settings controller
-            if (!$obWidget->getController() instanceof \System\Controllers\Settings) {
-                return;
-            }
-
-            // Only for the Settings model
-            if (!$obWidget->model instanceof Settings) {
-                return;
-            }
-
-            $arFields = Settings::getAdditionFields();
-            if(empty($arFields)) {
-                return;
-            }
-
-            //Add addition field
-            $obWidget->addTabFields($arFields);
-        });
+        Event::subscribe(CategoryModelHandler::class);
+        Event::subscribe(OfferModelHandler::class);
+        Event::subscribe(ProductModelHandler::class);
+        Event::subscribe(BrandModelHandler::class);
+        Event::subscribe(SettingsModelHandler::class);
     }
 }

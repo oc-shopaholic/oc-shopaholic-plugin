@@ -25,8 +25,6 @@
         'comma'                             => 'Запятая',
         'together'                          => 'Слитно',
         'space'                             => 'Пробел',
-        'double_space'                      => 'Двойной пробел',
-        'hyphen'                            => 'Дефис',
         'currency'                          => 'Currency',
         'category_preview_limit_max'        => 'Ограничение на длинну краткого описания категории (max)',
         'product_preview_limit_max'         => 'Ограничение на длинну краткого описания товара (max)',

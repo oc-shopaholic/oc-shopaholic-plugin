@@ -25,8 +25,6 @@
         'comma'                             => 'Запятая',
         'together'                          => 'Слитно',
         'space'                             => 'Пробел',
-        'double_space'                      => 'Двойной пробел',
-        'hyphen'                            => 'Дефис',
         'currency'                          => 'Валюта',
         'category_preview_limit_max'        => 'Ограничение на длинну краткого описания категории (max)',
         'product_preview_limit_max'         => 'Ограничение на длинну краткого описания товара (max)',
@@ -70,6 +68,12 @@
         'product_data_description'          => 'Получение данных товара',
         'product_list_name'                 => 'Список товаров',
         'product_list_description'          => 'Получение списка товаров',
+
+        //Brand components
+        'brand_page_name'                   => 'Страница бренда',
+        'brand_page_description'            => 'Получение данных для страницы бренда',
+        'brand_data_name'                   => 'Данные бренда',
+        'brand_data_description'            => 'Получение данных бренда',
 
         //Category components
         'category_page_name'                => 'Страница категории',

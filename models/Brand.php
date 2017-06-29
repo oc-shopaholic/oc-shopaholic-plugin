@@ -9,15 +9,12 @@ use Kharanenka\Scope\ActiveField;
 use Kharanenka\Scope\CodeField;
 use Kharanenka\Scope\ExternalIDField;
 use Kharanenka\Scope\NameField;
-use Kharanenka\Helper\CCache;
 use Kharanenka\Scope\SlugField;
 
 use October\Rain\Database\Traits\Validation;
 use October\Rain\Database\Traits\Sortable;
 
-use Lovata\Shopaholic\Plugin;
 use Lovata\Toolbox\Plugin as ToolboxPlugin;
-use Lovata\Toolbox\Traits\Helpers\TraitClassExtension;
 
 /**
  * Class Brand
@@ -57,10 +54,6 @@ class Brand extends Model
     use ExternalIDField;
     use CustomValidationMessage;
     use DataFileModel;
-    use TraitClassExtension;
-
-    const CACHE_TAG_ELEMENT = 'shopaholic-brand-element';
-    const CACHE_TAG_LIST = 'shopaholic-brand-list';
 
     public $table = 'lovata_shopaholic_brands';
     
@@ -104,8 +97,7 @@ class Brand extends Model
      */
     public function afterSave()
     {
-        $this->clearCache();
-        Event::fire(self::CACHE_TAG_ELEMENT.'.after.save', [$this]);
+        Event::fire('shopaholic.brand.after.save', [$this]);
     }
 
     /**
@@ -113,75 +105,6 @@ class Brand extends Model
      */
     public function afterDelete()
     {
-        $this->clearCache();
-        Event::fire(self::CACHE_TAG_ELEMENT.'.after.delete', [$this]);
-    }
-
-    /**
-     * Clear cache
-     */
-    protected function clearCache()
-    {
-        CCache::clear([Plugin::CACHE_TAG, self::CACHE_TAG_ELEMENT], $this->id);
-        Event::fire(self::CACHE_TAG_ELEMENT.'.cache.clear', [$this]);
-    }
-
-    /**
-     * Get brand data
-     * @return array
-     */
-    public function getData()
-    {
-        $arResult = [
-            'id'            => $this->id,
-            'name'          => $this->name,
-            'slug'          => $this->slug,
-            'code'          => $this->code,
-            'preview_text'  => $this->preview_text,
-            'description'   => $this->description,
-            'preview_image' => $this->getFileData('preview_image'),
-            'images'        => $this->getFileListData('images'),
-        ];
-
-        self::extendMethodResult(__FUNCTION__, $arResult, [$this]);
-        return $arResult;
-    }
-
-    /**
-     * Get cached brand data
-     * @param int $iElementID
-     * @param null|Brand $obElement
-     * @return array|null
-     */
-    public static function getCacheData($iElementID, $obElement = null) {
-
-        if(empty($iElementID)) {
-            return null;
-        }
-
-        //Get cache data
-        $arCacheTags = [Plugin::CACHE_TAG, self::CACHE_TAG_ELEMENT];
-        $sCacheKey = $iElementID;
-
-        $arResult = CCache::get($arCacheTags, $sCacheKey);
-        if(empty($arResult)) {
-
-            //Get element object
-            if(empty($obElement)) {
-                $obElement = self::active()->find($iElementID);
-            }
-
-            if(empty($obElement)) {
-                return null;
-            }
-
-            $arResult = $obElement->getData();
-
-            //Set cache data
-            CCache::forever($arCacheTags, $sCacheKey, $arResult);
-        }
-
-        self::extendMethodResult(__FUNCTION__, $arResult);
-        return $arResult;
+        Event::fire('shopaholic.brand.after.delete', [$this]);
     }
 }

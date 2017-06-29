@@ -40,8 +40,6 @@ tabs:
             options:
                 together: lovata.shopaholic::lang.field.together
                 space: lovata.shopaholic::lang.field.space
-                double_space: lovata.shopaholic::lang.field.double_space
-                hyphen: lovata.shopaholic::lang.field.hyphen
         currency:
             tab: lovata.shopaholic::lang.tab.prices_format
             span: left

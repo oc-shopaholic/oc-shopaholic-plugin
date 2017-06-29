@@ -3,7 +3,7 @@
 use Input;
 use Request;
 use Cms\Classes\ComponentBase;
-use Lovata\Shopaholic\Models\Category;
+use Lovata\Shopaholic\Classes\Item\CategoryItem;
 
 /**
  * Class CategoryData
@@ -29,10 +29,12 @@ class CategoryData extends ComponentBase
      * Ajax listener
      * @return array|null
      */
-    public function onGetProductData()
+    public function onGetData()
     {
         $this->iCategoryID = Input::get('category_id');
-        return Category::getCacheData($this->iCategoryID);
+        $obCategoryItem = CategoryItem::make($this->iCategoryID);
+
+        return $obCategoryItem->getArray();
     }
 
     /**
@@ -46,16 +48,15 @@ class CategoryData extends ComponentBase
     /**
      * Get category data with children
      * @param int $iCategoryID
-     * @return array|null
+     * @return CategoryItem
      */
     public function get($iCategoryID = null)
     {
         if(Request::ajax() && empty($iCategoryID)) {
-            $arResult = Category::getCacheData($this->iCategoryID);
-        } else {
-            $arResult = Category::getCacheData($iCategoryID);
+            $iCategoryID = $this->iCategoryID;
         }
 
-        return $arResult;
+        $obCategoryItem = CategoryItem::make($iCategoryID);
+        return $obCategoryItem;
     }
 }

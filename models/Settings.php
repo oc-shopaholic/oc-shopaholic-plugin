@@ -1,8 +1,5 @@
 <?php namespace Lovata\Shopaholic\Models;
 
-use Lovata\Shopaholic\Controllers\Brands;
-use Lovata\Shopaholic\Controllers\Categories;
-use Lovata\Shopaholic\Controllers\Products;
 use Lovata\Shopaholic\Plugin;
 use Kharanenka\Helper\CCache;
 use October\Rain\Database\Model;
@@ -23,8 +20,6 @@ class Settings extends Model
     public $implement = ['System.Behaviors.SettingsModel'];
     public $settingsCode = 'lovata_shopaholic_settings';
     public $settingsFields = 'fields.yaml';
-
-    protected static $arFields = [];
 
     /**
      * Get setting value from cache
@@ -63,52 +58,6 @@ class Settings extends Model
         $arValue = $this->value;
         foreach($arValue as $sKey => $sValue) {
             CCache::clear([Plugin::CACHE_TAG, self::CACHE_TAG], $sKey);
-        }
-    }
-
-    /**
-     * Init addition fields config
-     * @return array
-     */
-    public static function getAdditionFields()
-    {
-        self::addConfiguredFields(Products::getConfiguredBackendFields(), 'product');
-        self::addConfiguredFields(Products::getOfferConfiguredBackendFields(), 'offer');
-        self::addConfiguredFields(Categories::getConfiguredBackendFields(), 'category');
-        self::addConfiguredFields(Brands::getConfiguredBackendFields(), 'brand');
-
-        return self::$arFields;
-    }
-
-    /**
-     * @param array $arFields
-     * @param string $sName
-     */
-    protected static function addConfiguredFields($arFields, $sName)
-    {
-        if(empty($arFields) || empty($sName)) {
-            return;
-        }
-
-        self::$arFields[$sName.'_view_off'] = [
-            'tab'       => 'lovata.shopaholic::lang.tab.field_view',
-            'label'     => 'lovata.shopaholic::lang.settings.'.$sName,
-            'span'      => 'left',
-            'type'      => 'section',
-        ];
-
-        foreach($arFields as $sFieldName => $sFieldLabel) {
-
-            if(empty($sFieldName)) {
-                continue;
-            }
-
-            self::$arFields[$sName.'_'.$sFieldName] = [
-                'tab'       => 'lovata.shopaholic::lang.tab.field_view',
-                'label'     => $sFieldLabel,
-                'type'      => 'checkbox',
-                'span'      => 'left',
-            ];
         }
     }
 }

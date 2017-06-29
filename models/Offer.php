@@ -1,5 +1,6 @@
 <?php namespace Lovata\Shopaholic\Models;
 
+use App;
 use Model;
 use Event;
 
@@ -9,14 +10,9 @@ use Kharanenka\Scope\ActiveField;
 use Kharanenka\Scope\CodeField;
 use Kharanenka\Scope\ExternalIDField;
 use Kharanenka\Scope\NameField;
-use Kharanenka\Scope\SlugField;
-use Kharanenka\Helper\CCache;
 
-use Lovata\Shopaholic\Plugin;
 use Lovata\Toolbox\Plugin as ToolboxPlugin;
-use Lovata\Shopaholic\Classes\CPrice;
-use Lovata\Shopaholic\Classes\ProductListStore;
-use Lovata\Toolbox\Traits\Helpers\TraitClassExtension;
+use Lovata\Shopaholic\Classes\Helper\PriceHelper;
 
 use October\Rain\Database\Traits\Validation;
 use October\Rain\Database\Traits\SoftDelete;
@@ -28,12 +24,10 @@ use October\Rain\Database\Traits\SoftDelete;
  * 
  * @mixin \October\Rain\Database\Builder
  * @mixin \Eloquent
- * @mixin \Lovata\CustomShopaholic\Classes\OfferExtend
  * 
  * @property $id
  * @property bool $active
  * @property string $name
- * @property string $slug
  * @property string $code
  * @property string $external_id
  * @property string $preview_text
@@ -64,15 +58,10 @@ class Offer extends Model
     use SoftDelete;
     use ActiveField;
     use NameField;
-    use SlugField;
     use CodeField;
     use ExternalIDField;
     use CustomValidationMessage;
     use DataFileModel;
-    use TraitClassExtension;
-
-    const CACHE_TAG_ELEMENT = 'shopaholic-offer-element';
-    const CACHE_TAG_LIST = 'shopaholic-offer-list';
 
     public $table = 'lovata_shopaholic_offers';
 
@@ -94,6 +83,7 @@ class Offer extends Model
         'old_price',
         'quantity',
         'preview_text',
+        'description',
     ];
 
     public $dates = ['created_at', 'updated_at', 'deleted_at'];
@@ -122,10 +112,7 @@ class Offer extends Model
      */
     public function afterSave()
     {
-        $this->clearCache();
-
-        ProductListStore::updateCacheAfterOfferSave($this);
-        Event::fire(self::CACHE_TAG_ELEMENT.'.after.save', [$this]);
+        Event::fire('shopaholic.offer.after.save', [$this]);
     }
 
     /**
@@ -133,145 +120,7 @@ class Offer extends Model
      */
     public function afterDelete()
     {
-        $this->clearCache();
-
-        ProductListStore::updateCacheAfterOfferDelete($this);
-        Event::fire(self::CACHE_TAG_ELEMENT.'.after.delete', [$this]);
-    }
-
-    /**
-     * Clear cache
-     */
-    public function clearCache()
-    {
-        //Clear product cache
-        $iOriginalProductID = $this->getOriginal('product_id');
-        $iProductID = $this->getAttribute('product_id');
-        if($iOriginalProductID != $iProductID) {
-
-            if(!empty($iOriginalProductID)) {
-                CCache::clear([Plugin::CACHE_TAG, Product::CACHE_TAG_ELEMENT], $iOriginalProductID);
-            }
-            
-            if(!empty($iProductID)) {
-                CCache::clear([Plugin::CACHE_TAG, Product::CACHE_TAG_ELEMENT], $iProductID);
-            }
-        }
-
-        //Clear offer data
-        CCache::clear([Plugin::CACHE_TAG, self::CACHE_TAG_ELEMENT], $this->id);
-        Event::fire(self::CACHE_TAG_ELEMENT.'.cache.clear', [$this]);
-    }
-
-    /**
-     * Set addition property values
-     * @param $arProperties
-     */
-    public function setPropertyAttribute($arProperties)
-    {
-        //TODO: Перенести в плагин
-        if(PluginManager::instance()->hasPlugin('Lovata.PropertiesShopaholic')) {
-            \Lovata\PropertiesShopaholic\Classes\CProperty::setOfferPropertiesValues($arProperties, $this);
-        }
-    }
-
-    //TODO: Удалить методы и проверить новую фишку с полями _category в клнфиге
-    public function setCategoryAttribute($sValue) {}
-    public function getCategoryAttribute() {}
-
-    /**
-     * Get offer data
-     * @return  array
-     */
-    public function getData() {
-
-        $arResult = [
-            'id'                => $this->id,
-            'name'              => $this->name,
-            'code'              => $this->code,
-            'product_id'        => $this->product_id,
-            'preview_text'      => $this->preview_text,
-            'preview_image'     => $this->getFileData('preview_image'),
-            'description'       => $this->description,
-            'images'            => $this->getFileListData('images'),
-            'price'             => $this->price,
-            'old_price'         => $this->old_price,
-            'price_value'       => $this->getPriceValue(),
-            'old_price_value'   => $this->getOldPriceValue(),
-            'quantity'          => $this->quantity,
-        ];
-
-        self::extendMethodResult(__FUNCTION__, $arResult, [$this]);
-        return $arResult;
-    }
-
-    /**
-     * Get cached product data
-     * @param int $iElementID
-     * @param Offer $obElement
-     * @param \October\Rain\Database\Collection $obSettings
-     *      check_offer_active      - true|false
-     *      check_offer_trashed     - true|false
-     *
-     * @return array|null
-     */
-    public static function getCacheData($iElementID, $obElement = null, $obSettings = null)
-    {
-        if(empty($iElementID)) {
-            return null;
-        }
-
-        //Get cache data
-        $arCacheTags = [Plugin::CACHE_TAG, self::CACHE_TAG_ELEMENT];
-        $sCacheKey = $iElementID;
-
-        $arResult = CCache::get($arCacheTags, $sCacheKey);
-        if(empty($arResult)) {
-            
-            //Get offer object
-            if(empty($obElement)) {
-                $obElement = self::withTrashed()->find($iElementID);
-            }
-
-            if(empty($obElement)) {
-                return null;
-            }
-
-            $arResult = $obElement->getData();
-
-            //Set cache data
-            CCache::forever($arCacheTags, $sCacheKey, $arResult);
-        }
-
-        if(!self::checkOfferData($arResult, $obSettings)) {
-            return null;
-        }
-
-        self::extendMethodResult(__FUNCTION__, $arResult);
-        return $arResult;
-    }
-
-    /**
-     * Check offer data
-     * @param array $arResult
-     * @param \October\Rain\Database\Collection $obSettings
-     * @return bool
-     */
-    protected static function checkOfferData($arResult, $obSettings)
-    {
-        if(empty($obSettings)) {
-            return $arResult['active'] && !$arResult['trashed'];
-        }
-
-        if($obSettings->get('check_offer_active') && !$arResult['active']) {
-            return false;
-        }
-
-        if($obSettings->get('check_offer_trashed') && $arResult['trashed']) {
-            return false;
-        }
-
-        return true;
+        Event::fire('shopaholic.offer.after.delete', [$this]);
     }
 
     /**
@@ -300,7 +149,8 @@ class Offer extends Model
      */
     public function getPriceAttribute($dPrice)
     {
-        return CPrice::get($dPrice);
+        $obPriceHelper = App::make(PriceHelper::class);
+        return $obPriceHelper->get($dPrice);
     }
 
     /**
@@ -311,7 +161,8 @@ class Offer extends Model
      */
     public function getOldPriceAttribute($dPrice)
     {
-        return CPrice::get($dPrice);
+        $obPriceHelper = App::make(PriceHelper::class);
+        return $obPriceHelper->get($dPrice);
     }
 
     /**

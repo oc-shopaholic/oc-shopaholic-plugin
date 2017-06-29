@@ -1,17 +1,14 @@
-<?php namespace Lovata\Shopaholic\Classes;
+<?php namespace Lovata\Shopaholic\Classes\Helper;
 
 use Lovata\Shopaholic\Models\Settings;
 
 /**
- * Class CPrice
- * @package Lovata\Shopaholic\Classes
+ * Class PriceHelper
+ * @package Lovata\Shopaholic\Classes\Helper
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
-class CPrice
+class PriceHelper
 {
-    /** @var CPrice */
-    protected static $obThis = null;
-
     /** @var int */
     protected $iDecimals = 2;
 
@@ -22,18 +19,15 @@ class CPrice
     protected $sThousandsSep = ' ';
 
     /**
-     * CPrice constructor.
+     * PriceHelper constructor.
      */
-    protected function __construct()
+    public function __construct()
     {
         //Get options from settings
         $this->iDecimals = (int) Settings::getValue('decimals');
 
         $sDecPoint = Settings::getValue('dec_point');
         switch($sDecPoint) {
-            case 'dot':
-                $this->sDecPoint = '.';
-                break;
             case 'comma':
                 $this->sDecPoint = ',';
                 break;
@@ -43,17 +37,8 @@ class CPrice
 
         $sThousandsSep = Settings::getValue('thousands_sep');
         switch($sThousandsSep) {
-            case 'together':
-                $this->sThousandsSep = '';
-                break;
             case 'space':
                 $this->sThousandsSep = ' ';
-                break;
-            case 'double_space':
-                $this->sThousandsSep = '  ';
-                break;
-            case 'hyphen':
-                $this->sThousandsSep = '-';
                 break;
             default:
                 $this->sThousandsSep = '';
@@ -61,26 +46,12 @@ class CPrice
     }
 
     /**
-     * Get instance CPrice
-     * @return CPrice
-     */
-    protected static function getInstance()
-    {
-        if(self::$obThis === null) {
-            self::$obThis = new CPrice();
-        }
-
-        return self::$obThis;
-    }
-
-    /**
      * Apply custom format for price
      * @param float $fPrice
      * @return string
      */
-    public static function get($fPrice)
+    public function get($fPrice)
     {
-        $obThis = self::getInstance();
-        return number_format($fPrice, $obThis->iDecimals, $obThis->sDecPoint, $obThis->sThousandsSep);
+        return number_format($fPrice, $this->iDecimals, $this->sDecPoint, $this->sThousandsSep);
     }
 }

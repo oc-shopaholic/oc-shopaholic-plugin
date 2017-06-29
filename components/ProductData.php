@@ -3,7 +3,7 @@
 use Input;
 use Request;
 use Cms\Classes\ComponentBase;
-use Lovata\Shopaholic\Models\Product;
+use Lovata\Shopaholic\Classes\Item\ProductItem;
 
 /**
  * Class ProductData
@@ -29,10 +29,12 @@ class ProductData extends ComponentBase
      * Ajax listener
      * @return array|null
      */
-    public function onGetProductData()
+    public function onGetData()
     {
         $this->iProductID = Input::get('product_id');
-        return Product::getCacheData($this->iProductID);
+        $obProductItem = ProductItem::make($this->iProductID);
+
+        return $obProductItem->getArray();
     }
 
     /**
@@ -44,18 +46,17 @@ class ProductData extends ComponentBase
     }
 
     /**
-     * Get product data
+     * Get product item
      * @param int $iProductID
-     * @return array
+     * @return ProductItem
      */
     public function get($iProductID = null)
     {
         if(Request::ajax() && empty($iProductID)) {
-            $arResult = Product::getCacheData($this->iProductID);
-        } else {
-            $arResult = Product::getCacheData($iProductID);
+            $iProductID = $this->iProductID;
         }
-        
-        return $arResult;
+
+        $obProductItem = ProductItem::make($iProductID);
+        return $obProductItem;
     }
 }

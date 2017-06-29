@@ -29,7 +29,8 @@ class ProductTest extends PluginTestCase
 
     const MODEL_NAME = '\Lovata\Shopaholic\Models\Product';
 
-    protected $arModelData = [
+    /** @var array Used in TestModelGetDataMethod */
+    protected $arCreateModelData = [
         'name'         => 'Windows phone',
         'slug'         => 'windows_phone',
         'active'       => true,
@@ -38,6 +39,22 @@ class ProductTest extends PluginTestCase
         'brand_id'     => 1,
         'preview_text' => 'test preview text',
         'description'  => '<p>test description</p>',
+    ];
+
+    /** @var array Used in TestModelGetDataMethod */
+    protected $arModelData = [
+        'id'           => 1,
+        'active'       => true,
+        'trashed'      => false,
+        'name'         => 'Windows phone',
+        'slug'         => 'windows_phone',
+        'code'         => 'phone_code',
+        'category_id'  => 1,
+        'brand_id'     => 1,
+        'preview_text' => 'test preview text',
+        'description'  => '<p>test description</p>',
+        'preview_image' => null,
+        'images'        => [],
     ];
 
     /**

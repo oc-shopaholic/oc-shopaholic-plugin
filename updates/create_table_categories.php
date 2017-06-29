@@ -34,6 +34,7 @@ class CreateTableCategories extends Migration
             $table->timestamps();
 
             $table->index('name');
+            $table->index('slug');
             $table->index('code');
             $table->index('external_id');
 
