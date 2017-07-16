@@ -1,10 +1,9 @@
 <?php namespace Lovata\Shopaholic\Tests\Unit\Models;
 
 include_once __DIR__.'/../../../../toolbox/vendor/autoload.php';
+include_once __DIR__.'/../../../../../../tests/PluginTestCase.php';
 
 use Lovata\Shopaholic\Models\Category;
-use Lovata\Toolbox\Traits\Tests\TestModelCacheTagConst;
-use Lovata\Toolbox\Traits\Tests\TestModelGetDataMethod;
 use Lovata\Toolbox\Traits\Tests\TestModelHasImages;
 use Lovata\Toolbox\Traits\Tests\TestModelHasPreviewImage;
 use Lovata\Toolbox\Traits\Tests\TestModelValidationNameField;
@@ -20,51 +19,33 @@ use PluginTestCase;
  */
 class CategoryTest extends PluginTestCase
 {
-    use TestModelCacheTagConst;
     use TestModelHasPreviewImage;
     use TestModelHasImages;
+
     use TestModelValidationNameField;
     use TestModelValidationSlugField;
-    use TestModelGetDataMethod;
 
-    const MODEL_NAME = '\Lovata\Shopaholic\Models\Category';
+    protected $sModelClass;
 
-    /** @var array Used in TestModelGetDataMethod */
-    protected $arCreateModelData = [
-        'name'         => 'Mobile phone',
-        'slug'         => 'mobile_phone',
-        'active'       => true,
-        'code'         => 'mobile_phone',
-        'preview_text' => 'test preview text',
-        'description'  => '<p>test description</p>',
-    ];
-
-    /** @var array Used in TestModelGetDataMethod */
-    protected $arModelData = [
-        'id'            => 1,
-        'name'          => 'Mobile phone',
-        'slug'          => 'mobile_phone',
-        'code'          => 'mobile_phone',
-        'preview_text'  => 'test preview text',
-        'description'   => '<p>test description</p>',
-        'nest_depth'    => 0,
-        'parent_id'     => 0,
-        'preview_image' => null,
-        'images'        => [],
-    ];
+    /**
+     * CategoryTest constructor.
+     */
+    public function __construct()
+    {
+        $this->sModelClass = Category::class;
+    }
 
     /**
      * Check model "product" relation config
      */
     public function testHasProductRelation()
     {
-        $sModelClass = self::MODEL_NAME;
-        $sErrorMessage = $sModelClass.' model has not correct "product" relation config';
+        $sErrorMessage = $this->sModelClass.' model has not correct "product" relation config';
 
         /** @var Category $obModel */
         $obModel = new Category();
         self::assertNotEmpty($obModel->hasMany, $sErrorMessage);
         self::assertArrayHasKey('products', $obModel->hasMany, $sErrorMessage);
-        self::assertEquals($obModel->hasMany['products'], 'Lovata\Shopaholic\Models\Product', $sErrorMessage);
+        self::assertEquals('Lovata\Shopaholic\Models\Product', $obModel->hasMany['products'], $sErrorMessage);
     }
 }

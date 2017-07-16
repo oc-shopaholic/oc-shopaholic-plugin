@@ -1,8 +1,11 @@
 <?php namespace Lovata\Shopaholic\Classes\Collection;
 
-use Lovata\Shopaholic\Classes\Store\ProductListStore;
-use Lovata\Toolbox\Classes\ElementCollection;
 use Lovata\Shopaholic\Classes\Item\ProductItem;
+use Lovata\Shopaholic\Classes\Store\ProductListStore;
+
+use Lovata\Toolbox\Classes\Collection\ElementCollection;
+use Lovata\Toolbox\Traits\Collection\TraitCheckItemActive;
+use Lovata\Toolbox\Traits\Collection\TraitCheckItemTrashed;
 
 /**
  * Class ProductCollection
@@ -11,6 +14,9 @@ use Lovata\Shopaholic\Classes\Item\ProductItem;
  */
 class ProductCollection extends ElementCollection
 {
+    use TraitCheckItemActive;
+    use TraitCheckItemTrashed;
+
     /** @var ProductListStore */
     protected $obProductListStore;
 
@@ -24,15 +30,45 @@ class ProductCollection extends ElementCollection
     }
 
     /**
+     * Make element item
+     * @param int   $iElementID
+     * @param \Lovata\Shopaholic\Models\Product  $obElement
+     *
+     * @return ProductItem
+     */
+    protected function makeItem($iElementID, $obElement = null)
+    {
+        $obItem = ProductItem::make($iElementID, $obElement);
+        $obItem->setCheckingActive($this->bCheckActive);
+        $obItem->withTrashed($this->bCheckTrashed);
+
+        return $obItem;
+    }
+
+    /**
      * Sort list by
      * @param string $sSorting
      * @return $this
      */
     public function sortBy($sSorting)
     {
+        if(!$this->isClear() && $this->isEmpty()) {
+            return $this;
+        }
+
         //Get sorting list
         $arElementIDList = $this->obProductListStore->getBySorting($sSorting);
-        return $this->intersect($arElementIDList);
+        if(empty($arElementIDList)) {
+            return $this->clear();
+        }
+
+        if($this->isClear()) {
+            $this->arElementIDList = $arElementIDList;
+            return $this;
+        }
+
+        $this->arElementIDList = array_intersect($arElementIDList, $this->arElementIDList);
+        return $this;
     }
 
     /**
@@ -41,8 +77,8 @@ class ProductCollection extends ElementCollection
      */
     public function active()
     {
-        $this->arElementIDList = $this->obProductListStore->getActiveList();
-        return $this;
+        $arElementIDList = $this->obProductListStore->getActiveList();
+        return $this->intersect($arElementIDList);
     }
 
     /**
@@ -57,28 +93,13 @@ class ProductCollection extends ElementCollection
     }
 
     /**
-     * Get product model store list
-     * @param array $arSettings
-     *
-     * @return array|null|ProductItem[]
+     * Filter product list by category ID
+     * @param int $iBrandID
+     * @return $this
      */
-    public function getList($arSettings = [])
+    public function brand($iBrandID)
     {
-        if(empty($this->arElementIDList)) {
-            return null;
-        }
-
-        $arResult = [];
-        foreach ($this->arElementIDList as $iElementID) {
-
-            $obProductStore = ProductItem::make($iElementID, null, $arSettings);
-            if($obProductStore->isEmpty()) {
-                continue;
-            }
-
-            $arResult[$iElementID] = $obProductStore;
-        }
-
-        return $arResult;
+        $arElementIDList = $this->obProductListStore->getByBrand($iBrandID);
+        return $this->intersect($arElementIDList);
     }
 }

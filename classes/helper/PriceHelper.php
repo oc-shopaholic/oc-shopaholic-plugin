@@ -10,7 +10,7 @@ use Lovata\Shopaholic\Models\Settings;
 class PriceHelper
 {
     /** @var int */
-    protected $iDecimals = 2;
+    protected $iDecimal = 2;
 
     /** @var string  */
     protected $sDecPoint = '.';
@@ -24,7 +24,10 @@ class PriceHelper
     public function __construct()
     {
         //Get options from settings
-        $this->iDecimals = (int) Settings::getValue('decimals');
+        $iDecimal = Settings::getValue('decimals');
+        if($iDecimal != null) {
+            $this->iDecimal = (int) $iDecimal;
+        }
 
         $sDecPoint = Settings::getValue('dec_point');
         switch($sDecPoint) {
@@ -52,6 +55,6 @@ class PriceHelper
      */
     public function get($fPrice)
     {
-        return number_format($fPrice, $this->iDecimals, $this->sDecPoint, $this->sThousandsSep);
+        return number_format($fPrice, $this->iDecimal, $this->sDecPoint, $this->sThousandsSep);
     }
 }

@@ -77,11 +77,11 @@ tabs:
             span: left
             type: fileupload
             tab: 'lovata.toolbox::lang.tab.images'
-        offers:
-            label: 'lovata.shopaholic::lang.field.offers'
+        offer:
+            label: 'lovata.shopaholic::lang.field.offer'
             span: full
             context:
                 - update
                 - preview
             type: partial
-            tab: 'lovata.shopaholic::lang.tab.offers'
+            tab: 'lovata.shopaholic::lang.tab.offer'

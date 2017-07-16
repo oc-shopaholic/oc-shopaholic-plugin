@@ -19,8 +19,19 @@ class BrandModelHandler
      */
     public function subscribe($obEvent)
     {
-        $obEvent->listen('shopaholic.brand.after.save', BrandModelHandler::class.'@afterSave');
-        $obEvent->listen('shopaholic.brand.after.delete', BrandModelHandler::class.'@afterDelete');
+        Brand::extend(function ($obElement) {
+            /** @var Brand $obElement */
+            $obElement->bindEvent('model.afterSave', function () use($obElement) {
+                $this->afterSave($obElement);
+            });
+        });
+
+        Brand::extend(function ($obElement) {
+            /** @var Brand $obElement */
+            $obElement->bindEvent('model.afterDelete', function () use($obElement) {
+                $this->afterDelete($obElement);
+            });
+        });
     }
 
     /**

@@ -1,6 +1,7 @@
 <?php namespace Lovata\Shopaholic\Classes\Event;
 
 use Kharanenka\Helper\CCache;
+use Lovata\Shopaholic\Classes\Item\BrandItem;
 use Lovata\Shopaholic\Classes\Item\CategoryItem;
 use Lovata\Shopaholic\Classes\Item\ProductItem;
 use Lovata\Shopaholic\Classes\Store\ProductListStore;
@@ -32,8 +33,19 @@ class ProductModelHandler
      */
     public function subscribe($obEvent)
     {
-        $obEvent->listen('shopaholic.product.after.save', ProductModelHandler::class.'@afterSave');
-        $obEvent->listen('shopaholic.product.after.delete', ProductModelHandler::class.'@afterDelete');
+        Product::extend(function ($obElement) {
+            /** @var Product $obElement */
+            $obElement->bindEvent('model.afterSave', function () use($obElement) {
+                $this->afterSave($obElement);
+            });
+        });
+
+        Product::extend(function ($obElement) {
+            /** @var Product $obElement */
+            $obElement->bindEvent('model.afterDelete', function () use($obElement) {
+                $this->afterDelete($obElement);
+            });
+        });
     }
 
     /**
@@ -54,6 +66,9 @@ class ProductModelHandler
 
         //Check "category_id" field
         $this->checkCategoryIDField();
+
+        //Check "brand_id" field
+        $this->checkBrandIDField();
 
         //Check "popularity" field
         $this->checkPopularityField();
@@ -77,6 +92,7 @@ class ProductModelHandler
         }
 
         $this->removeFromCategoryList($obElement->category_id);
+        $this->removeFromBrandList($obElement->brand_id);
 
         $this->removeFromSortingList(ProductListStore::SORT_PRICE_ASC);
         $this->removeFromSortingList(ProductListStore::SORT_PRICE_DESC);
@@ -125,6 +141,21 @@ class ProductModelHandler
         //Update product ID cache list for category
         $this->addToCategoryList($this->obElement->category_id);
         $this->removeFromCategoryList((int) $this->obElement->getOriginal('category_id'));
+    }
+
+    /**
+     * Check product "brand_id" field, if it was changed, then clear cache
+     */
+    private function checkBrandIDField()
+    {
+        //Check "brand_id" field
+        if($this->obElement->getOriginal('brand_id') == $this->obElement->brand_id){
+            return;
+        }
+
+        //Update product ID cache list for brand
+        $this->addToBrandList($this->obElement->brand_id);
+        $this->removeFromBrandList((int) $this->obElement->getOriginal('brand_id'));
     }
 
     /**
@@ -226,6 +257,75 @@ class ProductModelHandler
         $arProductIDList = CCache::get($arCacheTags, $sCacheKey);
         if(empty($arProductIDList)) {
             $this->obProductListStore->getByCategory($iCategoryID);
+            return;
+        }
+
+        if(!in_array($this->obElement->id, $arProductIDList)) {
+            return;
+        }
+
+        //Remove element from cache array and save
+        $iPosition = array_search($this->obElement->id, $arProductIDList);
+        if($iPosition === false) {
+            return;
+        }
+
+        unset($arProductIDList[$iPosition]);
+
+        //Set cache data
+        CCache::forever($arCacheTags, $sCacheKey, $arProductIDList);
+    }
+
+    /**
+     * Add product in product ID list for brand
+     * @param int $iBrandID
+     */
+    private function addToBrandList($iBrandID)
+    {
+        if(empty($iBrandID)) {
+            return;
+        }
+
+        //Get cache data
+        $arCacheTags = [Plugin::CACHE_TAG, ProductListStore::CACHE_TAG_LIST, BrandItem::CACHE_TAG_ELEMENT];
+        $sCacheKey = $iBrandID;
+
+        //Check cache array
+        $arProductIDList = CCache::get($arCacheTags, $sCacheKey);
+        if(empty($arProductIDList)) {
+            $this->obProductListStore->getByBrand($iBrandID);
+            return;
+        }
+
+        if(in_array($this->obElement->id, $arProductIDList)) {
+            return;
+        }
+
+        //Add element to cache array and save
+        $arProductIDList[] = $this->obElement->id;
+
+        //Set cache data
+        CCache::forever($arCacheTags, $sCacheKey, $arProductIDList);
+    }
+
+    /**
+     * Remove product from product ID list for brand
+     * @param int $iBrandID
+     */
+    private function removeFromBrandList($iBrandID)
+    {
+        if(empty($iBrandID)) {
+            return;
+        }
+
+        //Get cache data
+        $arCacheTags = [Plugin::CACHE_TAG, ProductListStore::CACHE_TAG_LIST, BrandItem::CACHE_TAG_ELEMENT];
+        $sCacheKey = $iBrandID;
+
+        //Check cache array
+        $arProductIDList = CCache::get($arCacheTags, $sCacheKey);
+        if(empty($arProductIDList)) {
+            $this->obProductListStore->getByBrand($iBrandID);
             return;
         }
 

@@ -1,9 +1,12 @@
 <?php namespace Lovata\Shopaholic\Classes\Event;
 
+use Kharanenka\Helper\CCache;
 use Lovata\Shopaholic\Classes\Item\OfferItem;
 use Lovata\Shopaholic\Classes\Item\ProductItem;
+use Lovata\Shopaholic\Classes\Store\OfferListStore;
 use Lovata\Shopaholic\Classes\Store\ProductListStore;
 use Lovata\Shopaholic\Models\Offer;
+use Lovata\Shopaholic\Plugin;
 
 /**
  * Class OfferModelHandler
@@ -18,9 +21,13 @@ class OfferModelHandler
     /** @var  ProductListStore */
     protected $obProductListStore;
 
-    public function __construct(ProductListStore $obProductListStore)
+    /** @var  OfferListStore */
+    protected $obOfferListStore;
+
+    public function __construct(ProductListStore $obProductListStore, OfferListStore $obOfferListStore)
     {
         $this->obProductListStore = $obProductListStore;
+        $this->obOfferListStore = $obOfferListStore;
     }
 
     /**
@@ -29,8 +36,19 @@ class OfferModelHandler
      */
     public function subscribe($obEvent)
     {
-        $obEvent->listen('shopaholic.offer.after.save', OfferModelHandler::class.'@afterSave');
-        $obEvent->listen('shopaholic.offer.after.delete', OfferModelHandler::class.'@afterDelete');
+        Offer::extend(function ($obElement) {
+            /** @var Offer $obElement */
+            $obElement->bindEvent('model.afterSave', function () use($obElement) {
+                $this->afterSave($obElement);
+            });
+        });
+
+        Offer::extend(function ($obElement) {
+            /** @var Offer $obElement */
+            $obElement->bindEvent('model.afterDelete', function () use($obElement) {
+                $this->afterDelete($obElement);
+            });
+        });
     }
 
     /**
@@ -48,6 +66,9 @@ class OfferModelHandler
 
         $this->checkProductIDField();
         $this->checkPriceField();
+
+        //Check "active" flag
+        $this->checkActiveField();
     }
 
     /**
@@ -63,7 +84,10 @@ class OfferModelHandler
         $this->obElement = $obElement;
 
         $this->clearItemCache();
-        $this->clearProductItemCache($obElement->product_id);
+
+        if($obElement->active) {
+            $this->removeFromActiveList();
+        }
 
         //Get product object
         $obProduct = $obElement->product;
@@ -143,4 +167,55 @@ class OfferModelHandler
         $this->obProductListStore->updateCacheBySorting(ProductListStore::SORT_PRICE_ASC);
         $this->obProductListStore->updateCacheBySorting(ProductListStore::SORT_PRICE_DESC);
     }
-} 
+
+    /**
+     * Check offer "active" field, if it was changed, then clear cache
+     */
+    private function checkActiveField()
+    {
+        //check product "active" field
+        if($this->obElement->getOriginal('active') == $this->obElement->active) {
+            return;
+        }
+
+        //Get cache data
+        $arCacheTags = [Plugin::CACHE_TAG, OfferListStore::CACHE_TAG_LIST];
+        $sCacheKey = OfferListStore::CACHE_TAG_LIST;
+
+        //Clear cache data
+        CCache::clear($arCacheTags, $sCacheKey);
+        $this->obOfferListStore->getActiveList();
+    }
+
+    /**
+     * Remove offer from active product ID list
+     */
+    private function removeFromActiveList()
+    {
+        //Get cache data
+        $arCacheTags = [Plugin::CACHE_TAG, OfferListStore::CACHE_TAG_LIST];
+        $sCacheKey = OfferListStore::CACHE_TAG_LIST;
+
+        //Check cache array
+        $arOfferIDList = CCache::get($arCacheTags, $sCacheKey);
+        if(empty($arOfferIDList)) {
+            $this->obOfferListStore->getActiveList();
+            return;
+        }
+
+        if(!in_array($this->obElement->id, $arOfferIDList)) {
+            return;
+        }
+
+        //Remove element from cache array and save
+        $iPosition = array_search($this->obElement->id, $arOfferIDList);
+        if($iPosition === false) {
+            return;
+        }
+
+        unset($arOfferIDList[$iPosition]);
+
+        //Set cache data
+        CCache::forever($arCacheTags, $sCacheKey, $arOfferIDList);
+    }
+}

@@ -1,6 +1,5 @@
 <?php namespace Lovata\Shopaholic\Models;
 
-use Event;
 use Model;
 
 use Kharanenka\Helper\CustomValidationMessage;
@@ -90,21 +89,5 @@ class Brand extends Model
         $this->setCustomMessage(ToolboxPlugin::NAME, ['required', 'unique']);
         $this->setCustomAttributeName(ToolboxPlugin::NAME, ['name', 'slug']);
         parent::__construct($attributes);
-    }
-
-    /**
-     * After save method
-     */
-    public function afterSave()
-    {
-        Event::fire('shopaholic.brand.after.save', [$this]);
-    }
-
-    /**
-     * After delete method
-     */
-    public function afterDelete()
-    {
-        Event::fire('shopaholic.brand.after.delete', [$this]);
     }
 }

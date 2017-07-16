@@ -117,9 +117,9 @@ class Products extends Controller
         }
 
         //Add model config
-        $arConfig['offers']['manage']['form'] = $arFormConfig;
-        $arConfig['offers']['manage']['list'] = $arListConfig;
-        $arConfig['offers']['view']['list'] = $arListConfig;
+        $arConfig['offer']['manage']['form'] = $arFormConfig;
+        $arConfig['offer']['manage']['list'] = $arListConfig;
+        $arConfig['offer']['view']['list'] = $arListConfig;
 
         $this->relationConfig = $arConfig;
     }

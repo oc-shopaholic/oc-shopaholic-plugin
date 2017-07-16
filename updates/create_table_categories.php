@@ -22,7 +22,7 @@ class CreateTableCategories extends Migration
             $table->increments('id')->unsigned();
             $table->boolean('active')->default(0);
             $table->string('name');
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->string('code')->nullable();
             $table->string('external_id')->nullable();
             $table->text('preview_text')->nullable();
@@ -37,8 +37,6 @@ class CreateTableCategories extends Migration
             $table->index('slug');
             $table->index('code');
             $table->index('external_id');
-
-            $table->unique('slug');
         });
     }
     

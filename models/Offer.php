@@ -1,8 +1,6 @@
 <?php namespace Lovata\Shopaholic\Models;
 
-use App;
 use Model;
-use Event;
 
 use Kharanenka\Helper\CustomValidationMessage;
 use Kharanenka\Helper\DataFileModel;
@@ -108,22 +106,6 @@ class Offer extends Model
     }
 
     /**
-     * After save method
-     */
-    public function afterSave()
-    {
-        Event::fire('shopaholic.offer.after.save', [$this]);
-    }
-
-    /**
-     * After delete method
-     */
-    public function afterDelete()
-    {
-        Event::fire('shopaholic.offer.after.delete', [$this]);
-    }
-
-    /**
      * Get price value
      * @return double
      */
@@ -149,7 +131,7 @@ class Offer extends Model
      */
     public function getPriceAttribute($dPrice)
     {
-        $obPriceHelper = App::make(PriceHelper::class);
+        $obPriceHelper = app()->make(PriceHelper::class);
         return $obPriceHelper->get($dPrice);
     }
 
@@ -161,7 +143,7 @@ class Offer extends Model
      */
     public function getOldPriceAttribute($dPrice)
     {
-        $obPriceHelper = App::make(PriceHelper::class);
+        $obPriceHelper = app()->make(PriceHelper::class);
         return $obPriceHelper->get($dPrice);
     }
 
@@ -172,7 +154,7 @@ class Offer extends Model
     public function setPriceAttribute($sPrice)
     {
         $sPrice = str_replace(',', '.', $sPrice);
-        $sPrice = preg_replace("/[^0-9\.]/", "",$sPrice);
+        $sPrice = (float) preg_replace("/[^0-9\.]/", "",$sPrice);
         $this->attributes['price'] = $sPrice;
     }
 
@@ -183,7 +165,7 @@ class Offer extends Model
     public function setOldPriceAttribute($sPrice)
     {
         $sPrice = str_replace(',', '.', $sPrice);
-        $sPrice = preg_replace("/[^0-9\.]/", "",$sPrice);
+        $sPrice = (float) preg_replace("/[^0-9\.]/", "",$sPrice);
         if($sPrice <= $this->getPriceValue()) {
             $sPrice = 0;
         }

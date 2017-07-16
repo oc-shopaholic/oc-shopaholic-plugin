@@ -34,6 +34,8 @@ class Brands extends Controller
         BackendMenu::setContext('Lovata.Shopaholic', 'shopaholic-menu-main', 'shopaholic-menu-brands');
     }
 
+    //TODO:: Пересмотреть удаление полей
+
     /**
      * Get $listConfig
      */

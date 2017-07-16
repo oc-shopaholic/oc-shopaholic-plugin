@@ -1,6 +1,7 @@
 <?php namespace Lovata\Shopaholic\Classes\Store;
 
 use Kharanenka\Helper\CCache;
+use Lovata\Shopaholic\Classes\Item\BrandItem;
 use Lovata\Shopaholic\Classes\Item\CategoryItem;
 use Lovata\Shopaholic\Models\Offer;
 use Lovata\Shopaholic\Models\Product;
@@ -146,6 +147,36 @@ class ProductListStore
         //Get product ID list
         /** @var array $arProductIDList */
         $arProductIDList = Product::getByCategory($iCategoryID)->lists('id');
+
+        //Set cache data
+        CCache::forever($arCacheTags, $sCacheKey, $arProductIDList);
+
+        return $arProductIDList;
+    }
+
+    /**
+     * Get cached product ID list, filter by category ID
+     * @param int $iBrandID
+     * @return array|null
+     */
+    public function getByBrand($iBrandID)
+    {
+        if(empty($iBrandID)) {
+            return null;
+        }
+
+        //Get cache data
+        $arCacheTags = [Plugin::CACHE_TAG, self::CACHE_TAG_LIST, BrandItem::CACHE_TAG_ELEMENT];
+        $sCacheKey = $iBrandID;
+
+        $arProductIDList = CCache::get($arCacheTags, $sCacheKey);
+        if(!empty($arProductIDList)) {
+            return $arProductIDList;
+        }
+
+        //Get product ID list
+        /** @var array $arProductIDList */
+        $arProductIDList = Product::getByBrand($iBrandID)->lists('id');
 
         //Set cache data
         CCache::forever($arCacheTags, $sCacheKey, $arProductIDList);

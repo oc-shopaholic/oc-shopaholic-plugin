@@ -1,10 +1,9 @@
 <?php namespace Lovata\Shopaholic\Tests\Unit\Models;
 
 include_once __DIR__.'/../../../../toolbox/vendor/autoload.php';
+include_once __DIR__.'/../../../../../../tests/PluginTestCase.php';
 
 use Lovata\Shopaholic\Models\Product;
-use Lovata\Toolbox\Traits\Tests\TestModelCacheTagConst;
-use Lovata\Toolbox\Traits\Tests\TestModelGetDataMethod;
 use Lovata\Toolbox\Traits\Tests\TestModelHasImages;
 use Lovata\Toolbox\Traits\Tests\TestModelHasPreviewImage;
 use Lovata\Toolbox\Traits\Tests\TestModelValidationNameField;
@@ -20,56 +19,33 @@ use PluginTestCase;
  */
 class ProductTest extends PluginTestCase
 {
-    use TestModelCacheTagConst;
     use TestModelHasPreviewImage;
     use TestModelHasImages;
+
     use TestModelValidationNameField;
     use TestModelValidationSlugField;
-    use TestModelGetDataMethod;
+    protected $sModelClass;
 
-    const MODEL_NAME = '\Lovata\Shopaholic\Models\Product';
-
-    /** @var array Used in TestModelGetDataMethod */
-    protected $arCreateModelData = [
-        'name'         => 'Windows phone',
-        'slug'         => 'windows_phone',
-        'active'       => true,
-        'code'         => 'phone_code',
-        'category_id'  => 1,
-        'brand_id'     => 1,
-        'preview_text' => 'test preview text',
-        'description'  => '<p>test description</p>',
-    ];
-
-    /** @var array Used in TestModelGetDataMethod */
-    protected $arModelData = [
-        'id'           => 1,
-        'active'       => true,
-        'trashed'      => false,
-        'name'         => 'Windows phone',
-        'slug'         => 'windows_phone',
-        'code'         => 'phone_code',
-        'category_id'  => 1,
-        'brand_id'     => 1,
-        'preview_text' => 'test preview text',
-        'description'  => '<p>test description</p>',
-        'preview_image' => null,
-        'images'        => [],
-    ];
+    /**
+     * CategoryTest constructor.
+     */
+    public function __construct()
+    {
+        $this->sModelClass = Product::class;
+    }
 
     /**
      * Check model "offer" relation config
      */
     public function testHasOfferRelation()
     {
-        $sModelClass = self::MODEL_NAME;
-        $sErrorMessage = $sModelClass.' model has not correct "offer" relation config';
+        $sErrorMessage = $this->sModelClass.' model has not correct "offer" relation config';
 
         /** @var Product $obModel */
         $obModel = new Product();
         self::assertNotEmpty($obModel->hasMany, $sErrorMessage);
-        self::assertArrayHasKey('offers', $obModel->hasMany, $sErrorMessage);
-        self::assertEquals($obModel->hasMany['offers'], ['Lovata\Shopaholic\Models\Offer'], $sErrorMessage);
+        self::assertArrayHasKey('offer', $obModel->hasMany, $sErrorMessage);
+        self::assertEquals(['Lovata\Shopaholic\Models\Offer'], $obModel->hasMany['offer'], $sErrorMessage);
     }
 
     /**
@@ -77,14 +53,13 @@ class ProductTest extends PluginTestCase
      */
     public function testHasCategoryRelation()
     {
-        $sModelClass = self::MODEL_NAME;
-        $sErrorMessage = $sModelClass.' model has not correct "category" relation config';
+        $sErrorMessage = $this->sModelClass.' model has not correct "category" relation config';
 
         /** @var Product $obModel */
         $obModel = new Product();
         self::assertNotEmpty($obModel->belongsTo, $sErrorMessage);
         self::assertArrayHasKey('category', $obModel->belongsTo, $sErrorMessage);
-        self::assertEquals($obModel->belongsTo['category'], ['Lovata\Shopaholic\Models\Category'], $sErrorMessage);
+        self::assertEquals(['Lovata\Shopaholic\Models\Category'], $obModel->belongsTo['category'], $sErrorMessage);
     }
 
     /**
@@ -92,13 +67,12 @@ class ProductTest extends PluginTestCase
      */
     public function testHasBrandRelation()
     {
-        $sModelClass = self::MODEL_NAME;
-        $sErrorMessage = $sModelClass.' model has not correct "brand" relation config';
+        $sErrorMessage = $this->sModelClass.' model has not correct "brand" relation config';
 
         /** @var Product $obModel */
         $obModel = new Product();
         self::assertNotEmpty($obModel->belongsTo, $sErrorMessage);
         self::assertArrayHasKey('brand', $obModel->belongsTo, $sErrorMessage);
-        self::assertEquals($obModel->belongsTo['brand'], ['Lovata\Shopaholic\Models\Brand'], $sErrorMessage);
+        self::assertEquals(['Lovata\Shopaholic\Models\Brand'], $obModel->belongsTo['brand'], $sErrorMessage);
     }
 }

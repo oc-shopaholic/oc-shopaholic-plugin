@@ -1,4 +1,4 @@
-offers:
+offer:
     label: 'lovata.shopaholic::lang.offer.name'
     manage:
         form: $/lovata/shopaholic/models/offer/fields.yaml

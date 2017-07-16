@@ -15,7 +15,7 @@
 
         //Product fields
         'brand'                             => 'Brand',
-        'offers'                            => 'Offers',
+        'offer'                            => 'Offers',
 
         //Settings fields
         'decimals'                          => 'Число знаков после запятой',
@@ -38,7 +38,7 @@
         'brands'                => 'Brands',
     ],
     'tab' => [
-        'offers'                => 'Offers',
+        'offer'                => 'Offers',
         'field_view'            => 'Отображение полей',
         'prices_format'         => 'Формат цен',
         'permissions'           => 'Shopaholic',

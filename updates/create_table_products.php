@@ -22,7 +22,7 @@ class CreateTableProducts extends Migration
             $table->increments('id')->unsigned();
             $table->boolean('active')->default(0);
             $table->string('name');
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->integer('brand_id')->nullable()->unsigned();
             $table->integer('category_id')->nullable()->unsigned();
             $table->string('external_id')->nullable();
@@ -38,8 +38,6 @@ class CreateTableProducts extends Migration
             $table->index('external_id');
             $table->index('brand_id');
             $table->index('category_id');
-
-            $table->unique('slug');
         });
     }
     

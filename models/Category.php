@@ -1,7 +1,6 @@
 <?php namespace Lovata\Shopaholic\Models;
 
 use Model;
-use Event;
 
 use Kharanenka\Helper\CustomValidationMessage;
 use Kharanenka\Helper\DataFileModel;
@@ -115,22 +114,6 @@ class Category extends Model
         $this->setCustomMessage(ToolboxPlugin::NAME, ['required', 'unique', 'max.string']);
         $this->setCustomAttributeName(ToolboxPlugin::NAME, ['name', 'slug', 'preview_text']);
         parent::__construct($attributes);
-    }
-
-    /**
-     * After save method
-     */
-    public function afterSave()
-    {
-        Event::fire('shopaholic.category.after.save', [$this]);
-    }
-
-    /**
-     * After delete method
-     */
-    public function afterDelete()
-    {
-        Event::fire('shopaholic.category.after.delete', [$this]);
     }
 
     /**

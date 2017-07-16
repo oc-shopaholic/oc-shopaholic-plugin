@@ -22,8 +22,20 @@ class CategoryModelHandler
      */
     public function subscribe($obEvent)
     {
-        $obEvent->listen('shopaholic.category.after.save', CategoryModelHandler::class.'@afterSave');
-        $obEvent->listen('shopaholic.category.after.delete', CategoryModelHandler::class.'@afterDelete');
+        Category::extend(function ($obElement) {
+            /** @var Category $obElement */
+            $obElement->bindEvent('model.afterSave', function () use($obElement) {
+                $this->afterSave($obElement);
+            });
+        });
+
+        Category::extend(function ($obElement) {
+            /** @var Category $obElement */
+            $obElement->bindEvent('model.afterDelete', function () use($obElement) {
+                $this->afterDelete($obElement);
+            });
+        });
+
         $obEvent->listen('shopaholic.category.update.sorting', CategoryModelHandler::class.'@clearTopLevelList');
     }
 

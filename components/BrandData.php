@@ -1,19 +1,15 @@
 <?php namespace Lovata\Shopaholic\Components;
 
-use Input;
-use Request;
+use Lovata\Toolbox\Classes\Component\ElementData;
 use Lovata\Shopaholic\Classes\Item\BrandItem;
-use Cms\Classes\ComponentBase;
 
 /**
  * Class BrandData
  * @package Lovata\Shopaholic\Components
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
-class BrandData extends ComponentBase
+class BrandData extends ElementData
 {
-    protected $iBrandID = null;
-
     /**
      * @return array
      */
@@ -26,37 +22,12 @@ class BrandData extends ComponentBase
     }
 
     /**
-     * Ajax listener
-     * @return array|null
-     */
-    public function onGetData()
-    {
-        $this->iBrandID = Input::get('brand_id');
-        $obBrandItem = BrandItem::make($this->iBrandID);
-
-        return $obBrandItem->getArray();
-    }
-
-    /**
-     * Ajax listener
-     */
-    public function onAjaxRequest()
-    {
-        $this->iBrandID = Input::get('brand_id');
-    }
-
-    /**
-     * Get brand data
-     * @param int $iBrandID
+     * Make new element item
+     * @param int $iElementID
      * @return BrandItem
      */
-    public function get($iBrandID = null)
+    protected function makeItem($iElementID)
     {
-        if(Request::ajax() && empty($iBrandID)) {
-            $iBrandID = $this->iBrandID;
-        }
-
-        $obBrandItem = BrandItem::make($iBrandID);
-        return $obBrandItem;
+        return BrandItem::make($iElementID);
     }
 }

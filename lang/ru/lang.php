@@ -15,7 +15,7 @@
 
         //Product fields
         'brand'                             => 'Бренд',
-        'offers'                            => 'Товарные предложения',
+        'offer'                            => 'Товарные предложения',
 
         //Settings fields
         'decimals'                          => 'Число знаков после запятой',
@@ -38,7 +38,7 @@
         'brands'                => 'Бренды',
     ],
     'tab' => [
-        'offers'                => 'Товарные предложения',
+        'offer'                => 'Товарные предложения',
         'field_view'            => 'Отображение полей',
         'prices_format'         => 'Формат цен',
         'permissions'           => 'Shopaholic',

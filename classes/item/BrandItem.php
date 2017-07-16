@@ -3,7 +3,7 @@
 use Lovata\Shopaholic\Plugin;
 use Lovata\Shopaholic\Models\Brand;
 
-use Lovata\Toolbox\Classes\ElementItem;
+use Lovata\Toolbox\Classes\Item\ElementItem;
 
 /**
  * Class BrandStore
@@ -33,6 +33,10 @@ class BrandItem extends ElementItem
      */
     protected function setElementObject()
     {
+        if(!empty($this->obElement) && ! $this->obElement instanceof Brand) {
+            $this->obElement = null;
+        }
+
         if(!empty($this->obElement) || empty($this->iElementID)) {
             return;
         }

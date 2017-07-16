@@ -1,7 +1,6 @@
 <?php namespace Lovata\Shopaholic\Models;
 
 use Model;
-use Event;
 
 use Kharanenka\Helper\CustomValidationMessage;
 use Kharanenka\Helper\DataFileModel;
@@ -49,8 +48,10 @@ use October\Rain\Database\Traits\Validation;
  * @property Brand $brand
  * @method static \October\Rain\Database\Relations\BelongsTo brand()
  *
- * @property \October\Rain\Database\Collection|Offer[] $offers
- * @method Offer|\October\Rain\Database\Relations\HasMany offers()
+ * @property \October\Rain\Database\Collection|Offer[] $offer
+ * @method Offer|\October\Rain\Database\Relations\HasMany offer()
+ *
+ * @method static $this getByBrand(int $iBrandID)
  *
  * Popularity for Shopaholic field
  * @property int $popularity
@@ -80,7 +81,7 @@ class Product extends Model
 
     public $attachOne = ['preview_image' => 'System\Models\File'];
     public $attachMany = ['images' => 'System\Models\File'];
-    public $hasMany = ['offers' => ['Lovata\Shopaholic\Models\Offer']];
+    public $hasMany = ['offer' => ['Lovata\Shopaholic\Models\Offer']];
     public $belongsTo = [
         'category' => ['Lovata\Shopaholic\Models\Category'],
         'brand'    => ['Lovata\Shopaholic\Models\Brand'],
@@ -119,18 +120,17 @@ class Product extends Model
     }
 
     /**
-     * After save method
+     * Get element by brand ID
+     * @param Product $obQuery
+     * @param string $sData
+     * @return $this
      */
-    public function afterSave()
-    {
-        Event::fire('shopaholic.product.after.save', [$this]);
-    }
+    public function scopeGetByBrand($obQuery, $sData) {
 
-    /**
-     * After delete method
-     */
-    public function afterDelete()
-    {
-        Event::fire('shopaholic.product.after.delete', [$this]);
+        if(!empty($sData)) {
+            $obQuery->where('brand_id', $sData);
+        }
+
+        return $obQuery;
     }
 }

@@ -2,8 +2,9 @@
 
 use Lovata\Shopaholic\Plugin;
 use Lovata\Shopaholic\Models\Category;
+use Lovata\Shopaholic\Classes\Collection\CategoryCollection;
 
-use Lovata\Toolbox\Classes\ElementItem;
+use Lovata\Toolbox\Classes\Item\ElementItem;
 
 /**
  * Class CategoryItem
@@ -23,8 +24,10 @@ use Lovata\Toolbox\Classes\ElementItem;
  * @property string $description
  * @property array  $images
  *
+ * @property CategoryItem $parent
+ *
  * @property array  $children_id_list
- * @property CategoryItem[] $children
+ * @property CategoryCollection $children
  */
 class CategoryItem extends ElementItem
 {
@@ -33,11 +36,26 @@ class CategoryItem extends ElementItem
     /** @var Category */
     protected $obElement = null;
 
+    public $arRelationList = [
+        'parent' => [
+            'class' => CategoryItem::class,
+            'field' => 'parent_id',
+        ],
+        'children' => [
+            'class' => CategoryCollection::class,
+            'field' => 'children_id_list',
+        ],
+    ];
+
     /**
      * Set element object
      */
     protected function setElementObject()
     {
+        if(!empty($this->obElement) && ! $this->obElement instanceof Category) {
+            $this->obElement = null;
+        }
+
         if(!empty($this->obElement) || empty($this->iElementID)) {
             return;
         }
@@ -84,45 +102,5 @@ class CategoryItem extends ElementItem
             ->lists('id');
 
         return $arResult;
-    }
-
-    /**
-     * Set cached category data
-     */
-    protected function setCachedData()
-    {
-        if(empty($this->iElementID)) {
-            return;
-        }
-
-        //Set model data from cache
-        $this->setDataFromCache();
-
-        $this->setChildrenCategoryList();
-        self::extendMethodResult(__FUNCTION__, $this->arModelData);
-    }
-
-    /**
-     * Set children category list
-     */
-    protected function setChildrenCategoryList()
-    {
-        //Add data children categories
-        $this->arModelData['children'] = [];
-        $arChildrenCategoryIDList = $this->children_id_list;
-
-        if(empty($arChildrenCategoryIDList)) {
-            return;
-        }
-
-        foreach($arChildrenCategoryIDList as $iChildCategoryID) {
-
-            $arChildCategoryData = self::make($iChildCategoryID);
-            if($arChildCategoryData->isEmpty()) {
-                continue;
-            }
-
-            $arResult['children'][$iChildCategoryID] = $arChildCategoryData;
-        }
     }
 }

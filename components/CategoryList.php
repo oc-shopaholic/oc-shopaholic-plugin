@@ -1,15 +1,14 @@
 <?php namespace Lovata\Shopaholic\Components;
 
-use Cms\Classes\ComponentBase;
 use Lovata\Shopaholic\Classes\Collection\CategoryCollection;
-use Lovata\Shopaholic\Classes\Item\CategoryItem;
+use Lovata\Toolbox\Components\ElementList;
 
 /**
  * Class CategoryList
  * @package Lovata\Shopaholic\Components
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
-class CategoryList extends ComponentBase
+class CategoryList extends ElementList
 {
     /**
      * @return array
@@ -23,12 +22,10 @@ class CategoryList extends ComponentBase
     }
 
     /**
-     * Get category tree
-     * @return array|CategoryItem[]|null
+     * Make element collection
      */
-    public function get()
+    protected function makeCollection()
     {
-        $obCategoryCollection = CategoryCollection::make();
-        return $obCategoryCollection->tree()->getList();
+        $this->obItemCollection = CategoryCollection::make();
     }
 }

@@ -2,25 +2,16 @@
 
 use Event;
 use Lovata\Shopaholic\Classes\Item\BrandItem;
-use Lovata\Toolbox\Traits\Helpers\TraitComponentNotFoundResponse;
+use Lovata\Toolbox\Components\ElementPage;
 use Lovata\Shopaholic\Models\Brand;
-use Cms\Classes\ComponentBase;
 
 /**
  * Class BrandPage
  * @package Lovata\Shopaholic\Components
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
-class BrandPage extends ComponentBase
+class BrandPage extends ElementPage
 {
-    use TraitComponentNotFoundResponse;
-
-    /** @var null|Brand */
-    protected $obBrand = null;
-
-    /** @var  BrandItem */
-    protected $obBrandItem;
-
     /**
      * @return array
      */
@@ -33,12 +24,28 @@ class BrandPage extends ComponentBase
     }
 
     /**
-     * @return array
+     * Get element object
+     * @param string $sElementSlug
+     * @return Brand
      */
-    public function defineProperties()
+    protected function getElementObject($sElementSlug)
     {
-        $arProperties = $this->getElementPageProperties();
-        return $arProperties;
+        if(empty($sElementSlug)) {
+            return null;
+        }
+
+        return Brand::active()->getBySlug($sElementSlug)->first();
+    }
+
+    /**
+     * Make new element item
+     * @param int $iElementID
+     * @param Brand $obElement
+     * @return BrandItem
+     */
+    protected function makeItem($iElementID, $obElement)
+    {
+        return BrandItem::make($iElementID, $obElement);
     }
 
     /**
@@ -46,36 +53,13 @@ class BrandPage extends ComponentBase
      */
     public function onRun()
     {
-        //Get brand slug
-        $sBrandSlug = $this->property('slug');
-        if (empty($sBrandSlug)) {
-            return $this->getErrorResponse();
+        $obResult = parent::onRun();
+        if($obResult === null) {
+
+            //Send event
+            Event::fire('shopaholic.brand.open', [$this->obElement]);
         }
 
-        //Get brand by slug
-        /** @var Brand $obBrand */
-        $obBrand = Brand::active()->getBySlug($sBrandSlug)->first();
-        if (empty($obBrand)) {
-            return $this->getErrorResponse();
-        }
-
-        $this->obBrand = $obBrand;
-
-        //Get brand item
-        $this->obBrandItem = BrandItem::make($this->obBrand->id, $this->obBrand);
-
-        //Send event
-        Event::fire('shopaholic.brand.open', [$obBrand]);
-
-        return null;
-    }
-
-    /**
-     * Get brand item
-     * @return BrandItem
-     */
-    public function get()
-    {
-        return $this->obBrandItem;
+        return $obResult;
     }
 }

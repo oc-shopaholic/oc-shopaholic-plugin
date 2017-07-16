@@ -1,7 +1,7 @@
 <?php namespace Lovata\Shopaholic\Classes\Collection;
 
 use Lovata\Shopaholic\Classes\Store\CategoryListStore;
-use Lovata\Toolbox\Classes\ElementCollection;
+use Lovata\Toolbox\Classes\Collection\ElementCollection;
 use Lovata\Shopaholic\Classes\Item\CategoryItem;
 
 /**
@@ -24,6 +24,18 @@ class CategoryCollection extends ElementCollection
     }
 
     /**
+     * Make element item
+     * @param int   $iElementID
+     * @param \Lovata\Shopaholic\Models\Category  $obElement
+     *
+     * @return CategoryItem
+     */
+    protected function makeItem($iElementID, $obElement = null)
+    {
+        return CategoryItem::make($iElementID, $obElement);
+    }
+
+    /**
      * Set to element ID list top level category ID list
      * @return CategoryCollection
      */
@@ -31,29 +43,5 @@ class CategoryCollection extends ElementCollection
     {
         $this->arElementIDList = $this->obCategoryListStore->getTopLevelList();
         return $this;
-    }
-
-    /**
-     * Get category item list
-     * @return array|null|CategoryItem[]
-     */
-    public function getList()
-    {
-        if(empty($this->arElementIDList)) {
-            return null;
-        }
-
-        $arResult = [];
-        foreach ($this->arElementIDList as $iElementID) {
-
-            $obCategoryStore = CategoryItem::make($iElementID);
-            if($obCategoryStore->isEmpty()) {
-                continue;
-            }
-
-            $arResult[$iElementID] = $obCategoryStore;
-        }
-
-        return $arResult;
     }
 }
