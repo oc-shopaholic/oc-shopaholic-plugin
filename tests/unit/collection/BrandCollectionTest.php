@@ -41,7 +41,7 @@ class BrandCollectionTest extends PluginTestCase
     }
 
     /**
-     * Check item fields
+     * Check item collection
      */
     public function testCollectionItem()
     {
@@ -52,7 +52,7 @@ class BrandCollectionTest extends PluginTestCase
 
         $sErrorMessage = 'Brand collection item data is not correct';
 
-        //Check item fields
+        //Check item collection
         $obCollection = BrandCollection::make([$this->obElement->id]);
 
         /** @var BrandItem $obItem */

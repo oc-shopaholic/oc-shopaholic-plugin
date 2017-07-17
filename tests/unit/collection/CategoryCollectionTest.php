@@ -3,11 +3,11 @@
 include_once __DIR__.'/../../../../toolbox/vendor/autoload.php';
 include_once __DIR__.'/../../../../../../tests/PluginTestCase.php';
 
+use PluginTestCase;
+use System\Classes\PluginManager;
 use Lovata\Shopaholic\Classes\Collection\CategoryCollection;
 use Lovata\Shopaholic\Classes\Item\CategoryItem;
 use Lovata\Shopaholic\Models\Category;
-use PluginTestCase;
-use System\Classes\PluginManager;
 
 /**
  * Class CategoryCollectionTest
@@ -20,6 +20,9 @@ class CategoryCollectionTest extends PluginTestCase
 {
     /** @var  Category */
     protected $obElement;
+
+    /** @var  Category */
+    protected $obChildElement;
 
     protected $arCreateData = [
         'name'         => 'name',
@@ -41,7 +44,7 @@ class CategoryCollectionTest extends PluginTestCase
     }
 
     /**
-     * Check item fields
+     * Check item collection
      */
     public function testCollectionItem()
     {
@@ -52,7 +55,7 @@ class CategoryCollectionTest extends PluginTestCase
 
         $sErrorMessage = 'Category collection item data is not correct';
 
-        //Check item fields
+        //Check item collection
         $obCollection = CategoryCollection::make([$this->obElement->id]);
 
         /** @var CategoryItem $obItem */
@@ -62,14 +65,46 @@ class CategoryCollectionTest extends PluginTestCase
     }
 
     /**
+     * Check item collection "tree" method
+     */
+    public function testTreeMethod()
+    {
+        $this->createTestData();
+        if(empty($this->obElement)) {
+            return;
+        }
+
+        $sErrorMessage = 'Category collection "tree" method is not correct';
+
+        //Check item collection
+        $obCollection = CategoryCollection::make()->tree();
+
+        /** @var CategoryItem $obItem */
+        $obItem = $obCollection->first();
+        self::assertInstanceOf(CategoryItem::class, $obItem, $sErrorMessage);
+        self::assertEquals($this->obElement->id, $obItem->id, $sErrorMessage);
+        self::assertEquals(1, $obCollection->count(), $sErrorMessage);
+    }
+
+    /**
      * Create brand object for test
      */
     protected function createTestData()
     {
         //Create new element data
-        $arCreateData = $this->arCreateData;
-        $arCreateData['active'] = true;
+        $arCreatedData = $this->arCreateData;
+        $arCreatedData['active'] = true;
 
-        $this->obElement = Category::create($arCreateData);
+        $this->obElement = Category::create($arCreatedData);
+
+        $arCreatedData = $this->arCreateData;
+        $arCreatedData['active'] = true;
+        $arCreatedData['slug'] = 'slug1';
+
+        $this->obChildElement = Category::create($arCreatedData);
+
+        $this->obChildElement->parent_id = $this->obElement->id;
+        $this->obChildElement->nest_depth = 1;
+        $this->obChildElement->save();
     }
 }

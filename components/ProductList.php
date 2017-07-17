@@ -11,6 +11,8 @@ use Lovata\Shopaholic\Classes\Store\ProductListStore;
  * Class ProductList
  * @package Lovata\Shopaholic\Components
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ *
+ * @mixin ProductCollection
  */
 class ProductList extends SortingElementList
 {

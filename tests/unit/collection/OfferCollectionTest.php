@@ -23,10 +23,12 @@ class OfferCollectionTest extends PluginTestCase
 
     protected $arCreateData = [
         'name'         => 'name',
-        'slug'         => 'slug',
         'code'         => 'code',
         'preview_text' => 'preview_text',
         'description'  => 'description',
+        'price'        => '10,50',
+        'old_price'    => '11,50',
+        'quantity'     => 5,
     ];
 
     /**
@@ -41,7 +43,7 @@ class OfferCollectionTest extends PluginTestCase
     }
 
     /**
-     * Check item fields
+     * Check item collection
      */
     public function testCollectionItem()
     {
@@ -52,7 +54,7 @@ class OfferCollectionTest extends PluginTestCase
 
         $sErrorMessage = 'Offer collection item data is not correct';
 
-        //Check item fields
+        //Check item collection
         $obCollection = OfferCollection::make([$this->obElement->id]);
 
         /** @var OfferItem $obItem */
