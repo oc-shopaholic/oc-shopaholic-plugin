@@ -89,7 +89,7 @@ class ProductItem extends ElementItem
     }
 
     /**
-     * Set product data from model object
+     * Set element data from model object
      *
      * @return array
      */

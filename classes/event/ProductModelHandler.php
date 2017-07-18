@@ -29,9 +29,8 @@ class ProductModelHandler
 
     /**
      * Add listeners
-     * @param \Illuminate\Events\Dispatcher $obEvent
      */
-    public function subscribe($obEvent)
+    public function subscribe()
     {
         Product::extend(function ($obElement) {
             /** @var Product $obElement */

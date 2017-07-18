@@ -32,9 +32,8 @@ class OfferModelHandler
 
     /**
      * Add listeners
-     * @param \Illuminate\Events\Dispatcher $obEvent
      */
-    public function subscribe($obEvent)
+    public function subscribe()
     {
         Offer::extend(function ($obElement) {
             /** @var Offer $obElement */

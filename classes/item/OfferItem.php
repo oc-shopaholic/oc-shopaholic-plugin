@@ -76,7 +76,7 @@ class OfferItem extends ElementItem
     }
 
     /**
-     * Set offer data from model object
+     * Set element data from model object
      *
      * @return array
      */
