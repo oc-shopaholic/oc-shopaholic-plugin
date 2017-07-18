@@ -1,8 +1,5 @@
 <?php namespace Lovata\Shopaholic\Classes\Event;
 
-use Lovata\Shopaholic\Controllers\Brands;
-use Lovata\Shopaholic\Controllers\Categories;
-use Lovata\Shopaholic\Controllers\Products;
 use Lovata\Shopaholic\Models\Settings;
 
 /**
@@ -54,10 +51,10 @@ class SettingsModelHandler
      */
     protected function getAdditionFields()
     {
-        self::addConfiguredFields(Products::getConfiguredBackendFields(), 'product');
-        self::addConfiguredFields(Products::getOfferConfiguredBackendFields(), 'offer');
-        self::addConfiguredFields(Categories::getConfiguredBackendFields(), 'category');
-        self::addConfiguredFields(Brands::getConfiguredBackendFields(), 'brand');
+        self::addConfiguredFields(ProductModelHandler::getConfiguredBackendFields(), 'product');
+        self::addConfiguredFields(OfferModelHandler::getConfiguredBackendFields(), 'offer');
+        self::addConfiguredFields(CategoryModelHandler::getConfiguredBackendFields(), 'category');
+        self::addConfiguredFields(BrandModelHandler::getConfiguredBackendFields(), 'brand');
 
         return $this->arFields;
     }

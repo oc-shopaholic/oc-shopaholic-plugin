@@ -2,7 +2,7 @@
 
 use Event;
 use Lovata\Shopaholic\Classes\Item\BrandItem;
-use Lovata\Toolbox\Components\ElementPage;
+use Lovata\Toolbox\Classes\Component\ElementPage;
 use Lovata\Shopaholic\Models\Brand;
 
 /**

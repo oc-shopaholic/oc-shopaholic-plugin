@@ -218,4 +218,22 @@ class OfferModelHandler
         //Set cache data
         CCache::forever($arCacheTags, $sCacheKey, $arOfferIDList);
     }
+
+    /**
+     * Get fields list for backend interface with switching visibility
+     * @return array
+     */
+    public static function getConfiguredBackendFields() {
+        return [
+            'quantity'              => 'lovata.shopaholic::lang.field.quantity',
+            'price'                 => 'lovata.shopaholic::lang.field.price',
+            'old_price'             => 'lovata.shopaholic::lang.field.old_price',
+            'code'                  => 'lovata.toolbox::lang.field.code',
+            'external_id'           => 'lovata.toolbox::lang.field.external_id',
+            'preview_text'          => 'lovata.toolbox::lang.field.preview_text',
+            'description'           => 'lovata.toolbox::lang.field.description',
+            'preview_image'         => 'lovata.toolbox::lang.field.preview_image',
+            'images'                => 'lovata.toolbox::lang.field.images',
+        ];
+    }
 }

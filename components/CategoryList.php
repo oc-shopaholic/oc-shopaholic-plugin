@@ -1,7 +1,7 @@
 <?php namespace Lovata\Shopaholic\Components;
 
 use Lovata\Shopaholic\Classes\Collection\CategoryCollection;
-use Lovata\Toolbox\Components\ElementList;
+use Lovata\Toolbox\Classes\Component\ElementList;
 
 /**
  * Class CategoryList

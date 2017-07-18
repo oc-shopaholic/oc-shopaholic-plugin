@@ -3,7 +3,7 @@
 use Lang;
 use System\Classes\PluginManager;
 
-use Lovata\Toolbox\Components\SortingElementList;
+use Lovata\Toolbox\Classes\Component\SortingElementList;
 use Lovata\Shopaholic\Classes\Collection\ProductCollection;
 use Lovata\Shopaholic\Classes\Store\ProductListStore;
 

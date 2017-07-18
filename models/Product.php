@@ -20,7 +20,7 @@ use October\Rain\Database\Traits\Validation;
  * Class Product
  * @package Lovata\Shopaholic\Models
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
- * 
+ *
  * @mixin \October\Rain\Database\Builder
  * @mixin \Eloquent
  * 
