@@ -86,3 +86,5 @@ vendors/
 pixelPerfect/
 node_modules/
 docs/
+
+_ide_helper.php

@@ -53,6 +53,10 @@ use October\Rain\Database\Traits\Validation;
  *
  * @method static $this getByBrand(int $iBrandID)
  *
+ * Stickers for Shopaholic field
+ * @property \Lovata\StickersShopaholic\Models\Sticker[]|\October\Rain\Database\Collection $sticker
+ * @method static \Lovata\StickersShopaholic\Models\Sticker|\October\Rain\Database\Relations\BelongsToMany sticker()
+ *
  * Popularity for Shopaholic field
  * @property int $popularity
  */
