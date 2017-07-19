@@ -57,6 +57,10 @@ use October\Rain\Database\Traits\Validation;
  * @property \Lovata\StickersShopaholic\Models\Sticker[]|\October\Rain\Database\Collection $sticker
  * @method static \Lovata\StickersShopaholic\Models\Sticker|\October\Rain\Database\Relations\BelongsToMany sticker()
  *
+ * Sets for Shopaholic field
+ * @property \Lovata\StickersShopaholic\Models\Sticker[]|\October\Rain\Database\Collection $sticker
+ * @method static \Lovata\StickersShopaholic\Models\Sticker|\October\Rain\Database\Relations\BelongsToMany sticker()
+ *
  * Popularity for Shopaholic field
  * @property int $popularity
  */
