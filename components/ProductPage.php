@@ -3,7 +3,7 @@
 use Event;
 use Lovata\Shopaholic\Models\Product;
 use Lovata\Shopaholic\Classes\Item\ProductItem;
-use Lovata\Toolbox\Components\ElementPage;
+use Lovata\Toolbox\Classes\Component\ElementPage;
 
 /**
  * Class ProductPage

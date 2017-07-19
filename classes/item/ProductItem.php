@@ -37,6 +37,10 @@ use Lovata\Toolbox\Traits\Item\TraitCheckItemTrashed;
  *
  * Popularity for Shopaholic field
  * @property int             $popularity
+ *
+ * Stickers for Shopaholic field
+ * @property array $sticker_id_list
+ * @property \Lovata\StickersShopaholic\Classes\Collection\StickerCollection $sticker
  */
 class ProductItem extends ElementItem
 {

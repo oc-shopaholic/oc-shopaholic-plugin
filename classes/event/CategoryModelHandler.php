@@ -87,4 +87,20 @@ class CategoryModelHandler
 
         CCache::clear($arCacheTags, $sCacheKey);
     }
+
+    /**
+     * Get fields list for backend interface with switching visibility
+     * @return array
+     */
+    public static function getConfiguredBackendFields()
+    {
+        return [
+            'code'                  => 'lovata.toolbox::lang.field.code',
+            'external_id'           => 'lovata.toolbox::lang.field.external_id',
+            'preview_text'          => 'lovata.toolbox::lang.field.preview_text',
+            'description'           => 'lovata.toolbox::lang.field.description',
+            'preview_image'         => 'lovata.toolbox::lang.field.preview_image',
+            'images'                => 'lovata.toolbox::lang.field.images',
+        ];
+    }
 }

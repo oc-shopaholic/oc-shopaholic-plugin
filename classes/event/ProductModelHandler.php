@@ -5,7 +5,9 @@ use Lovata\Shopaholic\Classes\Item\BrandItem;
 use Lovata\Shopaholic\Classes\Item\CategoryItem;
 use Lovata\Shopaholic\Classes\Item\ProductItem;
 use Lovata\Shopaholic\Classes\Store\ProductListStore;
+use Lovata\Shopaholic\Controllers\Products;
 use Lovata\Shopaholic\Models\Product;
+use Lovata\Shopaholic\Models\Settings;
 use Lovata\Shopaholic\Plugin;
 use System\Classes\PluginManager;
 
@@ -44,6 +46,14 @@ class ProductModelHandler
             $obElement->bindEvent('model.afterDelete', function () use($obElement) {
                 $this->afterDelete($obElement);
             });
+        });
+
+        $obEvent->listen('backend.list.extendColumns', function ($obWidget) {
+            $this->hideListColumns($obWidget);
+        });
+
+        $obEvent->listen('backend.form.extendFields', function ($obWidget) {
+            $this->hideListColumns($obWidget);
         });
     }
 
@@ -379,5 +389,52 @@ class ProductModelHandler
 
         //Set cache data
         CCache::forever($arCacheTags, $sCacheKey, $arProductIDList);
+    }
+
+    /**
+     * Hide backend list columns
+     * @param \Backend\Widgets\Lists|\Backend\Widgets\Form $obWidget
+     */
+    protected function hideListColumns($obWidget)
+    {
+        // Only for the Product model
+        if (!$obWidget->model instanceof Product) {
+            return;
+        }
+
+        $arConfiguredViewFields = self::getConfiguredBackendFields();
+        if(empty($arConfiguredViewFields)) {
+            return;
+        }
+
+        foreach($arConfiguredViewFields as $sFieldKey => $sFieldName) {
+            if(!Settings::getValue('product_'.$sFieldKey)) {
+                continue;
+            }
+
+            if($obWidget instanceof \Backend\Widgets\Lists) {
+                $obWidget->removeColumn($sFieldKey);
+            } else {
+                $obWidget->removeField($sFieldKey);
+            }
+        }
+    }
+
+    /**
+     * Get fields list for backend interface with switching visibility
+     * @return array
+     */
+    public static function getConfiguredBackendFields()
+    {
+        return [
+            'code'                  => 'lovata.toolbox::lang.field.code',
+            'external_id'           => 'lovata.toolbox::lang.field.external_id',
+            'category'              => 'lovata.toolbox::lang.field.category',
+            'brand'                 => 'lovata.shopaholic::lang.field.brand',
+            'preview_text'          => 'lovata.toolbox::lang.field.preview_text',
+            'description'           => 'lovata.toolbox::lang.field.description',
+            'preview_image'         => 'lovata.toolbox::lang.field.preview_image',
+            'images'                => 'lovata.toolbox::lang.field.images',
+        ];
     }
 }
