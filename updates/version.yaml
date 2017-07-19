@@ -1,4 +1,4 @@
-1.0.1:
+1.0.0:
     - 'Initialize plugin.'
     - create_table_categories.php
     - create_table_products.php

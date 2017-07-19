@@ -6,7 +6,7 @@ use Lovata\Shopaholic\Models\Brand;
 use Lovata\Toolbox\Classes\Item\ElementItem;
 
 /**
- * Class BrandStore
+ * Class BrandItem
  * @package Lovata\Shopaholic\Classes\Item
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  *
@@ -54,7 +54,7 @@ class BrandItem extends ElementItem
     }
 
     /**
-     * Set brand data from model object
+     * Set element data from model object
      *
      * @return array
      */

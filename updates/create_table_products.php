@@ -10,6 +10,9 @@ use October\Rain\Database\Updates\Migration;
  */
 class CreateTableProducts extends Migration
 {
+    /**
+     * Apply migration
+     */
     public function up()
     {
         if(Schema::hasTable('lovata_shopaholic_products')) {
@@ -40,7 +43,10 @@ class CreateTableProducts extends Migration
             $table->index('category_id');
         });
     }
-    
+
+    /**
+     * Rollback migration
+     */
     public function down()
     {
         Schema::dropIfExists('lovata_shopaholic_products');

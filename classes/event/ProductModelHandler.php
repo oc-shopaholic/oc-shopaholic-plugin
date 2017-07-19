@@ -32,6 +32,7 @@ class ProductModelHandler
     /**
      * Add listeners
      * @param \Illuminate\Events\Dispatcher $obEvent
+     * 
      */
     public function subscribe($obEvent)
     {
