@@ -26,6 +26,7 @@ class OfferCollection extends ElementCollection
     public function __construct(OfferListStore $obOfferListStore)
     {
         $this->obOfferListStore = $obOfferListStore;
+        parent::__construct();
     }
 
     /**
@@ -44,6 +45,32 @@ class OfferCollection extends ElementCollection
         return $obItem;
     }
 
+    /**
+     * Sort list by
+     * @param string $sSorting
+     * @return $this
+     */
+    public function sortBy($sSorting)
+    {
+        if(!$this->isClear() && $this->isEmpty()) {
+            return $this;
+        }
+
+        //Get sorting list
+        $arElementIDList = $this->obOfferListStore->getBySorting($sSorting);
+        if(empty($arElementIDList)) {
+            return $this->clear();
+        }
+
+        if($this->isClear()) {
+            $this->arElementIDList = $arElementIDList;
+            return $this;
+        }
+
+        $this->arElementIDList = array_intersect($arElementIDList, $this->arElementIDList);
+        return $this->returnClone();
+    }
+    
     /**
      * Apply filter by active product list0
      * @return $this

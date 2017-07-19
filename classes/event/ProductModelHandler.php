@@ -4,6 +4,7 @@ use Kharanenka\Helper\CCache;
 use Lovata\Shopaholic\Classes\Item\BrandItem;
 use Lovata\Shopaholic\Classes\Item\CategoryItem;
 use Lovata\Shopaholic\Classes\Item\ProductItem;
+use Lovata\Shopaholic\Classes\Store\BrandListStore;
 use Lovata\Shopaholic\Classes\Store\ProductListStore;
 use Lovata\Shopaholic\Controllers\Products;
 use Lovata\Shopaholic\Models\Product;
@@ -23,10 +24,20 @@ class ProductModelHandler
 
     /** @var  ProductListStore */
     protected $obProductListStore;
+    
+    /** @var  BrandListStore */
+    protected $obBrandListStore;
 
-    public function __construct(ProductListStore $obProductListStore)
+    /**
+     * ProductModelHandler constructor.
+     *
+     * @param ProductListStore $obProductListStore
+     * @param BrandListStore   $obBrandListStore
+     */
+    public function __construct(ProductListStore $obProductListStore, BrandListStore $obBrandListStore)
     {
         $this->obProductListStore = $obProductListStore;
+        $this->obBrandListStore = $obBrandListStore;
     }
 
     /**
@@ -103,6 +114,8 @@ class ProductModelHandler
         }
 
         $this->removeFromCategoryList($obElement->category_id);
+        $this->obBrandListStore->clearListByCategory($this->obElement->category_id);
+        
         $this->removeFromBrandList($obElement->brand_id);
 
         $this->removeFromSortingList(ProductListStore::SORT_PRICE_ASC);
@@ -152,6 +165,9 @@ class ProductModelHandler
         //Update product ID cache list for category
         $this->addToCategoryList($this->obElement->category_id);
         $this->removeFromCategoryList((int) $this->obElement->getOriginal('category_id'));
+        
+        $this->obBrandListStore->clearListByCategory($this->obElement->category_id);
+        $this->obBrandListStore->clearListByCategory((int) $this->obElement->getOriginal('category_id'));
     }
 
     /**

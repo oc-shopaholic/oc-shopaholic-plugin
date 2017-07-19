@@ -27,6 +27,7 @@ class ProductCollection extends ElementCollection
     public function __construct(ProductListStore $obProductListStore)
     {
         $this->obProductListStore = $obProductListStore;
+        parent::__construct();
     }
 
     /**
@@ -68,7 +69,7 @@ class ProductCollection extends ElementCollection
         }
 
         $this->arElementIDList = array_intersect($arElementIDList, $this->arElementIDList);
-        return $this;
+        return $this->returnClone();
     }
 
     /**

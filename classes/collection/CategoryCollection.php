@@ -21,6 +21,7 @@ class CategoryCollection extends ElementCollection
     public function __construct(CategoryListStore $obCategoryListStore)
     {
         $this->obCategoryListStore = $obCategoryListStore;
+        parent::__construct();
     }
 
     /**
@@ -42,6 +43,6 @@ class CategoryCollection extends ElementCollection
     public function tree()
     {
         $this->arElementIDList = $this->obCategoryListStore->getTopLevelList();
-        return $this;
+        return $this->returnClone();
     }
 }

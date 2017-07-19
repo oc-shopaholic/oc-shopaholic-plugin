@@ -145,6 +145,11 @@ class OfferModelHandler
      */
     protected function checkPriceField()
     {
+        if($this->obElement->getOriginal('price') != $this->obElement->price) {
+            $this->obOfferListStore->updateCacheBySorting(OfferListStore::SORT_PRICE_ASC);
+            $this->obOfferListStore->updateCacheBySorting(OfferListStore::SORT_PRICE_DESC);
+        }
+        
         $bNeedUpdateFlag =
             $this->obElement->getOriginal('active') != $this->obElement->active
             || (
@@ -156,7 +161,7 @@ class OfferModelHandler
         if(!$bNeedUpdateFlag) {
             return;
         }
-
+        
         //Get product object
         $obProduct = $this->obElement->product;
         if(empty($obProduct)) {
