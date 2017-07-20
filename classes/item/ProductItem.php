@@ -33,18 +33,15 @@ use Lovata\Toolbox\Traits\Item\TraitCheckItemTrashed;
  * @property array           $images
  *
  * @property array           $offer_id_list
- * @property OfferCollection $offer
+ * @property OfferCollection|OfferItem[] $offer
  *
  * Popularity for Shopaholic field
  * @property int             $popularity
  *
  * Stickers for Shopaholic field
  * @property array $sticker_id_list
- * @property \Lovata\StickersShopaholic\Classes\Collection\StickerCollection $sticker
+ * @property \Lovata\StickersShopaholic\Classes\Collection\StickerCollection|\Lovata\StickersShopaholic\Classes\Item\StickerItem[] $sticker
  *
- * Sets for Shopaholic field
- * @property array $set_id_list
- * @property \Lovata\SetsShopaholic\Classes\Collection\SetCollection $set
  */
 class ProductItem extends ElementItem
 {

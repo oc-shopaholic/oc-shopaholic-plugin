@@ -27,7 +27,16 @@ use Lovata\Toolbox\Classes\Item\ElementItem;
  * @property CategoryItem $parent
  *
  * @property array  $children_id_list
- * @property CategoryCollection $children
+ * @property CategoryCollection|CategoryItem[] $children
+ * 
+ * @property int $product_count
+ * 
+ * Property for Shopaholic
+ * @property array $product_property_list
+ * @property \Lovata\PropertiesShopaholic\Classes\Collection\PropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[] $product_property
+ * 
+ * @property array $offer_property_list
+ * @property \Lovata\PropertiesShopaholic\Classes\Collection\PropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[] $offer_property
  */
 class CategoryItem extends ElementItem
 {
@@ -102,5 +111,33 @@ class CategoryItem extends ElementItem
             ->lists('id');
 
         return $arResult;
+    }
+
+    /**
+     * Get product count for category
+     * @return int
+     */
+    protected function getProductCountAttribute()
+    {
+        $iProductCount = $this->getAttribute('product_count');
+        if($iProductCount !== null) {
+            return $iProductCount;
+        }
+        
+        $iProductCount = 0;
+        $obChildCategoryCollect = $this->children;
+        if(!$obChildCategoryCollect->isEmpty()) {
+            /** @var CategoryItem $obChildCategoryItem */
+            foreach($obChildCategoryCollect as $obChildCategoryItem) {
+                if($obChildCategoryItem->isEmpty()) {
+                    continue;
+                }
+                
+                $iProductCount += $obChildCategoryItem->product_count;
+            }
+        }
+        
+        $this->setAttribute('product_count', $iProductCount);
+        return $iProductCount;
     }
 }

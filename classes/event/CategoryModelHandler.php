@@ -86,6 +86,8 @@ class CategoryModelHandler
         $sCacheKey = CategoryListStore::CACHE_KEY_TOP_LEVEL_LIST;
 
         CCache::clear($arCacheTags, $sCacheKey);
+        
+        CCache::clear([Plugin::CACHE_TAG, CategoryItem::CACHE_TAG_ELEMENT]);
     }
 
     /**

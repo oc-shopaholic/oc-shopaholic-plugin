@@ -12,3 +12,18 @@ offer:
         showSearch: true
         showSorting: true
         recordsPerPage: 10
+# Stickers for Shopaholic plugin
+sticker:
+    label: 'lovata.stickersshopaholic::lang.sticker.name'
+    manage:
+        form: $/lovata/stickersshopaholic/models/sticker/fields.yaml
+        list: $/lovata/stickersshopaholic/models/sticker/columns.yaml
+        showSearch: true
+        showSorting: true
+        recordsPerPage: 10
+    view:
+        list: $/lovata/stickersshopaholic/models/sticker/columns.yaml
+        toolbarButtons: 'add|remove'
+        showSearch: true
+        showSorting: true
+        recordsPerPage: 10
