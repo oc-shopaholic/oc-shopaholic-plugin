@@ -6,6 +6,7 @@ use Lovata\Shopaholic\Classes\Item\ProductItem;
 use Lovata\Shopaholic\Classes\Store\OfferListStore;
 use Lovata\Shopaholic\Classes\Store\ProductListStore;
 use Lovata\Shopaholic\Models\Offer;
+use Lovata\Shopaholic\Models\Settings;
 use Lovata\Shopaholic\Plugin;
 
 /**
@@ -86,6 +87,7 @@ class OfferModelHandler
 
         if($obElement->active) {
             $this->removeFromActiveList();
+            $this->clearProductActiveList();
         }
 
         //Get product object
@@ -182,6 +184,8 @@ class OfferModelHandler
             return;
         }
 
+        $this->clearProductActiveList();
+
         //Get cache data
         $arCacheTags = [Plugin::CACHE_TAG, OfferListStore::CACHE_TAG_LIST];
         $sCacheKey = OfferListStore::CACHE_TAG_LIST;
@@ -221,6 +225,24 @@ class OfferModelHandler
 
         //Set cache data
         CCache::forever($arCacheTags, $sCacheKey, $arOfferIDList);
+    }
+
+    /**
+     * Clear cached active product ID list
+     */
+    public function clearProductActiveList()
+    {
+        if(!Settings::getValue('check_offer_active')) {
+            return;
+        }
+
+        //Get cache data
+        $arCacheTags = [Plugin::CACHE_TAG, ProductListStore::CACHE_TAG_LIST];
+        $sCacheKey = ProductListStore::CACHE_TAG_LIST;
+
+        //Clear cache data
+        CCache::clear($arCacheTags, $sCacheKey);
+        $this->obProductListStore->getActiveList();
     }
 
     /**

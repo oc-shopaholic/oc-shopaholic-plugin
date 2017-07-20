@@ -1,8 +1,5 @@
 <?php namespace Lovata\Shopaholic\Tests\Unit\Collection;
 
-include_once __DIR__.'/../../../../toolbox/vendor/autoload.php';
-include_once __DIR__.'/../../../../../../tests/PluginTestCase.php';
-
 use Lovata\Shopaholic\Classes\Collection\ProductCollection;
 use Lovata\Shopaholic\Classes\Item\ProductItem;
 use Lovata\Shopaholic\Classes\Store\ProductListStore;
@@ -10,8 +7,8 @@ use Lovata\Shopaholic\Models\Brand;
 use Lovata\Shopaholic\Models\Category;
 use Lovata\Shopaholic\Models\Offer;
 use Lovata\Shopaholic\Models\Product;
-use PluginTestCase;
-use System\Classes\PluginManager;
+use Lovata\Shopaholic\Models\Settings;
+use Lovata\Toolbox\Tests\CommonTest;
 
 /**
  * Class ProductCollectionTest
@@ -20,7 +17,7 @@ use System\Classes\PluginManager;
  *
  * @mixin \PHPUnit\Framework\Assert
  */
-class ProductCollectionTest extends PluginTestCase
+class ProductCollectionTest extends CommonTest
 {
     /** @var  Product */
     protected $obElement;
@@ -72,17 +69,6 @@ class ProductCollectionTest extends PluginTestCase
         'nest_depth'   => 0,
         'parent_id'    => 0,
     ];
-
-    /**
-     * Set up test method
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $obManager = PluginManager::instance();
-        $obManager->bootAll(true);
-    }
 
     /**
      * Check item collection
@@ -150,6 +136,56 @@ class ProductCollectionTest extends PluginTestCase
         //Check item collection, after element remove
         $obCollection = ProductCollection::make()->active();
         self::assertEquals(true, $obCollection->isEmpty(), $sErrorMessage);
+    }
+
+    /**
+     * Check item collection "active" method with checking offer
+     */
+    public function testActiveListWithCheckingOffer()
+    {
+        ProductCollection::make()->active();
+        Settings::set('check_offer_active', true);
+
+        $this->createTestData();
+        if(empty($this->obElement)) {
+            return;
+        }
+
+        $sErrorMessage = 'Product collection "active" method is not correct';
+
+        //Check item collection after create
+        $obCollection = ProductCollection::make()->active();
+
+        /** @var ProductItem $obItem */
+        $obItem = $obCollection->first();
+        self::assertInstanceOf(ProductItem::class, $obItem, $sErrorMessage);
+        self::assertEquals($this->obElement->id, $obItem->id, $sErrorMessage);
+
+        $this->obOffer->active = false;
+        $this->obOffer->save();
+
+        //Check item collection, after active = false
+        $obCollection = ProductCollection::make()->active();
+        self::assertEquals(true, $obCollection->isEmpty(), $sErrorMessage);
+
+        $this->obOffer->active = true;
+        $this->obOffer->save();
+
+        //Check item collection, after active = true
+        $obCollection = ProductCollection::make()->active();
+
+        /** @var ProductItem $obItem */
+        $obItem = $obCollection->first();
+        self::assertInstanceOf(ProductItem::class, $obItem, $sErrorMessage);
+        self::assertEquals($this->obElement->id, $obItem->id, $sErrorMessage);
+
+        $this->obOffer->delete();
+
+        //Check item collection, after element remove
+        $obCollection = ProductCollection::make()->active();
+        self::assertEquals(true, $obCollection->isEmpty(), $sErrorMessage);
+
+        Settings::set('check_offer_active', false);
     }
 
     /**

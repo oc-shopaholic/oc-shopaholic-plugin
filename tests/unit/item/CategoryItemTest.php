@@ -1,13 +1,9 @@
 <?php namespace Lovata\Shopaholic\Tests\Unit\Item;
 
-include_once __DIR__.'/../../../../toolbox/vendor/autoload.php';
-include_once __DIR__.'/../../../../../../tests/PluginTestCase.php';
-
 use Lovata\Shopaholic\Classes\Collection\CategoryCollection;
 use Lovata\Shopaholic\Classes\Item\CategoryItem;
 use Lovata\Shopaholic\Models\Category;
-use PluginTestCase;
-use System\Classes\PluginManager;
+use Lovata\Toolbox\Tests\CommonTest;
 
 /**
  * Class CategoryItemTest
@@ -16,7 +12,7 @@ use System\Classes\PluginManager;
  *
  * @mixin \PHPUnit\Framework\Assert
  */
-class CategoryItemTest extends PluginTestCase
+class CategoryItemTest extends CommonTest
 {
     /** @var  Category */
     protected $obElement;
@@ -31,17 +27,6 @@ class CategoryItemTest extends PluginTestCase
         'preview_text' => 'preview_text',
         'description'  => 'description',
     ];
-
-    /**
-     * Set up test method
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $obManager = PluginManager::instance();
-        $obManager->bootAll(true);
-    }
 
     /**
      * Check item fields
