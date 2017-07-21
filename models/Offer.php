@@ -44,6 +44,10 @@ use October\Rain\Database\Traits\SoftDelete;
  *
  * @property \Lovata\Shopaholic\Models\Product $product
  * @method $this|\October\Rain\Database\Relations\BelongsTo product()
+ * 
+ * Properties for Shopaholic fields
+ * @property array $property
+ * @property array $property_value
  *
  * @method static $this getByProduct(int $iProductID)
  * @method static $this getByQuantity(int $iCount, string $sCondition = '=')

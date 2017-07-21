@@ -59,6 +59,11 @@ use October\Rain\Database\Traits\Validation;
  *
  * Popularity for Shopaholic field
  * @property int $popularity
+ * 
+ * Properties for Shopaholic fields
+ * @property array $property
+ * @property array $property_value
+ * 
  */
 class Product extends Model
 {
