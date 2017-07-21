@@ -1,15 +1,10 @@
 <?php namespace Lovata\Shopaholic\Classes\Event;
 
-use Kharanenka\Helper\CCache;
-use Lovata\Shopaholic\Classes\Item\BrandItem;
-use Lovata\Shopaholic\Classes\Item\CategoryItem;
 use Lovata\Shopaholic\Classes\Item\ProductItem;
 use Lovata\Shopaholic\Classes\Store\BrandListStore;
 use Lovata\Shopaholic\Classes\Store\ProductListStore;
-use Lovata\Shopaholic\Controllers\Products;
 use Lovata\Shopaholic\Models\Product;
 use Lovata\Shopaholic\Models\Settings;
-use Lovata\Shopaholic\Plugin;
 use System\Classes\PluginManager;
 
 /**
@@ -107,22 +102,23 @@ class ProductModelHandler
         }
 
         $this->obElement = $obElement;
+        $this->processOfferAfterDelete();
         $this->clearItemCache();
 
         if($obElement->active) {
-            $this->removeFromActiveList();
+            $this->obProductListStore->clearActiveList();
         }
 
-        $this->removeFromCategoryList($obElement->category_id);
+        $this->obProductListStore->clearListByCategory($this->obElement->category_id);
         $this->obBrandListStore->clearListByCategory($this->obElement->category_id);
-        
-        $this->removeFromBrandList($obElement->brand_id);
 
-        $this->removeFromSortingList(ProductListStore::SORT_PRICE_ASC);
-        $this->removeFromSortingList(ProductListStore::SORT_PRICE_DESC);
-        $this->removeFromSortingList(ProductListStore::SORT_NEW);
-        $this->removeFromSortingList(ProductListStore::SORT_POPULARITY_DESC);
-        $this->removeFromSortingList(ProductListStore::SORT_NO);
+        $this->obProductListStore->clearListByBrand($obElement->brand_id);
+
+        $this->obProductListStore->updateCacheBySorting(ProductListStore::SORT_PRICE_ASC);
+        $this->obProductListStore->updateCacheBySorting(ProductListStore::SORT_PRICE_DESC);
+        $this->obProductListStore->updateCacheBySorting(ProductListStore::SORT_NEW);
+        $this->obProductListStore->updateCacheBySorting(ProductListStore::SORT_POPULARITY_DESC);
+        $this->obProductListStore->updateCacheBySorting(ProductListStore::SORT_NO);
     }
 
     /**
@@ -134,6 +130,22 @@ class ProductModelHandler
     }
 
     /**
+     * Set active = false in offer list, after product was removed
+     */
+    protected function processOfferAfterDelete()
+    {
+        $obOfferList = $this->obElement->offer;
+        if($obOfferList->isEmpty()) {
+            return;
+        }
+
+        foreach($obOfferList as $obOffer) {
+            $obOffer->active = false;
+            $obOffer->save();
+        }
+    }
+    
+    /**
      * Check product "active" field, if it was changed, then clear cache
      */
     private function checkActiveField()
@@ -143,13 +155,7 @@ class ProductModelHandler
             return;
         }
 
-        //Get cache data
-        $arCacheTags = [Plugin::CACHE_TAG, ProductListStore::CACHE_TAG_LIST];
-        $sCacheKey = ProductListStore::CACHE_TAG_LIST;
-
-        //Clear cache data
-        CCache::clear($arCacheTags, $sCacheKey);
-        $this->obProductListStore->getActiveList();
+        $this->obProductListStore->clearActiveList();
     }
 
     /**
@@ -163,8 +169,8 @@ class ProductModelHandler
         }
 
         //Update product ID cache list for category
-        $this->addToCategoryList($this->obElement->category_id);
-        $this->removeFromCategoryList((int) $this->obElement->getOriginal('category_id'));
+        $this->obProductListStore->clearListByCategory($this->obElement->category_id);
+        $this->obProductListStore->clearListByCategory((int) $this->obElement->getOriginal('category_id'));
         
         $this->obBrandListStore->clearListByCategory($this->obElement->category_id);
         $this->obBrandListStore->clearListByCategory((int) $this->obElement->getOriginal('category_id'));
@@ -181,8 +187,8 @@ class ProductModelHandler
         }
 
         //Update product ID cache list for brand
-        $this->addToBrandList($this->obElement->brand_id);
-        $this->removeFromBrandList((int) $this->obElement->getOriginal('brand_id'));
+        $this->obProductListStore->clearListByBrand($this->obElement->brand_id);
+        $this->obProductListStore->clearListByBrand((int) $this->obElement->getOriginal('brand_id'));
     }
 
     /**
@@ -200,213 +206,6 @@ class ProductModelHandler
 
         //Update product list with popularity
         $this->obProductListStore->updateCacheBySorting(ProductListStore::SORT_POPULARITY_DESC);
-    }
-
-    /**
-     * Remove product from active product ID list
-     */
-    private function removeFromActiveList()
-    {
-        //Get cache data
-        $arCacheTags = [Plugin::CACHE_TAG, ProductListStore::CACHE_TAG_LIST];
-        $sCacheKey = ProductListStore::CACHE_TAG_LIST;
-
-        //Check cache array
-        $arProductIDList = CCache::get($arCacheTags, $sCacheKey);
-        if(empty($arProductIDList)) {
-            $this->obProductListStore->getActiveList();
-            return;
-        }
-
-        if(!in_array($this->obElement->id, $arProductIDList)) {
-            return;
-        }
-
-        //Remove element from cache array and save
-        $iPosition = array_search($this->obElement->id, $arProductIDList);
-        if($iPosition === false) {
-            return;
-        }
-        
-        unset($arProductIDList[$iPosition]);
-
-        //Set cache data
-        CCache::forever($arCacheTags, $sCacheKey, $arProductIDList);
-    }
-
-    /**
-     * Add product in product ID list for category
-     * @param int $iCategoryID
-     */
-    private function addToCategoryList($iCategoryID)
-    {
-        if(empty($iCategoryID)) {
-            return;
-        }
-
-        //Get cache data
-        $arCacheTags = [Plugin::CACHE_TAG, ProductListStore::CACHE_TAG_LIST, CategoryItem::CACHE_TAG_ELEMENT];
-        $sCacheKey = $iCategoryID;
-
-        //Check cache array
-        $arProductIDList = CCache::get($arCacheTags, $sCacheKey);
-        if(empty($arProductIDList)) {
-            $this->obProductListStore->getByCategory($iCategoryID);
-            return;
-        }
-
-        if(in_array($this->obElement->id, $arProductIDList)) {
-            return;
-        }
-
-        //Add element to cache array and save
-        $arProductIDList[] = $this->obElement->id;
-
-        //Set cache data
-        CCache::forever($arCacheTags, $sCacheKey, $arProductIDList);
-    }
-
-    /**
-     * Remove product from product ID list for category
-     * @param int $iCategoryID
-     */
-    private function removeFromCategoryList($iCategoryID)
-    {
-        if(empty($iCategoryID)) {
-            return;
-        }
-
-        //Get cache data
-        $arCacheTags = [Plugin::CACHE_TAG, ProductListStore::CACHE_TAG_LIST, CategoryItem::CACHE_TAG_ELEMENT];
-        $sCacheKey = $iCategoryID;
-
-        //Check cache array
-        $arProductIDList = CCache::get($arCacheTags, $sCacheKey);
-        if(empty($arProductIDList)) {
-            $this->obProductListStore->getByCategory($iCategoryID);
-            return;
-        }
-
-        if(!in_array($this->obElement->id, $arProductIDList)) {
-            return;
-        }
-
-        //Remove element from cache array and save
-        $iPosition = array_search($this->obElement->id, $arProductIDList);
-        if($iPosition === false) {
-            return;
-        }
-
-        unset($arProductIDList[$iPosition]);
-
-        //Set cache data
-        CCache::forever($arCacheTags, $sCacheKey, $arProductIDList);
-    }
-
-    /**
-     * Add product in product ID list for brand
-     * @param int $iBrandID
-     */
-    private function addToBrandList($iBrandID)
-    {
-        if(empty($iBrandID)) {
-            return;
-        }
-
-        //Get cache data
-        $arCacheTags = [Plugin::CACHE_TAG, ProductListStore::CACHE_TAG_LIST, BrandItem::CACHE_TAG_ELEMENT];
-        $sCacheKey = $iBrandID;
-
-        //Check cache array
-        $arProductIDList = CCache::get($arCacheTags, $sCacheKey);
-        if(empty($arProductIDList)) {
-            $this->obProductListStore->getByBrand($iBrandID);
-            return;
-        }
-
-        if(in_array($this->obElement->id, $arProductIDList)) {
-            return;
-        }
-
-        //Add element to cache array and save
-        $arProductIDList[] = $this->obElement->id;
-
-        //Set cache data
-        CCache::forever($arCacheTags, $sCacheKey, $arProductIDList);
-    }
-
-    /**
-     * Remove product from product ID list for brand
-     * @param int $iBrandID
-     */
-    private function removeFromBrandList($iBrandID)
-    {
-        if(empty($iBrandID)) {
-            return;
-        }
-
-        //Get cache data
-        $arCacheTags = [Plugin::CACHE_TAG, ProductListStore::CACHE_TAG_LIST, BrandItem::CACHE_TAG_ELEMENT];
-        $sCacheKey = $iBrandID;
-
-        //Check cache array
-        $arProductIDList = CCache::get($arCacheTags, $sCacheKey);
-        if(empty($arProductIDList)) {
-            $this->obProductListStore->getByBrand($iBrandID);
-            return;
-        }
-
-        if(!in_array($this->obElement->id, $arProductIDList)) {
-            return;
-        }
-
-        //Remove element from cache array and save
-        $iPosition = array_search($this->obElement->id, $arProductIDList);
-        if($iPosition === false) {
-            return;
-        }
-
-        unset($arProductIDList[$iPosition]);
-
-        //Set cache data
-        CCache::forever($arCacheTags, $sCacheKey, $arProductIDList);
-    }
-
-    /**
-     * Remove product from product ID list with sorting
-     * @param string $sSorting
-     */
-    private function removeFromSortingList($sSorting)
-    {
-        if(empty($sSorting)) {
-            return;
-        }
-
-        //Get cache data
-        $arCacheTags = [Plugin::CACHE_TAG, ProductListStore::CACHE_TAG_LIST];
-        $sCacheKey = $sSorting;
-
-        //Check cache array
-        $arProductIDList = CCache::get($arCacheTags, $sCacheKey);
-        if(empty($arProductIDList)) {
-            $this->obProductListStore->getBySorting($sSorting);
-            return;
-        }
-
-        if(!in_array($this->obElement->id, $arProductIDList)) {
-            return;
-        }
-
-        //Remove element from cache array and save
-        $iPosition = array_search($this->obElement->id, $arProductIDList);
-        if($iPosition === false) {
-            return;
-        }
-
-        unset($arProductIDList[$iPosition]);
-
-        //Set cache data
-        CCache::forever($arCacheTags, $sCacheKey, $arProductIDList);
     }
 
     /**

@@ -40,4 +40,15 @@ class CategoryListStore
 
         return $arCategoryListID;
     }
+
+    /**
+     * Clear top level category ID list
+     */
+    public function clearTopLevelList()
+    {
+        $arCacheTags = [Plugin::CACHE_TAG, CategoryListStore::CACHE_TAG_LIST];
+        $sCacheKey = CategoryListStore::CACHE_KEY_TOP_LEVEL_LIST;
+        
+        CCache::clear($arCacheTags, $sCacheKey);
+    }
 }

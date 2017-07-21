@@ -50,7 +50,7 @@ class OfferCollection extends ElementCollection
      * @param string $sSorting
      * @return $this
      */
-    public function sortBy($sSorting)
+    public function sort($sSorting)
     {
         if(!$this->isClear() && $this->isEmpty()) {
             return $this;

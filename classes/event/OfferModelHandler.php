@@ -1,13 +1,11 @@
 <?php namespace Lovata\Shopaholic\Classes\Event;
 
-use Kharanenka\Helper\CCache;
 use Lovata\Shopaholic\Classes\Item\OfferItem;
 use Lovata\Shopaholic\Classes\Item\ProductItem;
 use Lovata\Shopaholic\Classes\Store\OfferListStore;
 use Lovata\Shopaholic\Classes\Store\ProductListStore;
 use Lovata\Shopaholic\Models\Offer;
 use Lovata\Shopaholic\Models\Settings;
-use Lovata\Shopaholic\Plugin;
 
 /**
  * Class OfferModelHandler
@@ -86,7 +84,7 @@ class OfferModelHandler
         $this->clearItemCache();
 
         if($obElement->active) {
-            $this->removeFromActiveList();
+            $this->obOfferListStore->clearActiveList();
             $this->clearProductActiveList();
         }
 
@@ -185,46 +183,7 @@ class OfferModelHandler
         }
 
         $this->clearProductActiveList();
-
-        //Get cache data
-        $arCacheTags = [Plugin::CACHE_TAG, OfferListStore::CACHE_TAG_LIST];
-        $sCacheKey = OfferListStore::CACHE_TAG_LIST;
-
-        //Clear cache data
-        CCache::clear($arCacheTags, $sCacheKey);
-        $this->obOfferListStore->getActiveList();
-    }
-
-    /**
-     * Remove offer from active product ID list
-     */
-    private function removeFromActiveList()
-    {
-        //Get cache data
-        $arCacheTags = [Plugin::CACHE_TAG, OfferListStore::CACHE_TAG_LIST];
-        $sCacheKey = OfferListStore::CACHE_TAG_LIST;
-
-        //Check cache array
-        $arOfferIDList = CCache::get($arCacheTags, $sCacheKey);
-        if(empty($arOfferIDList)) {
-            $this->obOfferListStore->getActiveList();
-            return;
-        }
-
-        if(!in_array($this->obElement->id, $arOfferIDList)) {
-            return;
-        }
-
-        //Remove element from cache array and save
-        $iPosition = array_search($this->obElement->id, $arOfferIDList);
-        if($iPosition === false) {
-            return;
-        }
-
-        unset($arOfferIDList[$iPosition]);
-
-        //Set cache data
-        CCache::forever($arCacheTags, $sCacheKey, $arOfferIDList);
+        $this->obOfferListStore->clearActiveList();
     }
 
     /**
@@ -236,13 +195,7 @@ class OfferModelHandler
             return;
         }
 
-        //Get cache data
-        $arCacheTags = [Plugin::CACHE_TAG, ProductListStore::CACHE_TAG_LIST];
-        $sCacheKey = ProductListStore::CACHE_TAG_LIST;
-
-        //Clear cache data
-        CCache::clear($arCacheTags, $sCacheKey);
-        $this->obProductListStore->getActiveList();
+        $this->obProductListStore->clearActiveList();
     }
 
     /**

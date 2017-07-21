@@ -16,6 +16,19 @@ class CategoryModelHandler
     /** @var  Category */
     protected $obElement;
 
+    /** @var  CategoryListStore */
+    protected $obCategoryListStore;
+
+    /**
+     * CategoryModelHandler constructor.
+     *
+     * @param CategoryListStore $obCategoryListStore
+     */
+    public function __construct(CategoryListStore $obCategoryListStore)
+    {
+        $this->obCategoryListStore = $obCategoryListStore;
+    }
+    
     /**
      * Add listeners
      * @param \Illuminate\Events\Dispatcher $obEvent
@@ -51,7 +64,6 @@ class CategoryModelHandler
         
         $this->obElement = $obElement;
         $this->clearItemCache();
-        $this->clearTopLevelList();
     }
 
     /**
@@ -66,7 +78,7 @@ class CategoryModelHandler
 
         $this->obElement = $obElement;
         $this->clearItemCache();
-        $this->clearTopLevelList();
+        $this->obCategoryListStore->clearTopLevelList();
     }
 
     /**
@@ -82,11 +94,7 @@ class CategoryModelHandler
      */
     public function clearTopLevelList()
     {
-        $arCacheTags = [Plugin::CACHE_TAG, CategoryListStore::CACHE_TAG_LIST];
-        $sCacheKey = CategoryListStore::CACHE_KEY_TOP_LEVEL_LIST;
-
-        CCache::clear($arCacheTags, $sCacheKey);
-        
+        $this->obCategoryListStore->clearTopLevelList();
         CCache::clear([Plugin::CACHE_TAG, CategoryItem::CACHE_TAG_ELEMENT]);
     }
 

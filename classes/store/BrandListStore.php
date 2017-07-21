@@ -5,6 +5,7 @@ use Lovata\Shopaholic\Classes\Item\CategoryItem;
 use Lovata\Shopaholic\Models\Brand;
 use Lovata\Shopaholic\Models\Product;
 use Lovata\Shopaholic\Plugin;
+use Lovata\Toolbox\Traits\Store\TraitActiveList;
 
 /**
  * Class BrandListStore
@@ -13,6 +14,8 @@ use Lovata\Shopaholic\Plugin;
  */
 class BrandListStore
 {
+    use TraitActiveList;
+    
     const CACHE_TAG_LIST = 'shopaholic-brand-list';
 
     /**
@@ -63,30 +66,13 @@ class BrandListStore
     }
 
     /**
-     * Get active brand ID list
-     * @return array|null
+     * Get brand active ID list
+     * @return array
      */
-    public function getActiveList()
+    protected function getActiveIDList()
     {
-        //Get cache data
-        $arCacheTags = [Plugin::CACHE_TAG, self::CACHE_TAG_LIST];
-        $sCacheKey = self::CACHE_TAG_LIST;
-
-        $arBrandIDList = CCache::get($arCacheTags, $sCacheKey);
-        if(!empty($arBrandIDList)) {
-            return $arBrandIDList;
-        }
-
-        //Get brand ID list
         /** @var array $arBrandIDList */
         $arBrandIDList = Brand::active()->lists('id');
-        if(empty($arBrandIDList)) {
-            return null;
-        }
-        
-        //Set cache data
-        CCache::forever($arCacheTags, $sCacheKey, $arBrandIDList);
-
         return $arBrandIDList;
     }
 }

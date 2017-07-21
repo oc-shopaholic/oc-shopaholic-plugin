@@ -3,6 +3,7 @@
 use Kharanenka\Helper\CCache;
 use Lovata\Shopaholic\Models\Offer;
 use Lovata\Shopaholic\Plugin;
+use Lovata\Toolbox\Traits\Store\TraitActiveList;
 
 /**
  * Class OfferListStore
@@ -11,6 +12,8 @@ use Lovata\Shopaholic\Plugin;
  */
 class OfferListStore
 {
+    use TraitActiveList;
+    
     const CACHE_TAG_LIST = 'shopaholic-offer-list';
 
     const SORT_NO = 'no';
@@ -98,32 +101,15 @@ class OfferListStore
 
         return $arOfferIDList;
     }
-
+    
     /**
-     * Get active offer ID list
-     * @return array|null
+     * Get offer active ID list
+     * @return array
      */
-    public function getActiveList()
+    protected function getActiveIDList()
     {
-        //Get cache data
-        $arCacheTags = [Plugin::CACHE_TAG, self::CACHE_TAG_LIST];
-        $sCacheKey = self::CACHE_TAG_LIST;
-
-        $arOfferIDList = CCache::get($arCacheTags, $sCacheKey);
-        if(!empty($arOfferIDList)) {
-            return $arOfferIDList;
-        }
-
-        //Get offer ID list
         /** @var array $arOfferIDList */
         $arOfferIDList = Offer::active()->lists('id');
-        if(empty($arOfferIDList)) {
-            return null;
-        }
-
-        //Set cache data
-        CCache::forever($arCacheTags, $sCacheKey, $arOfferIDList);
-
         return $arOfferIDList;
     }
 }

@@ -7,6 +7,7 @@ use Lovata\Shopaholic\Models\Offer;
 use Lovata\Shopaholic\Models\Product;
 use Lovata\Shopaholic\Models\Settings;
 use Lovata\Shopaholic\Plugin;
+use Lovata\Toolbox\Traits\Store\TraitActiveList;
 use System\Classes\PluginManager;
 
 /**
@@ -16,6 +17,8 @@ use System\Classes\PluginManager;
  */
 class ProductListStore
 {
+    use TraitActiveList;
+    
     const CACHE_TAG_LIST = 'shopaholic-product-list';
 
     const SORT_NO = 'no';
@@ -155,6 +158,24 @@ class ProductListStore
     }
 
     /**
+     * Clear product ID list by category ID
+     * @param int $iCategoryID
+     */
+    public function clearListByCategory($iCategoryID)
+    {
+        if(empty($iCategoryID)) {
+            return;
+        }
+
+        //Get cache data
+        $arCacheTags = [Plugin::CACHE_TAG, self::CACHE_TAG_LIST, CategoryItem::CACHE_TAG_ELEMENT];
+        $sCacheKey = $iCategoryID;
+
+        CCache::clear($arCacheTags, $sCacheKey);
+        $this->getByCategory($iCategoryID);
+    }
+    
+    /**
      * Get cached product ID list, filter by category ID
      * @param int $iBrandID
      * @return array|null
@@ -185,20 +206,29 @@ class ProductListStore
     }
 
     /**
-     * Get active product ID list
-     * @return array|null
+     * Clear product ID list by brand ID
+     * @param int $iBrandID
      */
-    public function getActiveList()
+    public function clearListByBrand($iBrandID)
     {
-        //Get cache data
-        $arCacheTags = [Plugin::CACHE_TAG, self::CACHE_TAG_LIST];
-        $sCacheKey = self::CACHE_TAG_LIST;
-
-        $arProductIDList = CCache::get($arCacheTags, $sCacheKey);
-        if(!empty($arProductIDList)) {
-            return $arProductIDList;
+        if(empty($iBrandID)) {
+            return;
         }
 
+        //Get cache data
+        $arCacheTags = [Plugin::CACHE_TAG, self::CACHE_TAG_LIST, BrandItem::CACHE_TAG_ELEMENT];
+        $sCacheKey = $iBrandID;
+
+        CCache::clear($arCacheTags, $sCacheKey);
+        $this->getByBrand($iBrandID);
+    }
+    
+    /**
+     * Get product active ID list
+     * @return array
+     */
+    protected function getActiveIDList()
+    {
         //Get product ID list
         /** @var array $arProductIDList */
         $arProductIDList = Product::active()->lists('id');
@@ -221,10 +251,7 @@ class ProductListStore
                 return null;
             }
         }
-
-        //Set cache data
-        CCache::forever($arCacheTags, $sCacheKey, $arProductIDList);
-
+        
         return $arProductIDList;
     }
 }

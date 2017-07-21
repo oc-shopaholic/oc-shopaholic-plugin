@@ -283,7 +283,7 @@ class ProductCollectionTest extends CommonTest
     }
 
     /**
-     * Check item collection "sortBy" method (default, new)
+     * Check item collection "sort" method (default, new)
      */
     public function testSortingByID()
     {
@@ -293,30 +293,30 @@ class ProductCollectionTest extends CommonTest
             return;
         }
 
-        ProductCollection::make()->sortBy(ProductListStore::SORT_NO);
-        ProductCollection::make()->sortBy(ProductListStore::SORT_NEW);
+        ProductCollection::make()->sort(ProductListStore::SORT_NO);
+        ProductCollection::make()->sort(ProductListStore::SORT_NEW);
 
-        $sErrorMessage = 'Product collection "sortBy" method is not correct';
+        $sErrorMessage = 'Product collection "sort" method is not correct';
 
         //Check item collection after create
-        $obCollection = ProductCollection::make()->sortBy(ProductListStore::SORT_NO);
+        $obCollection = ProductCollection::make()->sort(ProductListStore::SORT_NO);
         self::assertEquals([1,2], array_values($obCollection->getIDList()), $sErrorMessage);
 
-        $obCollection = ProductCollection::make()->sortBy(ProductListStore::SORT_NEW);
+        $obCollection = ProductCollection::make()->sort(ProductListStore::SORT_NEW);
         self::assertEquals([2,1], array_values($obCollection->getIDList()), $sErrorMessage);
 
         $this->obElement->delete();
 
         //Check item collection, after element remove
-        $obCollection = ProductCollection::make()->sortBy(ProductListStore::SORT_NO);
+        $obCollection = ProductCollection::make()->sort(ProductListStore::SORT_NO);
         self::assertEquals([1], array_values($obCollection->getIDList()), $sErrorMessage);
 
-        $obCollection = ProductCollection::make()->sortBy(ProductListStore::SORT_NEW);
+        $obCollection = ProductCollection::make()->sort(ProductListStore::SORT_NEW);
         self::assertEquals([1], array_values($obCollection->getIDList()), $sErrorMessage);
     }
 
     /**
-     * Check item collection "sortBy" method (price desc, asc)
+     * Check item collection "sort" method (price desc, asc)
      */
     public function testSortingByPrice()
     {
@@ -326,55 +326,55 @@ class ProductCollectionTest extends CommonTest
             return;
         }
 
-        ProductCollection::make()->sortBy(ProductListStore::SORT_PRICE_ASC);
-        ProductCollection::make()->sortBy(ProductListStore::SORT_PRICE_DESC);
+        ProductCollection::make()->sort(ProductListStore::SORT_PRICE_ASC);
+        ProductCollection::make()->sort(ProductListStore::SORT_PRICE_DESC);
 
-        $sErrorMessage = 'Product collection "sortBy" method is not correct';
+        $sErrorMessage = 'Product collection "sort" method is not correct';
 
         //Check item collection after create
-        $obCollection = ProductCollection::make()->sortBy(ProductListStore::SORT_PRICE_ASC);
+        $obCollection = ProductCollection::make()->sort(ProductListStore::SORT_PRICE_ASC);
         self::assertEquals([1,2], array_values($obCollection->getIDList()), $sErrorMessage);
 
-        $obCollection = ProductCollection::make()->sortBy(ProductListStore::SORT_PRICE_DESC);
+        $obCollection = ProductCollection::make()->sort(ProductListStore::SORT_PRICE_DESC);
         self::assertEquals([2,1], array_values($obCollection->getIDList()), $sErrorMessage);
 
         //Check item collection, after update offer price
         $this->obOffer->price = 1;
         $this->obOffer->save();
 
-        $obCollection = ProductCollection::make()->sortBy(ProductListStore::SORT_PRICE_DESC);
+        $obCollection = ProductCollection::make()->sort(ProductListStore::SORT_PRICE_DESC);
         self::assertEquals([1,2], array_values($obCollection->getIDList()), $sErrorMessage);
 
-        $obCollection = ProductCollection::make()->sortBy(ProductListStore::SORT_PRICE_ASC);
+        $obCollection = ProductCollection::make()->sort(ProductListStore::SORT_PRICE_ASC);
         self::assertEquals([2,1], array_values($obCollection->getIDList()), $sErrorMessage);
 
         $this->obOffer->active = false;
         $this->obOffer->save();
 
         //Check item collection, after offer active = false
-        $obCollection = ProductCollection::make()->sortBy(ProductListStore::SORT_PRICE_ASC);
+        $obCollection = ProductCollection::make()->sort(ProductListStore::SORT_PRICE_ASC);
         self::assertEquals([1], array_values($obCollection->getIDList()), $sErrorMessage);
 
-        $obCollection = ProductCollection::make()->sortBy(ProductListStore::SORT_PRICE_DESC);
+        $obCollection = ProductCollection::make()->sort(ProductListStore::SORT_PRICE_DESC);
         self::assertEquals([1], array_values($obCollection->getIDList()), $sErrorMessage);
 
         //Check item collection, after offer active = true
         $this->obOffer->active = true;
         $this->obOffer->save();
 
-        $obCollection = ProductCollection::make()->sortBy(ProductListStore::SORT_PRICE_DESC);
+        $obCollection = ProductCollection::make()->sort(ProductListStore::SORT_PRICE_DESC);
         self::assertEquals([1,2], array_values($obCollection->getIDList()), $sErrorMessage);
 
-        $obCollection = ProductCollection::make()->sortBy(ProductListStore::SORT_PRICE_ASC);
+        $obCollection = ProductCollection::make()->sort(ProductListStore::SORT_PRICE_ASC);
         self::assertEquals([2,1], array_values($obCollection->getIDList()), $sErrorMessage);
 
         $this->obElement->delete();
 
         //Check item collection, after element remove
-        $obCollection = ProductCollection::make()->sortBy(ProductListStore::SORT_PRICE_ASC);
+        $obCollection = ProductCollection::make()->sort(ProductListStore::SORT_PRICE_ASC);
         self::assertEquals([1], array_values($obCollection->getIDList()), $sErrorMessage);
 
-        $obCollection = ProductCollection::make()->sortBy(ProductListStore::SORT_PRICE_DESC);
+        $obCollection = ProductCollection::make()->sort(ProductListStore::SORT_PRICE_DESC);
         self::assertEquals([1], array_values($obCollection->getIDList()), $sErrorMessage);
     }
 

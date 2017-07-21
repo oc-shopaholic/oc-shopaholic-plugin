@@ -1,10 +1,8 @@
 <?php namespace Lovata\Shopaholic\Classes\Event;
 
-use Kharanenka\Helper\CCache;
 use Lovata\Shopaholic\Classes\Item\BrandItem;
 use Lovata\Shopaholic\Classes\Store\BrandListStore;
 use Lovata\Shopaholic\Models\Brand;
-use Lovata\Shopaholic\Plugin;
 
 /**
  * Class BrandModelHandler
@@ -78,7 +76,9 @@ class BrandModelHandler
         $this->obElement = $obElement;
         $this->clearItemCache();
         
-        $this->removeFromActiveList();
+        if($this->obElement->active) {
+            $this->obBrandListStore->clearActiveList();
+        }
     }
 
     /**
@@ -99,45 +99,7 @@ class BrandModelHandler
             return;
         }
 
-        //Get cache data
-        $arCacheTags = [Plugin::CACHE_TAG, BrandListStore::CACHE_TAG_LIST];
-        $sCacheKey = BrandListStore::CACHE_TAG_LIST;
-
-        //Clear cache data
-        CCache::clear($arCacheTags, $sCacheKey);
-        $this->obBrandListStore->getActiveList();
-    }
-
-    /**
-     * Remove brand from active product ID list
-     */
-    private function removeFromActiveList()
-    {
-        //Get cache data
-        $arCacheTags = [Plugin::CACHE_TAG, BrandListStore::CACHE_TAG_LIST];
-        $sCacheKey = BrandListStore::CACHE_TAG_LIST;
-
-        //Check cache array
-        $arBrandIDList = CCache::get($arCacheTags, $sCacheKey);
-        if(empty($arBrandIDList)) {
-            $this->obBrandListStore->getActiveList();
-            return;
-        }
-
-        if(!in_array($this->obElement->id, $arBrandIDList)) {
-            return;
-        }
-
-        //Remove element from cache array and save
-        $iPosition = array_search($this->obElement->id, $arBrandIDList);
-        if($iPosition === false) {
-            return;
-        }
-
-        unset($arBrandIDList[$iPosition]);
-
-        //Set cache data
-        CCache::forever($arCacheTags, $sCacheKey, $arBrandIDList);
+        $this->obBrandListStore->clearActiveList();
     }
     
     /**
