@@ -1,17 +1,18 @@
 <?php namespace Lovata\Shopaholic\Classes\Event;
 
 use Kharanenka\Helper\CCache;
+use Lovata\Shopaholic\Plugin;
+use Lovata\Shopaholic\Models\Category;
+use Lovata\Toolbox\Classes\Event\ModelHandler;
 use Lovata\Shopaholic\Classes\Item\CategoryItem;
 use Lovata\Shopaholic\Classes\Store\CategoryListStore;
-use Lovata\Shopaholic\Models\Category;
-use Lovata\Shopaholic\Plugin;
 
 /**
  * Class CategoryModelHandler
  * @package Lovata\Shopaholic\Classes\Event
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
-class CategoryModelHandler
+class CategoryModelHandler extends ModelHandler
 {
     /** @var  Category */
     protected $obElement;
@@ -28,6 +29,24 @@ class CategoryModelHandler
     {
         $this->obCategoryListStore = $obCategoryListStore;
     }
+
+    /**
+     * Get model class name
+     * @return string
+     */
+    protected function getModelClass()
+    {
+        return Category::class;
+    }
+
+    /**
+     * Get item class name
+     * @return string
+     */
+    protected function getItemClass()
+    {
+        return CategoryItem::class;
+    }
     
     /**
      * Add listeners
@@ -35,82 +54,25 @@ class CategoryModelHandler
      */
     public function subscribe($obEvent)
     {
-        Category::extend(function ($obElement) {
-            /** @var Category $obElement */
-            $obElement->bindEvent('model.afterSave', function () use($obElement) {
-                $this->afterSave($obElement);
-            });
-        });
-
-        Category::extend(function ($obElement) {
-            /** @var Category $obElement */
-            $obElement->bindEvent('model.afterDelete', function () use($obElement) {
-                $this->afterDelete($obElement);
-            });
-        });
-
+        parent::subscribe($obEvent);
         $obEvent->listen('shopaholic.category.update.sorting', CategoryModelHandler::class.'@clearTopLevelList');
     }
 
     /**
-     * After save event handler
-     * @param Category $obElement
-     */
-    public function afterSave($obElement)
-    {
-        if(empty($obElement) || !$obElement instanceof Category) {
-            return;
-        }
-        
-        $this->obElement = $obElement;
-        $this->clearItemCache();
-    }
-
-    /**
      * After delete event handler
-     * @param Category $obElement
      */
-    public function afterDelete($obElement)
+    protected function afterDelete()
     {
-        if(empty($obElement) || !$obElement instanceof Category) {
-            return;
-        }
-
-        $this->obElement = $obElement;
-        $this->clearItemCache();
+        parent::afterDelete();
         $this->obCategoryListStore->clearTopLevelList();
-    }
-
-    /**
-     * Clear item cache
-     */
-    protected function clearItemCache()
-    {
-        CategoryItem::clearCache($this->obElement->id);
     }
     
     /**
      * Clear top level category ID list
      */
-    public function clearTopLevelList()
+    protected function clearTopLevelList()
     {
         $this->obCategoryListStore->clearTopLevelList();
         CCache::clear([Plugin::CACHE_TAG, CategoryItem::CACHE_TAG_ELEMENT]);
-    }
-
-    /**
-     * Get fields list for backend interface with switching visibility
-     * @return array
-     */
-    public static function getConfiguredBackendFields()
-    {
-        return [
-            'code'                  => 'lovata.toolbox::lang.field.code',
-            'external_id'           => 'lovata.toolbox::lang.field.external_id',
-            'preview_text'          => 'lovata.toolbox::lang.field.preview_text',
-            'description'           => 'lovata.toolbox::lang.field.description',
-            'preview_image'         => 'lovata.toolbox::lang.field.preview_image',
-            'images'                => 'lovata.toolbox::lang.field.images',
-        ];
     }
 }

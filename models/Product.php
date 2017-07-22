@@ -63,6 +63,11 @@ use October\Rain\Database\Traits\Validation;
  * Reviews for Shopaholic
  * @property \Lovata\ReviewsShopaholic\Models\Review[]|\October\Rain\Database\Collection $reviews
  * @method \Lovata\ReviewsShopaholic\Models\Review|\October\Rain\Database\Relations\HasMany reviews()
+ *
+ * Properties for Shopaholic fields
+ * @property array $property
+ * @property array $property_value
+ * 
  */
 class Product extends Model
 {

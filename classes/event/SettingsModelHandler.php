@@ -1,5 +1,9 @@
 <?php namespace Lovata\Shopaholic\Classes\Event;
 
+use Lovata\Shopaholic\Models\Brand;
+use Lovata\Shopaholic\Models\Category;
+use Lovata\Shopaholic\Models\Offer;
+use Lovata\Shopaholic\Models\Product;
 use Lovata\Shopaholic\Models\Settings;
 
 /**
@@ -10,7 +14,7 @@ use Lovata\Shopaholic\Models\Settings;
 class SettingsModelHandler
 {
     protected $arFields = [];
-
+    
     /**
      * Add listeners
      * @param \Illuminate\Events\Dispatcher $obEvent
@@ -18,6 +22,14 @@ class SettingsModelHandler
     public function subscribe($obEvent)
     {
         $obEvent->listen('backend.form.extendFields', SettingsModelHandler::class.'@addFields');
+
+        $obEvent->listen('backend.list.extendColumns', function ($obWidget) {
+            $this->hideListColumns($obWidget);
+        });
+
+        $obEvent->listen('backend.form.extendFields', function ($obWidget) {
+            $this->hideListColumns($obWidget);
+        });
     }
 
     /**
@@ -51,10 +63,10 @@ class SettingsModelHandler
      */
     protected function getAdditionFields()
     {
-        self::addConfiguredFields(ProductModelHandler::getConfiguredBackendFields(), 'product');
-        self::addConfiguredFields(OfferModelHandler::getConfiguredBackendFields(), 'offer');
-        self::addConfiguredFields(CategoryModelHandler::getConfiguredBackendFields(), 'category');
-        self::addConfiguredFields(BrandModelHandler::getConfiguredBackendFields(), 'brand');
+        self::addConfiguredFields($this->getConfiguredBackendFieldsProduct(), 'product');
+        self::addConfiguredFields($this->getConfiguredBackendFieldsOffer(), 'offer');
+        self::addConfiguredFields($this->getConfiguredBackendFieldsCategory(), 'category');
+        self::addConfiguredFields($this->getConfiguredBackendFieldsBrand(), 'brand');
 
         return $this->arFields;
     }
@@ -89,5 +101,118 @@ class SettingsModelHandler
                 'span'  => 'left',
             ];
         }
+    }
+
+    /**
+     * Hide backend list columns
+     * @param \Backend\Widgets\Lists|\Backend\Widgets\Form $obWidget
+     */
+    protected function hideListColumns($obWidget)
+    {
+        $sModelName = get_class($obWidget->model);
+        $sModelKey = null;
+        
+        switch($sModelName) {
+            case Product::class :
+                $arConfiguredViewFields = $this->getConfiguredBackendFieldsProduct();
+                $sModelKey = 'product';
+                break;
+            case Offer::class :
+                $arConfiguredViewFields = $this->getConfiguredBackendFieldsOffer();
+                $sModelKey = 'offer';
+                break;
+            case Category::class :
+                $arConfiguredViewFields = $this->getConfiguredBackendFieldsCategory();
+                $sModelKey = 'category';
+                break;
+            case Brand::class :
+                $arConfiguredViewFields = $this->getConfiguredBackendFieldsBrand();
+                $sModelKey = 'brand';
+                break;
+        }
+        
+        if(empty($arConfiguredViewFields)) {
+            return;
+        }
+
+        foreach($arConfiguredViewFields as $sFieldKey => $sFieldName) {
+            if(!Settings::getValue($sModelKey.'_'.$sFieldKey)) {
+                continue;
+            }
+
+            if($obWidget instanceof \Backend\Widgets\Lists) {
+                $obWidget->removeColumn($sFieldKey);
+            } else {
+                $obWidget->removeField($sFieldKey);
+            }
+        }
+    }
+
+    /**
+     * Get fields list for backend interface with switching visibility (Brand)
+     * @return array
+     */
+    private function getConfiguredBackendFieldsBrand()
+    {
+        return [
+            'code'                  => 'lovata.toolbox::lang.field.code',
+            'external_id'           => 'lovata.toolbox::lang.field.external_id',
+            'preview_text'          => 'lovata.toolbox::lang.field.preview_text',
+            'description'           => 'lovata.toolbox::lang.field.description',
+            'preview_image'         => 'lovata.toolbox::lang.field.preview_image',
+            'images'                => 'lovata.toolbox::lang.field.images',
+        ];
+    }
+
+    /**
+     * Get fields list for backend interface with switching visibility (Category)
+     * @return array
+     */
+    private function getConfiguredBackendFieldsCategory()
+    {
+        return [
+            'code'                  => 'lovata.toolbox::lang.field.code',
+            'external_id'           => 'lovata.toolbox::lang.field.external_id',
+            'preview_text'          => 'lovata.toolbox::lang.field.preview_text',
+            'description'           => 'lovata.toolbox::lang.field.description',
+            'preview_image'         => 'lovata.toolbox::lang.field.preview_image',
+            'images'                => 'lovata.toolbox::lang.field.images',
+        ];
+    }
+
+    /**
+     * Get fields list for backend interface with switching visibility (Offer)
+     * @return array
+     */
+    private function getConfiguredBackendFieldsOffer() {
+        return [
+            'quantity'              => 'lovata.shopaholic::lang.field.quantity',
+            'price'                 => 'lovata.shopaholic::lang.field.price',
+            'old_price'             => 'lovata.shopaholic::lang.field.old_price',
+            'code'                  => 'lovata.toolbox::lang.field.code',
+            'external_id'           => 'lovata.toolbox::lang.field.external_id',
+            'preview_text'          => 'lovata.toolbox::lang.field.preview_text',
+            'description'           => 'lovata.toolbox::lang.field.description',
+            'preview_image'         => 'lovata.toolbox::lang.field.preview_image',
+            'images'                => 'lovata.toolbox::lang.field.images',
+        ];
+    }
+
+    /**
+     * Get fields list for backend interface with switching visibility (Product)
+     * @return array
+     */
+    private function getConfiguredBackendFieldsProduct()
+    {
+        return [
+            'code'                  => 'lovata.toolbox::lang.field.code',
+            'external_id'           => 'lovata.toolbox::lang.field.external_id',
+            'category'              => 'lovata.toolbox::lang.field.category',
+            'brand'                 => 'lovata.shopaholic::lang.field.brand',
+            'preview_text'          => 'lovata.toolbox::lang.field.preview_text',
+            'description'           => 'lovata.toolbox::lang.field.description',
+            'preview_image'         => 'lovata.toolbox::lang.field.preview_image',
+            'images'                => 'lovata.toolbox::lang.field.images',
+        ];
     }
 }

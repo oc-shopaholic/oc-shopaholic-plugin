@@ -1,109 +1,90 @@
 <?php namespace Lovata\Shopaholic\Classes\Event;
 
+use Lovata\Shopaholic\Models\Offer;
+use Lovata\Shopaholic\Models\Settings;
+use Lovata\Toolbox\Classes\Event\ModelHandler;
 use Lovata\Shopaholic\Classes\Item\OfferItem;
 use Lovata\Shopaholic\Classes\Item\ProductItem;
 use Lovata\Shopaholic\Classes\Store\OfferListStore;
 use Lovata\Shopaholic\Classes\Store\ProductListStore;
-use Lovata\Shopaholic\Models\Offer;
-use Lovata\Shopaholic\Models\Settings;
 
 /**
  * Class OfferModelHandler
  * @package Lovata\Shopaholic\Classes\Event
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
-class OfferModelHandler
+class OfferModelHandler extends ModelHandler
 {
-    /** @var  \Lovata\Shopaholic\Models\Offer */
+    /** @var  Offer */
     protected $obElement;
 
     /** @var  ProductListStore */
     protected $obProductListStore;
 
     /** @var  OfferListStore */
-    protected $obOfferListStore;
+    protected $obListStore;
 
+    /**
+     * OfferModelHandler constructor.
+     *
+     * @param ProductListStore $obProductListStore
+     * @param OfferListStore   $obOfferListStore
+     */
     public function __construct(ProductListStore $obProductListStore, OfferListStore $obOfferListStore)
     {
         $this->obProductListStore = $obProductListStore;
-        $this->obOfferListStore = $obOfferListStore;
+        $this->obListStore = $obOfferListStore;
     }
 
     /**
-     * Add listeners
+     * Get model class name
+     * @return string
      */
-    public function subscribe()
+    protected function getModelClass()
     {
-        Offer::extend(function ($obElement) {
-            /** @var Offer $obElement */
-            $obElement->bindEvent('model.afterSave', function () use($obElement) {
-                $this->afterSave($obElement);
-            });
-        });
+        return Offer::class;
+    }
 
-        Offer::extend(function ($obElement) {
-            /** @var Offer $obElement */
-            $obElement->bindEvent('model.afterDelete', function () use($obElement) {
-                $this->afterDelete($obElement);
-            });
-        });
+    /**
+     * Get item class name
+     * @return string
+     */
+    protected function getItemClass()
+    {
+        return OfferItem::class;
     }
 
     /**
      * After save event handler
-     * @param \Lovata\Shopaholic\Models\Offer $obElement
      */
-    public function afterSave($obElement)
+    protected function afterSave()
     {
-        if(empty($obElement) || !$obElement instanceof Offer) {
-            return;
-        }
-
-        $this->obElement = $obElement;
-        $this->clearItemCache();
+        parent::afterSave();
 
         $this->checkProductIDField();
         $this->checkPriceField();
-
-        //Check "active" flag
-        $this->checkActiveField();
     }
 
     /**
      * After delete event handler
-     * @param \Lovata\Shopaholic\Models\Offer $obElement
      */
-    public function afterDelete($obElement)
+    protected function afterDelete()
     {
-        if(empty($obElement) || !$obElement instanceof Offer) {
-            return;
-        }
-
-        $this->obElement = $obElement;
-
-        $this->clearItemCache();
-
-        if($obElement->active) {
-            $this->obOfferListStore->clearActiveList();
+        parent::afterDelete();
+        
+        if($this->obElement->active) {
             $this->clearProductActiveList();
         }
 
         //Get product object
-        $obProduct = $obElement->product;
-        if(empty($obProduct) || !$obElement->active) {
+        $obProduct = $this->obElement->product;
+        if(empty($obProduct) || !$this->obElement->active) {
             return;
         }
 
+        //Clear sorting product list by offer price
         $this->obProductListStore->updateCacheBySorting(ProductListStore::SORT_PRICE_ASC);
         $this->obProductListStore->updateCacheBySorting(ProductListStore::SORT_PRICE_DESC);
-    }
-
-    /**
-     * Clear item cache
-     */
-    protected function clearItemCache()
-    {
-        OfferItem::clearCache($this->obElement->id);
     }
 
     /**
@@ -146,8 +127,8 @@ class OfferModelHandler
     protected function checkPriceField()
     {
         if($this->obElement->getOriginal('price') != $this->obElement->price) {
-            $this->obOfferListStore->updateCacheBySorting(OfferListStore::SORT_PRICE_ASC);
-            $this->obOfferListStore->updateCacheBySorting(OfferListStore::SORT_PRICE_DESC);
+            $this->obListStore->updateCacheBySorting(OfferListStore::SORT_PRICE_ASC);
+            $this->obListStore->updateCacheBySorting(OfferListStore::SORT_PRICE_DESC);
         }
         
         $bNeedUpdateFlag =
@@ -175,7 +156,7 @@ class OfferModelHandler
     /**
      * Check offer "active" field, if it was changed, then clear cache
      */
-    private function checkActiveField()
+    protected function checkActiveField()
     {
         //check product "active" field
         if($this->obElement->getOriginal('active') == $this->obElement->active) {
@@ -183,7 +164,7 @@ class OfferModelHandler
         }
 
         $this->clearProductActiveList();
-        $this->obOfferListStore->clearActiveList();
+        $this->obListStore->clearActiveList();
     }
 
     /**
@@ -196,23 +177,5 @@ class OfferModelHandler
         }
 
         $this->obProductListStore->clearActiveList();
-    }
-
-    /**
-     * Get fields list for backend interface with switching visibility
-     * @return array
-     */
-    public static function getConfiguredBackendFields() {
-        return [
-            'quantity'              => 'lovata.shopaholic::lang.field.quantity',
-            'price'                 => 'lovata.shopaholic::lang.field.price',
-            'old_price'             => 'lovata.shopaholic::lang.field.old_price',
-            'code'                  => 'lovata.toolbox::lang.field.code',
-            'external_id'           => 'lovata.toolbox::lang.field.external_id',
-            'preview_text'          => 'lovata.toolbox::lang.field.preview_text',
-            'description'           => 'lovata.toolbox::lang.field.description',
-            'preview_image'         => 'lovata.toolbox::lang.field.preview_image',
-            'images'                => 'lovata.toolbox::lang.field.images',
-        ];
     }
 }
