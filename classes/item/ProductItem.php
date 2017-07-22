@@ -42,6 +42,9 @@ use Lovata\Toolbox\Traits\Item\TraitCheckItemTrashed;
  * @property array $sticker_id_list
  * @property \Lovata\StickersShopaholic\Classes\Collection\StickerCollection|\Lovata\StickersShopaholic\Classes\Item\StickerItem[] $sticker
  *
+ * Reviews for Shopaholic field
+ * @property array $review_id_list
+ * @property \Lovata\ReviewsShopaholic\Classes\Collection\ReviewCollection|\Lovata\ReviewsShopaholic\Classes\Item\ReviewItem[] $review
  */
 class ProductItem extends ElementItem
 {

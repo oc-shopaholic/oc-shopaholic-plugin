@@ -32,6 +32,10 @@ use Lovata\Toolbox\Traits\Item\TraitCheckItemTrashed;
  * @property float       $old_price_value
  *
  * @property int         $quantity
+ *
+ * Stores for Shopaholic
+ * @property int $store_id
+ * @property \Lovata\StoresShopaholic\Classes\Item\StoreItem $store
  */
 class OfferItem extends ElementItem
 {

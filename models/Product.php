@@ -53,12 +53,16 @@ use October\Rain\Database\Traits\Validation;
  *
  * @method static $this getByBrand(int $iBrandID)
  *
- * Stickers for Shopaholic field
+ * Stickers for Shopaholic
  * @property \Lovata\StickersShopaholic\Models\Sticker[]|\October\Rain\Database\Collection $sticker
  * @method static \Lovata\StickersShopaholic\Models\Sticker|\October\Rain\Database\Relations\BelongsToMany sticker()
  *
- * Popularity for Shopaholic field
+ * Popularity for Shopaholic
  * @property int $popularity
+ *
+ * Reviews for Shopaholic
+ * @property \Lovata\ReviewsShopaholic\Models\Review[]|\October\Rain\Database\Collection $reviews
+ * @method \Lovata\ReviewsShopaholic\Models\Review|\October\Rain\Database\Relations\HasMany reviews()
  */
 class Product extends Model
 {

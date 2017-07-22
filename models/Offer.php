@@ -49,6 +49,10 @@ use October\Rain\Database\Traits\SoftDelete;
  * @method static $this getByQuantity(int $iCount, string $sCondition = '=')
  * @method static $this getByPrice(int $iPrice, string $sCondition = '=')
  * @method static $this getByOldPrice(int $iPrice, string $sCondition = '=')
+ *
+ * Stores For Shopaholic
+ * @property int $store_id
+ * @method \Lovata\StoresShopaholic\Models\Store|\October\Rain\Database\Relations\BelongsTo store()
  */
 class Offer extends Model
 {
