@@ -1,24 +1,26 @@
 <?php namespace Lovata\Shopaholic\Classes\Event;
 
+use System\Classes\PluginManager;
+
+use Lovata\Shopaholic\Models\Product;
+use Lovata\Shopaholic\Models\Settings;
+use Lovata\Toolbox\Classes\Event\ModelHandler;
 use Lovata\Shopaholic\Classes\Item\ProductItem;
 use Lovata\Shopaholic\Classes\Store\BrandListStore;
 use Lovata\Shopaholic\Classes\Store\ProductListStore;
-use Lovata\Shopaholic\Models\Product;
-use Lovata\Shopaholic\Models\Settings;
-use System\Classes\PluginManager;
 
 /**
  * Class ProductModelHandler
  * @package Lovata\Shopaholic\Classes\Event
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
-class ProductModelHandler
+class ProductModelHandler extends ModelHandler
 {
     /** @var  Product */
     protected $obElement;
 
     /** @var  ProductListStore */
-    protected $obProductListStore;
+    protected $obListStore;
     
     /** @var  BrandListStore */
     protected $obBrandListStore;
@@ -31,10 +33,28 @@ class ProductModelHandler
      */
     public function __construct(ProductListStore $obProductListStore, BrandListStore $obBrandListStore)
     {
-        $this->obProductListStore = $obProductListStore;
+        $this->obListStore = $obProductListStore;
         $this->obBrandListStore = $obBrandListStore;
     }
 
+    /**
+     * Get model class name
+     * @return string
+     */
+    protected function getModelClass()
+    {
+        return Product::class;
+    }
+
+    /**
+     * Get item class name
+     * @return string
+     */
+    protected function getItemClass()
+    {
+        return ProductItem::class;
+    }
+    
     /**
      * Add listeners
      * @param \Illuminate\Events\Dispatcher $obEvent
@@ -42,44 +62,15 @@ class ProductModelHandler
      */
     public function subscribe($obEvent)
     {
-        Product::extend(function ($obElement) {
-            /** @var Product $obElement */
-            $obElement->bindEvent('model.afterSave', function () use($obElement) {
-                $this->afterSave($obElement);
-            });
-        });
-
-        Product::extend(function ($obElement) {
-            /** @var Product $obElement */
-            $obElement->bindEvent('model.afterDelete', function () use($obElement) {
-                $this->afterDelete($obElement);
-            });
-        });
-
-        $obEvent->listen('backend.list.extendColumns', function ($obWidget) {
-            $this->hideListColumns($obWidget);
-        });
-
-        $obEvent->listen('backend.form.extendFields', function ($obWidget) {
-            $this->hideListColumns($obWidget);
-        });
+        parent::subscribe($obEvent);
     }
 
     /**
      * After save event handler
-     * @param Product $obElement
      */
-    public function afterSave($obElement)
+    protected function afterSave()
     {
-        if(empty($obElement) || !$obElement instanceof Product) {
-            return;
-        }
-
-        $this->obElement = $obElement;
-        $this->clearItemCache();
-
-        //Check "active" flag
-        $this->checkActiveField();
+        parent::afterSave();
 
         //Check "category_id" field
         $this->checkCategoryIDField();
@@ -93,40 +84,22 @@ class ProductModelHandler
 
     /**
      * After delete event handler
-     * @param Product $obElement
      */
-    public function afterDelete($obElement)
+    public function afterDelete()
     {
-        if(empty($obElement) || !$obElement instanceof Product) {
-            return;
-        }
-
-        $this->obElement = $obElement;
         $this->processOfferAfterDelete();
-        $this->clearItemCache();
+        parent::afterDelete();
 
-        if($obElement->active) {
-            $this->obProductListStore->clearActiveList();
-        }
-
-        $this->obProductListStore->clearListByCategory($this->obElement->category_id);
+        $this->obListStore->clearListByCategory($this->obElement->category_id);
         $this->obBrandListStore->clearListByCategory($this->obElement->category_id);
 
-        $this->obProductListStore->clearListByBrand($obElement->brand_id);
+        $this->obListStore->clearListByBrand($this->obElement->brand_id);
 
-        $this->obProductListStore->updateCacheBySorting(ProductListStore::SORT_PRICE_ASC);
-        $this->obProductListStore->updateCacheBySorting(ProductListStore::SORT_PRICE_DESC);
-        $this->obProductListStore->updateCacheBySorting(ProductListStore::SORT_NEW);
-        $this->obProductListStore->updateCacheBySorting(ProductListStore::SORT_POPULARITY_DESC);
-        $this->obProductListStore->updateCacheBySorting(ProductListStore::SORT_NO);
-    }
-
-    /**
-     * Clear item cache
-     */
-    protected function clearItemCache()
-    {
-        ProductItem::clearCache($this->obElement->id);
+        $this->obListStore->updateCacheBySorting(ProductListStore::SORT_PRICE_ASC);
+        $this->obListStore->updateCacheBySorting(ProductListStore::SORT_PRICE_DESC);
+        $this->obListStore->updateCacheBySorting(ProductListStore::SORT_NEW);
+        $this->obListStore->updateCacheBySorting(ProductListStore::SORT_POPULARITY_DESC);
+        $this->obListStore->updateCacheBySorting(ProductListStore::SORT_NO);
     }
 
     /**
@@ -146,19 +119,6 @@ class ProductModelHandler
     }
     
     /**
-     * Check product "active" field, if it was changed, then clear cache
-     */
-    private function checkActiveField()
-    {
-        //check product "active" field
-        if($this->obElement->getOriginal('active') == $this->obElement->active) {
-            return;
-        }
-
-        $this->obProductListStore->clearActiveList();
-    }
-
-    /**
      * Check product "category_id" field, if it was changed, then clear cache
      */
     private function checkCategoryIDField()
@@ -169,8 +129,8 @@ class ProductModelHandler
         }
 
         //Update product ID cache list for category
-        $this->obProductListStore->clearListByCategory($this->obElement->category_id);
-        $this->obProductListStore->clearListByCategory((int) $this->obElement->getOriginal('category_id'));
+        $this->obListStore->clearListByCategory($this->obElement->category_id);
+        $this->obListStore->clearListByCategory((int) $this->obElement->getOriginal('category_id'));
         
         $this->obBrandListStore->clearListByCategory($this->obElement->category_id);
         $this->obBrandListStore->clearListByCategory((int) $this->obElement->getOriginal('category_id'));
@@ -187,8 +147,8 @@ class ProductModelHandler
         }
 
         //Update product ID cache list for brand
-        $this->obProductListStore->clearListByBrand($this->obElement->brand_id);
-        $this->obProductListStore->clearListByBrand((int) $this->obElement->getOriginal('brand_id'));
+        $this->obListStore->clearListByBrand($this->obElement->brand_id);
+        $this->obListStore->clearListByBrand((int) $this->obElement->getOriginal('brand_id'));
     }
 
     /**
@@ -205,53 +165,6 @@ class ProductModelHandler
         }
 
         //Update product list with popularity
-        $this->obProductListStore->updateCacheBySorting(ProductListStore::SORT_POPULARITY_DESC);
-    }
-
-    /**
-     * Hide backend list columns
-     * @param \Backend\Widgets\Lists|\Backend\Widgets\Form $obWidget
-     */
-    protected function hideListColumns($obWidget)
-    {
-        // Only for the Product model
-        if (!$obWidget->model instanceof Product) {
-            return;
-        }
-
-        $arConfiguredViewFields = self::getConfiguredBackendFields();
-        if(empty($arConfiguredViewFields)) {
-            return;
-        }
-
-        foreach($arConfiguredViewFields as $sFieldKey => $sFieldName) {
-            if(!Settings::getValue('product_'.$sFieldKey)) {
-                continue;
-            }
-
-            if($obWidget instanceof \Backend\Widgets\Lists) {
-                $obWidget->removeColumn($sFieldKey);
-            } else {
-                $obWidget->removeField($sFieldKey);
-            }
-        }
-    }
-
-    /**
-     * Get fields list for backend interface with switching visibility
-     * @return array
-     */
-    public static function getConfiguredBackendFields()
-    {
-        return [
-            'code'                  => 'lovata.toolbox::lang.field.code',
-            'external_id'           => 'lovata.toolbox::lang.field.external_id',
-            'category'              => 'lovata.toolbox::lang.field.category',
-            'brand'                 => 'lovata.shopaholic::lang.field.brand',
-            'preview_text'          => 'lovata.toolbox::lang.field.preview_text',
-            'description'           => 'lovata.toolbox::lang.field.description',
-            'preview_image'         => 'lovata.toolbox::lang.field.preview_image',
-            'images'                => 'lovata.toolbox::lang.field.images',
-        ];
+        $this->obListStore->updateCacheBySorting(ProductListStore::SORT_POPULARITY_DESC);
     }
 }

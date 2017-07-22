@@ -72,7 +72,7 @@ class ProductList extends SortingElementList
      */
     protected function makeCollection()
     {
-        $this->obItemCollection = ProductCollection::make()->sort($this->sSorting);
+        return ProductCollection::make()->sort($this->sSorting);
     }
 
     /**

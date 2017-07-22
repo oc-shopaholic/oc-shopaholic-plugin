@@ -1,5 +1,6 @@
 <?php namespace Lovata\Shopaholic\Classes\Item;
 
+use Lovata\Shopaholic\Classes\Collection\ProductCollection;
 use Lovata\Shopaholic\Plugin;
 use Lovata\Shopaholic\Models\Category;
 use Lovata\Shopaholic\Classes\Collection\CategoryCollection;
@@ -137,6 +138,7 @@ class CategoryItem extends ElementItem
             }
         }
         
+        $iProductCount += ProductCollection::make()->active()->category($this->id)->count();
         $this->setAttribute('product_count', $iProductCount);
         return $iProductCount;
     }
