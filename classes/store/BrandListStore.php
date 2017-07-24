@@ -1,10 +1,11 @@
 <?php namespace Lovata\Shopaholic\Classes\Store;
 
 use Kharanenka\Helper\CCache;
-use Lovata\Shopaholic\Classes\Item\CategoryItem;
-use Lovata\Shopaholic\Models\Brand;
+
 use Lovata\Shopaholic\Models\Product;
 use Lovata\Shopaholic\Plugin;
+use Lovata\Shopaholic\Models\Brand;
+use Lovata\Shopaholic\Classes\Item\CategoryItem;
 use Lovata\Toolbox\Traits\Store\TraitActiveList;
 
 /**
@@ -17,6 +18,19 @@ class BrandListStore
     use TraitActiveList;
     
     const CACHE_TAG_LIST = 'shopaholic-brand-list';
+
+    /** @var ProductListStore */
+    protected $obProductListStore;
+    
+    /**
+     * BrandListStore constructor.
+     *
+     * @param ProductListStore $obProductListStore
+     */
+    public function __construct(ProductListStore $obProductListStore)
+    {
+        $this->obProductListStore = $obProductListStore;
+    }
 
     /**
      * Get cached brand ID list, filter by category ID
@@ -34,18 +48,33 @@ class BrandListStore
         $sCacheKey = $iCategoryID;
 
         $arBrandIDList = CCache::get($arCacheTags, $sCacheKey);
-        if(!empty($arBrandIDList)) {
-            return $arBrandIDList;
+        if(empty($arBrandIDList)) {
+            //Get brand ID list
+            /** @var array $arBrandIDList */
+            $arBrandIDList = Product::getByCategory($iCategoryID)->where('brand_id', '>', 0)->lists('brand_id', 'id');
+
+            //Set cache data
+            CCache::forever($arCacheTags, $sCacheKey, $arBrandIDList);
         }
 
-        //Get brand ID list
-        /** @var array $arBrandIDList */
-        $arBrandIDList = Product::getByCategory($iCategoryID)->where('brand_id', '>', 0)->groupBy('brand_id')->lists('brand_id');
+        //Get active product list
+        $arActiveProductIDList = $this->obProductListStore->getActiveList();
+        if(empty($arActiveProductIDList) || empty($arBrandIDList)) {
+            return null;
+        }
+        
+        $arResult = [];
+        foreach($arBrandIDList as $iProductID => $iBrandID) {
+            if(!in_array($iProductID, $arActiveProductIDList)) {
+                continue;
+            }
+            
+            $arResult[] = $iBrandID;
+        }
+        
+        $arResult = array_unique($arResult);
 
-        //Set cache data
-        CCache::forever($arCacheTags, $sCacheKey, $arBrandIDList);
-
-        return $arBrandIDList;
+        return $arResult;
     }
 
     /**

@@ -1,8 +1,8 @@
 <?php namespace Lovata\Shopaholic\Classes\Item;
 
-use Lovata\Shopaholic\Classes\Collection\ProductCollection;
 use Lovata\Shopaholic\Plugin;
 use Lovata\Shopaholic\Models\Category;
+use Lovata\Shopaholic\Classes\Collection\ProductCollection;
 use Lovata\Shopaholic\Classes\Collection\CategoryCollection;
 
 use Lovata\Toolbox\Classes\Item\ElementItem;

@@ -1,9 +1,11 @@
 <?php namespace Lovata\Shopaholic\Classes\Event;
 
 use Kharanenka\Helper\CCache;
+
+use Lovata\Toolbox\Classes\Event\ModelHandler;
+
 use Lovata\Shopaholic\Plugin;
 use Lovata\Shopaholic\Models\Category;
-use Lovata\Toolbox\Classes\Event\ModelHandler;
 use Lovata\Shopaholic\Classes\Item\CategoryItem;
 use Lovata\Shopaholic\Classes\Store\CategoryListStore;
 

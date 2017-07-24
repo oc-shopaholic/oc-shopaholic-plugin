@@ -1,5 +1,6 @@
 <?php namespace Lovata\Shopaholic\Classes\Item;
 
+use Lovata\Shopaholic\Models\Settings;
 use Lovata\Shopaholic\Plugin;
 use Lovata\Shopaholic\Models\Offer;
 
@@ -30,7 +31,8 @@ use Lovata\Toolbox\Traits\Item\TraitCheckItemTrashed;
  * @property string      $old_price
  * @property float       $price_value
  * @property float       $old_price_value
- *
+ * @property string      $currency
+ * 
  * @property int         $quantity
  *
  * Stores for Shopaholic
@@ -109,5 +111,14 @@ class OfferItem extends ElementItem
         ];
 
         return $arResult;
+    }
+
+    /**
+     * Get currency value
+     * @return null|string
+     */
+    protected function getCurrencyAttribute()
+    {
+        return Settings::getValue('currency');
     }
 }

@@ -1,8 +1,9 @@
 <?php namespace Lovata\Shopaholic\Classes\Event;
 
+use Lovata\Toolbox\Classes\Event\ModelHandler;
+
 use Lovata\Shopaholic\Models\Offer;
 use Lovata\Shopaholic\Models\Settings;
-use Lovata\Toolbox\Classes\Event\ModelHandler;
 use Lovata\Shopaholic\Classes\Item\OfferItem;
 use Lovata\Shopaholic\Classes\Item\ProductItem;
 use Lovata\Shopaholic\Classes\Store\OfferListStore;

@@ -48,7 +48,6 @@ class Plugin extends PluginBase
             'Lovata\Shopaholic\Components\Breadcrumbs'  => 'CatalogBreadcrumbs',
             'Lovata\Shopaholic\Components\ProductData'  => 'ProductData',
             'Lovata\Shopaholic\Components\ProductPage'  => 'ProductPage',
-            'Lovata\Shopaholic\Components\Currency'     => 'Currency',
         ];
     }
 

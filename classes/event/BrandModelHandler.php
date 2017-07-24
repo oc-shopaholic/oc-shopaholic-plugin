@@ -1,9 +1,10 @@
 <?php namespace Lovata\Shopaholic\Classes\Event;
 
+use Lovata\Toolbox\Classes\Event\ModelHandler;
+
+use Lovata\Shopaholic\Models\Brand;
 use Lovata\Shopaholic\Classes\Item\BrandItem;
 use Lovata\Shopaholic\Classes\Store\BrandListStore;
-use Lovata\Shopaholic\Models\Brand;
-use Lovata\Toolbox\Classes\Event\ModelHandler;
 
 /**
  * Class BrandModelHandler
