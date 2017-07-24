@@ -41,13 +41,16 @@ class Plugin extends PluginBase
     public function registerComponents()
     {
         return [
-            'Lovata\Shopaholic\Components\ProductList'  => 'ProductList',
             'Lovata\Shopaholic\Components\CategoryList' => 'CategoryList',
             'Lovata\Shopaholic\Components\CategoryPage' => 'CategoryPage',
             'Lovata\Shopaholic\Components\CategoryData' => 'CategoryData',
             'Lovata\Shopaholic\Components\Breadcrumbs'  => 'CatalogBreadcrumbs',
             'Lovata\Shopaholic\Components\ProductData'  => 'ProductData',
             'Lovata\Shopaholic\Components\ProductPage'  => 'ProductPage',
+            'Lovata\Shopaholic\Components\ProductList'  => 'ProductList',
+            'Lovata\Shopaholic\Components\BrandData'    => 'BrandData',
+            'Lovata\Shopaholic\Components\BrandPage'    => 'BrandPage',
+            'Lovata\Shopaholic\Components\BrandList'    => 'BrandList',
         ];
     }
 

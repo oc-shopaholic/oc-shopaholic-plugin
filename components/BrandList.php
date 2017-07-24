@@ -1,14 +1,14 @@
 <?php namespace Lovata\Shopaholic\Components;
 
 use Cms\Classes\ComponentBase;
-use Lovata\Shopaholic\Classes\Collection\CategoryCollection;
+use Lovata\Shopaholic\Classes\Collection\BrandCollection;
 
 /**
- * Class CategoryList
+ * Class BrandList
  * @package Lovata\Shopaholic\Components
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
-class CategoryList extends ComponentBase
+class BrandList extends ComponentBase
 {
     /**
      * @return array
@@ -16,8 +16,8 @@ class CategoryList extends ComponentBase
     public function componentDetails()
     {
         return [
-            'name'          => 'lovata.shopaholic::lang.component.category_list_name',
-            'description'   => 'lovata.shopaholic::lang.component.category_list_description',
+            'name'          => 'lovata.shopaholic::lang.component.brand_list_name',
+            'description'   => 'lovata.shopaholic::lang.component.brand_list_description',
         ];
     }
 
@@ -25,10 +25,10 @@ class CategoryList extends ComponentBase
      * Make element collection
      * @param array $arElementIDList
      *
-     * @return CategoryCollection
+     * @return BrandCollection
      */
     protected function make($arElementIDList = null)
     {
-        return CategoryCollection::make($arElementIDList);
+        return BrandCollection::make($arElementIDList);
     }
 }

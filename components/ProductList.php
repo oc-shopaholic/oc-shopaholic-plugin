@@ -19,6 +19,9 @@ class ProductList extends SortingElementList
     /** @var  ProductListStore */
     protected $obProductListStore;
 
+    /** @var array  */
+    protected $arPropertyList = [];
+
     /**
      * @return array
      */
@@ -69,10 +72,13 @@ class ProductList extends SortingElementList
 
     /**
      * Make element collection
+     * @param array $arElementIDList
+     *
+     * @return ProductCollection
      */
-    protected function makeCollection()
+    protected function make($arElementIDList = null)
     {
-        return ProductCollection::make()->sort($this->sSorting);
+        return ProductCollection::make($arElementIDList)->sort($this->sSorting);
     }
 
     /**
