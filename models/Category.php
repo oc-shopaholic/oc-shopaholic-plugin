@@ -12,6 +12,7 @@ use Kharanenka\Scope\SlugField;
 
 use Lovata\Toolbox\Plugin as ToolboxPlugin;
 
+use October\Rain\Database\Traits\Sluggable;
 use October\Rain\Database\Traits\Validation;
 use October\Rain\Database\Traits\NestedTree;
 
@@ -64,6 +65,7 @@ class Category extends Model
 {
     use Validation;
     use NestedTree;
+    use Sluggable;
     use ActiveField;
     use NameField;
     use SlugField;
@@ -82,6 +84,8 @@ class Category extends Model
     public $customMessages = [];
     public $attributeNames = [];
 
+    public $slugs = ['slug' => 'name'];
+    
     public $attachOne = ['preview_image' => 'System\Models\File'];
     public $attachMany = ['images' => 'System\Models\File'];
     public $belongsToMany = [];

@@ -57,7 +57,9 @@ class CategoryModelHandler extends ModelHandler
     public function subscribe($obEvent)
     {
         parent::subscribe($obEvent);
-        $obEvent->listen('shopaholic.category.update.sorting', CategoryModelHandler::class.'@clearTopLevelList');
+        $obEvent->listen('shopaholic.category.update.sorting', function () {
+            $this->clearTopLevelList();
+        });
     }
 
     /**

@@ -10,6 +10,7 @@ use Kharanenka\Scope\ExternalIDField;
 use Kharanenka\Scope\NameField;
 use Kharanenka\Scope\SlugField;
 
+use October\Rain\Database\Traits\Sluggable;
 use October\Rain\Database\Traits\Validation;
 use October\Rain\Database\Traits\Sortable;
 
@@ -46,6 +47,7 @@ class Brand extends Model
 {
     use Validation;
     use Sortable;
+    use Sluggable;
     use ActiveField;
     use NameField;
     use CodeField;
@@ -64,6 +66,8 @@ class Brand extends Model
     public $customMessages = [];
     public $attributeNames = [];
 
+    public $slugs = ['slug' => 'name'];
+    
     public $attachOne = ['preview_image' => 'System\Models\File'];
     public $attachMany = ['images' => 'System\Models\File'];
     public $hasMany = ['products' => 'Lovata\Shopaholic\Models\Product'];
