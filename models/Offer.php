@@ -12,7 +12,6 @@ use Kharanenka\Scope\NameField;
 use Lovata\Toolbox\Plugin as ToolboxPlugin;
 use Lovata\Shopaholic\Classes\Helper\PriceHelper;
 
-use October\Rain\Database\Traits\Sluggable;
 use October\Rain\Database\Traits\Validation;
 use October\Rain\Database\Traits\SoftDelete;
 
@@ -57,12 +56,12 @@ use October\Rain\Database\Traits\SoftDelete;
  *
  * Stores For Shopaholic
  * @property int $store_id
+ * @property \Lovata\StoresShopaholic\Models\Store $store
  * @method \Lovata\StoresShopaholic\Models\Store|\October\Rain\Database\Relations\BelongsTo store()
  */
 class Offer extends Model
 {
     use Validation;
-    use Sluggable;
     use SoftDelete;
     use ActiveField;
     use NameField;
@@ -76,8 +75,6 @@ class Offer extends Model
     public $rules = ['name' => 'required'];
     public $customMessages = [];
     public $attributeNames = [];
-
-    public $slugs = ['slug' => 'name'];
     
     public $attachOne = ['preview_image' => 'System\Models\File'];
     public $attachMany = ['images' => 'System\Models\File'];
