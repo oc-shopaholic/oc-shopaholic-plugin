@@ -142,4 +142,34 @@ class CategoryItem extends ElementItem
         $this->setAttribute('product_count', $iProductCount);
         return $iProductCount;
     }
+
+    /**
+     * Get full product list for category
+     * @return ProductCollection
+     */
+    protected function getFullProductListAttribute()
+    {
+        $obFullProductList = $this->getAttribute('full_product_list');
+        if($obFullProductList !== null) {
+            return $obFullProductList;
+        }
+
+        $obFullProductList = ProductCollection::make()->category($this->id);
+
+        $obChildCategoryCollect = $this->children;
+        if(!$obChildCategoryCollect->isEmpty()) {
+            /** @var CategoryItem $obChildCategoryItem */
+            foreach($obChildCategoryCollect as $obChildCategoryItem) {
+                if($obChildCategoryItem->isEmpty()) {
+                    continue;
+                }
+                $arChildCategoryIDList = ProductCollection::make()->category($obChildCategoryItem->id)->getIDList();
+                $obFullProductList->merge($arChildCategoryIDList);
+            }
+        }
+
+        $this->setAttribute('full_product_list', $obFullProductList);
+        return $obFullProductList;
+    }
+
 }
