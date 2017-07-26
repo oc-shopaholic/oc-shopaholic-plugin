@@ -58,7 +58,7 @@ class ProductList extends SortingElementList
                 Lang::get('lovata.shopaholic::lang.component.sorting_popularity_desc');
         }
 
-        return parent::defineProperties();
+        return $this->arPropertyList;
     }
 
     /**
