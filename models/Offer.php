@@ -140,6 +140,7 @@ class Offer extends Model
      */
     public function getPriceAttribute($dPrice)
     {
+        /** @var PriceHelper $obPriceHelper */
         $obPriceHelper = app()->make(PriceHelper::class);
         return $obPriceHelper->get($dPrice);
     }
@@ -152,6 +153,7 @@ class Offer extends Model
      */
     public function getOldPriceAttribute($dPrice)
     {
+        /** @var PriceHelper $obPriceHelper */
         $obPriceHelper = app()->make(PriceHelper::class);
         return $obPriceHelper->get($dPrice);
     }
