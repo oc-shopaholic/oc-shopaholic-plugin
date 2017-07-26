@@ -27,7 +27,7 @@ class CategoryList extends ComponentBase
      *
      * @return CategoryCollection
      */
-    protected function make($arElementIDList = null)
+    public function make($arElementIDList = null)
     {
         return CategoryCollection::make($arElementIDList);
     }
