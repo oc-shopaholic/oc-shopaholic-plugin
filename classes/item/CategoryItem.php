@@ -43,10 +43,10 @@ use Lovata\Shopaholic\Classes\Collection\CategoryCollection;
  * @see \Lovata\PropertiesShopaholic\Classes\Event\CategoryModelHandler::addOfferPropertyField
  * @property array $offer_property_list
  * @property \Lovata\PropertiesShopaholic\Classes\Collection\PropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[] $offer_property
- * 
+ *
  * Filter for Shopaholic
  * @property \Lovata\FilterShopaholic\Classes\Collection\FilterPropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[] $product_filter_property
- * 
+ *
  * @property \Lovata\FilterShopaholic\Classes\Collection\FilterPropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[] $offer_filter_property
  */
 class CategoryItem extends ElementItem
@@ -143,7 +143,7 @@ class CategoryItem extends ElementItem
         if($iProductCount !== null) {
             return $iProductCount;
         }
-        
+
         //Calculate product count from child categories
         $iProductCount = 0;
         $obChildCategoryCollect = $this->children;
@@ -162,12 +162,12 @@ class CategoryItem extends ElementItem
         if(empty($obProductCollection)) {
             $obProductCollection = ProductCollection::make()->active()->save(self::class.'_active');
         }
-        
+
         $iProductCount += $obProductCollection->category($this->id)->count();
-        
+
         CCache::forever($arCacheTag, $sCacheKey, $iProductCount);
         $this->setAttribute('product_count', $iProductCount);
-        
+
         return $iProductCount;
     }
 
@@ -178,14 +178,14 @@ class CategoryItem extends ElementItem
     {
         $arCacheTag = [Plugin::CACHE_TAG, self::CACHE_TAG_ELEMENT, ProductListStore::CACHE_TAG_LIST];
         $sCacheKey = 'product_count_'.$this->id;
-        
+
         CCache::clear($arCacheTag, $sCacheKey);
-        
+
         $obParentItem = $this->parent;
         if($obParentItem->isEmpty()) {
             return;
         }
-        
+
         $obParentItem->clearProductCount();
     }
 }
