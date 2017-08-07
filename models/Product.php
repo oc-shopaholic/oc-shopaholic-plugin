@@ -2,7 +2,6 @@
 
 use Model;
 
-use Kharanenka\Helper\CustomValidationMessage;
 use Kharanenka\Helper\DataFileModel;
 use Kharanenka\Scope\ActiveField;
 use Kharanenka\Scope\CategoryBelongsTo;
@@ -10,8 +9,6 @@ use Kharanenka\Scope\CodeField;
 use Kharanenka\Scope\ExternalIDField;
 use Kharanenka\Scope\NameField;
 use Kharanenka\Scope\SlugField;
-
-use Lovata\Toolbox\Plugin as ToolboxPlugin;
 
 use October\Rain\Database\Traits\Sluggable;
 use October\Rain\Database\Traits\SoftDelete;
@@ -44,13 +41,13 @@ use October\Rain\Database\Traits\Validation;
  * @property \October\Rain\Database\Collection|\System\Models\File[] $images
  *
  * @property Category $category
- * @method static \October\Rain\Database\Relations\BelongsTo category()
+ * @method static \October\Rain\Database\Relations\BelongsTo|Category category()
  *
  * @property Brand $brand
- * @method static \October\Rain\Database\Relations\BelongsTo brand()
+ * @method static \October\Rain\Database\Relations\BelongsTo|Brand brand()
  *
  * @property \October\Rain\Database\Collection|Offer[] $offer
- * @method Offer|\October\Rain\Database\Relations\HasMany offer()
+ * @method \October\Rain\Database\Relations\HasMany|Offer offer()
  *
  * @method static $this getByBrand(int $iBrandID)
  *
@@ -68,7 +65,18 @@ use October\Rain\Database\Traits\Validation;
  * Properties for Shopaholic fields
  * @property array $property
  * @property array $property_value
- * 
+ *
+ * Reviews for Shopaholic fields
+ * @property string $rating
+ * @property array $rating_data
+ *
+ * Actions for Shopaholic
+ * @property \Lovata\ActionsShopaholic\Models\Action[]|\October\Rain\Database\Collection $promo
+ * @method \Lovata\ActionsShopaholic\Models\Action promo()
+ *
+ * Accessories for Shopaholic
+ * @property \Lovata\Shopaholic\Models\Product[]|\October\Rain\Database\Collection $accessory
+ * @method \Lovata\Shopaholic\Models\Product accessory()
  */
 class Product extends Model
 {
@@ -81,7 +89,6 @@ class Product extends Model
     use SlugField;
     use CodeField;
     use ExternalIDField;
-    use CustomValidationMessage;
     use DataFileModel;
 
     public $table = 'lovata_shopaholic_products';
@@ -91,24 +98,26 @@ class Product extends Model
         'slug' => 'required|unique:lovata_shopaholic_products',
     ];
 
-    public $customMessages = [];
-    public $attributeNames = [];
+    public $attributeNames = [
+        'lovata.toolbox::lang.field.name',
+        'lovata.toolbox::lang.field.slug',
+    ];
 
     public $slugs = ['slug' => 'name'];
     
     public $attachOne = ['preview_image' => 'System\Models\File'];
     public $attachMany = ['images' => 'System\Models\File'];
-    public $hasMany = ['offer' => ['Lovata\Shopaholic\Models\Offer']];
+    public $hasMany = ['offer' => [Offer::class]];
     public $belongsTo = [
-        'category' => ['Lovata\Shopaholic\Models\Category'],
-        'brand'    => ['Lovata\Shopaholic\Models\Brand'],
+        'category' => [Category::class],
+        'brand'    => [Brand::class],
     ];
 
     public $appends = [];
     public $fillable = [
+        'active',
         'name',
         'slug',
-        'active',
         'code',
         'external_id',
         'preview_text',
@@ -119,22 +128,7 @@ class Product extends Model
 
     public $dates = ['created_at', 'created_at', 'deleted_at'];
 
-    /**
-     * Product constructor.
-     * @param array $attributes
-     */
-    public function __construct(array $attributes = [])
-    {
-        $iPreviewTextMaxLength = (int) Settings::getValue('product_preview_limit_max');
-        if($iPreviewTextMaxLength > 0) {
-            $this->rules['preview_text'] = 'max:'.$iPreviewTextMaxLength;
-        }
-
-        $this->setCustomMessage(ToolboxPlugin::NAME, ['required', 'unique', 'max.string']);
-        $this->setCustomAttributeName(ToolboxPlugin::NAME, ['name', 'slug', 'preview_text']);
-
-        parent::__construct($attributes);
-    }
+    public $jsonable = [];
 
     /**
      * Get element by brand ID

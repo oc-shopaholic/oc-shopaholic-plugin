@@ -1,8 +1,9 @@
 <?php namespace Lovata\Shopaholic\Classes\Collection;
 
-use Lovata\Shopaholic\Classes\Store\CategoryListStore;
 use Lovata\Toolbox\Classes\Collection\ElementCollection;
+
 use Lovata\Shopaholic\Classes\Item\CategoryItem;
+use Lovata\Shopaholic\Classes\Store\CategoryListStore;
 
 /**
  * Class CategoryCollection
@@ -43,6 +44,6 @@ class CategoryCollection extends ElementCollection
     public function tree()
     {
         $this->arElementIDList = $this->obCategoryListStore->getTopLevelList();
-        return $this->returnClone();
+        return $this->returnThis();
     }
 }

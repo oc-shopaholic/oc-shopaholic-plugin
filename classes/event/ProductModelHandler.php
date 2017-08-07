@@ -6,6 +6,7 @@ use Lovata\Toolbox\Classes\Event\ModelHandler;
 
 use Lovata\Shopaholic\Models\Product;
 use Lovata\Shopaholic\Classes\Item\ProductItem;
+use Lovata\Shopaholic\Classes\Item\CategoryItem;
 use Lovata\Shopaholic\Classes\Store\BrandListStore;
 use Lovata\Shopaholic\Classes\Store\ProductListStore;
 
@@ -53,16 +54,6 @@ class ProductModelHandler extends ModelHandler
     protected function getItemClass()
     {
         return ProductItem::class;
-    }
-    
-    /**
-     * Add listeners
-     * @param \Illuminate\Events\Dispatcher $obEvent
-     * 
-     */
-    public function subscribe($obEvent)
-    {
-        parent::subscribe($obEvent);
     }
 
     /**
@@ -166,5 +157,25 @@ class ProductModelHandler extends ModelHandler
 
         //Update product list with popularity
         $this->obListStore->updateCacheBySorting(ProductListStore::SORT_POPULARITY_DESC);
+    }
+
+    /**
+     * Check offer "active" field, if it was changed, then clear cache
+     */
+    protected function checkActiveField()
+    {
+        //check product "active" field
+        if($this->obElement->getOriginal('active') == $this->obElement->active) {
+            return;
+        }
+
+        $this->obListStore->clearActiveList();
+        
+        $obCategoryItem = CategoryItem::make($this->obElement->category_id);
+        if($obCategoryItem->isEmpty()) {
+            return;
+        }
+        
+        $obCategoryItem->clearProductCount();
     }
 }

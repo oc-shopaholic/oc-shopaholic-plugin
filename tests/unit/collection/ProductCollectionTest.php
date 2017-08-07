@@ -1,14 +1,16 @@
 <?php namespace Lovata\Shopaholic\Tests\Unit\Collection;
 
-use Lovata\Shopaholic\Classes\Collection\ProductCollection;
-use Lovata\Shopaholic\Classes\Item\ProductItem;
-use Lovata\Shopaholic\Classes\Store\ProductListStore;
+use Lovata\Shopaholic\Classes\Item\OfferItem;
+use Lovata\Toolbox\Tests\CommonTest;
+
 use Lovata\Shopaholic\Models\Brand;
 use Lovata\Shopaholic\Models\Category;
 use Lovata\Shopaholic\Models\Offer;
 use Lovata\Shopaholic\Models\Product;
 use Lovata\Shopaholic\Models\Settings;
-use Lovata\Toolbox\Tests\CommonTest;
+use Lovata\Shopaholic\Classes\Item\ProductItem;
+use Lovata\Shopaholic\Classes\Store\ProductListStore;
+use Lovata\Shopaholic\Classes\Collection\ProductCollection;
 
 /**
  * Class ProductCollectionTest
@@ -376,6 +378,44 @@ class ProductCollectionTest extends CommonTest
 
         $obCollection = ProductCollection::make()->sort(ProductListStore::SORT_PRICE_DESC);
         self::assertEquals([1], array_values($obCollection->getIDList()), $sErrorMessage);
+    }
+
+    /**
+     * Check item collection "getOfferMinPrice" method
+     */
+    public function testOfferMinPriceMethod()
+    {
+        $this->createTestData(1);
+        $this->createTestData(2);
+        if(empty($this->obElement)) {
+            return;
+        }
+
+        $sErrorMessage = 'Product collection "getOfferMinPrice" method is not correct';
+
+        $obOfferItem = ProductCollection::make()->active()->getOfferMinPrice();
+
+        self::assertInstanceOf(OfferItem::class, $obOfferItem, $sErrorMessage);
+        self::assertEquals(1, $obOfferItem->id, $sErrorMessage);
+    }
+
+    /**
+     * Check item collection "getOfferMaxPrice" method
+     */
+    public function testOfferMaxPriceMethod()
+    {
+        $this->createTestData(1);
+        $this->createTestData(2);
+        if(empty($this->obElement)) {
+            return;
+        }
+
+        $sErrorMessage = 'Product collection "getOfferMaxPrice" method is not correct';
+
+        $obOfferItem = ProductCollection::make()->active()->getOfferMaxPrice();
+
+        self::assertInstanceOf(OfferItem::class, $obOfferItem, $sErrorMessage);
+        self::assertEquals(2, $obOfferItem->id, $sErrorMessage);
     }
 
     /**

@@ -40,16 +40,15 @@ class ProductList extends SortingElementList
     {
         $this->arPropertyList = [
             'sorting' => [
-                'title'     => 'lovata.shopaholic::lang.component.product_list_sorting',
-                'type'      => 'dropdown',
-                'default'   => ProductListStore::SORT_NO,
-                'options'   => [
-                    ProductListStore::SORT_NO           => Lang::get('lovata.shopaholic::lang.component.sorting_no'),
-                    ProductListStore::SORT_PRICE_ASC    => Lang::get('lovata.shopaholic::lang.component.sorting_price_asc'),
-                    ProductListStore::SORT_PRICE_DESC   => Lang::get('lovata.shopaholic::lang.component.sorting_price_desc'),
-                    ProductListStore::SORT_NEW          => Lang::get('lovata.shopaholic::lang.component.sorting_new'),
+                'title'   => 'lovata.shopaholic::lang.component.product_list_sorting',
+                'type'    => 'dropdown',
+                'default' => ProductListStore::SORT_NO,
+                'options' => [
+                    ProductListStore::SORT_NO         => Lang::get('lovata.shopaholic::lang.component.sorting_no'),
+                    ProductListStore::SORT_PRICE_ASC  => Lang::get('lovata.shopaholic::lang.component.sorting_price_asc'),
+                    ProductListStore::SORT_PRICE_DESC => Lang::get('lovata.shopaholic::lang.component.sorting_price_desc'),
+                    ProductListStore::SORT_NEW        => Lang::get('lovata.shopaholic::lang.component.sorting_new'),
                 ],
-
             ],
         ];
 
@@ -58,7 +57,7 @@ class ProductList extends SortingElementList
                 Lang::get('lovata.shopaholic::lang.component.sorting_popularity_desc');
         }
 
-        return parent::defineProperties();
+        return $this->arPropertyList;
     }
 
     /**
@@ -76,7 +75,7 @@ class ProductList extends SortingElementList
      *
      * @return ProductCollection
      */
-    protected function make($arElementIDList = null)
+    public function make($arElementIDList = null)
     {
         return ProductCollection::make($arElementIDList)->sort($this->sSorting);
     }
@@ -88,5 +87,10 @@ class ProductList extends SortingElementList
     protected function getAvailableSorting()
     {
         return $this->obProductListStore->getAvailableSorting();
+    }
+    
+    public function onAjaxRequest()
+    {
+        return true;
     }
 }

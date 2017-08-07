@@ -3,11 +3,12 @@
 include_once __DIR__.'/../../../../toolbox/vendor/autoload.php';
 include_once __DIR__.'/../../../../../../tests/PluginTestCase.php';
 
+use PluginTestCase;
 use Lovata\Shopaholic\Models\Offer;
+use Lovata\Shopaholic\Models\Product;
 use Lovata\Toolbox\Traits\Tests\TestModelHasImages;
 use Lovata\Toolbox\Traits\Tests\TestModelHasPreviewImage;
 use Lovata\Toolbox\Traits\Tests\TestModelValidationNameField;
-use PluginTestCase;
 
 /**
  * Class OfferTest
@@ -31,6 +32,7 @@ class OfferTest extends PluginTestCase
     public function __construct()
     {
         $this->sModelClass = Offer::class;
+        parent::__construct();
     }
 
     /**
@@ -44,6 +46,6 @@ class OfferTest extends PluginTestCase
         $obModel = new Offer();
         self::assertNotEmpty($obModel->belongsTo, $sErrorMessage);
         self::assertArrayHasKey('product', $obModel->belongsTo, $sErrorMessage);
-        self::assertEquals(['Lovata\Shopaholic\Models\Product'], $obModel->belongsTo['product'], $sErrorMessage);
+        self::assertEquals([Product::class], $obModel->belongsTo['product'], $sErrorMessage);
     }
 }

@@ -1,9 +1,10 @@
 <?php namespace Lovata\Shopaholic\Tests\Unit\Collection;
 
 use Lovata\Toolbox\Tests\CommonTest;
-use Lovata\Shopaholic\Classes\Collection\CategoryCollection;
-use Lovata\Shopaholic\Classes\Item\CategoryItem;
+
 use Lovata\Shopaholic\Models\Category;
+use Lovata\Shopaholic\Classes\Item\CategoryItem;
+use Lovata\Shopaholic\Classes\Collection\CategoryCollection;
 
 /**
  * Class CategoryCollectionTest

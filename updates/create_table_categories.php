@@ -1,7 +1,7 @@
 <?php namespace Lovata\Shopaholic\Updates;
 
-use October\Rain\Database\Schema\Blueprint;
 use Schema;
+use October\Rain\Database\Schema\Blueprint;
 use October\Rain\Database\Updates\Migration;
 
 /**

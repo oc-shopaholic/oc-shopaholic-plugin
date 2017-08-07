@@ -2,15 +2,12 @@
 
 use Model;
 
-use Kharanenka\Helper\CustomValidationMessage;
 use Kharanenka\Helper\DataFileModel;
 use Kharanenka\Scope\ActiveField;
 use Kharanenka\Scope\CodeField;
 use Kharanenka\Scope\ExternalIDField;
 use Kharanenka\Scope\NameField;
 use Kharanenka\Scope\SlugField;
-
-use Lovata\Toolbox\Plugin as ToolboxPlugin;
 
 use October\Rain\Database\Traits\Sluggable;
 use October\Rain\Database\Traits\Validation;
@@ -48,15 +45,15 @@ use October\Rain\Database\Traits\NestedTree;
  * @property \System\Models\File $preview_image
  * @property \October\Rain\Database\Collection|\System\Models\File[] $images
  *
- * @property \October\Rain\Database\Collection|Product[] $products
- * @method Product|\October\Rain\Database\Relations\HasMany products()
+ * @property \October\Rain\Database\Collection|Product[] $product
+ * @method \October\Rain\Database\Relations\HasMany|Product product()
  *
  * Properties for Shopaholic
  * @property \October\Rain\Database\Collection|\Lovata\PropertiesShopaholic\Models\Property[] $product_property
- * @method \Lovata\PropertiesShopaholic\Models\Property|\October\Rain\Database\Relations\BelongsToMany product_property()
+ * @method \October\Rain\Database\Relations\BelongsToMany|\Lovata\PropertiesShopaholic\Models\Property product_property()
  *
  * @property \October\Rain\Database\Collection|\Lovata\PropertiesShopaholic\Models\Property[] $offer_property
- * @method \Lovata\PropertiesShopaholic\Models\Property|\October\Rain\Database\Relations\BelongsToMany offer_property()
+ * @method \October\Rain\Database\Relations\BelongsToMany|\Lovata\PropertiesShopaholic\Models\Property offer_property()
  *
  * Scope list
  * @method static $this getByParentID(int $iParentID)
@@ -71,7 +68,6 @@ class Category extends Model
     use SlugField;
     use CodeField;
     use ExternalIDField;
-    use CustomValidationMessage;
     use DataFileModel;
 
     public $table = 'lovata_shopaholic_categories';
@@ -80,21 +76,23 @@ class Category extends Model
         'name' => 'required',
         'slug' => 'required|unique:lovata_shopaholic_categories',
     ];
-    
-    public $customMessages = [];
-    public $attributeNames = [];
+
+    public $attributeNames = [
+        'lovata.toolbox::lang.field.name',
+        'lovata.toolbox::lang.field.slug',
+    ];
 
     public $slugs = ['slug' => 'name'];
     
     public $attachOne = ['preview_image' => 'System\Models\File'];
     public $attachMany = ['images' => 'System\Models\File'];
     public $belongsToMany = [];
-    public $hasMany = ['products' => 'Lovata\Shopaholic\Models\Product'];
+    public $hasMany = ['product' => Product::class];
 
     public $fillable = [
+        'active',
         'name',
         'slug',
-        'active',
         'code',
         'external_id',
         'preview_text',
@@ -103,22 +101,6 @@ class Category extends Model
 
     public $dates = ['created_at', 'updated_at'];
     public $casts = [];
-
-    /**
-     * Category constructor.
-     * @param array $attributes
-     */
-    public function __construct(array $attributes = [])
-    {
-        $iPreviewTextMaxLength = (int) Settings::getValue('category_preview_limit_max');
-        if($iPreviewTextMaxLength > 0) {
-            $this->rules['preview_text'] = 'max:'.$iPreviewTextMaxLength;
-        }
-
-        $this->setCustomMessage(ToolboxPlugin::NAME, ['required', 'unique', 'max.string']);
-        $this->setCustomAttributeName(ToolboxPlugin::NAME, ['name', 'slug', 'preview_text']);
-        parent::__construct($attributes);
-    }
 
     /**
      * Get by parent ID

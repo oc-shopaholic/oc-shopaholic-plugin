@@ -34,7 +34,12 @@ class CategoryPage extends ElementPage
             return null;
         }
 
-        return Category::active()->getBySlug($sElementSlug)->first();
+        $obElement = Category::active()->getBySlug($sElementSlug)->first();
+        if(!empty($obElement)) {
+            Event::fire('shopaholic.category.open', [$obElement]);
+        }
+        
+        return $obElement;
     }
 
     /**
@@ -46,20 +51,5 @@ class CategoryPage extends ElementPage
     protected function makeItem($iElementID, $obElement)
     {
         return CategoryItem::make($iElementID, $obElement);
-    }
-    
-    /**
-     * @return \Illuminate\Http\Response|null
-     */
-    public function onRun()
-    {
-        $obResult = parent::onRun();
-        if($obResult === null) {
-
-            //Send event
-            Event::fire('shopaholic.category.open', [$this->obElement]);
-        }
-
-        return $obResult;
     }
 }

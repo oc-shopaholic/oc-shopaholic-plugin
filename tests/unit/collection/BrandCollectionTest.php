@@ -1,12 +1,13 @@
 <?php namespace Lovata\Shopaholic\Tests\Unit\Collection;
 
 use Lovata\Toolbox\Tests\CommonTest;
-use Lovata\Shopaholic\Classes\Collection\BrandCollection;
-use Lovata\Shopaholic\Classes\Item\BrandItem;
+
 use Lovata\Shopaholic\Models\Brand;
 use Lovata\Shopaholic\Models\Category;
 use Lovata\Shopaholic\Models\Offer;
 use Lovata\Shopaholic\Models\Product;
+use Lovata\Shopaholic\Classes\Item\BrandItem;
+use Lovata\Shopaholic\Classes\Collection\BrandCollection;
 
 /**
  * Class BrandCollectionTest

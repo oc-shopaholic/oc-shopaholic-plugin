@@ -1,9 +1,7 @@
 <?php namespace Lovata\Shopaholic\Controllers;
 
-use Yaml;
 use Event;
 use BackendMenu;
-use Lovata\Shopaholic\Models\Settings;
 use Backend\Classes\Controller;
 
 /**

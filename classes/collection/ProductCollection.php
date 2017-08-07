@@ -1,11 +1,13 @@
 <?php namespace Lovata\Shopaholic\Classes\Collection;
 
-use Lovata\Shopaholic\Classes\Item\ProductItem;
-use Lovata\Shopaholic\Classes\Store\ProductListStore;
-
 use Lovata\Toolbox\Classes\Collection\ElementCollection;
 use Lovata\Toolbox\Traits\Collection\TraitCheckItemActive;
 use Lovata\Toolbox\Traits\Collection\TraitCheckItemTrashed;
+
+use Lovata\Shopaholic\Classes\Item\OfferItem;
+use Lovata\Shopaholic\Classes\Item\ProductItem;
+use Lovata\Shopaholic\Classes\Store\OfferListStore;
+use Lovata\Shopaholic\Classes\Store\ProductListStore;
 
 /**
  * Class ProductCollection
@@ -69,11 +71,11 @@ class ProductCollection extends ElementCollection
         }
 
         $this->arElementIDList = array_intersect($arElementIDList, $this->arElementIDList);
-        return $this->returnClone();
+        return $this->returnThis();
     }
 
     /**
-     * Apply filter by active product list0
+     * Apply filter by active product list
      * @return $this
      */
     public function active()
@@ -102,5 +104,63 @@ class ProductCollection extends ElementCollection
     {
         $arElementIDList = $this->obProductListStore->getByBrand($iBrandID);
         return $this->intersect($arElementIDList);
+    }
+
+    /**
+     * Get offer with min price
+     * @return OfferItem
+     */
+    public function getOfferMinPrice()
+    {
+        $obProductList = clone $this;
+        $obProductList->sort(ProductListStore::SORT_PRICE_ASC);
+
+        //Get product with min price
+        /** @var \Lovata\Shopaholic\Classes\Item\ProductItem $obProductItem */
+        $obProductItem = $obProductList->first();
+
+        if($obProductItem->isEmpty()) {
+            return OfferItem::make(null);
+        }
+
+        //Get offer with min price
+        $obOfferCollection = $obProductItem->offer;
+        if($obOfferCollection->isEmpty()) {
+            return OfferItem::make(null);
+        }
+
+        /** @var OfferItem $obOfferItem */
+        $obOfferItem = $obOfferCollection->active()->sort(OfferListStore::SORT_PRICE_ASC)->first();
+
+        return $obOfferItem;
+    }
+
+    /**
+     * Get offer with max price
+     * @return OfferItem
+     */
+    public function getOfferMaxPrice()
+    {
+        $obProductList = clone $this;
+        $obProductList->sort(ProductListStore::SORT_PRICE_ASC);
+
+        //Get product with min price
+        /** @var \Lovata\Shopaholic\Classes\Item\ProductItem $obProductItem */
+        $obProductItem = $obProductList->last();
+
+        if($obProductItem->isEmpty()) {
+            return OfferItem::make(null);
+        }
+
+        //Get offer with min price
+        $obOfferCollection = $obProductItem->offer;
+        if($obOfferCollection->isEmpty()) {
+            return OfferItem::make(null);
+        }
+
+        /** @var OfferItem $obOfferItem */
+        $obOfferItem = $obOfferCollection->active()->sort(OfferListStore::SORT_PRICE_ASC)->last();
+
+        return $obOfferItem;
     }
 }

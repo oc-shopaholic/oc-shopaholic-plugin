@@ -27,6 +27,19 @@ class BrandModelHandler extends ModelHandler
     }
 
     /**
+     * Add listeners
+     * @param \Illuminate\Events\Dispatcher $obEvent
+     */
+    public function subscribe($obEvent)
+    {
+        parent::subscribe($obEvent);
+
+        $obEvent->listen('shopaholic.brand.update.sorting', function () {
+            $this->clearSortingList();
+        });
+    }
+
+    /**
      * Get model class name
      * @return string
      */
@@ -42,5 +55,13 @@ class BrandModelHandler extends ModelHandler
     protected function getItemClass()
     {
         return BrandItem::class;
+    }
+
+    /**
+     * Clear sorting list
+     */
+    public function clearSortingList()
+    {
+        $this->obListStore->clearSortingList();
     }
 }

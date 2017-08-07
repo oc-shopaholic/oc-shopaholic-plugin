@@ -1,8 +1,9 @@
 <?php namespace Lovata\Shopaholic\Tests\Unit\Item;
 
-use Lovata\Shopaholic\Classes\Item\BrandItem;
-use Lovata\Shopaholic\Models\Brand;
 use Lovata\Toolbox\Tests\CommonTest;
+
+use Lovata\Shopaholic\Models\Brand;
+use Lovata\Shopaholic\Classes\Item\BrandItem;
 
 /**
  * Class BrandItemTest

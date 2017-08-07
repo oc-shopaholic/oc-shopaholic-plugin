@@ -1,9 +1,11 @@
 <?php namespace Lovata\Shopaholic\Classes\Store;
 
 use Kharanenka\Helper\CCache;
-use Lovata\Shopaholic\Models\Offer;
-use Lovata\Shopaholic\Plugin;
+
 use Lovata\Toolbox\Traits\Store\TraitActiveList;
+
+use Lovata\Shopaholic\Plugin;
+use Lovata\Shopaholic\Models\Offer;
 
 /**
  * Class OfferListStore

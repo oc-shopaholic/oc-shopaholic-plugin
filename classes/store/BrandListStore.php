@@ -2,11 +2,12 @@
 
 use Kharanenka\Helper\CCache;
 
-use Lovata\Shopaholic\Models\Product;
+use Lovata\Toolbox\Traits\Store\TraitActiveList;
+
 use Lovata\Shopaholic\Plugin;
 use Lovata\Shopaholic\Models\Brand;
+use Lovata\Shopaholic\Models\Product;
 use Lovata\Shopaholic\Classes\Item\CategoryItem;
-use Lovata\Toolbox\Traits\Store\TraitActiveList;
 
 /**
  * Class BrandListStore
@@ -33,6 +34,45 @@ class BrandListStore
     }
 
     /**
+     * Get brand ID list with sorting
+     * @return array
+     */
+    public function getBySorting()
+    {
+        //Get cache data
+        $arCacheTags = [Plugin::CACHE_TAG, self::CACHE_TAG_LIST];
+        $sCacheKey = 'sorting';
+
+        $arBrandIDList = CCache::get($arCacheTags, $sCacheKey);
+        if(!empty($arBrandIDList)) {
+            return $arBrandIDList;
+        }
+
+        //Get brand ID list with sorting by sort_order field
+        /** @var array $arBrandIDList */
+        $arBrandIDList = Brand::orderBy('sort_order', 'asc')->lists('id');
+
+        //Set cache data
+        CCache::forever($arCacheTags, $sCacheKey, $arBrandIDList);
+
+        return $arBrandIDList;
+    }
+
+    /**
+     * Clear sorting list
+     */
+    public function clearSortingList()
+    {
+        //Get cache data
+        $arCacheTags = [Plugin::CACHE_TAG, self::CACHE_TAG_LIST];
+        $sCacheKey = 'sorting';
+
+        //Clear cache data
+        CCache::clear($arCacheTags, $sCacheKey);
+        $this->getBySorting();
+    }
+    
+    /**
      * Get cached brand ID list, filter by category ID
      * @param int $iCategoryID
      * @return array|null
@@ -51,7 +91,9 @@ class BrandListStore
         if(empty($arBrandIDList)) {
             //Get brand ID list
             /** @var array $arBrandIDList */
-            $arBrandIDList = Product::getByCategory($iCategoryID)->where('brand_id', '>', 0)->lists('brand_id', 'id');
+            $arBrandIDList = Product::getByCategory($iCategoryID)
+                ->where('brand_id', '>', 0)
+                ->lists('brand_id', 'id');
 
             //Set cache data
             CCache::forever($arCacheTags, $sCacheKey, $arBrandIDList);

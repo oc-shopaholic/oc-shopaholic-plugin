@@ -1,12 +1,12 @@
 <?php namespace Lovata\Shopaholic\Classes\Item;
 
-use Lovata\Shopaholic\Plugin;
-use Lovata\Shopaholic\Models\Product;
-use Lovata\Shopaholic\Classes\Collection\OfferCollection;
-
 use Lovata\Toolbox\Classes\Item\ElementItem;
 use Lovata\Toolbox\Traits\Item\TraitCheckItemActive;
 use Lovata\Toolbox\Traits\Item\TraitCheckItemTrashed;
+
+use Lovata\Shopaholic\Plugin;
+use Lovata\Shopaholic\Models\Product;
+use Lovata\Shopaholic\Classes\Collection\OfferCollection;
 
 /**
  * Class ProductItem

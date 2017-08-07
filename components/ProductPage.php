@@ -34,7 +34,12 @@ class ProductPage extends ElementPage
             return null;
         }
 
-        return Product::active()->getBySlug($sElementSlug)->first();
+        $obElement = Product::active()->getBySlug($sElementSlug)->first();
+        if(!empty($obElement)) {
+            Event::fire('shopaholic.product.open', [$obElement]);
+        }
+
+        return $obElement;
     }
 
     /**
@@ -46,20 +51,5 @@ class ProductPage extends ElementPage
     protected function makeItem($iElementID, $obElement)
     {
         return ProductItem::make($iElementID, $obElement);
-    }
-
-    /**
-     * @return \Illuminate\Http\Response|null
-     */
-    public function onRun()
-    {
-        $obResult = parent::onRun();
-        if($obResult === null) {
-
-            //Send event
-            Event::fire('shopaholic.product.open', [$this->obElement]);
-        }
-
-        return $obResult;
     }
 }

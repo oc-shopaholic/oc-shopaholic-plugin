@@ -1,9 +1,9 @@
 <?php namespace Lovata\Shopaholic\Classes\Item;
 
+use Lovata\Toolbox\Classes\Item\ElementItem;
+
 use Lovata\Shopaholic\Plugin;
 use Lovata\Shopaholic\Models\Brand;
-
-use Lovata\Toolbox\Classes\Item\ElementItem;
 
 /**
  * Class BrandItem

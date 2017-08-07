@@ -34,7 +34,12 @@ class BrandPage extends ElementPage
             return null;
         }
 
-        return Brand::active()->getBySlug($sElementSlug)->first();
+        $obElement = Brand::active()->getBySlug($sElementSlug)->first();
+        if(!empty($obElement)) {
+            Event::fire('shopaholic.brand.open', [$obElement]);
+        }
+
+        return $obElement;
     }
 
     /**
@@ -46,20 +51,5 @@ class BrandPage extends ElementPage
     protected function makeItem($iElementID, $obElement)
     {
         return BrandItem::make($iElementID, $obElement);
-    }
-
-    /**
-     * @return \Illuminate\Http\Response|null
-     */
-    public function onRun()
-    {
-        $obResult = parent::onRun();
-        if($obResult === null) {
-
-            //Send event
-            Event::fire('shopaholic.brand.open', [$this->obElement]);
-        }
-
-        return $obResult;
     }
 }

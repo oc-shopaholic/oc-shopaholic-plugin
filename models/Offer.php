@@ -2,7 +2,6 @@
 
 use Model;
 
-use Kharanenka\Helper\CustomValidationMessage;
 use Kharanenka\Helper\DataFileModel;
 use Kharanenka\Scope\ActiveField;
 use Kharanenka\Scope\CodeField;
@@ -12,7 +11,6 @@ use Kharanenka\Scope\NameField;
 use Lovata\Toolbox\Plugin as ToolboxPlugin;
 use Lovata\Shopaholic\Classes\Helper\PriceHelper;
 
-use October\Rain\Database\Traits\Sluggable;
 use October\Rain\Database\Traits\Validation;
 use October\Rain\Database\Traits\SoftDelete;
 
@@ -35,16 +33,16 @@ use October\Rain\Database\Traits\SoftDelete;
  * @property double $old_price
  * @property integer $quantity
  * @property int $product_id
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
- * @property \Carbon\Carbon $deleted_at
+ * @property \October\Rain\Argon\Argon $created_at
+ * @property \October\Rain\Argon\Argon $updated_at
+ * @property \October\Rain\Argon\Argon $deleted_at
  *
  * Relations
  * @property \System\Models\File $preview_image
  * @property \October\Rain\Database\Collection $images
  *
  * @property \Lovata\Shopaholic\Models\Product $product
- * @method $this|\October\Rain\Database\Relations\BelongsTo product()
+ * @method \October\Rain\Database\Relations\BelongsTo|Product product()
  * 
  * Properties for Shopaholic fields
  * @property array $property
@@ -57,37 +55,36 @@ use October\Rain\Database\Traits\SoftDelete;
  *
  * Stores For Shopaholic
  * @property int $store_id
- * @method \Lovata\StoresShopaholic\Models\Store|\October\Rain\Database\Relations\BelongsTo store()
+ * @property \Lovata\StoresShopaholic\Models\Store $store
+ * @method \October\Rain\Database\Relations\BelongsTo|\Lovata\StoresShopaholic\Models\Store store()
  */
 class Offer extends Model
 {
     use Validation;
-    use Sluggable;
     use SoftDelete;
     use ActiveField;
     use NameField;
     use CodeField;
     use ExternalIDField;
-    use CustomValidationMessage;
     use DataFileModel;
 
     public $table = 'lovata_shopaholic_offers';
 
     public $rules = ['name' => 'required'];
-    public $customMessages = [];
-    public $attributeNames = [];
 
-    public $slugs = ['slug' => 'name'];
+    public $attributeNames = [
+        'lovata.toolbox::lang.field.name',
+    ];
     
     public $attachOne = ['preview_image' => 'System\Models\File'];
     public $attachMany = ['images' => 'System\Models\File'];
-    public $belongsTo = ['product' => ['Lovata\Shopaholic\Models\Product']];
+    public $belongsTo = ['product' => [Product::class]];
 
     public $fillable = [
-        'name',
-        'product_id',
         'active',
+        'name',
         'code',
+        'product_id',
         'external_id',
         'price',
         'old_price',
@@ -97,25 +94,8 @@ class Offer extends Model
     ];
 
     public $dates = ['created_at', 'updated_at', 'deleted_at'];
-    public $appends = ['category'];
+    public $appends = [];
     public $casts = [];
-
-    /**
-     * Offer constructor.
-     * @param array $attributes
-     */
-    public function __construct(array $attributes = [])
-    {
-        $iPreviewTextMaxLength = (int) Settings::getValue('offer_preview_limit_max');
-        if($iPreviewTextMaxLength > 0) {
-            $this->rules['preview_text'] = 'max:'.$iPreviewTextMaxLength;
-        }
-
-        $this->setCustomMessage(ToolboxPlugin::NAME, ['required', 'max.string']);
-        $this->setCustomAttributeName(ToolboxPlugin::NAME, ['name', 'preview_text']);
-
-        parent::__construct($attributes);
-    }
 
     /**
      * Get price value
@@ -143,6 +123,7 @@ class Offer extends Model
      */
     public function getPriceAttribute($dPrice)
     {
+        /** @var PriceHelper $obPriceHelper */
         $obPriceHelper = app()->make(PriceHelper::class);
         return $obPriceHelper->get($dPrice);
     }
@@ -155,6 +136,7 @@ class Offer extends Model
      */
     public function getOldPriceAttribute($dPrice)
     {
+        /** @var PriceHelper $obPriceHelper */
         $obPriceHelper = app()->make(PriceHelper::class);
         return $obPriceHelper->get($dPrice);
     }

@@ -1,10 +1,11 @@
 <?php namespace Lovata\Shopaholic\Classes\Collection;
 
-use Lovata\Shopaholic\Classes\Item\OfferItem;
-use Lovata\Shopaholic\Classes\Store\OfferListStore;
 use Lovata\Toolbox\Classes\Collection\ElementCollection;
 use Lovata\Toolbox\Traits\Collection\TraitCheckItemActive;
 use Lovata\Toolbox\Traits\Collection\TraitCheckItemTrashed;
+
+use Lovata\Shopaholic\Classes\Item\OfferItem;
+use Lovata\Shopaholic\Classes\Store\OfferListStore;
 
 /**
  * Class OfferCollection
@@ -68,7 +69,7 @@ class OfferCollection extends ElementCollection
         }
 
         $this->arElementIDList = array_intersect($arElementIDList, $this->arElementIDList);
-        return $this->returnClone();
+        return $this->returnThis();
     }
     
     /**

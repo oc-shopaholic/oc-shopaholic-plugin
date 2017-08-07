@@ -1,6 +1,7 @@
 <?php namespace Lovata\Shopaholic\Components;
 
 use Lovata\Toolbox\Classes\Component\ElementData;
+
 use Lovata\Shopaholic\Classes\Item\BrandItem;
 
 /**

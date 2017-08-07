@@ -6,6 +6,7 @@ use Lovata\Shopaholic\Models\Offer;
 use Lovata\Shopaholic\Models\Settings;
 use Lovata\Shopaholic\Classes\Item\OfferItem;
 use Lovata\Shopaholic\Classes\Item\ProductItem;
+use Lovata\Shopaholic\Classes\Item\CategoryItem;
 use Lovata\Shopaholic\Classes\Store\OfferListStore;
 use Lovata\Shopaholic\Classes\Store\ProductListStore;
 
@@ -166,6 +167,18 @@ class OfferModelHandler extends ModelHandler
 
         $this->clearProductActiveList();
         $this->obListStore->clearActiveList();
+
+        $obProduct = $this->obElement->product;
+        if(empty($obProduct)) {
+            return;
+        }
+        
+        $obCategoryItem = CategoryItem::make($obProduct->category_id);
+        if($obCategoryItem->isEmpty()) {
+            return;
+        }
+
+        $obCategoryItem->clearProductCount();
     }
 
     /**

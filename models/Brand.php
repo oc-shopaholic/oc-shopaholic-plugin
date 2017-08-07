@@ -2,7 +2,6 @@
 
 use Model;
 
-use Kharanenka\Helper\CustomValidationMessage;
 use Kharanenka\Helper\DataFileModel;
 use Kharanenka\Scope\ActiveField;
 use Kharanenka\Scope\CodeField;
@@ -13,8 +12,6 @@ use Kharanenka\Scope\SlugField;
 use October\Rain\Database\Traits\Sluggable;
 use October\Rain\Database\Traits\Validation;
 use October\Rain\Database\Traits\Sortable;
-
-use Lovata\Toolbox\Plugin as ToolboxPlugin;
 
 /**
  * Class Brand
@@ -32,15 +29,15 @@ use Lovata\Toolbox\Plugin as ToolboxPlugin;
  * @property string $external_id
  * @property string $preview_text
  * @property string $description
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
+ * @property \October\Rain\Argon\Argon $created_at
+ * @property \October\Rain\Argon\Argon $updated_at
  *
  * Relations
  * @property \System\Models\File $preview_image
  * @property \October\Rain\Database\Collection|\System\Models\File[] $images
  *
- * @property \October\Rain\Database\Collection|Product[] $products
- * @method $this|\October\Rain\Database\Relations\HasMany products()
+ * @property \October\Rain\Database\Collection|Product[] $product
+ * @method \October\Rain\Database\Relations\HasMany|Product product()
  *
  */
 class Brand extends Model
@@ -53,7 +50,6 @@ class Brand extends Model
     use CodeField;
     use SlugField;
     use ExternalIDField;
-    use CustomValidationMessage;
     use DataFileModel;
 
     public $table = 'lovata_shopaholic_brands';
@@ -62,20 +58,22 @@ class Brand extends Model
         'name' => 'required',
         'slug' => 'required|unique:lovata_shopaholic_brands',
     ];
-    
-    public $customMessages = [];
-    public $attributeNames = [];
+
+    public $attributeNames = [
+        'lovata.toolbox::lang.field.name',
+        'lovata.toolbox::lang.field.slug',
+    ];
 
     public $slugs = ['slug' => 'name'];
     
     public $attachOne = ['preview_image' => 'System\Models\File'];
     public $attachMany = ['images' => 'System\Models\File'];
-    public $hasMany = ['products' => 'Lovata\Shopaholic\Models\Product'];
+    public $hasMany = ['product' => Product::class];
 
     public $fillable = [
+        'active',
         'name',
         'slug',
-        'active',
         'code',
         'external_id',
         'preview_text',
@@ -83,15 +81,4 @@ class Brand extends Model
     ];
 
     public $dates = ['created_at', 'updated_at'];
-
-    /**
-     * Brand constructor.
-     * @param array $attributes
-     */
-    public function __construct(array $attributes = [])
-    {
-        $this->setCustomMessage(ToolboxPlugin::NAME, ['required', 'unique']);
-        $this->setCustomAttributeName(ToolboxPlugin::NAME, ['name', 'slug']);
-        parent::__construct($attributes);
-    }
 }

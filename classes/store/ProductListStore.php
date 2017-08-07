@@ -1,14 +1,16 @@
 <?php namespace Lovata\Shopaholic\Classes\Store;
 
+use System\Classes\PluginManager;
 use Kharanenka\Helper\CCache;
-use Lovata\Shopaholic\Classes\Item\BrandItem;
-use Lovata\Shopaholic\Classes\Item\CategoryItem;
+
+use Lovata\Toolbox\Traits\Store\TraitActiveList;
+
+use Lovata\Shopaholic\Plugin;
 use Lovata\Shopaholic\Models\Offer;
 use Lovata\Shopaholic\Models\Product;
 use Lovata\Shopaholic\Models\Settings;
-use Lovata\Shopaholic\Plugin;
-use Lovata\Toolbox\Traits\Store\TraitActiveList;
-use System\Classes\PluginManager;
+use Lovata\Shopaholic\Classes\Item\BrandItem;
+use Lovata\Shopaholic\Classes\Item\CategoryItem;
 
 /**
  * Class ProductListStore

@@ -1,7 +1,7 @@
 <?php namespace Lovata\Shopaholic\Components;
 
-use System\Classes\PluginManager;
 use Cms\Classes\ComponentBase;
+use System\Classes\PluginManager;
 
 use Lovata\Shopaholic\Classes\Item\CategoryItem;
 use Lovata\Shopaholic\Classes\Item\ProductItem;

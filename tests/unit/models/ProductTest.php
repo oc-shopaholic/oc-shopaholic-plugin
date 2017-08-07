@@ -3,12 +3,15 @@
 include_once __DIR__.'/../../../../toolbox/vendor/autoload.php';
 include_once __DIR__.'/../../../../../../tests/PluginTestCase.php';
 
+use PluginTestCase;
+use Lovata\Shopaholic\Models\Brand;
+use Lovata\Shopaholic\Models\Category;
+use Lovata\Shopaholic\Models\Offer;
 use Lovata\Shopaholic\Models\Product;
 use Lovata\Toolbox\Traits\Tests\TestModelHasImages;
 use Lovata\Toolbox\Traits\Tests\TestModelHasPreviewImage;
 use Lovata\Toolbox\Traits\Tests\TestModelValidationNameField;
 use Lovata\Toolbox\Traits\Tests\TestModelValidationSlugField;
-use PluginTestCase;
 
 /**
  * Class ProductTest
@@ -32,6 +35,7 @@ class ProductTest extends PluginTestCase
     public function __construct()
     {
         $this->sModelClass = Product::class;
+        parent::__construct();
     }
 
     /**
@@ -45,7 +49,7 @@ class ProductTest extends PluginTestCase
         $obModel = new Product();
         self::assertNotEmpty($obModel->hasMany, $sErrorMessage);
         self::assertArrayHasKey('offer', $obModel->hasMany, $sErrorMessage);
-        self::assertEquals(['Lovata\Shopaholic\Models\Offer'], $obModel->hasMany['offer'], $sErrorMessage);
+        self::assertEquals([Offer::class], $obModel->hasMany['offer'], $sErrorMessage);
     }
 
     /**
@@ -59,7 +63,7 @@ class ProductTest extends PluginTestCase
         $obModel = new Product();
         self::assertNotEmpty($obModel->belongsTo, $sErrorMessage);
         self::assertArrayHasKey('category', $obModel->belongsTo, $sErrorMessage);
-        self::assertEquals(['Lovata\Shopaholic\Models\Category'], $obModel->belongsTo['category'], $sErrorMessage);
+        self::assertEquals([Category::class], $obModel->belongsTo['category'], $sErrorMessage);
     }
 
     /**
@@ -73,6 +77,6 @@ class ProductTest extends PluginTestCase
         $obModel = new Product();
         self::assertNotEmpty($obModel->belongsTo, $sErrorMessage);
         self::assertArrayHasKey('brand', $obModel->belongsTo, $sErrorMessage);
-        self::assertEquals(['Lovata\Shopaholic\Models\Brand'], $obModel->belongsTo['brand'], $sErrorMessage);
+        self::assertEquals([Brand::class], $obModel->belongsTo['brand'], $sErrorMessage);
     }
 }

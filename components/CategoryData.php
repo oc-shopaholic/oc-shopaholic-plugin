@@ -1,7 +1,8 @@
 <?php namespace Lovata\Shopaholic\Components;
 
-use Lovata\Shopaholic\Classes\Item\CategoryItem;
 use Lovata\Toolbox\Classes\Component\ElementData;
+
+use Lovata\Shopaholic\Classes\Item\CategoryItem;
 
 /**
  * Class CategoryData

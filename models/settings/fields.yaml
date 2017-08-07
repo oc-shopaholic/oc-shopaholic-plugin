@@ -5,21 +5,6 @@ tabs:
             span: left
             label: lovata.shopaholic::lang.field.check_offer_active
             type: checkbox
-        category_preview_limit_max:
-            tab: lovata.toolbox::lang.tab.settings
-            span: left
-            label: lovata.shopaholic::lang.field.category_preview_limit_max
-            type: number
-        product_preview_limit_max:
-            tab: lovata.toolbox::lang.tab.settings
-            span: left
-            label: lovata.shopaholic::lang.field.product_preview_limit_max
-            type: number
-        offer_preview_limit_max:
-            tab: lovata.toolbox::lang.tab.settings
-            span: left
-            label: lovata.shopaholic::lang.field.offer_preview_limit_max
-            type: number
         decimals:
             tab: lovata.shopaholic::lang.tab.prices_format
             span: left

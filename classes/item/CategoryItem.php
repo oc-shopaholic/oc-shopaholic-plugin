@@ -1,11 +1,14 @@
 <?php namespace Lovata\Shopaholic\Classes\Item;
 
-use Lovata\Shopaholic\Plugin;
-use Lovata\Shopaholic\Models\Category;
-use Lovata\Shopaholic\Classes\Collection\ProductCollection;
-use Lovata\Shopaholic\Classes\Collection\CategoryCollection;
+use Kharanenka\Helper\CCache;
 
 use Lovata\Toolbox\Classes\Item\ElementItem;
+
+use Lovata\Shopaholic\Plugin;
+use Lovata\Shopaholic\Models\Category;
+use Lovata\Shopaholic\Classes\Store\ProductListStore;
+use Lovata\Shopaholic\Classes\Collection\ProductCollection;
+use Lovata\Shopaholic\Classes\Collection\CategoryCollection;
 
 /**
  * Class CategoryItem
@@ -33,11 +36,18 @@ use Lovata\Toolbox\Classes\Item\ElementItem;
  * @property int $product_count
  * 
  * Property for Shopaholic
+ * @see \Lovata\PropertiesShopaholic\Classes\Event\CategoryModelHandler::addProductPropertyField
  * @property array $product_property_list
  * @property \Lovata\PropertiesShopaholic\Classes\Collection\PropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[] $product_property
- * 
+ *
+ * @see \Lovata\PropertiesShopaholic\Classes\Event\CategoryModelHandler::addOfferPropertyField
  * @property array $offer_property_list
  * @property \Lovata\PropertiesShopaholic\Classes\Collection\PropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[] $offer_property
+ * 
+ * Filter for Shopaholic
+ * @property \Lovata\FilterShopaholic\Classes\Collection\FilterPropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[] $product_filter_property
+ * 
+ * @property \Lovata\FilterShopaholic\Classes\Collection\FilterPropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[] $offer_filter_property
  */
 class CategoryItem extends ElementItem
 {
@@ -125,9 +135,19 @@ class CategoryItem extends ElementItem
             return $iProductCount;
         }
         
+        //Get product count from cache
+        $arCacheTag = [Plugin::CACHE_TAG, self::CACHE_TAG_ELEMENT, ProductListStore::CACHE_TAG_LIST];
+        $sCacheKey = 'product_count_'.$this->id;
+
+        $iProductCount = CCache::get($arCacheTag, $sCacheKey);
+        if($iProductCount !== null) {
+            return $iProductCount;
+        }
+        
+        //Calculate product count from child categories
         $iProductCount = 0;
         $obChildCategoryCollect = $this->children;
-        if(!$obChildCategoryCollect->isEmpty()) {
+        if($obChildCategoryCollect->isNotEmpty()) {
             /** @var CategoryItem $obChildCategoryItem */
             foreach($obChildCategoryCollect as $obChildCategoryItem) {
                 if($obChildCategoryItem->isEmpty()) {
@@ -138,8 +158,34 @@ class CategoryItem extends ElementItem
             }
         }
         
-        $iProductCount += ProductCollection::make()->active()->category($this->id)->count();
+        $obProductCollection = ProductCollection::make()->saved(self::class.'_active');
+        if(empty($obProductCollection)) {
+            $obProductCollection = ProductCollection::make()->active()->save(self::class.'_active');
+        }
+        
+        $iProductCount += $obProductCollection->category($this->id)->count();
+        
+        CCache::forever($arCacheTag, $sCacheKey, $iProductCount);
         $this->setAttribute('product_count', $iProductCount);
+        
         return $iProductCount;
+    }
+
+    /**
+     * Clear product count cache
+     */
+    public function clearProductCount()
+    {
+        $arCacheTag = [Plugin::CACHE_TAG, self::CACHE_TAG_ELEMENT, ProductListStore::CACHE_TAG_LIST];
+        $sCacheKey = 'product_count_'.$this->id;
+        
+        CCache::clear($arCacheTag, $sCacheKey);
+        
+        $obParentItem = $this->parent;
+        if($obParentItem->isEmpty()) {
+            return;
+        }
+        
+        $obParentItem->clearProductCount();
     }
 }

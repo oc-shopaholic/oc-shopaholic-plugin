@@ -1,10 +1,7 @@
 <?php namespace Lovata\Shopaholic\Classes\Event;
 
-use Kharanenka\Helper\CCache;
-
 use Lovata\Toolbox\Classes\Event\ModelHandler;
 
-use Lovata\Shopaholic\Plugin;
 use Lovata\Shopaholic\Models\Category;
 use Lovata\Shopaholic\Classes\Item\CategoryItem;
 use Lovata\Shopaholic\Classes\Store\CategoryListStore;
@@ -57,9 +54,19 @@ class CategoryModelHandler extends ModelHandler
     public function subscribe($obEvent)
     {
         parent::subscribe($obEvent);
+
         $obEvent->listen('shopaholic.category.update.sorting', function () {
-            $this->clearTopLevelList();
+            $this->obCategoryListStore->clearTopLevelList();
         });
+    }
+
+    /**
+     * After save event handler
+     */
+    protected function afterSave()
+    {
+        parent::afterSave();
+        $this->obCategoryListStore->clearTopLevelList();
     }
 
     /**
@@ -69,14 +76,5 @@ class CategoryModelHandler extends ModelHandler
     {
         parent::afterDelete();
         $this->obCategoryListStore->clearTopLevelList();
-    }
-    
-    /**
-     * Clear top level category ID list
-     */
-    protected function clearTopLevelList()
-    {
-        $this->obCategoryListStore->clearTopLevelList();
-        CCache::clear([Plugin::CACHE_TAG, CategoryItem::CACHE_TAG_ELEMENT]);
     }
 }

@@ -1,5 +1,6 @@
 <?php namespace Lovata\Shopaholic\Controllers;
 
+use Event;
 use BackendMenu;
 use Backend\Classes\Controller;
 
@@ -27,5 +28,14 @@ class Brands extends Controller
     {
         parent::__construct();
         BackendMenu::setContext('Lovata.Shopaholic', 'shopaholic-menu-main', 'shopaholic-menu-brands');
+    }
+
+    /**
+     * Ajax handler onReorder event
+     */
+    public function onReorder()
+    {
+        parent::onReorder();
+        Event::fire('shopaholic.brand.update.sorting');
     }
 }

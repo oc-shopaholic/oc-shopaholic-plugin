@@ -1,8 +1,9 @@
 <?php namespace Lovata\Shopaholic\Classes\Store;
 
 use Kharanenka\Helper\CCache;
-use Lovata\Shopaholic\Models\Category;
+
 use Lovata\Shopaholic\Plugin;
+use Lovata\Shopaholic\Models\Category;
 
 /**
  * Class CategoryListStore

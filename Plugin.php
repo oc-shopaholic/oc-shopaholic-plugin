@@ -10,17 +10,20 @@ use Lovata\Shopaholic\Classes\Item\CategoryItem;
 use Lovata\Shopaholic\Classes\Item\OfferItem;
 use Lovata\Shopaholic\Classes\Item\ProductItem;
 
+use Lovata\Shopaholic\Classes\Collection\BrandCollection;
 use Lovata\Shopaholic\Classes\Collection\CategoryCollection;
+use Lovata\Shopaholic\Classes\Collection\OfferCollection;
 use Lovata\Shopaholic\Classes\Collection\ProductCollection;
 
+use Lovata\Shopaholic\Classes\Store\BrandListStore;
 use Lovata\Shopaholic\Classes\Store\CategoryListStore;
 use Lovata\Shopaholic\Classes\Store\ProductListStore;
+use Lovata\Shopaholic\Classes\Store\OfferListStore;
 
 use Lovata\Shopaholic\Classes\Event\BrandModelHandler;
 use Lovata\Shopaholic\Classes\Event\CategoryModelHandler;
 use Lovata\Shopaholic\Classes\Event\OfferModelHandler;
 use Lovata\Shopaholic\Classes\Event\ProductModelHandler;
-use Lovata\Shopaholic\Classes\Event\SettingsModelHandler;
 
 /**
  * Class Plugin
@@ -82,17 +85,15 @@ class Plugin extends PluginBase
         $this->app->bind(OfferItem::class, OfferItem::class);
         $this->app->bind(ProductItem::class, ProductItem::class);
 
-        $this->app->bind(ProductCollection::class, ProductCollection::class);
+        $this->app->bind(BrandCollection::class, BrandCollection::class);
         $this->app->bind(CategoryCollection::class, CategoryCollection::class);
+        $this->app->bind(OfferCollection::class, OfferCollection::class);
+        $this->app->bind(ProductCollection::class, ProductCollection::class);
 
-        $this->app->singleton(ProductListStore::class, ProductListStore::class);
+        $this->app->singleton(BrandListStore::class, BrandListStore::class);
         $this->app->singleton(CategoryListStore::class, CategoryListStore::class);
-
-        $this->app->singleton(CategoryModelHandler::class, CategoryModelHandler::class);
-        $this->app->singleton(OfferModelHandler::class, OfferModelHandler::class);
-        $this->app->singleton(ProductModelHandler::class, ProductModelHandler::class);
-        $this->app->singleton(BrandModelHandler::class, BrandModelHandler::class);
-        $this->app->singleton(SettingsModelHandler::class, SettingsModelHandler::class);
+        $this->app->singleton(OfferListStore::class, OfferListStore::class);
+        $this->app->singleton(ProductListStore::class, ProductListStore::class);
 
         $this->addEventListener();
     }
@@ -106,6 +107,5 @@ class Plugin extends PluginBase
         Event::subscribe(OfferModelHandler::class);
         Event::subscribe(ProductModelHandler::class);
         Event::subscribe(BrandModelHandler::class);
-        Event::subscribe(SettingsModelHandler::class);
     }
 }
