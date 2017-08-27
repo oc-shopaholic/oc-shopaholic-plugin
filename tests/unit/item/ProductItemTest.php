@@ -161,9 +161,6 @@ class ProductItemTest extends CommonTest
 
         $obItem = ProductItem::make($this->obElement->id);
         self::assertEquals(true, $obItem->isEmpty(), $sErrorMessage);
-
-        $obItem->setCheckingActive(false);
-        self::assertEquals(false, $obItem->isEmpty(), $sErrorMessage);
     }
 
     /**

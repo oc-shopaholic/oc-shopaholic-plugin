@@ -1,8 +1,6 @@
 <?php namespace Lovata\Shopaholic\Classes\Item;
 
 use Lovata\Toolbox\Classes\Item\ElementItem;
-use Lovata\Toolbox\Traits\Item\TraitCheckItemActive;
-use Lovata\Toolbox\Traits\Item\TraitCheckItemTrashed;
 
 use Lovata\Shopaholic\Plugin;
 use Lovata\Shopaholic\Models\Product;
@@ -12,6 +10,8 @@ use Lovata\Shopaholic\Classes\Collection\OfferCollection;
  * Class ProductItem
  * @package Lovata\Shopaholic\Classes\Item
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ *
+ * @see \Lovata\Shopaholic\Tests\Unit\Item\ProductItemTest
  *
  * @property                 $id
  * @property bool            $active
@@ -35,26 +35,12 @@ use Lovata\Shopaholic\Classes\Collection\OfferCollection;
  * @property array           $offer_id_list
  * @property OfferCollection|OfferItem[] $offer
  *
- * Popularity for Shopaholic field
- * @property int             $popularity
- *
- * Stickers for Shopaholic field
- * @property array $sticker_id_list
- * @property \Lovata\StickersShopaholic\Classes\Collection\StickerCollection|\Lovata\StickersShopaholic\Classes\Item\StickerItem[] $sticker
- * 
- * Property for Shopaholic fields
- * @property array $property_value
- * @property \Lovata\PropertiesShopaholic\Classes\Collection\PropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[] $property
- *
- * Reviews for Shopaholic field
- * @property array $review_id_list
- * @property \Lovata\ReviewsShopaholic\Classes\Collection\ReviewCollection|\Lovata\ReviewsShopaholic\Classes\Item\ReviewItem[] $review
+ * Properties for Shopaholic
+ * @see \Lovata\PropertiesShopaholic\Classes\Event\ProductModelHandler::extendProductItem
+ * @property \Lovata\PropertiesShopaholic\Classes\Collection\PropertyCollection $property
  */
 class ProductItem extends ElementItem
 {
-    use TraitCheckItemActive;
-    use TraitCheckItemTrashed;
-
     const CACHE_TAG_ELEMENT = 'shopaholic-product-element';
 
     /** @var Product */
@@ -88,7 +74,7 @@ class ProductItem extends ElementItem
             return;
         }
 
-        $this->obElement = Product::withTrashed()->find($this->iElementID);
+        $this->obElement = Product::active()->find($this->iElementID);
     }
 
     /**
@@ -124,7 +110,7 @@ class ProductItem extends ElementItem
             'preview_image' => $this->obElement->getFileData('preview_image'),
             'description'   => $this->obElement->description,
             'images'        => $this->obElement->getFileListData('images'),
-            'offer_id_list' => $this->obElement->offer()->withTrashed()->lists('id'),
+            'offer_id_list' => $this->obElement->offer()->active()->lists('id'),
         ];
 
         return $arResult;

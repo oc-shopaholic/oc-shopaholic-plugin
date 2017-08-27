@@ -51,32 +51,9 @@ use October\Rain\Database\Traits\Validation;
  *
  * @method static $this getByBrand(int $iBrandID)
  *
- * Stickers for Shopaholic
- * @property \Lovata\StickersShopaholic\Models\Sticker[]|\October\Rain\Database\Collection $sticker
- * @method static \Lovata\StickersShopaholic\Models\Sticker|\October\Rain\Database\Relations\BelongsToMany sticker()
- *
- * Popularity for Shopaholic
- * @property int $popularity
- *
- * Reviews for Shopaholic
- * @property \Lovata\ReviewsShopaholic\Models\Review[]|\October\Rain\Database\Collection $reviews
- * @method \Lovata\ReviewsShopaholic\Models\Review|\October\Rain\Database\Relations\HasMany reviews()
- *
- * Properties for Shopaholic fields
+ * Properties for Shopaholic
+ * @see \Lovata\PropertiesShopaholic\Classes\Event\ProductModelHandler::addPropertyMethods
  * @property array $property
- * @property array $property_value
- *
- * Reviews for Shopaholic fields
- * @property string $rating
- * @property array $rating_data
- *
- * Actions for Shopaholic
- * @property \Lovata\ActionsShopaholic\Models\Action[]|\October\Rain\Database\Collection $promo
- * @method \Lovata\ActionsShopaholic\Models\Action promo()
- *
- * Accessories for Shopaholic
- * @property \Lovata\Shopaholic\Models\Product[]|\October\Rain\Database\Collection $accessory
- * @method \Lovata\Shopaholic\Models\Product accessory()
  */
 class Product extends Model
 {

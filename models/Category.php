@@ -49,13 +49,14 @@ use October\Rain\Database\Traits\NestedTree;
  * @method \October\Rain\Database\Relations\HasMany|Product product()
  *
  * Properties for Shopaholic
- * @property \October\Rain\Database\Collection|\Lovata\PropertiesShopaholic\Models\Property[] $product_property
- * @method \October\Rain\Database\Relations\BelongsToMany|\Lovata\PropertiesShopaholic\Models\Property product_property()
+ * @see \Lovata\PropertiesShopaholic\Classes\Event\CategoryModelHandler::addModelRelationConfig
  *
- * @property \October\Rain\Database\Collection|\Lovata\PropertiesShopaholic\Models\Property[] $offer_property
- * @method \October\Rain\Database\Relations\BelongsToMany|\Lovata\PropertiesShopaholic\Models\Property offer_property()
+ * @property \October\Rain\Database\Collection|\Lovata\PropertiesShopaholic\Models\Property $product_property
+ * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\PropertiesShopaholic\Models\Property product_property()
  *
- * Scope list
+ * @property \October\Rain\Database\Collection|\Lovata\PropertiesShopaholic\Models\Property $offer_property
+ * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\PropertiesShopaholic\Models\Property offer_property()
+ *
  * @method static $this getByParentID(int $iParentID)
  */
 class Category extends Model

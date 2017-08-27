@@ -1,8 +1,6 @@
 <?php namespace Lovata\Shopaholic\Classes\Collection;
 
 use Lovata\Toolbox\Classes\Collection\ElementCollection;
-use Lovata\Toolbox\Traits\Collection\TraitCheckItemActive;
-use Lovata\Toolbox\Traits\Collection\TraitCheckItemTrashed;
 
 use Lovata\Shopaholic\Classes\Item\OfferItem;
 use Lovata\Shopaholic\Classes\Item\ProductItem;
@@ -16,9 +14,6 @@ use Lovata\Shopaholic\Classes\Store\ProductListStore;
  */
 class ProductCollection extends ElementCollection
 {
-    use TraitCheckItemActive;
-    use TraitCheckItemTrashed;
-
     /** @var ProductListStore */
     protected $obProductListStore;
 
@@ -34,22 +29,21 @@ class ProductCollection extends ElementCollection
 
     /**
      * Make element item
-     * @param int   $iElementID
-     * @param \Lovata\Shopaholic\Models\Product  $obElement
+     * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testCollectionItem()
+     * @param int                               $iElementID
+     * @param \Lovata\Shopaholic\Models\Product $obElement
      *
      * @return ProductItem
      */
     protected function makeItem($iElementID, $obElement = null)
     {
-        $obItem = ProductItem::make($iElementID, $obElement);
-        $obItem->setCheckingActive($this->bCheckActive);
-        $obItem->withTrashed($this->bCheckTrashed);
-
-        return $obItem;
+        return ProductItem::make($iElementID, $obElement);
     }
 
     /**
      * Sort list by
+     * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testSortingByID()
+     * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testSortingByPrice()
      * @param string $sSorting
      * @return $this
      */
@@ -76,6 +70,8 @@ class ProductCollection extends ElementCollection
 
     /**
      * Apply filter by active product list
+     * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testActiveList()
+     * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testActiveListWithCheckingOffer()
      * @return $this
      */
     public function active()
@@ -86,6 +82,7 @@ class ProductCollection extends ElementCollection
 
     /**
      * Filter product list by category ID
+     * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testCategoryFilter()
      * @param int $iCategoryID
      * @return $this
      */
@@ -97,6 +94,7 @@ class ProductCollection extends ElementCollection
 
     /**
      * Filter product list by category ID
+     * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testBrandFilter()
      * @param int $iBrandID
      * @return $this
      */
@@ -108,6 +106,7 @@ class ProductCollection extends ElementCollection
 
     /**
      * Get offer with min price
+     * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testOfferMinPriceMethod()
      * @return OfferItem
      */
     public function getOfferMinPrice()
@@ -137,6 +136,7 @@ class ProductCollection extends ElementCollection
 
     /**
      * Get offer with max price
+     * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testOfferMaxPriceMethod()
      * @return OfferItem
      */
     public function getOfferMaxPrice()

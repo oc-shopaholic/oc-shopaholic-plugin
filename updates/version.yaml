@@ -4,3 +4,4 @@
     - create_table_products.php
     - create_table_offers.php
     - create_table_brands.php
+    - insert_seo.php

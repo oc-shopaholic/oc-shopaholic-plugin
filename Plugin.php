@@ -68,8 +68,11 @@ class Plugin extends PluginBase
                 'description' => 'lovata.shopaholic::lang.plugin.description',
                 'icon'        => 'oc-icon-book',
                 'class'       => 'Lovata\Shopaholic\Models\Settings',
-                'order'       => 100
-            ]
+                'order'       => 100,
+                'permissions' => [
+                    'shopaholic-settings',
+                ],
+            ],
         ];
     }
 

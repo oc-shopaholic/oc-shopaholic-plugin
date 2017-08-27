@@ -1,8 +1,6 @@
 <?php namespace Lovata\Shopaholic\Classes\Item;
 
 use Lovata\Toolbox\Classes\Item\ElementItem;
-use Lovata\Toolbox\Traits\Item\TraitCheckItemActive;
-use Lovata\Toolbox\Traits\Item\TraitCheckItemTrashed;
 
 use Lovata\Shopaholic\Models\Settings;
 use Lovata\Shopaholic\Plugin;
@@ -13,6 +11,8 @@ use Lovata\Shopaholic\Models\Offer;
  * Class OfferItem
  * @package Lovata\Shopaholic\Classes\Item
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ *
+ * @see \Lovata\Shopaholic\Tests\Unit\Item\OfferItemTest
  *
  * @property             $id
  * @property bool        $active
@@ -36,15 +36,12 @@ use Lovata\Shopaholic\Models\Offer;
  * 
  * @property int         $quantity
  *
- * Stores for Shopaholic
- * @property int $store_id
- * @property \Lovata\StoresShopaholic\Classes\Item\StoreItem $store
+ * Properties for Shopaholic
+ * @see \Lovata\PropertiesShopaholic\Classes\Event\OfferModelHandler::extendOfferItem
+ * @property \Lovata\PropertiesShopaholic\Classes\Collection\PropertyCollection $property
  */
 class OfferItem extends ElementItem
 {
-    use TraitCheckItemActive;
-    use TraitCheckItemTrashed;
-
     const CACHE_TAG_ELEMENT = 'shopaholic-offer-element';
 
     /** @var Offer */
@@ -70,7 +67,7 @@ class OfferItem extends ElementItem
             return;
         }
 
-        $this->obElement = Offer::withTrashed()->find($this->iElementID);
+        $this->obElement = Offer::active()->find($this->iElementID);
     }
 
     /**

@@ -1,18 +1,10 @@
 # Plugin settings
     Backend -> Settings -> Shopaholic:
- 1. **Validation settings:**
-    - Ограничение максимальной длинны превью-текста для категории. Для категорий будет добавлено правило валидации для поля "preview_text".
-    - Ограничение максимальной длинны превью-текста для товаров. Для товаров будет добавлено правило валидации для поля "preview_text".
-    - Ограничение максимальной длинны превью-текста для товарных предложений. Для товарных предложений будет добавлено правило валидации для поля "preview_text".
- 2. **Настройка формата цен:**
+ 1. **Настройка формата цен:**
     - Число знаков после запятой.
     - Разделитель дробной части.
     - Разделитель разряда тысяч.
     - Обозначение валюты.
- 3. **Настройка отображения полей в административной панели:**
-    - Скрыть/отобразить поля для категорий: preview_text, description, preview_image, images, code, external_id.
-    - Скрыть/отобразить поля  для товаров: category, brand, preview_text, description, preview_image, images, code, external_id.
-    - Скрыть/отобразить поля  для товарных предложений: quantity, price, old_price, preview_text, description, preview_image, images, code, external_id.
 
 # Component "ProductPage"
 **Component properties:**

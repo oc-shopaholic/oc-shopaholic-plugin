@@ -76,6 +76,7 @@ class OfferModelHandler extends ModelHandler
         
         if($this->obElement->active) {
             $this->clearProductActiveList();
+            $this->clearProductItemCache($this->obElement->product_id);
         }
 
         //Get product object
@@ -172,6 +173,8 @@ class OfferModelHandler extends ModelHandler
         if(empty($obProduct)) {
             return;
         }
+
+        $this->clearProductItemCache($this->obElement->product_id);
         
         $obCategoryItem = CategoryItem::make($obProduct->category_id);
         if($obCategoryItem->isEmpty()) {

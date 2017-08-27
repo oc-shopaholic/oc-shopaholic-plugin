@@ -24,11 +24,12 @@ class BrandCollection extends ElementCollection
         $this->obBrandListStore = $obBrandListStore;
         parent::__construct();
     }
-    
+
     /**
      * Make element item
-     * @param int   $iElementID
-     * @param \Lovata\Shopaholic\Models\Brand  $obElement
+     * @see \Lovata\Shopaholic\Tests\Unit\Collection\BrandCollection::testCollectionItem()
+     * @param int                             $iElementID
+     * @param \Lovata\Shopaholic\Models\Brand $obElement
      *
      * @return BrandItem
      */
@@ -63,7 +64,8 @@ class BrandCollection extends ElementCollection
     }
     
     /**
-     * Apply filter by active product list0
+     * Apply filter by active product list
+     * @see \Lovata\Shopaholic\Tests\Unit\Collection\BrandCollection::testActiveList()
      * @return $this
      */
     public function active()
@@ -74,6 +76,7 @@ class BrandCollection extends ElementCollection
 
     /**
      * Filter product list by category ID
+     * @see \Lovata\Shopaholic\Tests\Unit\Collection\BrandCollection::testCategoryFilter()
      * @param int $iCategoryID
      * @return $this
      */

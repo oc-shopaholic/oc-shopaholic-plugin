@@ -56,12 +56,12 @@ class Breadcrumbs extends ComponentBase
             return $this->arResult;
         }
 
-        $obTagItem = \Lovata\TagsShopaholic\Item\TagItem::make($iTagID);
+        $obTagItem = \Lovata\TagsShopaholic\Classes\Item\TagItem::make($iTagID);
         if($obTagItem->isEmpty()) {
             return $this->arResult;
         }
 
-        $arTagData = $obTagItem->getArray();
+        $arTagData = $obTagItem->toArray();
         $arTagData['active'] = true;
         $this->arResult[] = $arTagData;
 

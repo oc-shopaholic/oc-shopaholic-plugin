@@ -1,8 +1,6 @@
 <?php namespace Lovata\Shopaholic\Classes\Collection;
 
 use Lovata\Toolbox\Classes\Collection\ElementCollection;
-use Lovata\Toolbox\Traits\Collection\TraitCheckItemActive;
-use Lovata\Toolbox\Traits\Collection\TraitCheckItemTrashed;
 
 use Lovata\Shopaholic\Classes\Item\OfferItem;
 use Lovata\Shopaholic\Classes\Store\OfferListStore;
@@ -14,9 +12,6 @@ use Lovata\Shopaholic\Classes\Store\OfferListStore;
  */
 class OfferCollection extends ElementCollection
 {
-    use TraitCheckItemActive;
-    use TraitCheckItemTrashed;
-
     /** @var OfferListStore */
     protected $obOfferListStore;
 
@@ -32,22 +27,20 @@ class OfferCollection extends ElementCollection
 
     /**
      * Make element item
-     * @param int   $iElementID
-     * @param \Lovata\Shopaholic\Models\Offer  $obElement
+     * @see \Lovata\Shopaholic\Tests\Unit\Collection\OfferCollectionTest::testCollectionItem()
+     * @param int                             $iElementID
+     * @param \Lovata\Shopaholic\Models\Offer $obElement
      *
      * @return OfferItem
      */
     protected function makeItem($iElementID, $obElement = null)
     {
-        $obItem = OfferItem::make($iElementID, $obElement);
-        $obItem->setCheckingActive($this->bCheckActive);
-        $obItem->withTrashed($this->bCheckTrashed);
-
-        return $obItem;
+        return OfferItem::make($iElementID, $obElement);
     }
 
     /**
      * Sort list by
+     * @see \Lovata\Shopaholic\Tests\Unit\Collection\OfferCollectionTest::testSortingByPrice()
      * @param string $sSorting
      * @return $this
      */
@@ -73,7 +66,8 @@ class OfferCollection extends ElementCollection
     }
     
     /**
-     * Apply filter by active product list0
+     * Apply filter by active product list
+     * @see \Lovata\Shopaholic\Tests\Unit\Collection\OfferCollectionTest::testActiveList()
      * @return $this
      */
     public function active()

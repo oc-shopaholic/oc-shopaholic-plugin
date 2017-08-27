@@ -8,7 +8,6 @@ use Kharanenka\Scope\CodeField;
 use Kharanenka\Scope\ExternalIDField;
 use Kharanenka\Scope\NameField;
 
-use Lovata\Toolbox\Plugin as ToolboxPlugin;
 use Lovata\Shopaholic\Classes\Helper\PriceHelper;
 
 use October\Rain\Database\Traits\Validation;
@@ -43,20 +42,15 @@ use October\Rain\Database\Traits\SoftDelete;
  *
  * @property \Lovata\Shopaholic\Models\Product $product
  * @method \October\Rain\Database\Relations\BelongsTo|Product product()
- * 
- * Properties for Shopaholic fields
- * @property array $property
- * @property array $property_value
  *
  * @method static $this getByProduct(int $iProductID)
  * @method static $this getByQuantity(int $iCount, string $sCondition = '=')
  * @method static $this getByPrice(int $iPrice, string $sCondition = '=')
  * @method static $this getByOldPrice(int $iPrice, string $sCondition = '=')
  *
- * Stores For Shopaholic
- * @property int $store_id
- * @property \Lovata\StoresShopaholic\Models\Store $store
- * @method \October\Rain\Database\Relations\BelongsTo|\Lovata\StoresShopaholic\Models\Store store()
+ * Properties for Shopaholic
+ * @see \Lovata\PropertiesShopaholic\Classes\Event\OfferModelHandler::addPropertyMethods
+ * @property array $property
  */
 class Offer extends Model
 {

@@ -27,8 +27,9 @@ class CategoryCollection extends ElementCollection
 
     /**
      * Make element item
-     * @param int   $iElementID
-     * @param \Lovata\Shopaholic\Models\Category  $obElement
+     * @see \Lovata\Shopaholic\Tests\Unit\Collection\CategoryCollectionTest::testCollectionItem()
+     * @param int                                $iElementID
+     * @param \Lovata\Shopaholic\Models\Category $obElement
      *
      * @return CategoryItem
      */
@@ -39,6 +40,7 @@ class CategoryCollection extends ElementCollection
 
     /**
      * Set to element ID list top level category ID list
+     * @see \Lovata\Shopaholic\Tests\Unit\Collection\CategoryCollectionTest::testTreeMethod()
      * @return CategoryCollection
      */
     public function tree()
