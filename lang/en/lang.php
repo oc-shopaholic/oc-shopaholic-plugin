@@ -31,7 +31,6 @@
         'category_preview_limit_max'        => 'The limit on the length of a brief description of the category (max)',
         'product_preview_limit_max'         => 'The limit on the length of the short product description (max)',
         'offer_preview_limit_max'           => 'The limit on the length of a brief description of the commodity offer (max)',
-        'check_offer_active'                => 'При получении списка активных товаров проверять наличие активных предложений',
     ],
     'menu' => [
         'main'                  => 'Catalog',
