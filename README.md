@@ -1,4 +1,13 @@
-# Plugin settings
+# Shopaholic plugin for October CMS
+
+[![Build Status](https://travis-ci.org/lovata/oc-shopaholic-plugin.svg?branch=master)](https://travis-ci.org/lovata/oc-shopaholic-plugin) [![Code Climate](https://codeclimate.com/github/lovata/oc-shopaholic-plugin/badges/gpa.svg)](https://codeclimate.com/github/lovata/oc-shopaholic-plugin) [![Crowdin](https://d322cqt584bo4o.cloudfront.net/shopaholic-plugin-for-october/localized.svg)](https://crowdin.com/project/shopaholic-plugin-for-october)
+
+## Description
+
+E-Commerce plugin by [LOVATA](http://lovata.com) for October CMS.
+
+
+### Plugin settings
     Backend -> Settings -> Shopaholic:
  1. **Настройка формата цен:**
     - Число знаков после запятой.
@@ -6,7 +15,7 @@
     - Разделитель разряда тысяч.
     - Обозначение валюты.
 
-# Component "ProductPage"
+### Component "ProductPage"
 **Component properties:**
   - Отображать 404 страницу, если товар не был найден.
   - Значение поля "slug" для поиска товара. Usage: если URL страницы "/product/:slug", то необходимо указать в настройках компонента: slug = "{{ :slug }}"
@@ -22,7 +31,7 @@ Component удобно использовать для отображения с
 <div>{{ obProperty.description }}</div>
 ```
 
-# Component "ProductData"
+### Component "ProductData"
 **Usage:**
 Component удобно использовать для получения данных товара по ID.
 
@@ -62,7 +71,7 @@ $.request('ProductData::onAjaxRequest', {
 <div>{{ obProduct.description }}</div>
 ```
 
-# Product data
+### Product data
 ```php
 [
     'id'                => 10,
@@ -97,7 +106,7 @@ $.request('ProductData::onAjaxRequest', {
 ]
 ```
 
-#Offer data
+### Offer data
 ```php
 [
     'id'                => 6,
@@ -130,7 +139,7 @@ $.request('ProductData::onAjaxRequest', {
 ]
 ```
 
-# Component "Currency"
+### Component "Currency"
 
 **Usage:**
 Component предназначен для получение значения валюты из настроек плагина:
@@ -139,7 +148,7 @@ Component предназначен для получение значения в
 <div>{{ Currency.get }}</div>
 ```
 
-# Component "CategoryPage"
+### Component "CategoryPage"
 **Component properties:**
   - Отображать 404 страницу, если категория не была найдена.
   - Значение поля "slug" для поиска категории. Usage: если URL страницы "/catalog/:slug", то необходимо указать в настройках компонента: slug = "{{ :slug }}"
@@ -155,7 +164,7 @@ Component удобно использовать для отображения с
 <div>{{ obCategory.description }}</div>
 ```
 
-# Component "CategoryData"
+### Component "CategoryData"
 **Usage:**
 Component удобно использовать для получения данных категории по ID.
 
@@ -195,7 +204,7 @@ $.request('CategoryData::onAjaxRequest', {
 <div>{{ obCategory.description }}</div>
 ```
 
-# Category data
+### Category data
 ```php
 [
     'id'                => 10,
@@ -229,7 +238,7 @@ $.request('CategoryData::onAjaxRequest', {
 ]
 ```
 
-# Component "CategoryList"
+### Component "CategoryList"
 **Usage:**
 Component используется для отображения категорий в виде дерева. Дерево возвращается начиная с первого уровня вложенности.
 
@@ -251,7 +260,7 @@ Component используется для отображения категор�
 </ul>
 ```
 
-# Component "ProductList"
+### Component "ProductList"
 **Usage:**
 Component используется для отображения постраничного списка отсортированных товаров.
 
@@ -397,3 +406,8 @@ window.sortingShopaholicAjaxRequest = function(_this) {
  - Если отправить 'response_type' == 'full', то метод вернет результат выполнения метода компонента getData
  - Если отправить 'response_type' == 'id_list', то метод вернет отсортированный список ID товаров
 
+## License
+
+© 2017, [LOVATA Group, LLC](http://lovata.com) under [GNU GPL v3](https://opensource.org/licenses/GPL-3.0).
+
+Developed by [Andrey Kharanenka](https://github.com/kharanenka).
