@@ -36,7 +36,7 @@
         'main'                  => 'Catalogue',
         'categories'            => 'Categories',
         'product'               => 'Products',
-        'offers_archive'        => 'Deleted proposals',
+        'offers_archive'        => 'Deleted offers',
         'brands'                => 'Brands',
     ],
     'tab' => [
@@ -72,13 +72,13 @@
         'product_data_name'                 => 'Product data',
         'product_data_description'          => 'Product data retrieval',
         'product_list_name'                 => 'Product List',
-        'product_list_description'          => 'Receiving the list of the goods',
+        'product_list_description'          => 'Retrieving the list of goods',
 
         //Category components
-        'category_page_name'                => 'Pages/Categories',
-        'category_page_description'         => 'Data output on category page',
-        'category_data_name'                => 'Data category',
-        'category_data_description'         => 'Retrieving data categories',
+        'category_page_name'                => 'Category page',
+        'category_page_description'         => 'Data output on the category page',
+        'category_data_name'                => 'Category data',
+        'category_data_description'         => 'Retrieving category data',
         'category_list_name'                => 'Category List',
         'category_list_description'         => 'Getting the catalog',
 
