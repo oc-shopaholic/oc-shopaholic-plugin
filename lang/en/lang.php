@@ -46,7 +46,7 @@
         'permissions'           => 'Shopaholic',
     ],
     'message' => [
-        'not_active_product'        => 'You cannot make this product active, if you have no active commodity offers',
+        'not_active_product'        => 'You cannot make a product active, if you have no active commodity offers',
     ],
     'category' => [
         'name'                      => 'categories',
