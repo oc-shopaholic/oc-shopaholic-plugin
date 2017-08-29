@@ -33,7 +33,7 @@
         'offer_preview_limit_max'           => 'The limit on the length of a brief description of the commodity offer (max)',
     ],
     'menu' => [
-        'main'                  => 'Catalog',
+        'main'                  => 'Catalogue',
         'categories'            => 'Categories',
         'product'               => 'Products',
         'offers_archive'        => 'Deleted proposals',
