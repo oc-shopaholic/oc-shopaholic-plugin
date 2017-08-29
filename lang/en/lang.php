@@ -80,7 +80,7 @@
         'category_data_name'                => 'Category data',
         'category_data_description'         => 'Retrieving category data',
         'category_list_name'                => 'Category List',
-        'category_list_description'         => 'Retrieving the catalogue',
+        'category_list_description'         => 'Retrieving the catalogue tree',
 
         //Common components
         'breadcrumbs_name'                  => 'Bread crumbs',
