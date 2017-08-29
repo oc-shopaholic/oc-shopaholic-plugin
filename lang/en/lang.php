@@ -40,29 +40,29 @@
         'brands'                => 'Brands',
     ],
     'tab' => [
-        'offers'                => 'Product listings',
+        'offers'                => 'Commodity offers',
         'field_view'            => 'Displaying fields',
         'prices_format'         => 'Price format',
         'permissions'           => 'Shopaholic',
     ],
     'message' => [
-        'not_active_product'        => 'You cannot make this product an active, if you have no active product proposals',
+        'not_active_product'        => 'You cannot make this product active, if you have no active commodity offers',
     ],
     'category' => [
         'name'                      => 'categories',
-        'list_title'                => 'Category List',
+        'list_title'                => 'List of categories',
     ],
     'brand' => [
         'name'                      => 'brand',
         'list_title'                => 'List of brands',
     ],
     'product' => [
-        'name'                      => 'products',
+        'name'                      => 'product\'s',
         'list_title'                => 'Product List',
     ],
     'offer' => [
         'name'                      => 'offers',
-        'list_title'                => 'List of proposals',
+        'list_title'                => 'List of offers',
     ],
     'component' => [
 
@@ -70,7 +70,7 @@
         'product_page_name'                 => 'Product page',
         'product_page_description'          => 'Retrieving data for product page',
         'product_data_name'                 => 'Product data',
-        'product_data_description'          => 'Data acquisition product',
+        'product_data_description'          => 'Product data retrieval',
         'product_list_name'                 => 'Product List',
         'product_list_description'          => 'Receiving the list of the goods',
 
