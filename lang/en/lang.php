@@ -1,7 +1,7 @@
 <?php return [
     'plugin' => [
         'name'          => 'Shopaholic',
-        'description'   => 'Catalog',
+        'description'   => 'Catalogue',
     ],
     'field' => [
 
