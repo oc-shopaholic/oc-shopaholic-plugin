@@ -40,13 +40,13 @@
         'brands'                => 'Brands',
     ],
     'tab' => [
-        'offers'                => 'Commodity offers',
+        'offers'                => 'Product offers',
         'field_view'            => 'Displaying fields',
         'prices_format'         => 'Price format',
         'permissions'           => 'Shopaholic',
     ],
     'message' => [
-        'not_active_product'        => 'You cannot make a product active, if you have no active commodity offers',
+        'not_active_product'        => 'You cannot make a product active, if you have no active product offers',
     ],
     'category' => [
         'name'                      => 'categories',
