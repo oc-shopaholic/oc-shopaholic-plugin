@@ -13,10 +13,9 @@ use Lovata\Shopaholic\Models\Offer;
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  *
  * @see \Lovata\Shopaholic\Tests\Unit\Item\OfferItemTest
+ * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/OfferItem
  *
  * @property             $id
- * @property bool        $active
- * @property bool        $trashed
  * @property string      $name
  * @property string      $code
  * @property int         $product_id
@@ -92,8 +91,6 @@ class OfferItem extends ElementItem
 
         $arResult = [
             'id'              => $this->obElement->id,
-            'active'          => $this->obElement->active,
-            'trashed'         => $this->obElement->trashed(),
             'product_id'      => $this->obElement->product_id,
             'name'            => $this->obElement->name,
             'code'            => $this->obElement->code,

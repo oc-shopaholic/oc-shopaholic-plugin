@@ -11,8 +11,9 @@ use Lovata\Shopaholic\Models\Brand;
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  *
  * @see \Lovata\Shopaholic\Tests\Unit\Item\BrandItemTest
+ * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/BrandItem
  *
- * @property        $id
+ * @property int    $id
  * @property string $name
  * @property string $slug
  * @property string $code

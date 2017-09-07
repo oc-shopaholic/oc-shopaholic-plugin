@@ -85,8 +85,6 @@ class ProductItemTest extends CommonTest
 
         $arCreatedData = $this->arCreateData;
         $arCreatedData['id'] = $this->obElement->id;
-        $arCreatedData['active'] = true;
-        $arCreatedData['trashed'] = false;
         $arCreatedData['category_id'] = $this->obCategory->id;
         $arCreatedData['brand_id'] = $this->obBrand->id;
         $arCreatedData['offer_id_list'] = [$this->obOffer->id];
@@ -182,9 +180,6 @@ class ProductItemTest extends CommonTest
 
         $obItem = ProductItem::make($this->obElement->id);
         self::assertEquals(true, $obItem->isEmpty(), $sErrorMessage);
-
-        $obItem->withTrashed(true);
-        self::assertEquals(false, $obItem->isEmpty(), $sErrorMessage);
     }
 
     /**

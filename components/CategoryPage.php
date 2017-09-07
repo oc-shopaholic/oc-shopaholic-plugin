@@ -9,6 +9,8 @@ use Lovata\Toolbox\Classes\Component\ElementPage;
  * Class CategoryPage
  * @package Lovata\Shopaholic\Components
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ *
+ * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/CategoryPage
  */
 class CategoryPage extends ElementPage
 {

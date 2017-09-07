@@ -7,6 +7,7 @@ use Lovata\Shopaholic\Classes\Collection\CategoryCollection;
  * Class CategoryList
  * @package Lovata\Shopaholic\Components
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/CategoryList
  */
 class CategoryList extends ComponentBase
 {
@@ -30,5 +31,14 @@ class CategoryList extends ComponentBase
     public function make($arElementIDList = null)
     {
         return CategoryCollection::make($arElementIDList);
+    }
+
+    /**
+     * Method for ajax request with empty response
+     * @return bool
+     */
+    public function onAjaxRequest()
+    {
+        return true;
     }
 }

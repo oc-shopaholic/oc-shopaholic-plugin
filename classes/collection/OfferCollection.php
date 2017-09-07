@@ -9,6 +9,8 @@ use Lovata\Shopaholic\Classes\Store\OfferListStore;
  * Class OfferCollection
  * @package Lovata\Shopaholic\Classes\Collection
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ *
+ * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/OfferCollection
  */
 class OfferCollection extends ElementCollection
 {
@@ -41,6 +43,7 @@ class OfferCollection extends ElementCollection
     /**
      * Sort list by
      * @see \Lovata\Shopaholic\Tests\Unit\Collection\OfferCollectionTest::testSortingByPrice()
+     * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/OfferCollection#sortssorting
      * @param string $sSorting
      * @return $this
      */
@@ -68,6 +71,7 @@ class OfferCollection extends ElementCollection
     /**
      * Apply filter by active product list
      * @see \Lovata\Shopaholic\Tests\Unit\Collection\OfferCollectionTest::testActiveList()
+     * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/OfferCollection#active
      * @return $this
      */
     public function active()

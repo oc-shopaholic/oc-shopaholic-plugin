@@ -1,5 +1,6 @@
 /node_modules
 Homestead.yaml
+/_ide_helper.php
 
 #site
 pdf/

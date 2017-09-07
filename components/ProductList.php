@@ -12,7 +12,7 @@ use Lovata\Shopaholic\Classes\Store\ProductListStore;
  * @package Lovata\Shopaholic\Components
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  *
- * @mixin ProductCollection
+ * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/ProductList
  */
 class ProductList extends SortingElementList
 {
@@ -88,7 +88,11 @@ class ProductList extends SortingElementList
     {
         return $this->obProductListStore->getAvailableSorting();
     }
-    
+
+    /**
+     * Method for ajax request with empty response
+     * @return bool
+     */
     public function onAjaxRequest()
     {
         return true;

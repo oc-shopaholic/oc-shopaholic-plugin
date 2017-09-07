@@ -16,6 +16,7 @@ use Lovata\Shopaholic\Classes\Collection\CategoryCollection;
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  *
  * @see \Lovata\Shopaholic\Tests\Unit\Item\CategoryItemTest
+ * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/CategoryItem
  *
  * @property              $id
  * @property string       $name

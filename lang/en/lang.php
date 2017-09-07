@@ -10,15 +10,15 @@
         'quantity'           => 'Quantity',
         'brand'              => 'Brand',
         'offer'              => 'Offers',
-        'decimals'           => 'Число знаков после запятой',
-        'dec_point'          => 'Разделитель дробной части',
-        'thousands_sep'      => 'Разделитель тысяч',
-        'dot'                => 'Точка',
-        'comma'              => 'Запятая',
-        'together'           => 'Слитно',
-        'space'              => 'Пробел',
+        'decimals'           => 'Number of decimal places',
+        'dec_point'          => 'Fractional part separator',
+        'thousands_sep'      => 'Thousands separator',
+        'dot'                => 'Dot',
+        'comma'              => 'Comma',
+        'together'           => 'Merge',
+        'space'              => 'Space',
         'currency'           => 'Currency',
-        'check_offer_active' => 'При получении списка активных товаров проверять наличие активных предложений',
+        'check_offer_active' => 'When you receive a list of active products, check for active offers',
     ],
     'menu'       => [
         'main'       => 'Catalog',
@@ -28,7 +28,7 @@
     ],
     'tab'        => [
         'offer'         => 'Offers',
-        'prices_format' => 'Формат цен',
+        'prices_format' => 'Price format',
         'permissions'   => 'Shopaholic',
     ],
     'category'   => [
@@ -58,12 +58,12 @@
         'product_list_description'  => 'Get sorting product list',
 
         //Brand components
-        'brand_page_name'           => 'Страница бренда',
-        'brand_page_description'    => 'Получение данных для страницы бренда',
-        'brand_data_name'           => 'Данные бренда',
-        'brand_data_description'    => 'Получение данных бренда',
-        'brand_list_name'           => 'Список брендов',
-        'brand_list_description'    => 'Получение списка брендов',
+        'brand_page_name'           => 'Brand page',
+        'brand_page_description'    => 'Get data for brand page',
+        'brand_data_name'           => 'Brand data',
+        'brand_data_description'    => 'Get brand data by ID',
+        'brand_list_name'           => 'Brand list',
+        'brand_list_description'    => 'Get brand list',
 
         //Category components
         'category_page_name'        => 'Category page',
@@ -76,14 +76,12 @@
         //Common components
         'breadcrumbs_name'          => 'Breadcrumbs',
         'breadcrumbs_description'   => 'Get data for catalog breadcrumbs',
-        'currency_name'             => 'Currency',
-        'currency_description'      => 'Get default currency value',
 
         //Components settings
         'product_list_sorting'      => 'Default sorting',
         'sorting_no'                => 'Without sorting',
-        'sorting_price_desc'        => 'Дорогие',
-        'sorting_price_asc'         => 'Дешевые',
+        'sorting_price_desc'        => 'Expensive',
+        'sorting_price_asc'         => 'Cheap',
         'sorting_new'               => 'New',
         'sorting_popularity_desc'   => 'More popular',
     ],

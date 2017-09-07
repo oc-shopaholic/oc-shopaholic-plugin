@@ -12,10 +12,9 @@ use Lovata\Shopaholic\Classes\Collection\OfferCollection;
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  *
  * @see \Lovata\Shopaholic\Tests\Unit\Item\ProductItemTest
+ * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/ProductItem
  *
  * @property                 $id
- * @property bool            $active
- * @property bool            $trashed
  * @property string          $name
  * @property string          $slug
  * @property string          $code
@@ -99,8 +98,6 @@ class ProductItem extends ElementItem
 
         $arResult = [
             'id'            => $this->obElement->id,
-            'active'        => $this->obElement->active,
-            'trashed'       => $this->obElement->trashed(),
             'name'          => $this->obElement->name,
             'slug'          => $this->obElement->slug,
             'code'          => $this->obElement->code,

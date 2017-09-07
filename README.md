@@ -4,7 +4,7 @@
 
 ## Description
 
-E-Commerce plugin by [LOVATA](http://lovata.com) for October CMS.
+E-Commerce plugin by [LOVATA](https://lovata.com) for October CMS.
 
 
 ### Plugin settings
@@ -408,6 +408,6 @@ window.sortingShopaholicAjaxRequest = function(_this) {
 
 ## License
 
-© 2017, [LOVATA Group, LLC](http://lovata.com) under [GNU GPL v3](https://opensource.org/licenses/GPL-3.0).
+© 2017, [LOVATA Group, LLC](https://lovata.com) under [GNU GPL v3](https://opensource.org/licenses/GPL-3.0).
 
 Developed by [Andrey Kharanenka](https://github.com/kharanenka).

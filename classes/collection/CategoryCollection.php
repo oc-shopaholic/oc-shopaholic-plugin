@@ -9,6 +9,8 @@ use Lovata\Shopaholic\Classes\Store\CategoryListStore;
  * Class CategoryCollection
  * @package Lovata\Shopaholic\Classes\Collection
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ *
+ * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/CategoryCollection
  */
 class CategoryCollection extends ElementCollection
 {
@@ -41,6 +43,7 @@ class CategoryCollection extends ElementCollection
     /**
      * Set to element ID list top level category ID list
      * @see \Lovata\Shopaholic\Tests\Unit\Collection\CategoryCollectionTest::testTreeMethod()
+     * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/CategoryCollection#tree
      * @return CategoryCollection
      */
     public function tree()

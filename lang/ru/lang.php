@@ -76,8 +76,6 @@
         //Common components
         'breadcrumbs_name'          => 'Хлебные крошки',
         'breadcrumbs_description'   => 'Получение данных для формирования хлебных крошек каталога',
-        'currency_name'             => 'Валюта',
-        'currency_description'      => 'Получение значение валюты',
 
         //Components settings
         'product_list_sorting'      => 'Сортировка по умолчанию',
