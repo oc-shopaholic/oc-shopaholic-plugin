@@ -19,24 +19,24 @@ class CreateTableBrands extends Migration
             return;
         }
 
-        Schema::create('lovata_shopaholic_brands', function(Blueprint $table)
+        Schema::create('lovata_shopaholic_brands', function(Blueprint $obTable)
         {
-            $table->engine = 'InnoDB';
-            $table->increments('id')->unsigned();
-            $table->boolean('active')->default(0);
-            $table->string('name');
-            $table->string('slug')->unique();
-            $table->string('code')->nullable();
-            $table->string('external_id')->nullable();
-            $table->text('preview_text')->nullable();
-            $table->text('description')->nullable();
-            $table->integer('sort_order')->nullable();
-            $table->timestamps();
+            $obTable->engine = 'InnoDB';
+            $obTable->increments('id')->unsigned();
+            $obTable->boolean('active')->default(0);
+            $obTable->string('name');
+            $obTable->string('slug')->unique();
+            $obTable->string('code')->nullable();
+            $obTable->string('external_id')->nullable();
+            $obTable->text('preview_text')->nullable();
+            $obTable->text('description')->nullable();
+            $obTable->integer('sort_order')->nullable();
+            $obTable->timestamps();
 
-            $table->index('name');
-            $table->index('slug');
-            $table->index('code');
-            $table->index('external_id');
+            $obTable->index('name');
+            $obTable->index('slug');
+            $obTable->index('code');
+            $obTable->index('external_id');
         });
     }
 

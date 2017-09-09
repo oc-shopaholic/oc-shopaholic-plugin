@@ -19,28 +19,28 @@ class CreateTableProducts extends Migration
             return;
         }
 
-        Schema::create('lovata_shopaholic_products', function(Blueprint $table)
+        Schema::create('lovata_shopaholic_products', function(Blueprint $obTable)
         {
-            $table->engine = 'InnoDB';
-            $table->increments('id')->unsigned();
-            $table->boolean('active')->default(0);
-            $table->string('name');
-            $table->string('slug')->unique();
-            $table->integer('brand_id')->nullable()->unsigned();
-            $table->integer('category_id')->nullable()->unsigned();
-            $table->string('external_id')->nullable();
-            $table->string('code')->nullable();
-            $table->text('preview_text')->nullable();
-            $table->text('description')->nullable();
-            $table->softDeletes();
-            $table->timestamps();
+            $obTable->engine = 'InnoDB';
+            $obTable->increments('id')->unsigned();
+            $obTable->boolean('active')->default(0);
+            $obTable->string('name');
+            $obTable->string('slug')->unique();
+            $obTable->integer('brand_id')->nullable()->unsigned();
+            $obTable->integer('category_id')->nullable()->unsigned();
+            $obTable->string('external_id')->nullable();
+            $obTable->string('code')->nullable();
+            $obTable->text('preview_text')->nullable();
+            $obTable->text('description')->nullable();
+            $obTable->softDeletes();
+            $obTable->timestamps();
 
-            $table->index('name');
-            $table->index('slug');
-            $table->index('code');
-            $table->index('external_id');
-            $table->index('brand_id');
-            $table->index('category_id');
+            $obTable->index('name');
+            $obTable->index('slug');
+            $obTable->index('code');
+            $obTable->index('external_id');
+            $obTable->index('brand_id');
+            $obTable->index('category_id');
         });
     }
 

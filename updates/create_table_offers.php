@@ -19,30 +19,30 @@ class CreateTableOffers extends Migration
             return;
         }
 
-        Schema::create('lovata_shopaholic_offers', function(Blueprint $table)
+        Schema::create('lovata_shopaholic_offers', function(Blueprint $obTable)
         {
-            $table->engine = 'InnoDB';
-            $table->increments('id')->unsigned();
-            $table->boolean('active')->default(0);
-            $table->integer('product_id')->unsigned()->nullable();
-            $table->string('name');
-            $table->string('code')->nullable();
-            $table->string('external_id')->nullable();
-            $table->decimal('price', 15, 2)->nullable();
-            $table->decimal('old_price', 15, 2)->nullable();
-            $table->integer('quantity')->unsigned()->default(0);
-            $table->text('preview_text')->nullable();
-            $table->text('description')->nullable();
-            $table->softDeletes();
-            $table->timestamps();
+            $obTable->engine = 'InnoDB';
+            $obTable->increments('id')->unsigned();
+            $obTable->boolean('active')->default(0);
+            $obTable->integer('product_id')->unsigned()->nullable();
+            $obTable->string('name');
+            $obTable->string('code')->nullable();
+            $obTable->string('external_id')->nullable();
+            $obTable->decimal('price', 15, 2)->nullable();
+            $obTable->decimal('old_price', 15, 2)->nullable();
+            $obTable->integer('quantity')->unsigned()->default(0);
+            $obTable->text('preview_text')->nullable();
+            $obTable->text('description')->nullable();
+            $obTable->softDeletes();
+            $obTable->timestamps();
 
-            $table->index('name');
-            $table->index('code');
-            $table->index('external_id');
-            $table->index('product_id');
-            $table->index('price');
-            $table->index('old_price');
-            $table->index('quantity');
+            $obTable->index('name');
+            $obTable->index('code');
+            $obTable->index('external_id');
+            $obTable->index('product_id');
+            $obTable->index('price');
+            $obTable->index('old_price');
+            $obTable->index('quantity');
         });
     }
 
