@@ -67,7 +67,7 @@ class Offer extends Model
     public $rules = ['name' => 'required'];
 
     public $attributeNames = [
-        'lovata.toolbox::lang.field.name',
+        'name' => 'lovata.toolbox::lang.field.name',
     ];
     
     public $attachOne = ['preview_image' => 'System\Models\File'];

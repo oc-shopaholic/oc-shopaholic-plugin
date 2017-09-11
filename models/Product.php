@@ -76,8 +76,8 @@ class Product extends Model
     ];
 
     public $attributeNames = [
-        'lovata.toolbox::lang.field.name',
-        'lovata.toolbox::lang.field.slug',
+        'name' => 'lovata.toolbox::lang.field.name',
+        'slug' => 'lovata.toolbox::lang.field.slug',
     ];
 
     public $slugs = ['slug' => 'name'];
