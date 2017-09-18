@@ -51,10 +51,10 @@ use October\Rain\Database\Traits\NestedTree;
  * Properties for Shopaholic
  * @see \Lovata\PropertiesShopaholic\Classes\Event\CategoryModelHandler::addModelRelationConfig
  *
- * @property \October\Rain\Database\Collection|\Lovata\PropertiesShopaholic\Models\Property $product_property
+ * @property \October\Rain\Database\Collection|\Lovata\PropertiesShopaholic\Models\Property[] $product_property
  * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\PropertiesShopaholic\Models\Property product_property()
  *
- * @property \October\Rain\Database\Collection|\Lovata\PropertiesShopaholic\Models\Property $offer_property
+ * @property \October\Rain\Database\Collection|\Lovata\PropertiesShopaholic\Models\Property[] $offer_property
  * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\PropertiesShopaholic\Models\Property offer_property()
  *
  * @method static $this getByParentID(int $iParentID)

@@ -30,7 +30,7 @@ class ProductTest extends PluginTestCase
     protected $sModelClass;
 
     /**
-     * CategoryTest constructor.
+     * ProductTest constructor.
      */
     public function __construct()
     {

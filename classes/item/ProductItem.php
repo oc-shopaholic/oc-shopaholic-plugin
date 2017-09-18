@@ -36,7 +36,7 @@ use Lovata\Shopaholic\Classes\Collection\OfferCollection;
  *
  * Properties for Shopaholic
  * @see \Lovata\PropertiesShopaholic\Classes\Event\ProductModelHandler::extendProductItem
- * @property \Lovata\PropertiesShopaholic\Classes\Collection\PropertyCollection $property
+ * @property \Lovata\PropertiesShopaholic\Classes\Collection\PropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[] $property
  */
 class ProductItem extends ElementItem
 {

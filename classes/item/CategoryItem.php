@@ -42,11 +42,11 @@ use Lovata\Shopaholic\Classes\Collection\CategoryCollection;
  *
  * @method addProductPropertyIDList()
  * @property array $product_property_list
- * @property \Lovata\PropertiesShopaholic\Classes\Collection\PropertyCollection $product_property
+ * @property \Lovata\PropertiesShopaholic\Classes\Collection\PropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[] $product_property
  *
  * @method addOfferPropertyIDList()
  * @property array $offer_property_list
- * @property \Lovata\PropertiesShopaholic\Classes\Collection\PropertyCollection $offer_property
+ * @property \Lovata\PropertiesShopaholic\Classes\Collection\PropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[] $offer_property
  */
 class CategoryItem extends ElementItem
 {

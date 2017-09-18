@@ -1,13 +1,14 @@
 offer:
     label: 'lovata.shopaholic::lang.offer.name'
     manage:
-        form: $/lovata/shopaholic/models/offer/fields.yaml
         list: $/lovata/shopaholic/models/offer/columns.yaml
+        form: $/lovata/shopaholic/models/offer/fields.yaml
         showSearch: true
         showSorting: true
         recordsPerPage: 10
     view:
         list: $/lovata/shopaholic/models/offer/columns.yaml
+        recordUrl: lovata/shopaholic/offers/update/:id
         toolbarButtons: 'create|delete'
         showSearch: true
         showSorting: true

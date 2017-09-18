@@ -27,7 +27,7 @@ class OfferTest extends PluginTestCase
     protected $sModelClass;
 
     /**
-     * CategoryTest constructor.
+     * OfferTest constructor.
      */
     public function __construct()
     {

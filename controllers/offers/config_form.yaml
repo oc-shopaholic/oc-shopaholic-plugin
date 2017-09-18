@@ -1,0 +1,16 @@
+name: 'lovata.shopaholic::lang.offer.name'
+modelClass: Lovata\Shopaholic\Models\Offer
+form: $/lovata/shopaholic/models/offer/fields.yaml
+defaultRedirect: 'lovata/shopaholic/products/update/:product_id'
+create:
+    title: 'backend::lang.form.create_title'
+    redirect: 'lovata/shopaholic/offers/update/:id'
+    redirectClose: 'lovata/shopaholic/products/update/:product_id'
+    flashSave: 'lovata.toolbox::lang.message.create_success'
+update:
+    title: 'backend::lang.form.update_title'
+    redirect: 'lovata/shopaholic/products/update/:product_id'
+    redirectClose: 'lovata/shopaholic/products/update/:product_id'
+    flashSave: 'lovata.toolbox::lang.message.update_success'
+    flashDelete: 'lovata.toolbox::lang.message.delete_success'
+preview: {  }

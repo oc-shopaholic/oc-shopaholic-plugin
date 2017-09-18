@@ -30,7 +30,7 @@ class BrandCollection extends ElementCollection
 
     /**
      * Make element item
-     * @see \Lovata\Shopaholic\Tests\Unit\Collection\BrandCollection::testCollectionItem()
+     * @see \Lovata\Shopaholic\Tests\Unit\Collection\BrandCollectionTest::testCollectionItem()
      * @param int                             $iElementID
      * @param \Lovata\Shopaholic\Models\Brand $obElement
      *
@@ -69,7 +69,7 @@ class BrandCollection extends ElementCollection
     
     /**
      * Apply filter by active product list
-     * @see \Lovata\Shopaholic\Tests\Unit\Collection\BrandCollection::testActiveList()
+     * @see \Lovata\Shopaholic\Tests\Unit\Collection\BrandCollectionTest::testActiveList()
      * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/BrandCollection#active
      * @return $this
      */
@@ -81,7 +81,7 @@ class BrandCollection extends ElementCollection
 
     /**
      * Filter product list by category ID
-     * @see \Lovata\Shopaholic\Tests\Unit\Collection\BrandCollection::testCategoryFilter()
+     * @see \Lovata\Shopaholic\Tests\Unit\Collection\BrandCollectionTest::testCategoryFilter()
      * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/BrandCollection#categoryicategoryid
      * @param int $iCategoryID
      * @return $this

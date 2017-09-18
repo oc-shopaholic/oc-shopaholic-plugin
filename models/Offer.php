@@ -162,6 +162,20 @@ class Offer extends Model
     }
 
     /**
+     * Set quantity attribute value
+     * @param  int  $iQuantity
+     */
+    public function setQuantityAttribute($iQuantity)
+    {
+        $iQuantity = (int) $iQuantity;
+        if(empty($iQuantity) || $iQuantity < 0) {
+            $iQuantity  = 0;
+        }
+
+        $this->attributes['quantity'] = $iQuantity;
+    }
+
+    /**
      * Get element by product ID
      * @param Offer $obQuery
      * @param $sData
