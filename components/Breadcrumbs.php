@@ -65,6 +65,8 @@ class Breadcrumbs extends ComponentBase
 
         $arTagData = $obTagItem->toArray();
         $arTagData['active'] = true;
+        $arTagData['item'] = $obTagItem;
+
         $this->arResult[] = $arTagData;
 
         //Get category data
@@ -97,6 +99,7 @@ class Breadcrumbs extends ComponentBase
             'name'   => $obProductItem->name,
             'slug'   => $obProductItem->slug,
             'active' => true,
+            'item'   => $obProductItem,
         ];
 
         //Get category data
@@ -123,6 +126,7 @@ class Breadcrumbs extends ComponentBase
             'name'   => $obCategoryItem->name,
             'slug'   => $obCategoryItem->slug,
             'active' => $bActiveCategory,
+            'item'   => $obCategoryItem,
         ];
 
         if(!empty($obCategoryItem->parent_id)) {
