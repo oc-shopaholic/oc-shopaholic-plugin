@@ -43,7 +43,6 @@ class BrandCollection extends ElementCollection
 
     /**
      * Sort list
-     * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/BrandCollection#sort
      * @return $this
      */
     public function sort()
@@ -70,7 +69,6 @@ class BrandCollection extends ElementCollection
     /**
      * Apply filter by active product list
      * @see \Lovata\Shopaholic\Tests\Unit\Collection\BrandCollectionTest::testActiveList()
-     * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/BrandCollection#active
      * @return $this
      */
     public function active()
@@ -82,7 +80,6 @@ class BrandCollection extends ElementCollection
     /**
      * Filter product list by category ID
      * @see \Lovata\Shopaholic\Tests\Unit\Collection\BrandCollectionTest::testCategoryFilter()
-     * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/BrandCollection#categoryicategoryid
      * @param int $iCategoryID
      * @return $this
      */

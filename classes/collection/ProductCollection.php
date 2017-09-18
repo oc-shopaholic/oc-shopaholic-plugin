@@ -46,7 +46,6 @@ class ProductCollection extends ElementCollection
      * Sort list by
      * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testSortingByID()
      * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testSortingByPrice()
-     * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/ProductCollection#sortssorting
      * @param string $sSorting
      * @return $this
      */
@@ -75,7 +74,6 @@ class ProductCollection extends ElementCollection
      * Apply filter by active product list
      * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testActiveList()
      * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testActiveListWithCheckingOffer()
-     * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/ProductCollection#active
      * @return $this
      */
     public function active()
@@ -87,7 +85,6 @@ class ProductCollection extends ElementCollection
     /**
      * Filter product list by category ID
      * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testCategoryFilter()
-     * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/ProductCollection#categoryicategoryid
      * @param int $iCategoryID
      * @return $this
      */
@@ -100,7 +97,6 @@ class ProductCollection extends ElementCollection
     /**
      * Filter product list by category ID
      * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testBrandFilter()
-     * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/ProductCollection#brandibrandid
      * @param int $iBrandID
      * @return $this
      */
@@ -113,7 +109,6 @@ class ProductCollection extends ElementCollection
     /**
      * Get offer with min price
      * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testOfferMinPriceMethod()
-     * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/ProductCollection#getofferminpricegetoffermaxprice
      * @return OfferItem
      */
     public function getOfferMinPrice()
@@ -144,7 +139,6 @@ class ProductCollection extends ElementCollection
     /**
      * Get offer with max price
      * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testOfferMaxPriceMethod()
-     * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/ProductCollection#getofferminpricegetoffermaxprice
      * @return OfferItem
      */
     public function getOfferMaxPrice()
