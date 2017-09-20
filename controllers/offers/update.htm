@@ -1,6 +1,12 @@
 <?php Block::put('breadcrumb') ?>
     <ul>
         <li><a href="<?= Backend::url('lovata/shopaholic/products') ?>"><?= e(trans('lovata.shopaholic::lang.product.list_title')) ?></a></li>
+        <?
+            $obProduct = $formModel->product;
+            if(!empty($obProduct)) {
+        ?>
+        <li><a href="<?= Backend::url('lovata/shopaholic/products/update/'.$obProduct->id) ?>"><?= $obProduct->name ?></a></li>
+        <? } ?>
         <li><?= e($this->pageTitle) ?></li>
     </ul>
 <?php Block::endPut() ?>
