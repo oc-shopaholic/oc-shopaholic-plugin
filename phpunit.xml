@@ -16,6 +16,12 @@
             <directory>./../toolbox/tests/unit</directory>
         </testsuite>
     </testsuites>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./classes</directory>
+            <directory suffix=".php">./components</directory>
+        </whitelist>
+    </filter>
     <php>
         <env name="APP_ENV" value="testing"/>
         <env name="CACHE_DRIVER" value="array"/>

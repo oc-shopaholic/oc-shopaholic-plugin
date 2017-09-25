@@ -71,6 +71,12 @@ class ProductModelHandler extends ModelHandler
 
         //Check "popularity" field
         $this->checkPopularityField();
+
+        if($this->obElement->id != $this->obElement->getOriginal('id')) {
+            $this->obListStore->updateCacheBySorting(ProductListStore::SORT_NEW);
+            $this->obListStore->updateCacheBySorting(ProductListStore::SORT_POPULARITY_DESC);
+            $this->obListStore->updateCacheBySorting(ProductListStore::SORT_NO);
+        }
     }
 
     /**
