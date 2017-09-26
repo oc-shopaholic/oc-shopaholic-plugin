@@ -47,6 +47,10 @@ use Lovata\Shopaholic\Classes\Collection\CategoryCollection;
  * @method addOfferPropertyIDList()
  * @property array $offer_property_list
  * @property \Lovata\PropertiesShopaholic\Classes\Collection\PropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[] $offer_property
+ *
+ * Filter for Shopaholic
+ * @property \Lovata\FilterShopaholic\Classes\Collection\FilterPropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[] $product_filter_property
+ * @property \Lovata\FilterShopaholic\Classes\Collection\FilterPropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[] $offer_filter_property
  */
 class CategoryItem extends ElementItem
 {
