@@ -89,5 +89,6 @@
         'category' => 'Manage categories',
         'brand'    => 'Manage brands',
         'product'  => 'Manage products',
+        'settings' => 'Manage settings',
     ],
 ];
