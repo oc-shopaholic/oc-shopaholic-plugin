@@ -12,6 +12,10 @@ use Lovata\Shopaholic\Classes\Store\OfferListStore;
  *
  * @see \Lovata\Shopaholic\Tests\Unit\Collection\OfferCollectionTest
  * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/OfferCollection
+ *
+ * Filter for Shopaholic plugin
+ * @method static $this filterByPrice(float $fStartPrice, float $fStopPrice)
+ * @method static $this filterByProperty(array $arFilterList, \Lovata\FilterShopaholic\Classes\Collection\FilterPropertyCollection $obPropertyList)
  */
 class OfferCollection extends ElementCollection
 {

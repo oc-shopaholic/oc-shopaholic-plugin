@@ -13,6 +13,12 @@ use Lovata\Shopaholic\Classes\Store\ProductListStore;
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  *
  * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/ProductCollection
+ *
+ * Filter for Shopaholic plugin
+ * @method static $this filterByPrice(float $fStartPrice, float $fStopPrice)
+ * @method static $this filterByBrandList(array $arBrandIDList)
+ * @method static $this filterByDiscount()
+ * @method static $this filterByProperty(array $arFilterList, \Lovata\FilterShopaholic\Classes\Collection\FilterPropertyCollection $obPropertyList)
  */
 class ProductCollection extends ElementCollection
 {
