@@ -18,6 +18,7 @@ use Lovata\Shopaholic\Classes\Store\ProductListStore;
  * @method static $this filterByPrice(float $fStartPrice, float $fStopPrice)
  * @method static $this filterByBrandList(array $arBrandIDList)
  * @method static $this filterByDiscount()
+ * @method static $this filterByQuantity()
  * @method static $this filterByProperty(array $arFilterList, \Lovata\FilterShopaholic\Classes\Collection\FilterPropertyCollection $obPropertyList)
  */
 class ProductCollection extends ElementCollection
