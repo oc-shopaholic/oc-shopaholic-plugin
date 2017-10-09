@@ -12,9 +12,9 @@ use Backend\Classes\Controller;
 class Brands extends Controller
 {
     public $implement = [
-        'Backend\Behaviors\ListController',
-        'Backend\Behaviors\FormController',
-        'Backend\Behaviors\ReorderController',
+        'Backend.Behaviors.ListController',
+        'Backend.Behaviors.FormController',
+        'Backend.Behaviors.ReorderController',
     ];
 
     public $listConfig = 'config_list.yaml';

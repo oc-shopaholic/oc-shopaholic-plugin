@@ -11,9 +11,9 @@ use Backend\Classes\Controller;
 class Products extends Controller
 {
     public $implement = [
-        'Backend\Behaviors\ListController',
-        'Backend\Behaviors\FormController',
-        'Backend\Behaviors\RelationController'
+        'Backend.Behaviors.ListController',
+        'Backend.Behaviors.FormController',
+        'Backend.Behaviors.RelationController'
     ];
     
     public $listConfig = 'config_list.yaml';
