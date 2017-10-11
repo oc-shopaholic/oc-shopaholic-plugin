@@ -30,6 +30,7 @@ before_script:
       cd october;
       composer self-update;
       travis_retry composer install --no-interaction --prefer-dist;
+      php artisan plugin:install Lovata.Toolbox
       cd plugins/lovata/shopaholic;
     fi
 
@@ -47,7 +48,7 @@ jobs:
         - BUILD=true
       script:
         - NAME="shopaholic"
-        - zip -r $NAME ./ -x .git/\* -x .gitignore -x .travis.yml -x crowdin.yml -x .editorconfig -x tests/\* -x phpunit.xml
+        - zip -r $NAME ./ -x .git/\* -x .gitignore -x .travis.yml -x crowdin.yml -x .editorconfig
         - TAG=$(git describe --tags)
         - FILE="./$NAME.zip"
         - if [[ -e $FILE ]]; then
