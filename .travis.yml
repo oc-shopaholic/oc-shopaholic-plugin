@@ -30,6 +30,7 @@ before_script:
       composer self-update;
       travis_retry composer install --no-interaction --prefer-dist;
       php artisan plugin:install Lovata.Toolbox
+      composer dump-autoload
       cd plugins/lovata/shopaholic;
     fi
 
