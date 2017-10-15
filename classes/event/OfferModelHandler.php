@@ -161,7 +161,7 @@ class OfferModelHandler extends ModelHandler
      */
     protected function checkActiveField()
     {
-        //check product "active" field
+        //check offer "active" field
         if($this->obElement->getOriginal('active') == $this->obElement->active) {
             return;
         }
