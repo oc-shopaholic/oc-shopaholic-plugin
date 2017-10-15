@@ -1,0 +1,66 @@
+language: php
+
+cache:
+  directories:
+    - $HOME/.composer/cache/files
+
+php:
+  - 7.0
+  - 7.1
+  - nightly
+
+matrix:
+  allow_failures:
+    - php: nightly
+
+sudo: false
+
+install:
+  - if [[ "$BUILD" != true ]]; then
+      composer require satooshi/php-coveralls:~0.6@stable;
+    fi
+
+before_script:
+  - if [[ "$BUILD" != true ]]; then
+      mkdir -p build/logs;
+      git clone https://github.com/octobercms/october.git;
+      mkdir -p ./october/plugins/lovata/shopaholic;
+      mv !(october) october/plugins/lovata/shopaholic;
+      cd october;
+      composer self-update;
+      travis_retry composer install --no-interaction --prefer-dist;
+      php artisan plugin:install Lovata.Toolbox
+      composer dump-autoload
+      cd plugins/lovata/shopaholic;
+    fi
+
+script:
+  - ../../../vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+after_success:
+  - if [[ "$BUILD" != true ]]; then
+      sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then php vendor/bin/coveralls -v; fi;'
+    fi
+
+jobs:
+  include:
+    - stage: Release
+      env:
+        - BUILD=true
+      script:
+        - NAME="shopaholic"
+        - zip -r $NAME ./ -x .git/\* -x .gitignore -x .travis.yml -x crowdin.yml -x .editorconfig
+        - TAG=$(git describe --tags)
+        - FILE="./$NAME.zip"
+        - if [[ -e $FILE ]]; then
+            NEW_NAME="$NAME-$TAG.$TRAVIS_JOB_ID";
+            mv $NAME.zip $NEW_NAME.zip;
+          fi
+      deploy:
+        provider: releases
+        api_key:
+          secure: cmTypFHvhnSbM8TbeqYR/SEilpjXFPtlYpvliY0qxgM1os+IGVHFCKSM7Bi9Wb8clqzwIG5dssc8qOomfg7QZ1i5TVHaAdgzGJNTyf20ogQbj1QJkzyMCV9synY0ATHXvwVHWMiGZ6N83HU47SStbi4Jt7GMVzCuPOeH6O0gNQwBs2NVPYxQwSYY1SsYQIUummTFVx8fD5NtD+kFCsvc72xjnqFF7rydzRPgRDYHmSZCmSo6eYdeS/uRSlDxMlxr8PNkOImE7OGDBJLtvJwhlrJXQ14NfAc8tUlwCVgcgitCjz8v33xLDRdPSwXjkx2Ci1jnie77HmvrRt8bRcXH0diwTkH0sNS5C+jrKro8X2wpS3d4YNt1D35qG4oIOJA99N26UZO666ao/AcsqJhJCRA4K0t7sNDY/9v+X7qDAb4tqbfUYV+GB8nA3VHhjyubh6VxJuzsuoiYRbsBA6gcYwe+NKZLdb6M4/zrj+OwXBlSINjyvyIOKsX1CU1EhXMuAPwuLyJhoXHt12Xc/O9DCrxxbd3qNS6TVFtAH1ud4W1WF25QhtqTjK3+LeY8pQqxshQfdbfnwWEV7/6FEuEUmcrjrUbT3AysvAKqYCRI41sdDHERiU9vHBMTRtJ23CZtg+nznVozzeRyNCuzDF+6kDqyehRfEOnJDinPGUbuwKs=
+        file: "$NEW_NAME.zip"
+        skip_cleanup: true
+        on:
+          tags: true
+          repo: lovata/oc-shopaholic-plugin
