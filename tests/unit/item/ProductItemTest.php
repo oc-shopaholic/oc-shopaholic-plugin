@@ -166,6 +166,7 @@ class ProductItemTest extends CommonTest
      */
     public function testDeleteElement()
     {
+        $this->createTestData();
         if(empty($this->obElement)) {
             return;
         }
