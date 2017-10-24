@@ -77,7 +77,7 @@ class ProductList extends SortingElementList
      */
     public function make($arElementIDList = null)
     {
-        return ProductCollection::make($arElementIDList)->sort($this->sSorting);
+        return ProductCollection::make($arElementIDList);
     }
 
     /**
