@@ -1,5 +1,6 @@
 <?php namespace Lovata\Shopaholic\Controllers;
 
+use BackendMenu;
 use Backend\Classes\Controller;
 
 /**
@@ -16,4 +17,13 @@ class Offers extends Controller
 
     public $formConfig = 'config_form.yaml';
     public $relationConfig = 'config_relation.yaml';
+
+    /**
+     * Products constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        BackendMenu::setContext('Lovata.Shopaholic', 'shopaholic-menu-main', 'shopaholic-menu-products');
+    }
 }

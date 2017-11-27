@@ -12,6 +12,7 @@ use Lovata\Shopaholic\Classes\Helper\PriceHelper;
 
 use October\Rain\Database\Traits\Validation;
 use October\Rain\Database\Traits\SoftDelete;
+use October\Rain\Database\Traits\Purgeable;
 
 /**
  * Class Offer
@@ -56,6 +57,7 @@ class Offer extends Model
 {
     use Validation;
     use SoftDelete;
+    use Purgeable;
     use ActiveField;
     use NameField;
     use CodeField;
@@ -95,6 +97,7 @@ class Offer extends Model
 
     public $dates = ['created_at', 'updated_at', 'deleted_at'];
     public $appends = [];
+    public $purgeable = [];
     public $casts = [];
 
     /**

@@ -13,6 +13,7 @@ use Kharanenka\Scope\SlugField;
 use October\Rain\Database\Traits\Sluggable;
 use October\Rain\Database\Traits\SoftDelete;
 use October\Rain\Database\Traits\Validation;
+use October\Rain\Database\Traits\Purgeable;
 
 /**
  * Class Product
@@ -60,6 +61,7 @@ class Product extends Model
     use Validation;
     use SoftDelete;
     use Sluggable;
+    use Purgeable;
     use ActiveField;
     use NameField;
     use CategoryBelongsTo;
@@ -97,6 +99,7 @@ class Product extends Model
     ];
 
     public $appends = [];
+    public $purgeable = [];
     public $fillable = [
         'active',
         'name',
