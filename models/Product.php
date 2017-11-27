@@ -69,7 +69,13 @@ class Product extends Model
     use DataFileModel;
 
     public $table = 'lovata_shopaholic_products';
-  
+
+    public $implement = [
+        '@RainLab.Translate.Behaviors.TranslatableModel',
+    ];
+
+    public $translatable = ['name', 'preview_text', 'description'];
+    
     public $rules = [
         'name' => 'required',
         'slug' => 'required|unique:lovata_shopaholic_products',

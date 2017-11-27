@@ -72,6 +72,12 @@ class Category extends Model
     use DataFileModel;
 
     public $table = 'lovata_shopaholic_categories';
+
+    public $implement = [
+        '@RainLab.Translate.Behaviors.TranslatableModel',
+    ];
+
+    public $translatable = ['name', 'preview_text', 'description'];
     
     public $rules = [
         'name' => 'required',

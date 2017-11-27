@@ -64,6 +64,12 @@ class Offer extends Model
 
     public $table = 'lovata_shopaholic_offers';
 
+    public $implement = [
+        '@RainLab.Translate.Behaviors.TranslatableModel',
+    ];
+
+    public $translatable = ['name', 'preview_text', 'description'];
+
     public $rules = ['name' => 'required'];
 
     public $attributeNames = [

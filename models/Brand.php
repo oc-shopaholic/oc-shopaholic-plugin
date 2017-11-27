@@ -53,6 +53,12 @@ class Brand extends Model
     use DataFileModel;
 
     public $table = 'lovata_shopaholic_brands';
+
+    public $implement = [
+        '@RainLab.Translate.Behaviors.TranslatableModel',
+    ];
+
+    public $translatable = ['name', 'preview_text', 'description'];
     
     public $rules = [
         'name' => 'required',
