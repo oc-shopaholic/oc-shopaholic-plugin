@@ -13,6 +13,7 @@ use Kharanenka\Scope\SlugField;
 use October\Rain\Database\Traits\Sluggable;
 use October\Rain\Database\Traits\SoftDelete;
 use October\Rain\Database\Traits\Validation;
+use October\Rain\Database\Traits\Purgeable;
 
 /**
  * Class Product
@@ -60,6 +61,7 @@ class Product extends Model
     use Validation;
     use SoftDelete;
     use Sluggable;
+    use Purgeable;
     use ActiveField;
     use NameField;
     use CategoryBelongsTo;
@@ -69,7 +71,13 @@ class Product extends Model
     use DataFileModel;
 
     public $table = 'lovata_shopaholic_products';
-  
+
+    public $implement = [
+        '@RainLab.Translate.Behaviors.TranslatableModel',
+    ];
+
+    public $translatable = ['name', 'preview_text', 'description'];
+    
     public $rules = [
         'name' => 'required',
         'slug' => 'required|unique:lovata_shopaholic_products',
@@ -91,6 +99,7 @@ class Product extends Model
     ];
 
     public $appends = [];
+    public $purgeable = [];
     public $fillable = [
         'active',
         'name',
