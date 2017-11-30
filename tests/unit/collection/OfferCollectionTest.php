@@ -24,8 +24,8 @@ class OfferCollectionTest extends CommonTest
         'code'         => 'code',
         'preview_text' => 'preview_text',
         'description'  => 'description',
-        'price'        => '10,50',
-        'old_price'    => '11,50',
+        'price'        => 10.50,
+        'old_price'    => 11.50,
         'quantity'     => 5,
     ];
 

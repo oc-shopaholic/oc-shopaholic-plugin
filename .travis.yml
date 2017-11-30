@@ -9,6 +9,12 @@ php:
   - 7.1
   - nightly
 
+services:
+  - mysql
+  
+before_install:
+  - mysql -e 'CREATE DATABASE test CHARACTER SET utf8 COLLATE utf8_general_ci;'
+
 matrix:
   allow_failures:
     - php: nightly
