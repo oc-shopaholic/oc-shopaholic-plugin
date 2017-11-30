@@ -29,15 +29,13 @@ install:
 before_script:
   - if [[ "$BUILD" != true ]]; then
       mkdir -p build/logs;
-      git clone https://github.com/octobercms/october.git;
+      composer create-project october/october october;
+      sed -i "s/'database'  => 'database',/'database'  => 'test',/" october/config/database.php;
+      php october/artisan october:up;
+      php october/artisan plugin:install Lovata.Toolbox;
       mkdir -p ./october/plugins/lovata/shopaholic;
       mv !(october) october/plugins/lovata/shopaholic;
-      cd october;
-      composer self-update;
-      travis_retry composer install --no-interaction --prefer-dist;
-      php artisan plugin:install Lovata.Toolbox
-      composer dump-autoload
-      cd plugins/lovata/shopaholic;
+      cd october/plugins/lovata/shopaholic;
     fi
 
 script:
