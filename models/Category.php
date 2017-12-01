@@ -17,10 +17,10 @@ use October\Rain\Database\Traits\NestedTree;
  * Class Category
  * @package Lovata\Shopaholic\Models
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
- * 
+ *
  * @mixin \October\Rain\Database\Builder
  * @mixin \Eloquent
- * 
+ *
  * @property $id
  * @property bool $active
  * @property string $name
