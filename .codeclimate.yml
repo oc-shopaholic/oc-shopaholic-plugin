@@ -1,0 +1,27 @@
+---
+plugins:
+  duplication:
+    enabled: true
+    config:
+      languages:
+        php:
+          mass_threshold: 45
+  fixme:
+    enabled: true
+  phpmd:
+    enabled: true
+    config:
+      file_extensions: "php"
+      rulesets: "controversial,design,unusedcode,PHPMD_custom.xml"
+  phpcodesniffer:
+    enabled: true
+    config:
+      standard: "Symfony2"
+  sonar-php:
+    enabled: true
+ratings:
+  paths:
+  - "**.php"
+exclude_patterns:
+  - 'tests/'
+  - 'lang/'
