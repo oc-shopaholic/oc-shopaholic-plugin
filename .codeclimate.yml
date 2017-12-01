@@ -25,3 +25,4 @@ ratings:
 exclude_patterns:
   - 'tests/'
   - 'lang/'
+  - 'updates/'

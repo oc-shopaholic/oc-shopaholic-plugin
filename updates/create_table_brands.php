@@ -19,8 +19,7 @@ class CreateTableBrands extends Migration
             return;
         }
 
-        Schema::create('lovata_shopaholic_brands', function (Blueprint $obTable)
-        {
+        Schema::create('lovata_shopaholic_brands', function (Blueprint $obTable) {
             $obTable->engine = 'InnoDB';
             $obTable->increments('id')->unsigned();
             $obTable->boolean('active')->default(0);

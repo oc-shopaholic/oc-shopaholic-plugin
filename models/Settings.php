@@ -56,7 +56,9 @@ class Settings extends Model
     {
         //Clear cache data
         $arValue = $this->value;
-        foreach ($arValue as $sKey => $sValue) {
+        $arKeyList = array_keys($arValue);
+
+        foreach ($arKeyList as $sKey) {
             CCache::clear([Plugin::CACHE_TAG, self::CACHE_TAG], $sKey);
         }
     }

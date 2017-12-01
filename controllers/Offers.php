@@ -12,7 +12,7 @@ class Offers extends Controller
 {
     public $implement = [
         'Backend.Behaviors.FormController',
-        'Backend.Behaviors.RelationController'
+        'Backend.Behaviors.RelationController',
     ];
 
     public $formConfig = 'config_form.yaml';
