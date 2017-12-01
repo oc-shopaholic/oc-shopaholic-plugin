@@ -29,6 +29,18 @@ class CategoryCollection extends ElementCollection
     }
 
     /**
+     * Set to element ID list top level category ID list
+     * @see \Lovata\Shopaholic\Tests\Unit\Collection\CategoryCollectionTest::testTreeMethod()
+     * @return CategoryCollection
+     */
+    public function tree()
+    {
+        $this->arElementIDList = $this->obCategoryListStore->getTopLevelList();
+
+        return $this->returnThis();
+    }
+
+    /**
      * Make element item
      * @see \Lovata\Shopaholic\Tests\Unit\Collection\CategoryCollectionTest::testCollectionItem()
      * @param int                                $iElementID
@@ -39,16 +51,5 @@ class CategoryCollection extends ElementCollection
     protected function makeItem($iElementID, $obElement = null)
     {
         return CategoryItem::make($iElementID, $obElement);
-    }
-
-    /**
-     * Set to element ID list top level category ID list
-     * @see \Lovata\Shopaholic\Tests\Unit\Collection\CategoryCollectionTest::testTreeMethod()
-     * @return CategoryCollection
-     */
-    public function tree()
-    {
-        $this->arElementIDList = $this->obCategoryListStore->getTopLevelList();
-        return $this->returnThis();
     }
 }

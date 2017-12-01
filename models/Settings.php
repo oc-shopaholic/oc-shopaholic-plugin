@@ -28,21 +28,21 @@ class Settings extends Model
      */
     public static function getValue($sCode)
     {
-        if(empty($sCode)) {
+        if (empty($sCode)) {
             return '';
         }
 
         $arTags = [Plugin::CACHE_TAG, self::CACHE_TAG];
-        
+
         //Get value from cache
         $sResult = CCache::get($arTags, $sCode);
-        if(!empty($sResult)) {
+        if (!empty($sResult)) {
             return $sResult;
         }
 
         //Get value
         $sResult = self::get($sCode);
-        
+
         //Set cache data
         CCache::forever($arTags, $sCode, $sResult);
 
@@ -56,7 +56,7 @@ class Settings extends Model
     {
         //Clear cache data
         $arValue = $this->value;
-        foreach($arValue as $sKey => $sValue) {
+        foreach ($arValue as $sKey => $sValue) {
             CCache::clear([Plugin::CACHE_TAG, self::CACHE_TAG], $sKey);
         }
     }

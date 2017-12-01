@@ -73,15 +73,15 @@ class OfferModelHandler extends ModelHandler
     protected function afterDelete()
     {
         parent::afterDelete();
-        
-        if($this->obElement->active) {
+
+        if ($this->obElement->active) {
             $this->clearProductActiveList();
             $this->clearProductItemCache($this->obElement->product_id);
         }
 
         //Get product object
         $obProduct = $this->obElement->product;
-        if(empty($obProduct) || !$this->obElement->active) {
+        if (empty($obProduct) || !$this->obElement->active) {
             return;
         }
 
@@ -109,17 +109,17 @@ class OfferModelHandler extends ModelHandler
         $iOriginalProductID = $this->obElement->getOriginal('product_id');
 
         /** @var int $iProductID */
-        $iProductID =  $this->obElement->getAttribute('product_id');
+        $iProductID = $this->obElement->getAttribute('product_id');
 
-        if($iOriginalProductID == $iProductID) {
+        if ($iOriginalProductID == $iProductID) {
             return;
         }
 
-        if(!empty($iOriginalProductID)) {
+        if (!empty($iOriginalProductID)) {
             $this->clearProductItemCache($iOriginalProductID);
         }
 
-        if(!empty($iProductID)) {
+        if (!empty($iProductID)) {
             $this->clearProductItemCache($iOriginalProductID);
         }
     }
@@ -129,11 +129,11 @@ class OfferModelHandler extends ModelHandler
      */
     protected function checkPriceField()
     {
-        if($this->obElement->getOriginal('price') != $this->obElement->price) {
+        if ($this->obElement->getOriginal('price') != $this->obElement->price) {
             $this->obListStore->updateCacheBySorting(OfferListStore::SORT_PRICE_ASC);
             $this->obListStore->updateCacheBySorting(OfferListStore::SORT_PRICE_DESC);
         }
-        
+
         $bNeedUpdateFlag =
             $this->obElement->getOriginal('active') != $this->obElement->active
             || (
@@ -142,13 +142,13 @@ class OfferModelHandler extends ModelHandler
                 && $this->obElement->getOriginal('price') != $this->obElement->price
             );
 
-        if(!$bNeedUpdateFlag) {
+        if (!$bNeedUpdateFlag) {
             return;
         }
-        
+
         //Get product object
         $obProduct = $this->obElement->product;
-        if(empty($obProduct)) {
+        if (empty($obProduct)) {
             return;
         }
 
@@ -162,7 +162,7 @@ class OfferModelHandler extends ModelHandler
     protected function checkActiveField()
     {
         //check offer "active" field
-        if($this->obElement->getOriginal('active') == $this->obElement->active) {
+        if ($this->obElement->getOriginal('active') == $this->obElement->active) {
             return;
         }
 
@@ -170,14 +170,14 @@ class OfferModelHandler extends ModelHandler
         $this->obListStore->clearActiveList();
 
         $obProduct = $this->obElement->product;
-        if(empty($obProduct)) {
+        if (empty($obProduct)) {
             return;
         }
 
         $this->clearProductItemCache($this->obElement->product_id);
-        
+
         $obCategoryItem = CategoryItem::make($obProduct->category_id);
-        if($obCategoryItem->isEmpty()) {
+        if ($obCategoryItem->isEmpty()) {
             return;
         }
 
@@ -187,9 +187,9 @@ class OfferModelHandler extends ModelHandler
     /**
      * Clear cached active product ID list
      */
-    public function clearProductActiveList()
+    protected function clearProductActiveList()
     {
-        if(!Settings::getValue('check_offer_active')) {
+        if (!Settings::getValue('check_offer_active')) {
             return;
         }
 

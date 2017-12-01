@@ -17,8 +17,8 @@ class CategoryList extends ComponentBase
     public function componentDetails()
     {
         return [
-            'name'          => 'lovata.shopaholic::lang.component.category_list_name',
-            'description'   => 'lovata.shopaholic::lang.component.category_list_description',
+            'name'        => 'lovata.shopaholic::lang.component.category_list_name',
+            'description' => 'lovata.shopaholic::lang.component.category_list_description',
         ];
     }
 

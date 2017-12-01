@@ -78,7 +78,7 @@ class Category extends Model
     ];
 
     public $translatable = ['name', 'preview_text', 'description'];
-    
+
     public $rules = [
         'name' => 'required',
         'slug' => 'required|unique:lovata_shopaholic_categories',
@@ -90,7 +90,7 @@ class Category extends Model
     ];
 
     public $slugs = ['slug' => 'name'];
-    
+
     public $attachOne = ['preview_image' => 'System\Models\File'];
     public $attachMany = ['images' => 'System\Models\File'];
     public $belongsToMany = [];
@@ -112,7 +112,7 @@ class Category extends Model
     /**
      * Get by parent ID
      * @param Category $obQuery
-     * @param $sData
+     * @param string   $sData
      * @return Category
      */
     public function scopeGetByParentID($obQuery, $sData)

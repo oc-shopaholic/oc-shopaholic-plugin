@@ -20,7 +20,7 @@ use Lovata\Shopaholic\Classes\Item\CategoryItem;
 class ProductListStore
 {
     use TraitActiveList;
-    
+
     const CACHE_TAG_LIST = 'shopaholic-product-list';
 
     const SORT_NO = 'no';
@@ -56,7 +56,7 @@ class ProductListStore
         $sCacheKey = $sSorting;
 
         $arProductIDList = CCache::get($arCacheTags, $sCacheKey);
-        if(!empty($arProductIDList)) {
+        if (!empty($arProductIDList)) {
             return $arProductIDList;
         }
 
@@ -74,36 +74,33 @@ class ProductListStore
         $arCacheTags = [Plugin::CACHE_TAG, self::CACHE_TAG_LIST];
         $sCacheKey = $sSorting;
 
-        switch($sSorting) {
-            case self::SORT_PRICE_ASC :
-
+        switch ($sSorting) {
+            case self::SORT_PRICE_ASC:
                 //Get product ID list (sort by offer price)
                 //We can not use groupBy() in this place
                 /** @var array $arProductIDList */
                 $arProductIDList = Offer::active()->orderBy('price', 'asc')->lists('product_id');
-                if(empty($arProductIDList)) {
+                if (empty($arProductIDList)) {
                     return null;
                 }
 
                 $arProductIDList = array_unique($arProductIDList);
 
                 break;
-            case self::SORT_PRICE_DESC :
-
+            case self::SORT_PRICE_DESC:
                 //Get product ID list (sort by offer price)
                 //We can not use groupBy() in this place
                 /** @var array $arProductIDList */
                 $arProductIDList = Offer::active()->orderBy('price', 'desc')->lists('product_id');
-                if(empty($arProductIDList)) {
+                if (empty($arProductIDList)) {
                     return null;
                 }
 
                 $arProductIDList = array_unique($arProductIDList);
 
                 break;
-            case self::SORT_POPULARITY_DESC :
-
-                if(!PluginManager::instance()->hasPlugin('Lovata.PopularityShopaholic')) {
+            case self::SORT_POPULARITY_DESC:
+                if (!PluginManager::instance()->hasPlugin('Lovata.PopularityShopaholic')) {
                     return null;
                 }
 
@@ -111,7 +108,7 @@ class ProductListStore
                 $arProductIDList = Product::orderBy('popularity', 'desc')->lists('id');
 
                 break;
-            case self::SORT_NEW :
+            case self::SORT_NEW:
                 $arProductIDList = Product::orderBy('id', 'desc')->lists('id');
                 break;
             default:
@@ -119,7 +116,7 @@ class ProductListStore
                 break;
         }
 
-        if(empty($arProductIDList)) {
+        if (empty($arProductIDList)) {
             return null;
         }
 
@@ -136,16 +133,16 @@ class ProductListStore
      */
     public function getByCategory($iCategoryID)
     {
-        if(empty($iCategoryID)) {
+        if (empty($iCategoryID)) {
             return null;
         }
-        
+
         //Get cache data
         $arCacheTags = [Plugin::CACHE_TAG, self::CACHE_TAG_LIST, CategoryItem::CACHE_TAG_ELEMENT];
         $sCacheKey = $iCategoryID;
 
         $arProductIDList = CCache::get($arCacheTags, $sCacheKey);
-        if(!empty($arProductIDList)) {
+        if (!empty($arProductIDList)) {
             return $arProductIDList;
         }
 
@@ -165,7 +162,7 @@ class ProductListStore
      */
     public function clearListByCategory($iCategoryID)
     {
-        if(empty($iCategoryID)) {
+        if (empty($iCategoryID)) {
             return;
         }
 
@@ -176,7 +173,7 @@ class ProductListStore
         CCache::clear($arCacheTags, $sCacheKey);
         $this->getByCategory($iCategoryID);
     }
-    
+
     /**
      * Get cached product ID list, filter by category ID
      * @param int $iBrandID
@@ -184,7 +181,7 @@ class ProductListStore
      */
     public function getByBrand($iBrandID)
     {
-        if(empty($iBrandID)) {
+        if (empty($iBrandID)) {
             return null;
         }
 
@@ -193,7 +190,7 @@ class ProductListStore
         $sCacheKey = $iBrandID;
 
         $arProductIDList = CCache::get($arCacheTags, $sCacheKey);
-        if(!empty($arProductIDList)) {
+        if (!empty($arProductIDList)) {
             return $arProductIDList;
         }
 
@@ -213,7 +210,7 @@ class ProductListStore
      */
     public function clearListByBrand($iBrandID)
     {
-        if(empty($iBrandID)) {
+        if (empty($iBrandID)) {
             return;
         }
 
@@ -224,7 +221,7 @@ class ProductListStore
         CCache::clear($arCacheTags, $sCacheKey);
         $this->getByBrand($iBrandID);
     }
-    
+
     /**
      * Get product active ID list
      * @return array
@@ -234,26 +231,25 @@ class ProductListStore
         //Get product ID list
         /** @var array $arProductIDList */
         $arProductIDList = Product::active()->lists('id');
-        if(empty($arProductIDList)) {
+        if (empty($arProductIDList)) {
             return null;
         }
 
         //Check active offers
-        if(Settings::getValue('check_offer_active')) {
-
+        if (Settings::getValue('check_offer_active')) {
             //Get product list with active offers
             /** @var array $arProductIDListWithOffers */
             $arProductIDListWithOffers = Offer::active()->groupBy('product_id')->lists('product_id');
-            if(empty($arProductIDListWithOffers)) {
+            if (empty($arProductIDListWithOffers)) {
                 return null;
             }
 
             $arProductIDList = array_intersect($arProductIDList, $arProductIDListWithOffers);
-            if(empty($arProductIDList)) {
+            if (empty($arProductIDList)) {
                 return null;
             }
         }
-        
+
         return $arProductIDList;
     }
 }

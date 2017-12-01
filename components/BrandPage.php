@@ -20,8 +20,8 @@ class BrandPage extends ElementPage
     public function componentDetails()
     {
         return [
-            'name'          => 'lovata.shopaholic::lang.component.brand_page_name',
-            'description'   => 'lovata.shopaholic::lang.component.brand_page_description',
+            'name'        => 'lovata.shopaholic::lang.component.brand_page_name',
+            'description' => 'lovata.shopaholic::lang.component.brand_page_description',
         ];
     }
 
@@ -32,12 +32,12 @@ class BrandPage extends ElementPage
      */
     protected function getElementObject($sElementSlug)
     {
-        if(empty($sElementSlug)) {
+        if (empty($sElementSlug)) {
             return null;
         }
 
         $obElement = Brand::active()->getBySlug($sElementSlug)->first();
-        if(!empty($obElement)) {
+        if (!empty($obElement)) {
             Event::fire('shopaholic.brand.open', [$obElement]);
         }
 
@@ -46,7 +46,7 @@ class BrandPage extends ElementPage
 
     /**
      * Make new element item
-     * @param int $iElementID
+     * @param int   $iElementID
      * @param Brand $obElement
      * @return BrandItem
      */

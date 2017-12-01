@@ -23,8 +23,8 @@ class Breadcrumbs extends ComponentBase
     public function componentDetails()
     {
         return [
-            'name'          => 'lovata.shopaholic::lang.component.breadcrumbs_name',
-            'description'   => 'lovata.shopaholic::lang.component.breadcrumbs_description',
+            'name'        => 'lovata.shopaholic::lang.component.breadcrumbs_name',
+            'description' => 'lovata.shopaholic::lang.component.breadcrumbs_description',
         ];
     }
 
@@ -35,14 +35,14 @@ class Breadcrumbs extends ComponentBase
      */
     public function getByCategoryID($iCategoryID)
     {
-        if(empty($iCategoryID)) {
+        if (empty($iCategoryID)) {
             return [];
         }
 
         //Get category data
         $this->addCategoryData($iCategoryID, true);
         $this->arResult = array_reverse($this->arResult);
-        
+
         return $this->arResult;
     }
 
@@ -54,12 +54,12 @@ class Breadcrumbs extends ComponentBase
     public function getByTagID($iTagID)
     {
         //Get tag element
-        if(!PluginManager::instance()->hasPlugin('Lovata.TagsShopaholic') || empty($iTagID)) {
+        if (!PluginManager::instance()->hasPlugin('Lovata.TagsShopaholic') || empty($iTagID)) {
             return $this->arResult;
         }
 
         $obTagItem = \Lovata\TagsShopaholic\Classes\Item\TagItem::make($iTagID);
-        if($obTagItem->isEmpty()) {
+        if ($obTagItem->isEmpty()) {
             return $this->arResult;
         }
 
@@ -83,13 +83,13 @@ class Breadcrumbs extends ComponentBase
      */
     public function getByProductID($iProductID)
     {
-        if(empty($iProductID)) {
+        if (empty($iProductID)) {
             return $this->arResult;
         }
 
         //Get product data
         $obProductItem = ProductItem::make($iProductID);
-        if($obProductItem->isEmpty()) {
+        if ($obProductItem->isEmpty()) {
             return $this->arResult;
         }
 
@@ -111,13 +111,13 @@ class Breadcrumbs extends ComponentBase
 
     /**
      * Add category data
-     * @param int $iCategoryID
+     * @param int  $iCategoryID
      * @param bool $bActiveCategory
      */
     protected function addCategoryData($iCategoryID, $bActiveCategory = false)
     {
         $obCategoryItem = CategoryItem::make($iCategoryID);
-        if($obCategoryItem->isEmpty()) {
+        if ($obCategoryItem->isEmpty()) {
             return;
         }
 
@@ -129,7 +129,7 @@ class Breadcrumbs extends ComponentBase
             'item'   => $obCategoryItem,
         ];
 
-        if(!empty($obCategoryItem->parent_id)) {
+        if (!empty($obCategoryItem->parent_id)) {
             $this->addCategoryData($obCategoryItem->parent_id);
         }
     }

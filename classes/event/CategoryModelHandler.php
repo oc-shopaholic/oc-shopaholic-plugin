@@ -30,6 +30,19 @@ class CategoryModelHandler extends ModelHandler
     }
 
     /**
+     * Add listeners
+     * @param \Illuminate\Events\Dispatcher $obEvent
+     */
+    public function subscribe($obEvent)
+    {
+        parent::subscribe($obEvent);
+
+        $obEvent->listen('shopaholic.category.update.sorting', function () {
+            $this->obCategoryListStore->clearTopLevelList();
+        });
+    }
+
+    /**
      * Get model class name
      * @return string
      */
@@ -45,19 +58,6 @@ class CategoryModelHandler extends ModelHandler
     protected function getItemClass()
     {
         return CategoryItem::class;
-    }
-    
-    /**
-     * Add listeners
-     * @param \Illuminate\Events\Dispatcher $obEvent
-     */
-    public function subscribe($obEvent)
-    {
-        parent::subscribe($obEvent);
-
-        $obEvent->listen('shopaholic.category.update.sorting', function () {
-            $this->obCategoryListStore->clearTopLevelList();
-        });
     }
 
     /**

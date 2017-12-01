@@ -59,7 +59,7 @@ class Brand extends Model
     ];
 
     public $translatable = ['name', 'preview_text', 'description'];
-    
+
     public $rules = [
         'name' => 'required',
         'slug' => 'required|unique:lovata_shopaholic_brands',
@@ -71,7 +71,7 @@ class Brand extends Model
     ];
 
     public $slugs = ['slug' => 'name'];
-    
+
     public $attachOne = ['preview_image' => 'System\Models\File'];
     public $attachMany = ['images' => 'System\Models\File'];
     public $hasMany = ['product' => Product::class];

@@ -37,19 +37,6 @@ class ProductCollection extends ElementCollection
     }
 
     /**
-     * Make element item
-     * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testCollectionItem()
-     * @param int                               $iElementID
-     * @param \Lovata\Shopaholic\Models\Product $obElement
-     *
-     * @return ProductItem
-     */
-    protected function makeItem($iElementID, $obElement = null)
-    {
-        return ProductItem::make($iElementID, $obElement);
-    }
-
-    /**
      * Sort list by
      * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testSortingByID()
      * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testSortingByPrice()
@@ -58,22 +45,24 @@ class ProductCollection extends ElementCollection
      */
     public function sort($sSorting)
     {
-        if(!$this->isClear() && $this->isEmpty()) {
-            return $this;
+        if (!$this->isClear() && $this->isEmpty()) {
+            return $this->returnThis();
         }
 
         //Get sorting list
-        $arElementIDList = $this->obProductListStore->getBySorting($sSorting);
-        if(empty($arElementIDList)) {
+        $arResultIDList = $this->obProductListStore->getBySorting($sSorting);
+        if (empty($arResultIDList)) {
             return $this->clear();
         }
 
-        if($this->isClear()) {
-            $this->arElementIDList = $arElementIDList;
-            return $this;
+        if ($this->isClear()) {
+            $this->arElementIDList = $arResultIDList;
+
+            return $this->returnThis();
         }
 
-        $this->arElementIDList = array_intersect($arElementIDList, $this->arElementIDList);
+        $this->arElementIDList = array_intersect($arResultIDList, $this->arElementIDList);
+
         return $this->returnThis();
     }
 
@@ -85,8 +74,9 @@ class ProductCollection extends ElementCollection
      */
     public function active()
     {
-        $arElementIDList = $this->obProductListStore->getActiveList();
-        return $this->intersect($arElementIDList);
+        $arResultIDList = $this->obProductListStore->getActiveList();
+
+        return $this->intersect($arResultIDList);
     }
 
     /**
@@ -97,8 +87,9 @@ class ProductCollection extends ElementCollection
      */
     public function category($iCategoryID)
     {
-        $arElementIDList = $this->obProductListStore->getByCategory($iCategoryID);
-        return $this->intersect($arElementIDList);
+        $arResultIDList = $this->obProductListStore->getByCategory($iCategoryID);
+
+        return $this->intersect($arResultIDList);
     }
 
     /**
@@ -109,8 +100,9 @@ class ProductCollection extends ElementCollection
      */
     public function brand($iBrandID)
     {
-        $arElementIDList = $this->obProductListStore->getByBrand($iBrandID);
-        return $this->intersect($arElementIDList);
+        $arResultIDList = $this->obProductListStore->getByBrand($iBrandID);
+
+        return $this->intersect($arResultIDList);
     }
 
     /**
@@ -127,13 +119,13 @@ class ProductCollection extends ElementCollection
         /** @var \Lovata\Shopaholic\Classes\Item\ProductItem $obProductItem */
         $obProductItem = $obProductList->first();
 
-        if($obProductItem->isEmpty()) {
+        if ($obProductItem->isEmpty()) {
             return OfferItem::make(null);
         }
 
         //Get offer with min price
         $obOfferCollection = $obProductItem->offer;
-        if($obOfferCollection->isEmpty()) {
+        if ($obOfferCollection->isEmpty()) {
             return OfferItem::make(null);
         }
 
@@ -157,13 +149,13 @@ class ProductCollection extends ElementCollection
         /** @var \Lovata\Shopaholic\Classes\Item\ProductItem $obProductItem */
         $obProductItem = $obProductList->last();
 
-        if($obProductItem->isEmpty()) {
+        if ($obProductItem->isEmpty()) {
             return OfferItem::make(null);
         }
 
         //Get offer with min price
         $obOfferCollection = $obProductItem->offer;
-        if($obOfferCollection->isEmpty()) {
+        if ($obOfferCollection->isEmpty()) {
             return OfferItem::make(null);
         }
 
@@ -171,5 +163,19 @@ class ProductCollection extends ElementCollection
         $obOfferItem = $obOfferCollection->sort(OfferListStore::SORT_PRICE_ASC)->last();
 
         return $obOfferItem;
+    }
+
+    /**
+     * Make element item
+     * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testCollectionItem()
+     *
+     * @param int                               $iElementID
+     * @param \Lovata\Shopaholic\Models\Product $obElement
+     *
+     * @return ProductItem
+     */
+    protected function makeItem($iElementID, $obElement = null)
+    {
+        return ProductItem::make($iElementID, $obElement);
     }
 }

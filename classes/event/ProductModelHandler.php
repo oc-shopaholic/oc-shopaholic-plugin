@@ -22,7 +22,7 @@ class ProductModelHandler extends ModelHandler
 
     /** @var  ProductListStore */
     protected $obListStore;
-    
+
     /** @var  BrandListStore */
     protected $obBrandListStore;
 
@@ -72,7 +72,7 @@ class ProductModelHandler extends ModelHandler
         //Check "popularity" field
         $this->checkPopularityField();
 
-        if($this->obElement->id != $this->obElement->getOriginal('id')) {
+        if ($this->obElement->id != $this->obElement->getOriginal('id')) {
             $this->obListStore->updateCacheBySorting(ProductListStore::SORT_NEW);
             $this->obListStore->updateCacheBySorting(ProductListStore::SORT_POPULARITY_DESC);
             $this->obListStore->updateCacheBySorting(ProductListStore::SORT_NO);
@@ -82,7 +82,7 @@ class ProductModelHandler extends ModelHandler
     /**
      * After delete event handler
      */
-    public function afterDelete()
+    protected function afterDelete()
     {
         $this->processOfferAfterDelete();
         parent::afterDelete();
@@ -105,30 +105,50 @@ class ProductModelHandler extends ModelHandler
     protected function processOfferAfterDelete()
     {
         $obOfferList = $this->obElement->offer;
-        if($obOfferList->isEmpty()) {
+        if ($obOfferList->isEmpty()) {
             return;
         }
 
-        foreach($obOfferList as $obOffer) {
+        foreach ($obOfferList as $obOffer) {
             $obOffer->active = false;
             $obOffer->save();
         }
     }
-    
+
+    /**
+     * Check offer "active" field, if it was changed, then clear cache
+     */
+    protected function checkActiveField()
+    {
+        //check product "active" field
+        if ($this->obElement->getOriginal('active') == $this->obElement->active) {
+            return;
+        }
+
+        $this->obListStore->clearActiveList();
+
+        $obCategoryItem = CategoryItem::make($this->obElement->category_id);
+        if ($obCategoryItem->isEmpty()) {
+            return;
+        }
+
+        $obCategoryItem->clearProductCount();
+    }
+
     /**
      * Check product "category_id" field, if it was changed, then clear cache
      */
     private function checkCategoryIDField()
     {
         //Check "category_id" field
-        if($this->obElement->getOriginal('category_id') == $this->obElement->category_id){
+        if ($this->obElement->getOriginal('category_id') == $this->obElement->category_id) {
             return;
         }
 
         //Update product ID cache list for category
         $this->obListStore->clearListByCategory($this->obElement->category_id);
         $this->obListStore->clearListByCategory((int) $this->obElement->getOriginal('category_id'));
-        
+
         $this->obBrandListStore->clearListByCategory($this->obElement->category_id);
         $this->obBrandListStore->clearListByCategory((int) $this->obElement->getOriginal('category_id'));
     }
@@ -139,7 +159,7 @@ class ProductModelHandler extends ModelHandler
     private function checkBrandIDField()
     {
         //Check "brand_id" field
-        if($this->obElement->getOriginal('brand_id') == $this->obElement->brand_id){
+        if ($this->obElement->getOriginal('brand_id') == $this->obElement->brand_id) {
             return;
         }
 
@@ -157,31 +177,11 @@ class ProductModelHandler extends ModelHandler
         $bNeedUpdateCache = PluginManager::instance()->hasPlugin('Lovata.PopularityShopaholic')
             && $this->obElement->getOriginal('popularity') != $this->obElement->popularity;
 
-        if(!$bNeedUpdateCache) {
+        if (!$bNeedUpdateCache) {
             return;
         }
 
         //Update product list with popularity
         $this->obListStore->updateCacheBySorting(ProductListStore::SORT_POPULARITY_DESC);
-    }
-
-    /**
-     * Check offer "active" field, if it was changed, then clear cache
-     */
-    protected function checkActiveField()
-    {
-        //check product "active" field
-        if($this->obElement->getOriginal('active') == $this->obElement->active) {
-            return;
-        }
-
-        $this->obListStore->clearActiveList();
-        
-        $obCategoryItem = CategoryItem::make($this->obElement->category_id);
-        if($obCategoryItem->isEmpty()) {
-            return;
-        }
-        
-        $obCategoryItem->clearProductCount();
     }
 }

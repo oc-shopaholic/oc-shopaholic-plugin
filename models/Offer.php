@@ -18,10 +18,10 @@ use October\Rain\Database\Traits\Purgeable;
  * Class Offer
  * @package Lovata\Shopaholic\Models
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
- * 
+ *
  * @mixin \October\Rain\Database\Builder
  * @mixin \Eloquent
- * 
+ *
  * @property $id
  * @property bool $active
  * @property string $name
@@ -77,7 +77,7 @@ class Offer extends Model
     public $attributeNames = [
         'name' => 'lovata.toolbox::lang.field.name',
     ];
-    
+
     public $attachOne = ['preview_image' => 'System\Models\File'];
     public $attachMany = ['images' => 'System\Models\File'];
     public $belongsTo = ['product' => [Product::class]];
@@ -117,68 +117,68 @@ class Offer extends Model
     {
         return $this->attributes['old_price'];
     }
-    
+
     /**
      * Accessor for price custom format
-     *
-     * @param  string  $dPrice
+     * @param  string $dPrice
      * @return string
      */
     public function getPriceAttribute($dPrice)
     {
         /** @var PriceHelper $obPriceHelper */
         $obPriceHelper = app()->make(PriceHelper::class);
+
         return $obPriceHelper->get($dPrice);
     }
 
     /**
      * Accessor for discount price custom format
-     *
-     * @param  string  $dPrice
+     * @param  string $dPrice
      * @return string
      */
     public function getOldPriceAttribute($dPrice)
     {
         /** @var PriceHelper $obPriceHelper */
         $obPriceHelper = app()->make(PriceHelper::class);
+
         return $obPriceHelper->get($dPrice);
     }
 
     /**
      * Format price to decimal format
-     * @param  string  $sPrice
+     * @param  string $sPrice
      */
     public function setPriceAttribute($sPrice)
     {
         $sPrice = str_replace(',', '.', $sPrice);
-        $sPrice = (float) preg_replace("/[^0-9\.]/", "",$sPrice);
+        $sPrice = (float) preg_replace("/[^0-9\.]/", "", $sPrice);
         $this->attributes['price'] = $sPrice;
     }
 
     /**
      * Format discount price to decimal format
-     * @param  string  $sPrice
+     * @param  string $sPrice
      */
     public function setOldPriceAttribute($sPrice)
     {
         $sPrice = str_replace(',', '.', $sPrice);
-        $sPrice = (float) preg_replace("/[^0-9\.]/", "",$sPrice);
-        if($sPrice <= $this->getPriceValue()) {
+        $sPrice = (float) preg_replace("/[^0-9\.]/", "", $sPrice);
+        if ($sPrice <= $this->getPriceValue()) {
             $sPrice = 0;
         }
-        
+
         $this->attributes['old_price'] = $sPrice;
     }
 
     /**
      * Set quantity attribute value
-     * @param  int  $iQuantity
+     * @param  int $iQuantity
      */
     public function setQuantityAttribute($iQuantity)
     {
         $iQuantity = (int) $iQuantity;
-        if(empty($iQuantity) || $iQuantity < 0) {
-            $iQuantity  = 0;
+        if (empty($iQuantity) || $iQuantity < 0) {
+            $iQuantity = 0;
         }
 
         $this->attributes['quantity'] = $iQuantity;
@@ -186,32 +186,35 @@ class Offer extends Model
 
     /**
      * Get element by product ID
-     * @param Offer $obQuery
-     * @param $sData
+     * @param Offer  $obQuery
+     * @param string $sData
+     *
      * @return Offer
      */
     public function scopeGetByProduct($obQuery, $sData)
     {
-        if(!empty($sData)) {
+        if (!empty($sData)) {
             $obQuery->where('product_id', $sData);
         }
+
         return $obQuery;
     }
 
     /**
      * Get by quantity
-     * @param Offer $obQuery
-     * @param $sData
+     * @param Offer  $obQuery
+     * @param string $sData
      * @param string $sCondition
+     *
      * @return Offer
      */
     public function scopeGetByQuantity($obQuery, $sData, $sCondition = '=')
     {
-        if(empty($sData)) {
+        if (empty($sData)) {
             $sData = 0;
         }
 
-        if(!empty($sCondition)) {
+        if (!empty($sCondition)) {
             $obQuery->where('quantity', $sCondition, $sData);
         }
 
@@ -220,18 +223,18 @@ class Offer extends Model
 
     /**
      * Get by price
-     * @param Offer $obQuery
-     * @param $sData
+     * @param Offer  $obQuery
+     * @param string $sData
      * @param string $sCondition
      * @return Offer
      */
     public function scopeGetByPrice($obQuery, $sData, $sCondition = '=')
     {
-        if(empty($sData)) {
+        if (empty($sData)) {
             $sData = 0;
         }
 
-        if(!empty($sCondition)) {
+        if (!empty($sCondition)) {
             $obQuery->where('price', $sCondition, $sData);
         }
 
@@ -240,18 +243,18 @@ class Offer extends Model
 
     /**
      * Get by old price
-     * @param Offer $obQuery
-     * @param $sData
+     * @param Offer  $obQuery
+     * @param string $sData
      * @param string $sCondition
      * @return Offer
      */
     public function scopeGetByOldPrice($obQuery, $sData, $sCondition = '=')
     {
-        if(empty($sData)) {
+        if (empty($sData)) {
             $sData = 0;
         }
 
-        if(!empty($sCondition)) {
+        if (!empty($sCondition)) {
             $obQuery->where('old_price', $sCondition, $sData);
         }
 

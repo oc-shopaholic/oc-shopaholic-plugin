@@ -17,12 +17,12 @@ use Lovata\Shopaholic\Classes\Item\CategoryItem;
 class BrandListStore
 {
     use TraitActiveList;
-    
+
     const CACHE_TAG_LIST = 'shopaholic-brand-list';
 
     /** @var ProductListStore */
     protected $obProductListStore;
-    
+
     /**
      * BrandListStore constructor.
      *
@@ -44,7 +44,7 @@ class BrandListStore
         $sCacheKey = 'sorting';
 
         $arBrandIDList = CCache::get($arCacheTags, $sCacheKey);
-        if(!empty($arBrandIDList)) {
+        if (!empty($arBrandIDList)) {
             return $arBrandIDList;
         }
 
@@ -71,7 +71,7 @@ class BrandListStore
         CCache::clear($arCacheTags, $sCacheKey);
         $this->getBySorting();
     }
-    
+
     /**
      * Get cached brand ID list, filter by category ID
      * @param int $iCategoryID
@@ -79,16 +79,16 @@ class BrandListStore
      */
     public function getByCategory($iCategoryID)
     {
-        if(empty($iCategoryID)) {
+        if (empty($iCategoryID)) {
             return null;
         }
-        
+
         //Get cache data
         $arCacheTags = [Plugin::CACHE_TAG, self::CACHE_TAG_LIST, CategoryItem::CACHE_TAG_ELEMENT];
         $sCacheKey = $iCategoryID;
 
         $arBrandIDList = CCache::get($arCacheTags, $sCacheKey);
-        if(empty($arBrandIDList)) {
+        if (empty($arBrandIDList)) {
             //Get brand ID list
             /** @var array $arBrandIDList */
             $arBrandIDList = Product::getByCategory($iCategoryID)
@@ -101,19 +101,19 @@ class BrandListStore
 
         //Get active product list
         $arActiveProductIDList = $this->obProductListStore->getActiveList();
-        if(empty($arActiveProductIDList) || empty($arBrandIDList)) {
+        if (empty($arActiveProductIDList) || empty($arBrandIDList)) {
             return null;
         }
-        
+
         $arResult = [];
-        foreach($arBrandIDList as $iProductID => $iBrandID) {
-            if(!in_array($iProductID, $arActiveProductIDList)) {
+        foreach ($arBrandIDList as $iProductID => $iBrandID) {
+            if (!in_array($iProductID, $arActiveProductIDList)) {
                 continue;
             }
-            
+
             $arResult[] = $iBrandID;
         }
-        
+
         $arResult = array_unique($arResult);
 
         return $arResult;
@@ -125,14 +125,14 @@ class BrandListStore
      */
     public function clearListByCategory($iCategoryID)
     {
-        if(empty($iCategoryID)) {
+        if (empty($iCategoryID)) {
             return;
         }
 
         //Get cache data
         $arCacheTags = [Plugin::CACHE_TAG, self::CACHE_TAG_LIST, CategoryItem::CACHE_TAG_ELEMENT];
         $sCacheKey = $iCategoryID;
-        
+
         CCache::clear($arCacheTags, $sCacheKey);
     }
 
@@ -144,6 +144,7 @@ class BrandListStore
     {
         /** @var array $arBrandIDList */
         $arBrandIDList = Brand::active()->lists('id');
+
         return $arBrandIDList;
     }
 }

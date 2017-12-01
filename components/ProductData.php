@@ -18,8 +18,8 @@ class ProductData extends ElementData
     public function componentDetails()
     {
         return [
-            'name'          => 'lovata.shopaholic::lang.component.product_data_name',
-            'description'   => 'lovata.shopaholic::lang.component.product_data_description',
+            'name'        => 'lovata.shopaholic::lang.component.product_data_name',
+            'description' => 'lovata.shopaholic::lang.component.product_data_description',
         ];
     }
 

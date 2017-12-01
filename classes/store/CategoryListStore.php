@@ -26,7 +26,7 @@ class CategoryListStore
         $sCacheKey = self::CACHE_KEY_TOP_LEVEL_LIST;
 
         $arCategoryListID = CCache::get($arCacheTags, $sCacheKey);
-        if(!empty($arCategoryListID)) {
+        if (!empty($arCategoryListID)) {
             return $arCategoryListID;
         }
 
@@ -49,7 +49,7 @@ class CategoryListStore
     {
         $arCacheTags = [Plugin::CACHE_TAG, CategoryListStore::CACHE_TAG_LIST];
         $sCacheKey = CategoryListStore::CACHE_KEY_TOP_LEVEL_LIST;
-        
+
         CCache::clear($arCacheTags, $sCacheKey);
     }
 }

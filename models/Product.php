@@ -22,7 +22,7 @@ use October\Rain\Database\Traits\Purgeable;
  *
  * @mixin \October\Rain\Database\Builder
  * @mixin \Eloquent
- * 
+ *
  * @property $id
  * @property bool $active
  * @property string $name
@@ -77,7 +77,7 @@ class Product extends Model
     ];
 
     public $translatable = ['name', 'preview_text', 'description'];
-    
+
     public $rules = [
         'name' => 'required',
         'slug' => 'required|unique:lovata_shopaholic_products',
@@ -89,7 +89,7 @@ class Product extends Model
     ];
 
     public $slugs = ['slug' => 'name'];
-    
+
     public $attachOne = ['preview_image' => 'System\Models\File'];
     public $attachMany = ['images' => 'System\Models\File'];
     public $hasMany = ['offer' => [Offer::class]];
@@ -119,12 +119,12 @@ class Product extends Model
     /**
      * Get element by brand ID
      * @param Product $obQuery
-     * @param string $sData
+     * @param string  $sData
      * @return $this
      */
-    public function scopeGetByBrand($obQuery, $sData) {
-
-        if(!empty($sData)) {
+    public function scopeGetByBrand($obQuery, $sData)
+    {
+        if (!empty($sData)) {
             $obQuery->where('brand_id', $sData);
         }
 

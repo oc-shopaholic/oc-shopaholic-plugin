@@ -29,43 +29,32 @@ class BrandCollection extends ElementCollection
     }
 
     /**
-     * Make element item
-     * @see \Lovata\Shopaholic\Tests\Unit\Collection\BrandCollectionTest::testCollectionItem()
-     * @param int                             $iElementID
-     * @param \Lovata\Shopaholic\Models\Brand $obElement
-     *
-     * @return BrandItem
-     */
-    protected function makeItem($iElementID, $obElement = null)
-    {
-        return BrandItem::make($iElementID, $obElement);
-    }
-
-    /**
      * Sort list
      * @return $this
      */
     public function sort()
     {
-        if(!$this->isClear() && $this->isEmpty()) {
+        if (!$this->isClear() && $this->isEmpty()) {
             return $this->returnThis();
         }
 
         //Get sorting list
-        $arElementIDList = $this->obBrandListStore->getBySorting();
-        if(empty($arElementIDList)) {
+        $arResultIDList = $this->obBrandListStore->getBySorting();
+        if (empty($arResultIDList)) {
             return $this->clear();
         }
 
-        if($this->isClear()) {
-            $this->arElementIDList = $arElementIDList;
+        if ($this->isClear()) {
+            $this->arElementIDList = $arResultIDList;
+
             return $this->returnThis();
         }
 
-        $this->arElementIDList = array_intersect($arElementIDList, $this->arElementIDList);
+        $this->arElementIDList = array_intersect($arResultIDList, $this->arElementIDList);
+
         return $this->returnThis();
     }
-    
+
     /**
      * Apply filter by active product list
      * @see \Lovata\Shopaholic\Tests\Unit\Collection\BrandCollectionTest::testActiveList()
@@ -73,8 +62,9 @@ class BrandCollection extends ElementCollection
      */
     public function active()
     {
-        $arElementIDList = $this->obBrandListStore->getActiveList();
-        return $this->intersect($arElementIDList);
+        $arResultIDList = $this->obBrandListStore->getActiveList();
+
+        return $this->intersect($arResultIDList);
     }
 
     /**
@@ -85,7 +75,21 @@ class BrandCollection extends ElementCollection
      */
     public function category($iCategoryID)
     {
-        $arElementIDList = $this->obBrandListStore->getByCategory($iCategoryID);
-        return $this->intersect($arElementIDList);
+        $arResultIDList = $this->obBrandListStore->getByCategory($iCategoryID);
+
+        return $this->intersect($arResultIDList);
+    }
+
+    /**
+     * Make element item
+     * @see \Lovata\Shopaholic\Tests\Unit\Collection\BrandCollectionTest::testCollectionItem()
+     * @param int                             $iElementID
+     * @param \Lovata\Shopaholic\Models\Brand $obElement
+     *
+     * @return BrandItem
+     */
+    protected function makeItem($iElementID, $obElement = null)
+    {
+        return BrandItem::make($iElementID, $obElement);
     }
 }

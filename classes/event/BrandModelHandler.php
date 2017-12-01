@@ -47,7 +47,7 @@ class BrandModelHandler extends ModelHandler
     {
         return Brand::class;
     }
-    
+
     /**
      * Get item class name
      * @return string
@@ -69,7 +69,7 @@ class BrandModelHandler extends ModelHandler
     /**
      * Clear sorting list
      */
-    public function clearSortingList()
+    protected function clearSortingList()
     {
         $this->obListStore->clearSortingList();
     }

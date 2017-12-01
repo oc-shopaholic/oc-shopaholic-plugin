@@ -46,7 +46,7 @@ class ProductItem extends ElementItem
     protected $obElement = null;
 
     public $arRelationList = [
-        'offer' => [
+        'offer'    => [
             'class' => OfferCollection::class,
             'field' => 'offer_id_list',
         ],
@@ -54,7 +54,7 @@ class ProductItem extends ElementItem
             'class' => CategoryItem::class,
             'field' => 'category_id',
         ],
-        'brand' => [
+        'brand'    => [
             'class' => BrandItem::class,
             'field' => 'brand_id',
         ],
@@ -65,11 +65,11 @@ class ProductItem extends ElementItem
      */
     protected function setElementObject()
     {
-        if(!empty($this->obElement) && ! $this->obElement instanceof Product) {
+        if (!empty($this->obElement) && !$this->obElement instanceof Product) {
             $this->obElement = null;
         }
 
-        if(!empty($this->obElement) || empty($this->iElementID)) {
+        if (!empty($this->obElement) || empty($this->iElementID)) {
             return;
         }
 
@@ -92,7 +92,7 @@ class ProductItem extends ElementItem
      */
     protected function getElementData()
     {
-        if(empty($this->obElement)) {
+        if (empty($this->obElement)) {
             return null;
         }
 

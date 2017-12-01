@@ -20,8 +20,8 @@ class ProductPage extends ElementPage
     public function componentDetails()
     {
         return [
-            'name'          => 'lovata.shopaholic::lang.component.product_page_name',
-            'description'   => 'lovata.shopaholic::lang.component.product_page_description',
+            'name'        => 'lovata.shopaholic::lang.component.product_page_name',
+            'description' => 'lovata.shopaholic::lang.component.product_page_description',
         ];
     }
 
@@ -32,12 +32,12 @@ class ProductPage extends ElementPage
      */
     protected function getElementObject($sElementSlug)
     {
-        if(empty($sElementSlug)) {
+        if (empty($sElementSlug)) {
             return null;
         }
 
         $obElement = Product::active()->getBySlug($sElementSlug)->first();
-        if(!empty($obElement)) {
+        if (!empty($obElement)) {
             Event::fire('shopaholic.product.open', [$obElement]);
         }
 
@@ -46,7 +46,7 @@ class ProductPage extends ElementPage
 
     /**
      * Make new element item
-     * @param int $iElementID
+     * @param int     $iElementID
      * @param Product $obElement
      * @return ProductItem
      */

@@ -60,7 +60,7 @@ class CategoryItem extends ElementItem
     protected $obElement = null;
 
     public $arRelationList = [
-        'parent' => [
+        'parent'   => [
             'class' => CategoryItem::class,
             'field' => 'parent_id',
         ],
@@ -71,15 +71,33 @@ class CategoryItem extends ElementItem
     ];
 
     /**
+     * Clear product count cache
+     */
+    public function clearProductCount()
+    {
+        $arCacheTag = [Plugin::CACHE_TAG, self::CACHE_TAG_ELEMENT, ProductListStore::CACHE_TAG_LIST];
+        $sCacheKey = 'product_count_'.$this->id;
+
+        CCache::clear($arCacheTag, $sCacheKey);
+
+        $obParentItem = $this->parent;
+        if ($obParentItem->isEmpty()) {
+            return;
+        }
+
+        $obParentItem->clearProductCount();
+    }
+
+    /**
      * Set element object
      */
     protected function setElementObject()
     {
-        if(!empty($this->obElement) && ! $this->obElement instanceof Category) {
+        if (!empty($this->obElement) && !$this->obElement instanceof Category) {
             $this->obElement = null;
         }
 
-        if(!empty($this->obElement) || empty($this->iElementID)) {
+        if (!empty($this->obElement) || empty($this->iElementID)) {
             return;
         }
 
@@ -102,7 +120,7 @@ class CategoryItem extends ElementItem
      */
     protected function getElementData()
     {
-        if(empty($this->obElement)) {
+        if (empty($this->obElement)) {
             return null;
         }
 
@@ -134,61 +152,43 @@ class CategoryItem extends ElementItem
     protected function getProductCountAttribute()
     {
         $iProductCount = $this->getAttribute('product_count');
-        if($iProductCount !== null) {
+        if ($iProductCount !== null) {
             return $iProductCount;
         }
-        
+
         //Get product count from cache
         $arCacheTag = [Plugin::CACHE_TAG, self::CACHE_TAG_ELEMENT, ProductListStore::CACHE_TAG_LIST];
         $sCacheKey = 'product_count_'.$this->id;
 
         $iProductCount = CCache::get($arCacheTag, $sCacheKey);
-        if($iProductCount !== null) {
+        if ($iProductCount !== null) {
             return $iProductCount;
         }
-        
+
         //Calculate product count from child categories
         $iProductCount = 0;
         $obChildCategoryCollect = $this->children;
-        if($obChildCategoryCollect->isNotEmpty()) {
+        if ($obChildCategoryCollect->isNotEmpty()) {
             /** @var CategoryItem $obChildCategoryItem */
-            foreach($obChildCategoryCollect as $obChildCategoryItem) {
-                if($obChildCategoryItem->isEmpty()) {
+            foreach ($obChildCategoryCollect as $obChildCategoryItem) {
+                if ($obChildCategoryItem->isEmpty()) {
                     continue;
                 }
-                
+
                 $iProductCount += $obChildCategoryItem->product_count;
             }
         }
-        
+
         $obProductCollection = ProductCollection::make()->saved(self::class.'_active');
-        if(empty($obProductCollection)) {
+        if (empty($obProductCollection)) {
             $obProductCollection = ProductCollection::make()->active()->save(self::class.'_active');
         }
-        
+
         $iProductCount += $obProductCollection->category($this->id)->count();
-        
+
         CCache::forever($arCacheTag, $sCacheKey, $iProductCount);
         $this->setAttribute('product_count', $iProductCount);
-        
-        return $iProductCount;
-    }
 
-    /**
-     * Clear product count cache
-     */
-    public function clearProductCount()
-    {
-        $arCacheTag = [Plugin::CACHE_TAG, self::CACHE_TAG_ELEMENT, ProductListStore::CACHE_TAG_LIST];
-        $sCacheKey = 'product_count_'.$this->id;
-        
-        CCache::clear($arCacheTag, $sCacheKey);
-        
-        $obParentItem = $this->parent;
-        if($obParentItem->isEmpty()) {
-            return;
-        }
-        
-        $obParentItem->clearProductCount();
+        return $iProductCount;
     }
 }

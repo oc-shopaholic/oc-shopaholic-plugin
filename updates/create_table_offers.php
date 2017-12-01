@@ -15,11 +15,11 @@ class CreateTableOffers extends Migration
      */
     public function up()
     {
-        if(Schema::hasTable('lovata_shopaholic_offers')) {
+        if (Schema::hasTable('lovata_shopaholic_offers')) {
             return;
         }
 
-        Schema::create('lovata_shopaholic_offers', function(Blueprint $obTable)
+        Schema::create('lovata_shopaholic_offers', function (Blueprint $obTable)
         {
             $obTable->engine = 'InnoDB';
             $obTable->increments('id')->unsigned();

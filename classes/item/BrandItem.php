@@ -36,11 +36,11 @@ class BrandItem extends ElementItem
      */
     protected function setElementObject()
     {
-        if(!empty($this->obElement) && ! $this->obElement instanceof Brand) {
+        if (!empty($this->obElement) && !$this->obElement instanceof Brand) {
             $this->obElement = null;
         }
 
-        if(!empty($this->obElement) || empty($this->iElementID)) {
+        if (!empty($this->obElement) || empty($this->iElementID)) {
             return;
         }
 
@@ -63,7 +63,7 @@ class BrandItem extends ElementItem
      */
     protected function getElementData()
     {
-        if(empty($this->obElement)) {
+        if (empty($this->obElement)) {
             return null;
         }
 

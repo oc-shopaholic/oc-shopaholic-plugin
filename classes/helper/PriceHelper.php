@@ -12,10 +12,10 @@ class PriceHelper
     /** @var int */
     protected $iDecimal = 2;
 
-    /** @var string  */
+    /** @var string */
     protected $sDecPoint = '.';
 
-    /** @var string  */
+    /** @var string */
     protected $sThousandsSep = ' ';
 
     /**
@@ -25,12 +25,12 @@ class PriceHelper
     {
         //Get options from settings
         $iDecimal = Settings::getValue('decimals');
-        if($iDecimal != null) {
+        if ($iDecimal != null) {
             $this->iDecimal = (int) $iDecimal;
         }
 
         $sDecPoint = Settings::getValue('dec_point');
-        switch($sDecPoint) {
+        switch ($sDecPoint) {
             case 'comma':
                 $this->sDecPoint = ',';
                 break;
@@ -39,7 +39,7 @@ class PriceHelper
         }
 
         $sThousandsSep = Settings::getValue('thousands_sep');
-        switch($sThousandsSep) {
+        switch ($sThousandsSep) {
             case 'space':
                 $this->sThousandsSep = ' ';
                 break;

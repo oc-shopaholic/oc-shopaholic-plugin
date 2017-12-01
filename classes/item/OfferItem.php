@@ -6,7 +6,6 @@ use Lovata\Shopaholic\Models\Settings;
 use Lovata\Shopaholic\Plugin;
 use Lovata\Shopaholic\Models\Offer;
 
-
 /**
  * Class OfferItem
  * @package Lovata\Shopaholic\Classes\Item
@@ -32,7 +31,7 @@ use Lovata\Shopaholic\Models\Offer;
  * @property float       $price_value
  * @property float       $old_price_value
  * @property string      $currency
- * 
+ *
  * @property int         $quantity
  *
  * Properties for Shopaholic
@@ -58,11 +57,11 @@ class OfferItem extends ElementItem
      */
     protected function setElementObject()
     {
-        if(!empty($this->obElement) && ! $this->obElement instanceof Offer) {
+        if (!empty($this->obElement) && !$this->obElement instanceof Offer) {
             $this->obElement = null;
         }
 
-        if(!empty($this->obElement) || empty($this->iElementID)) {
+        if (!empty($this->obElement) || empty($this->iElementID)) {
             return;
         }
 
@@ -85,7 +84,7 @@ class OfferItem extends ElementItem
      */
     protected function getElementData()
     {
-        if(empty($this->obElement)) {
+        if (empty($this->obElement)) {
             return null;
         }
 

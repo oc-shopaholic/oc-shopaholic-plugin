@@ -15,7 +15,7 @@ use Lovata\Shopaholic\Models\Offer;
 class OfferListStore
 {
     use TraitActiveList;
-    
+
     const CACHE_TAG_LIST = 'shopaholic-offer-list';
 
     const SORT_NO = 'no';
@@ -49,7 +49,7 @@ class OfferListStore
         $sCacheKey = $sSorting;
 
         $arOfferIDList = CCache::get($arCacheTags, $sCacheKey);
-        if(!empty($arOfferIDList)) {
+        if (!empty($arOfferIDList)) {
             return $arOfferIDList;
         }
 
@@ -67,26 +67,24 @@ class OfferListStore
         $arCacheTags = [Plugin::CACHE_TAG, self::CACHE_TAG_LIST];
         $sCacheKey = $sSorting;
 
-        switch($sSorting) {
-            case self::SORT_PRICE_ASC :
-
+        switch ($sSorting) {
+            case self::SORT_PRICE_ASC:
                 /** @var array $arOfferIDList */
                 $arOfferIDList = Offer::orderBy('price', 'asc')->lists('id');
-                if(empty($arOfferIDList)) {
+                if (empty($arOfferIDList)) {
                     return null;
                 }
 
                 break;
-            case self::SORT_PRICE_DESC :
-
+            case self::SORT_PRICE_DESC:
                 /** @var array $arOfferIDList */
                 $arOfferIDList = Offer::orderBy('price', 'desc')->lists('id');
-                if(empty($arOfferIDList)) {
+                if (empty($arOfferIDList)) {
                     return null;
                 }
-                
+
                 break;
-            case self::SORT_NEW :
+            case self::SORT_NEW:
                 $arOfferIDList = Offer::orderBy('id', 'desc')->lists('id');
                 break;
             default:
@@ -94,7 +92,7 @@ class OfferListStore
                 break;
         }
 
-        if(empty($arOfferIDList)) {
+        if (empty($arOfferIDList)) {
             return null;
         }
 
@@ -103,7 +101,7 @@ class OfferListStore
 
         return $arOfferIDList;
     }
-    
+
     /**
      * Get offer active ID list
      * @return array
@@ -112,6 +110,7 @@ class OfferListStore
     {
         /** @var array $arOfferIDList */
         $arOfferIDList = Offer::active()->lists('id');
+
         return $arOfferIDList;
     }
 }

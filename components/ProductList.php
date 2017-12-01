@@ -19,7 +19,7 @@ class ProductList extends SortingElementList
     /** @var  ProductListStore */
     protected $obProductListStore;
 
-    /** @var array  */
+    /** @var array */
     protected $arPropertyList = [];
 
     /**
@@ -28,8 +28,8 @@ class ProductList extends SortingElementList
     public function componentDetails()
     {
         return [
-            'name'          => 'lovata.shopaholic::lang.component.product_list_name',
-            'description'   => 'lovata.shopaholic::lang.component.product_list_description',
+            'name'        => 'lovata.shopaholic::lang.component.product_list_name',
+            'description' => 'lovata.shopaholic::lang.component.product_list_description',
         ];
     }
 
@@ -52,7 +52,7 @@ class ProductList extends SortingElementList
             ],
         ];
 
-        if(PluginManager::instance()->hasPlugin('Lovata.PopularityShopaholic')) {
+        if (PluginManager::instance()->hasPlugin('Lovata.PopularityShopaholic')) {
             $this->arPropertyList['sorting']['options'][ProductListStore::SORT_POPULARITY_DESC] =
                 Lang::get('lovata.shopaholic::lang.component.sorting_popularity_desc');
         }
@@ -81,20 +81,20 @@ class ProductList extends SortingElementList
     }
 
     /**
-     * Get available sorting array
-     * @return array
-     */
-    protected function getAvailableSorting()
-    {
-        return $this->obProductListStore->getAvailableSorting();
-    }
-
-    /**
      * Method for ajax request with empty response
      * @return bool
      */
     public function onAjaxRequest()
     {
         return true;
+    }
+
+    /**
+     * Get available sorting array
+     * @return array
+     */
+    protected function getAvailableSorting()
+    {
+        return $this->obProductListStore->getAvailableSorting();
     }
 }
