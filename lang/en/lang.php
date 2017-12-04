@@ -1,7 +1,7 @@
 <?php return [
     'plugin'     => [
         'name'        => 'Shopaholic',
-        'description' => 'Catalog',
+        'description' => 'Catalog of products for eCommerce',
     ],
     'field'      => [
         'vendor_code'        => 'Vendor code',
