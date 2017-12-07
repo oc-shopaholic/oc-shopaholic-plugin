@@ -55,6 +55,9 @@ use October\Rain\Database\Traits\Purgeable;
  * Properties for Shopaholic
  * @see \Lovata\PropertiesShopaholic\Classes\Event\ProductModelHandler::addPropertyMethods
  * @property array $property
+ *
+ * Popularity for Shopaholic
+ * @property int $popularity
  */
 class Product extends Model
 {
