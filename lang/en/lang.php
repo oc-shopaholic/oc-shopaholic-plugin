@@ -55,7 +55,7 @@
         'product_data_name'         => 'Product data',
         'product_data_description'  => 'Get product data by ID',
         'product_list_name'         => 'Product list',
-        'product_list_description'  => 'Get sorting product list',
+        'product_list_description'  => 'Get product list',
 
         //Brand components
         'brand_page_name'           => 'Brand page',

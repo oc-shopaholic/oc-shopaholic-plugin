@@ -33,9 +33,9 @@ use October\Rain\Database\Traits\Purgeable;
  * @property string $external_id
  * @property string $preview_text
  * @property string $description
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
- * @property \Carbon\Carbon $deleted_at
+ * @property \October\Rain\Argon\Argon $created_at
+ * @property \October\Rain\Argon\Argon $updated_at
+ * @property \October\Rain\Argon\Argon $deleted_at
  *
  * Relations
  * @property \System\Models\File $preview_image
@@ -55,6 +55,9 @@ use October\Rain\Database\Traits\Purgeable;
  * Properties for Shopaholic
  * @see \Lovata\PropertiesShopaholic\Classes\Event\ProductModelHandler::addPropertyMethods
  * @property array $property
+ *
+ * Popularity for Shopaholic
+ * @property int $popularity
  */
 class Product extends Model
 {

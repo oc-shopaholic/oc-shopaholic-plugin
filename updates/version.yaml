@@ -4,3 +4,5 @@
     - create_table_products.php
     - create_table_offers.php
     - create_table_brands.php
+1.1.0:
+    - 'Add integration with "Popularity for Shopaholic" and "Tags for Shopaholic" plugins'
