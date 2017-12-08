@@ -84,4 +84,5 @@ tabs:
                 - update
                 - preview
             type: partial
+            path: ~/plugins/lovata/shopaholic/controllers/products/_offer.htm
             tab: 'lovata.shopaholic::lang.tab.offer'

@@ -20,6 +20,9 @@ use Lovata\Shopaholic\Classes\Store\ProductListStore;
  * @method static $this filterByDiscount()
  * @method static $this filterByQuantity()
  * @method static $this filterByProperty(array $arFilterList, \Lovata\FilterShopaholic\Classes\Collection\FilterPropertyCollection $obPropertyList)
+ * 
+ * Tags for Shopaholic plugin
+ * @method static $this tag(int $iTagID)
  */
 class ProductCollection extends ElementCollection
 {
