@@ -55,7 +55,7 @@
         'product_data_name'         => 'Данные товара',
         'product_data_description'  => 'Получение данных товара',
         'product_list_name'         => 'Список товаров',
-        'product_list_description'  => 'Получение списка товаров',
+        'product_list_description'  => 'Get product list',
 
         //Brand components
         'brand_page_name'           => 'Страница бренда',
