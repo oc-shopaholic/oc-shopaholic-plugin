@@ -58,6 +58,12 @@ use October\Rain\Database\Traits\Purgeable;
  *
  * Popularity for Shopaholic
  * @property int $popularity
+ * 
+ * Reviews for Shopaholic
+ * @property float $rating
+ * @property array $rating_data
+ * @property \October\Rain\Database\Collection|\Lovata\ReviewsShopaholic\Models\Review[] $review
+ * @method static $this \October\Rain\Database\Relations\HasMany|\Lovata\ReviewsShopaholic\Models\Review review()
  */
 class Product extends Model
 {

@@ -37,6 +37,11 @@ use Lovata\Shopaholic\Classes\Collection\OfferCollection;
  * Properties for Shopaholic
  * @see \Lovata\PropertiesShopaholic\Classes\Event\ProductModelHandler::extendProductItem
  * @property \Lovata\PropertiesShopaholic\Classes\Collection\PropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[] $property
+ * 
+ * Reviews for Shopaholic
+ * @see \Lovata\ReviewsShopaholic\Classes\Event\ProductModelHandler::extendProductItem
+ * @property float $rating
+ * @property \Lovata\ReviewsShopaholic\Classes\Collection\ReviewCollection|\Lovata\ReviewsShopaholic\Classes\Item\ReviewItem[] $review
  */
 class ProductItem extends ElementItem
 {
