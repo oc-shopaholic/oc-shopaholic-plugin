@@ -19,10 +19,10 @@ use Lovata\Shopaholic\Models\Brand;
  * @property string $code
  *
  * @property string $preview_text
- * @property array  $preview_image
+ * @property \System\Models\File $preview_image
  *
  * @property string $description
- * @property array  $images
+ * @property \October\Rain\Database\Collection|\System\Models\File[]  $images
  */
 class BrandItem extends ElementItem
 {
@@ -73,9 +73,9 @@ class BrandItem extends ElementItem
             'slug'          => $this->obElement->slug,
             'code'          => $this->obElement->code,
             'preview_text'  => $this->obElement->preview_text,
-            'preview_image' => $this->obElement->getFileData('preview_image'),
+            'preview_image' => $this->obElement->preview_image,
             'description'   => $this->obElement->description,
-            'images'        => $this->obElement->getFileListData('images'),
+            'images'        => $this->obElement->images,
         ];
 
         return $arResult;

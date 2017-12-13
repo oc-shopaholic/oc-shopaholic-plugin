@@ -84,6 +84,8 @@
         'sorting_price_asc'         => 'Cheap',
         'sorting_new'               => 'New',
         'sorting_popularity_desc'   => 'More popular',
+        'sorting_rating_desc'       => 'High rating',
+        'sorting_rating_asc'        => 'Low rating',
     ],
     'permission' => [
         'category' => 'Manage categories',

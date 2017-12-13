@@ -28,6 +28,8 @@ class ProductListStore
     const SORT_PRICE_DESC = 'price|desc';
     const SORT_NEW = 'new';
     const SORT_POPULARITY_DESC = 'popularity|desc';
+    const SORT_RATING_DESC = 'rating|desc';
+    const SORT_RATING_ASC = 'rating|asc';
 
     /**
      * Get available sorting value list
@@ -41,6 +43,8 @@ class ProductListStore
             self::SORT_PRICE_DESC,
             self::SORT_NEW,
             self::SORT_POPULARITY_DESC,
+            self::SORT_RATING_DESC,
+            self::SORT_RATING_ASC,
         ];
     }
 
@@ -106,6 +110,24 @@ class ProductListStore
 
                 /** @var array $arProductIDList */
                 $arProductIDList = Product::orderBy('popularity', 'desc')->lists('id');
+
+                break;
+            case self::SORT_RATING_DESC:
+                if (!PluginManager::instance()->hasPlugin('Lovata.ReviewsShopaholic')) {
+                    return null;
+                }
+
+                /** @var array $arProductIDList */
+                $arProductIDList = Product::orderBy('rating', 'desc')->lists('id');
+
+                break;
+            case self::SORT_RATING_ASC:
+                if (!PluginManager::instance()->hasPlugin('Lovata.ReviewsShopaholic')) {
+                    return null;
+                }
+
+                /** @var array $arProductIDList */
+                $arProductIDList = Product::orderBy('rating', 'asc')->lists('id');
 
                 break;
             case self::SORT_NEW:

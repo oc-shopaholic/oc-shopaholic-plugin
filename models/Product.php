@@ -2,7 +2,6 @@
 
 use Model;
 
-use Kharanenka\Helper\DataFileModel;
 use Kharanenka\Scope\ActiveField;
 use Kharanenka\Scope\CategoryBelongsTo;
 use Kharanenka\Scope\CodeField;
@@ -58,6 +57,12 @@ use October\Rain\Database\Traits\Purgeable;
  *
  * Popularity for Shopaholic
  * @property int $popularity
+ * 
+ * Reviews for Shopaholic
+ * @property float $rating
+ * @property array $rating_data
+ * @property \October\Rain\Database\Collection|\Lovata\ReviewsShopaholic\Models\Review[] $review
+ * @method static $this \October\Rain\Database\Relations\HasMany|\Lovata\ReviewsShopaholic\Models\Review review()
  */
 class Product extends Model
 {
@@ -71,7 +76,6 @@ class Product extends Model
     use SlugField;
     use CodeField;
     use ExternalIDField;
-    use DataFileModel;
 
     public $table = 'lovata_shopaholic_products';
 

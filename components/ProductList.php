@@ -57,6 +57,13 @@ class ProductList extends SortingElementList
                 Lang::get('lovata.shopaholic::lang.component.sorting_popularity_desc');
         }
 
+        if (PluginManager::instance()->hasPlugin('Lovata.ReviewsShopaholic')) {
+            $this->arPropertyList['sorting']['options'][ProductListStore::SORT_RATING_DESC] =
+                Lang::get('lovata.shopaholic::lang.component.sorting_rating_desc');
+            $this->arPropertyList['sorting']['options'][ProductListStore::SORT_RATING_ASC] =
+                Lang::get('lovata.shopaholic::lang.component.sorting_rating_asc');
+        }
+
         return $this->arPropertyList;
     }
 
