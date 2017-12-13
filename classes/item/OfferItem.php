@@ -21,10 +21,10 @@ use Lovata\Shopaholic\Models\Offer;
  * @property ProductItem $product
  *
  * @property string      $preview_text
- * @property array       $preview_image
+ * @property \System\Models\File $preview_image
  *
  * @property string      $description
- * @property array       $images
+ * @property \October\Rain\Database\Collection|\System\Models\File[]  $images
  *
  * @property string      $price
  * @property string      $old_price
@@ -94,9 +94,9 @@ class OfferItem extends ElementItem
             'name'            => $this->obElement->name,
             'code'            => $this->obElement->code,
             'preview_text'    => $this->obElement->preview_text,
-            'preview_image'   => $this->obElement->getFileData('preview_image'),
+            'preview_image'   => $this->obElement->preview_image,
             'description'     => $this->obElement->description,
-            'images'          => $this->obElement->getFileListData('images'),
+            'images'          => $this->obElement->images,
             'price'           => $this->obElement->price,
             'old_price'       => $this->obElement->old_price,
             'price_value'     => $this->obElement->getPriceValue(),

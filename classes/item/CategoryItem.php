@@ -27,10 +27,10 @@ use Lovata\Shopaholic\Classes\Collection\CategoryCollection;
  * @property int          $product_count
  *
  * @property string       $preview_text
- * @property array        $preview_image
+ * @property \System\Models\File $preview_image
  *
  * @property string       $description
- * @property array        $images
+ * @property \October\Rain\Database\Collection|\System\Models\File[]  $images
  *
  * @property CategoryItem $parent
  *
@@ -133,8 +133,8 @@ class CategoryItem extends ElementItem
             'description'   => $this->obElement->description,
             'nest_depth'    => $this->obElement->getDepth(),
             'parent_id'     => $this->obElement->parent_id,
-            'preview_image' => $this->obElement->getFileData('preview_image'),
-            'images'        => $this->obElement->getFileListData('images'),
+            'preview_image' => $this->obElement->preview_image,
+            'images'        => $this->obElement->images,
         ];
 
         $arResult['children_id_list'] = $this->obElement->children()

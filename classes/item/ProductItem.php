@@ -26,10 +26,10 @@ use Lovata\Shopaholic\Classes\Collection\OfferCollection;
  * @property BrandItem       $brand
  *
  * @property string          $preview_text
- * @property array           $preview_image
+ * @property \System\Models\File $preview_image
  *
  * @property string          $description
- * @property array           $images
+ * @property \October\Rain\Database\Collection|\System\Models\File[]  $images
  *
  * @property array           $offer_id_list
  * @property OfferCollection|OfferItem[] $offer
@@ -109,9 +109,9 @@ class ProductItem extends ElementItem
             'category_id'   => $this->obElement->category_id,
             'brand_id'      => $this->obElement->brand_id,
             'preview_text'  => $this->obElement->preview_text,
-            'preview_image' => $this->obElement->getFileData('preview_image'),
+            'preview_image' => $this->obElement->preview_image,
             'description'   => $this->obElement->description,
-            'images'        => $this->obElement->getFileListData('images'),
+            'images'        => $this->obElement->images,
             'offer_id_list' => $this->obElement->offer()->active()->lists('id'),
         ];
 

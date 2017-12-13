@@ -2,7 +2,6 @@
 
 use Model;
 
-use Kharanenka\Helper\DataFileModel;
 use Kharanenka\Scope\ActiveField;
 use Kharanenka\Scope\CodeField;
 use Kharanenka\Scope\ExternalIDField;
@@ -62,7 +61,6 @@ class Offer extends Model
     use NameField;
     use CodeField;
     use ExternalIDField;
-    use DataFileModel;
 
     public $table = 'lovata_shopaholic_offers';
 

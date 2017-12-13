@@ -84,6 +84,8 @@
         'sorting_price_asc'         => 'Дешевые',
         'sorting_new'               => 'Новые',
         'sorting_popularity_desc'   => 'Популярные',
+        'sorting_rating_desc'       => 'Высокий рейтинг',
+        'sorting_rating_asc'        => 'Низкий рейтинг',
     ],
     'permission' => [
         'category' => 'Управление категориями',

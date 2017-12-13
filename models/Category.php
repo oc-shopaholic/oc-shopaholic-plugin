@@ -2,7 +2,6 @@
 
 use Model;
 
-use Kharanenka\Helper\DataFileModel;
 use Kharanenka\Scope\ActiveField;
 use Kharanenka\Scope\CodeField;
 use Kharanenka\Scope\ExternalIDField;
@@ -69,7 +68,6 @@ class Category extends Model
     use SlugField;
     use CodeField;
     use ExternalIDField;
-    use DataFileModel;
 
     public $table = 'lovata_shopaholic_categories';
 

@@ -72,10 +72,15 @@ class ProductModelHandler extends ModelHandler
         //Check "popularity" field
         $this->checkPopularityField();
 
+        //Check "rating" field
+        $this->checkRatingField();
+
         if ($this->obElement->id != $this->obElement->getOriginal('id')) {
             $this->obListStore->updateCacheBySorting(ProductListStore::SORT_NEW);
-            $this->obListStore->updateCacheBySorting(ProductListStore::SORT_POPULARITY_DESC);
             $this->obListStore->updateCacheBySorting(ProductListStore::SORT_NO);
+            $this->obListStore->updateCacheBySorting(ProductListStore::SORT_POPULARITY_DESC);
+            $this->obListStore->updateCacheBySorting(ProductListStore::SORT_RATING_DESC);
+            $this->obListStore->updateCacheBySorting(ProductListStore::SORT_RATING_ASC);
         }
     }
 
@@ -96,6 +101,8 @@ class ProductModelHandler extends ModelHandler
         $this->obListStore->updateCacheBySorting(ProductListStore::SORT_PRICE_DESC);
         $this->obListStore->updateCacheBySorting(ProductListStore::SORT_NEW);
         $this->obListStore->updateCacheBySorting(ProductListStore::SORT_POPULARITY_DESC);
+        $this->obListStore->updateCacheBySorting(ProductListStore::SORT_RATING_DESC);
+        $this->obListStore->updateCacheBySorting(ProductListStore::SORT_RATING_ASC);
         $this->obListStore->updateCacheBySorting(ProductListStore::SORT_NO);
     }
 
@@ -183,5 +190,23 @@ class ProductModelHandler extends ModelHandler
 
         //Update product list with popularity
         $this->obListStore->updateCacheBySorting(ProductListStore::SORT_POPULARITY_DESC);
+    }
+
+    /**
+     * Check product "rating" field, if it was changed, then clear cache
+     */
+    private function checkRatingField()
+    {
+        //Check "rating" field
+        $bNeedUpdateCache = PluginManager::instance()->hasPlugin('Lovata.ReviewsShopaholic')
+            && $this->obElement->getOriginal('rating') != $this->obElement->rating;
+
+        if (!$bNeedUpdateCache) {
+            return;
+        }
+
+        //Update product list with rating
+        $this->obListStore->updateCacheBySorting(ProductListStore::SORT_RATING_DESC);
+        $this->obListStore->updateCacheBySorting(ProductListStore::SORT_RATING_ASC);
     }
 }
