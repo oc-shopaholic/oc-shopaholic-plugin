@@ -8,3 +8,5 @@
     - 'Add integration with "Popularity for Shopaholic" and "Tags for Shopaholic" plugins'
 1.2.0:
     - 'preview_image, images fields in item classes returns \System\Models\File class objects. Add integration with "Reviews for Shopaholic" plugin'
+1.2.1:
+    - 'Remove php short tags from offers/update.htm'
