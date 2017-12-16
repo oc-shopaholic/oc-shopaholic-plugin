@@ -42,7 +42,7 @@ class CategoryModelHandler extends ModelHandler
 
             //Get category ID list
             $arCategoryIDList = Category::lists('id');
-            if(empty($arCategoryIDList)) {
+            if (empty($arCategoryIDList)) {
                 return;
             }
 
@@ -90,7 +90,7 @@ class CategoryModelHandler extends ModelHandler
         $this->obCategoryListStore->clearTopLevelList();
 
         //Clear parent item cache
-        if(!empty($this->obElement->parent_id)) {
+        if (!empty($this->obElement->parent_id)) {
             $sItemClass = $this->getItemClass();
             $sItemClass::clearCache($this->obElement->parent_id);
         }
