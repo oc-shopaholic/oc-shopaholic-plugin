@@ -39,6 +39,18 @@ class CategoryModelHandler extends ModelHandler
 
         $obEvent->listen('shopaholic.category.update.sorting', function () {
             $this->obCategoryListStore->clearTopLevelList();
+
+            //Get category ID list
+            $arCategoryIDList = Category::lists('id');
+            if (empty($arCategoryIDList)) {
+                return;
+            }
+
+            $sItemClass = $this->getItemClass();
+            //Clear cache for all categories
+            foreach ($arCategoryIDList as $iCategoryID) {
+                $sItemClass::clearCache($iCategoryID);
+            }
         });
     }
 
@@ -76,5 +88,11 @@ class CategoryModelHandler extends ModelHandler
     {
         parent::afterDelete();
         $this->obCategoryListStore->clearTopLevelList();
+
+        //Clear parent item cache
+        if (!empty($this->obElement->parent_id)) {
+            $sItemClass = $this->getItemClass();
+            $sItemClass::clearCache($this->obElement->parent_id);
+        }
     }
 }
