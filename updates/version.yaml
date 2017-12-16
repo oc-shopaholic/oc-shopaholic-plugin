@@ -10,3 +10,5 @@
     - 'preview_image, images fields in item classes returns \System\Models\File class objects. Add integration with "Reviews for Shopaholic" plugin'
 1.2.1:
     - 'Remove php short tags from offers/update.htm'
+1.2.2:
+    - 'Add additional cache cleaning after category reordering'
