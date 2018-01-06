@@ -12,6 +12,9 @@ use October\Rain\Database\Traits\Sluggable;
 use October\Rain\Database\Traits\Validation;
 use October\Rain\Database\Traits\NestedTree;
 
+use Cms\Classes\Theme;
+use Cms\Classes\Page as CmsPage;
+
 /**
  * Class Category
  * @package Lovata\Shopaholic\Models
