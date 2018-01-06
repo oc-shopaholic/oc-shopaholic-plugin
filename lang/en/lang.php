@@ -21,10 +21,12 @@
         'check_offer_active' => 'When you receive a list of active products, check for active offers',
     ],
     'menu'       => [
-        'main'       => 'Catalog',
-        'categories' => 'Categories',
-        'product'    => 'Products',
-        'brands'     => 'Brands',
+        'main'                => 'Catalog',
+        'categories'          => 'Categories',
+        'product'             => 'Products',
+        'brands'              => 'Brands',
+        'shop_category'       => 'Shopaholic category',
+        'all_shop_categories' => 'All Shopaholic categories',
     ],
     'tab'        => [
         'offer'         => 'Offers',
