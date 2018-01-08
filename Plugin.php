@@ -2,6 +2,7 @@
 
 use Event;
 use System\Classes\PluginBase;
+use Lovata\Shopaholic\Models\Category;
 
 use Lovata\Shopaholic\Classes\Helper\PriceHelper;
 
@@ -99,6 +100,26 @@ class Plugin extends PluginBase
         $this->app->singleton(ProductListStore::class, ProductListStore::class);
 
         $this->addEventListener();
+        
+        /*
+         * Register menu items for the RainLab.Pages plugin
+         */
+        Event::listen('pages.menuitem.listTypes', function() {
+            return [
+                'shop-category'       => 'lovata.shopaholic::lang.menu.shop_category',
+                'all-shop-categories' => 'lovata.shopaholic::lang.menu.all_shop_categories',
+            ];
+        });
+        Event::listen('pages.menuitem.getTypeInfo', function($type) {
+            if ($type == 'shop-category' || $type == 'all-shop-categories') {
+                return Category::getMenuTypeInfo($type);
+            }
+        });
+        Event::listen('pages.menuitem.resolveItem', function($type, $item, $url, $theme) {
+            if ($type == 'shop-category' || $type == 'all-shop-categories') {
+                return Category::resolveMenuItem($item, $url, $theme);
+            }
+        });
     }
 
     /**
