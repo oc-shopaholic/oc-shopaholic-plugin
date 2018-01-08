@@ -12,3 +12,4 @@
     - 'Remove php short tags from offers/update.htm'
 1.2.2:
     - 'Add additional cache cleaning after category reordering'
+1.2.3: !!! Adding additional cache cleaning for the sorted list of brands, after the creation of a new brand. Requires Toolbox plugin version 1.3.0 and later.

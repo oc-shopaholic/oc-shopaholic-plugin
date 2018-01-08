@@ -37,7 +37,9 @@ class Categories extends Controller
      */
     public function onReorder()
     {
-        parent::onReorder();
+        $obResult = parent::onReorder();
         Event::fire('shopaholic.category.update.sorting');
+
+        return $obResult;
     }
 }

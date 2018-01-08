@@ -35,7 +35,9 @@ class Brands extends Controller
      */
     public function onReorder()
     {
-        parent::onReorder();
+        $obResult = parent::onReorder();
         Event::fire('shopaholic.brand.update.sorting');
+
+        return $obResult;
     }
 }
