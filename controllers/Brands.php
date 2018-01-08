@@ -32,7 +32,7 @@ class Brands extends Controller
 
     /**
      * Ajax handler onReorder event
-     * 
+     *
      * @return mixed
      */
     public function onReorder()
