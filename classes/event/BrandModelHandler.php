@@ -58,6 +58,15 @@ class BrandModelHandler extends ModelHandler
     }
 
     /**
+     * After create event handler
+     */
+    protected function afterCreate()
+    {
+        parent::afterCreate();
+        $this->clearSortingList();
+    }
+
+    /**
      * After delete event handler
      */
     protected function afterDelete()

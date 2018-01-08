@@ -9,6 +9,8 @@
 
 E-Commerce plugin by [LOVATA](https://lovata.com) for October CMS.
 
+![Shopaholic Banner](assets/images/shopaholic-banner.png)
+
 ## Features
 
 * Components

@@ -34,10 +34,14 @@ class Categories extends Controller
 
     /**
      * Ajax handler onReorder event
+     *
+     * @return mixed
      */
     public function onReorder()
     {
-        parent::onReorder();
+        $obResult = parent::onReorder();
         Event::fire('shopaholic.category.update.sorting');
+
+        return $obResult;
     }
 }
