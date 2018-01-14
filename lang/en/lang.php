@@ -21,10 +21,13 @@
         'check_offer_active' => 'When you receive a list of active products, check for active offers',
     ],
     'menu'       => [
-        'main'       => 'Catalog',
-        'categories' => 'Categories',
-        'product'    => 'Products',
-        'brands'     => 'Brands',
+        'main'                => 'Catalog',
+        'categories'          => 'Categories',
+        'product'             => 'Products',
+        'brands'              => 'Brands',
+        'shop_catalog'        => 'Catalog of products',
+        'shop_category'       => 'Category of products',
+        'all_shop_categories' => 'All categories of products',
     ],
     'tab'        => [
         'offer'         => 'Offers',

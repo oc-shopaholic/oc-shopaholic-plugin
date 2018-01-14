@@ -1,8 +1,11 @@
 <?php namespace Lovata\Shopaholic\Classes\Item;
 
+use Cms\Classes\Page as CmsPage;
+
 use Kharanenka\Helper\CCache;
 
 use Lovata\Toolbox\Classes\Item\ElementItem;
+use Lovata\Toolbox\Classes\Helper\PageHelper;
 
 use Lovata\Shopaholic\Plugin;
 use Lovata\Shopaholic\Models\Category;
@@ -31,6 +34,8 @@ use Lovata\Shopaholic\Classes\Collection\CategoryCollection;
  *
  * @property string       $description
  * @property \October\Rain\Database\Collection|\System\Models\File[]  $images
+ *
+ * @property \October\Rain\Argon\Argon $updated_at
  *
  * @property CategoryItem $parent
  *
@@ -89,6 +94,39 @@ class CategoryItem extends ElementItem
     }
 
     /**
+     * Returns URL of a category page.
+     *
+     * @param string $sPageCode
+     *
+     * @return string
+     */
+    public function getPageUrl($sPageCode)
+    {
+        //Get URL params for page
+        $arParamList = PageHelper::instance()->getUrlParamList($sPageCode, 'CategoryPage');
+        if (empty($arParamList)) {
+            //Generate page URL
+            $sURL = CmsPage::url($sPageCode, ['slug' => $this->slug]);
+
+            return $sURL;
+        }
+
+        //Prepare page property list
+        $arPagePropertyList = [];
+        $obCategoryItem = $this;
+
+        foreach ($arParamList as $sParamName) {
+            $arPagePropertyList[$sParamName] = $obCategoryItem->slug;
+            $obCategoryItem = $obCategoryItem->parent;
+        }
+
+        //Generate page URL
+        $sURL = CmsPage::url($sPageCode, $arPagePropertyList);
+
+        return $sURL;
+    }
+
+    /**
      * Set element object
      */
     protected function setElementObject()
@@ -135,6 +173,7 @@ class CategoryItem extends ElementItem
             'parent_id'     => $this->obElement->parent_id,
             'preview_image' => $this->obElement->preview_image,
             'images'        => $this->obElement->images,
+            'updated_at'    => $this->obElement->updated_at,
         ];
 
         $arResult['children_id_list'] = $this->obElement->children()

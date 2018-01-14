@@ -24,6 +24,7 @@ use Lovata\Shopaholic\Classes\Event\BrandModelHandler;
 use Lovata\Shopaholic\Classes\Event\CategoryModelHandler;
 use Lovata\Shopaholic\Classes\Event\OfferModelHandler;
 use Lovata\Shopaholic\Classes\Event\ProductModelHandler;
+use Lovata\Shopaholic\Classes\Event\ExtendMenuHandler;
 
 /**
  * Class Plugin
@@ -110,5 +111,6 @@ class Plugin extends PluginBase
         Event::subscribe(OfferModelHandler::class);
         Event::subscribe(ProductModelHandler::class);
         Event::subscribe(BrandModelHandler::class);
+        Event::subscribe(ExtendMenuHandler::class);
     }
 }
