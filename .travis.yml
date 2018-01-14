@@ -30,8 +30,7 @@ before_script:
   - if [[ "$BUILD" != true ]]; then
       mkdir -p build/logs;
       composer create-project october/october october;
-      sed -i "s/'database'  => 'database',/'database'  => 'test',/" october/config/database.php;
-      rm .env;
+      sed -i "s/'database'  => 'database',/'database'  => 'test',/" .env;
       php october/artisan october:up;
       php october/artisan plugin:install Lovata.Toolbox;
       mkdir -p ./october/plugins/lovata/shopaholic;
