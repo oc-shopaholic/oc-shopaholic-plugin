@@ -41,7 +41,7 @@ class ExtendMenuHandler
             }
         });
 
-        $obEvent->listen('pages.menuitem.resolveItem', function ($sType, $obItem, $sURL, $obTheme) {
+        $obEvent->listen('pages.menuitem.resolveItem', function ($sType, $obItem, $sURL) {
 
             $obMenuType = $this->getMenuTypeObject($sType);
             if (!empty($obMenuType)) {

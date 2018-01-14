@@ -24,18 +24,14 @@ abstract class CommonMenuType
      *   return all available records.
      * - items - an array of arrays with the same keys (url, isActive, items) + the title key.
      *   The items array should be added only if the $item's $nesting property value is TRUE.
+     *
      * @param \RainLab\Pages\Classes\MenuItem $obItem Specifies the menu item.
-     * @param string $sURL Specifies the current page URL, normalized, in lower case
+     * @param string                          $sURL   Specifies the current page URL, normalized, in lower case
+     *
      * The URL is specified relative to the website root, it includes the subdirectory name, if any.
      * @return mixed Returns an array. Returns null if the item cannot be resolved.
      */
     abstract public function resolveMenuItem($obItem, $sURL);
-
-    /**
-     * Get default array for menu type
-     * @return array|null
-     */
-    abstract protected function getDefaultMenuTypeInfo();
 
     /**
      * Handler for the pages.menuitem.getTypeInfo event.
@@ -67,6 +63,12 @@ abstract class CommonMenuType
 
         return $arResult;
     }
+
+    /**
+     * Get default array for menu type
+     * @return array|null
+     */
+    abstract protected function getDefaultMenuTypeInfo();
 
     /**
      * Filter page list, add pages with CategoryPage component to result
