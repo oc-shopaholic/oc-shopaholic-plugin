@@ -13,25 +13,16 @@ class AllCategoriesMenuType extends CommonMenuType
     const MENU_TYPE = 'all-shop-categories';
 
     /**
-     * Get default array for menu type
-     * @return array|null
-     */
-    protected function getDefaultMenuTypeInfo()
-    {
-        $arResult = [
-            'dynamicItems' => true,
-        ];
-
-        return $arResult;
-    }
-
-    /**
-     * @inheritdoc
+     * Handler for the pages.menuitem.resolveItem event.
+     * @param \RainLab\Pages\Classes\MenuItem $obMenuItem
+     * @param string $sURL
+     * @param \Cms\Classes\Theme $obTheme
+     * @return array|mixed
      */
     public function resolveMenuItem($obMenuItem, $sURL, $obTheme)
     {
         $arResult = [
-            'items' => []
+            'items' => [],
         ];
 
         //Get category list with sorted by 'nest_left'
@@ -42,12 +33,24 @@ class AllCategoriesMenuType extends CommonMenuType
 
         /** @var Category $obCategory */
         foreach ($obCategoryList as $obCategory) {
-
             $obCategoryItem = CategoryItem::make($obCategory->id, $obCategory);
 
             $arMenuItem = $this->getCategoryMenuData($obCategoryItem, $obMenuItem->cmsPage, $sURL);
             $arResult['items'][] = $arMenuItem;
         }
+
+        return $arResult;
+    }
+
+    /**
+     * Get default array for menu type
+     * @return array|null
+     */
+    protected function getDefaultMenuTypeInfo()
+    {
+        $arResult = [
+            'dynamicItems' => true,
+        ];
 
         return $arResult;
     }

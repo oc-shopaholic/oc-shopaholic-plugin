@@ -14,22 +14,11 @@ class CategoryMenuType extends CommonMenuType
     const MENU_TYPE = 'shop-category';
 
     /**
-     * Get default array for menu type
-     * @return array|null
-     */
-    protected function getDefaultMenuTypeInfo()
-    {
-        $arResult = [
-            'references'   => $this->listSubCategoryOptions(),
-            'nesting'      => true,
-            'dynamicItems' => true,
-        ];
-
-        return $arResult;
-    }
-
-    /**
-     * @inheritdoc
+     * Handler for the pages.menuitem.resolveItem event.
+     * @param \RainLab\Pages\Classes\MenuItem $obMenuItem
+     * @param string $sURL
+     * @param \Cms\Classes\Theme $obTheme
+     * @return array|mixed
      */
     public function resolveMenuItem($obMenuItem, $sURL, $obTheme)
     {
@@ -50,6 +39,21 @@ class CategoryMenuType extends CommonMenuType
         }
 
         $arResult['items'] = $this->getChildrenCategoryList($obCategoryItem, $obMenuItem->cmsPage, $sURL);
+
+        return $arResult;
+    }
+
+    /**
+     * Get default array for menu type
+     * @return array|null
+     */
+    protected function getDefaultMenuTypeInfo()
+    {
+        $arResult = [
+            'references'   => $this->listSubCategoryOptions(),
+            'nesting'      => true,
+            'dynamicItems' => true,
+        ];
 
         return $arResult;
     }

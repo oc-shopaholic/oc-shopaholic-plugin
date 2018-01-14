@@ -14,21 +14,11 @@ class CatalogMenuType extends CommonMenuType
     const MENU_TYPE = 'shop-catalog';
 
     /**
-     * Get default array for menu type
-     * @return array|null
-     */
-    protected function getDefaultMenuTypeInfo()
-    {
-        $arResult = [
-            'dynamicItems' => true,
-            'nesting'      => true,
-        ];
-
-        return $arResult;
-    }
-
-    /**
-     * @inheritdoc
+     * Handler for the pages.menuitem.resolveItem event.
+     * @param \RainLab\Pages\Classes\MenuItem $obMenuItem
+     * @param string $sURL
+     * @param \Cms\Classes\Theme $obTheme
+     * @return array|mixed
      */
     public function resolveMenuItem($obMenuItem, $sURL, $obTheme)
     {
@@ -44,12 +34,25 @@ class CatalogMenuType extends CommonMenuType
 
         /** @var \Lovata\Shopaholic\Classes\Item\CategoryItem $obCategoryItem */
         foreach ($obCategoryList as $obCategoryItem) {
-
             $arMenuItem = $this->getCategoryMenuData($obCategoryItem, $obMenuItem->cmsPage, $sURL);
             $arMenuItem['items'] = $this->getChildrenCategoryList($obCategoryItem, $obMenuItem->cmsPage, $sURL);
 
             $arResult['items'][] = $arMenuItem;
         }
+
+        return $arResult;
+    }
+
+    /**
+     * Get default array for menu type
+     * @return array|null
+     */
+    protected function getDefaultMenuTypeInfo()
+    {
+        $arResult = [
+            'dynamicItems' => true,
+            'nesting'      => true,
+        ];
 
         return $arResult;
     }

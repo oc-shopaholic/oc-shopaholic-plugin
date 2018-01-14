@@ -22,7 +22,7 @@ class ExtendMenuHandler
         /*
          * Register menu items for the RainLab.Pages plugin
          */
-        $obEvent->listen('pages.menuitem.listTypes', function() {
+        $obEvent->listen('pages.menuitem.listTypes', function () {
 
             $arResult = [
                 CatalogMenuType::MENU_TYPE       => 'lovata.shopaholic::lang.menu.shop_catalog',
@@ -33,7 +33,7 @@ class ExtendMenuHandler
             return $arResult;
         });
 
-        $obEvent->listen('pages.menuitem.getTypeInfo', function($sType) {
+        $obEvent->listen('pages.menuitem.getTypeInfo', function ($sType) {
 
             $obMenuType = $this->getMenuTypeObject($sType);
             if (!empty($obMenuType)) {
@@ -41,7 +41,7 @@ class ExtendMenuHandler
             }
         });
 
-        $obEvent->listen('pages.menuitem.resolveItem', function($sType, $obItem, $sURL, $obTheme) {
+        $obEvent->listen('pages.menuitem.resolveItem', function ($sType, $obItem, $sURL, $obTheme) {
 
             $obMenuType = $this->getMenuTypeObject($sType);
             if (!empty($obMenuType)) {

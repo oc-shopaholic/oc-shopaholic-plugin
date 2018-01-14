@@ -30,13 +30,13 @@ abstract class CommonMenuType
      * The URL is specified relative to the website root, it includes the subdirectory name, if any.
      * @return mixed Returns an array. Returns null if the item cannot be resolved.
      */
-    public abstract function resolveMenuItem($obItem, $sURL, $obTheme);
+    abstract public function resolveMenuItem($obItem, $sURL, $obTheme);
 
     /**
      * Get default array for menu type
      * @return array|null
      */
-    protected abstract function getDefaultMenuTypeInfo();
+    abstract protected function getDefaultMenuTypeInfo();
 
     /**
      * Handler for the pages.menuitem.getTypeInfo event.
@@ -64,8 +64,7 @@ abstract class CommonMenuType
         $obTheme = Theme::getActiveTheme();
         $obPageList = CmsPage::listInTheme($obTheme, true);
 
-        $arResult['cmsPages'] = $obPageList;
-        $arResult['cmsPages'] = $this->filterPageList($arResult['cmsPages']);
+        $arResult['cmsPages'] = $this->filterPageList($obPageList);
 
         return $arResult;
     }
@@ -132,7 +131,6 @@ abstract class CommonMenuType
 
         $arResult = [];
         foreach ($obCategoryList as $obCategory) {
-
             if ($obCategory->children->isEmpty()) {
                 $arResult[$obCategory->id] = $obCategory->name;
             } else {
@@ -188,7 +186,6 @@ abstract class CommonMenuType
 
         $arResult = [];
         foreach ($obCategoryItem->children as $obChildrenCategory) {
-
             $arMenuItem = $this->getCategoryMenuData($obChildrenCategory, $sPageCode, $sURL);
             if ($obChildrenCategory->children->isNotEmpty()) {
                 $arMenuItem['items'] = $this->getChildrenCategoryList($obChildrenCategory, $sPageCode, $sURL);
