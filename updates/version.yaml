@@ -15,4 +15,4 @@
 1.2.3:
     - '!!! Adding additional cache cleaning for the sorted list of brands, after the creation of a new brand. Requires Toolbox plugin version 1.3.0 and later.'
 1.3.0:
-    - '!!! Add menu types for integration with the StaticPage plugin. Add getPageUrl() method to the CategoryItem class. Requires Toolbox plugin version 1.4.0 and later. Thanks for contribution Alvaro Alvaro Cánepa.'
+    - '!!! Add menu types for integration with the StaticPage plugin. Add getPageUrl() method to the CategoryItem class. Requires Toolbox plugin version 1.4.0 and later. Thanks for contribution Alvaro Cánepa.'
