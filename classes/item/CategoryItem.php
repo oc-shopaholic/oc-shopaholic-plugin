@@ -94,6 +94,39 @@ class CategoryItem extends ElementItem
     }
 
     /**
+     * Returns URL of a category page.
+     *
+     * @param string $sPageCode
+     *
+     * @return string
+     */
+    public function getPageUrl($sPageCode)
+    {
+        //Get URL params for page
+        $arParamList = PageHelper::instance()->getUrlParamList($sPageCode, 'CategoryPage');
+        if (empty($arParamList)) {
+            //Generate page URL
+            $sURL = CmsPage::url($sPageCode, ['slug' => $this->slug]);
+
+            return $sURL;
+        }
+
+        //Prepare page property list
+        $arPagePropertyList = [];
+        $obCategoryItem = $this;
+
+        foreach ($arParamList as $sParamName) {
+            $arPagePropertyList[$sParamName] = $obCategoryItem->slug;
+            $obCategoryItem = $obCategoryItem->parent;
+        }
+
+        //Generate page URL
+        $sURL = CmsPage::url($sPageCode, $arPagePropertyList);
+
+        return $sURL;
+    }
+
+    /**
      * Set element object
      */
     protected function setElementObject()
@@ -196,40 +229,5 @@ class CategoryItem extends ElementItem
         $this->setAttribute('product_count', $iProductCount);
 
         return $iProductCount;
-    }
-
-
-    /**
-     * Returns URL of a category page.
-     *
-     * @param string $sPageCode
-     *
-     * @return string
-     */
-    public function getPageUrl($sPageCode)
-    {
-        //Get URL params for page
-        $arParamList = PageHelper::instance()->getUrlParamList($sPageCode, 'CategoryPage');
-        if(empty($arParamList)) {
-            //Generate page URL
-            $sURL = CmsPage::url($sPageCode, ['slug' => $this->slug]);
-
-            return $sURL;
-        }
-
-        //Prepare page property list
-        $arPagePropertyList = [];
-        $obCategoryItem = $this;
-
-        foreach ($arParamList as $sParamName) {
-
-            $arPagePropertyList[$sParamName] = $obCategoryItem->slug;
-            $obCategoryItem = $obCategoryItem->parent;
-        }
-
-        //Generate page URL
-        $sURL = CmsPage::url($sPageCode, $arPagePropertyList);
-
-        return $sURL;
     }
 }

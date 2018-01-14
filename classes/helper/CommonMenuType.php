@@ -25,12 +25,11 @@ abstract class CommonMenuType
      * - items - an array of arrays with the same keys (url, isActive, items) + the title key.
      *   The items array should be added only if the $item's $nesting property value is TRUE.
      * @param \RainLab\Pages\Classes\MenuItem $obItem Specifies the menu item.
-     * @param \Cms\Classes\Theme $obTheme Specifies the current theme.
      * @param string $sURL Specifies the current page URL, normalized, in lower case
      * The URL is specified relative to the website root, it includes the subdirectory name, if any.
      * @return mixed Returns an array. Returns null if the item cannot be resolved.
      */
-    abstract public function resolveMenuItem($obItem, $sURL, $obTheme);
+    abstract public function resolveMenuItem($obItem, $sURL);
 
     /**
      * Get default array for menu type
@@ -136,7 +135,7 @@ abstract class CommonMenuType
             } else {
                 $arResult[$obCategory->id] = [
                     'title' => $obCategory->name,
-                    'items' => $this->getCategoryMenuOptions($obCategory->children)
+                    'items' => $this->getCategoryMenuOptions($obCategory->children),
                 ];
             }
         }

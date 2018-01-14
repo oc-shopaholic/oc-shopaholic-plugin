@@ -45,7 +45,7 @@ class ExtendMenuHandler
 
             $obMenuType = $this->getMenuTypeObject($sType);
             if (!empty($obMenuType)) {
-                return $obMenuType->resolveMenuItem($obItem, $sURL, $obTheme);
+                return $obMenuType->resolveMenuItem($obItem, $sURL);
             }
         });
     }
@@ -64,8 +64,8 @@ class ExtendMenuHandler
                 return new  CatalogMenuType();
             case AllCategoriesMenuType::MENU_TYPE:
                 return new AllCategoriesMenuType();
+            default:
+                return null;
         }
-
-        return null;
     }
 }

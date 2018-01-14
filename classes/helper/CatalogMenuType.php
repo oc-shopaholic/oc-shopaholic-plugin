@@ -16,14 +16,13 @@ class CatalogMenuType extends CommonMenuType
     /**
      * Handler for the pages.menuitem.resolveItem event.
      * @param \RainLab\Pages\Classes\MenuItem $obMenuItem
-     * @param string $sURL
-     * @param \Cms\Classes\Theme $obTheme
+     * @param string                          $sURL
      * @return array|mixed
      */
-    public function resolveMenuItem($obMenuItem, $sURL, $obTheme)
+    public function resolveMenuItem($obMenuItem, $sURL)
     {
         $arResult = [
-            'items' => []
+            'items' => [],
         ];
 
         //Get category list with sorted by 'nest_left'
