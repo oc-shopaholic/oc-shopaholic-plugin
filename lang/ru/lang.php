@@ -21,10 +21,13 @@
         'check_offer_active' => 'При получении списка активных товаров проверять наличие активных предложений',
     ],
     'menu'       => [
-        'main'       => 'Каталог товаров',
-        'categories' => 'Категории товаров',
-        'product'    => 'Товары',
-        'brands'     => 'Бренды',
+        'main'                => 'Каталог товаров',
+        'categories'          => 'Категории товаров',
+        'product'             => 'Товары',
+        'brands'              => 'Бренды',
+        'shop_catalog'        => 'Catalog of products',
+        'shop_category'       => 'Category of products',
+        'all_shop_categories' => 'All categories of products',
     ],
     'tab'        => [
         'offer'         => 'Товарные предложения',
