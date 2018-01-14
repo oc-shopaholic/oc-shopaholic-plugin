@@ -1,4 +1,4 @@
-language: php
+  language: php
 
 cache:
   directories:
@@ -31,6 +31,7 @@ before_script:
       mkdir -p build/logs;
       composer create-project october/october october;
       sed -i "s/'database'  => 'database',/'database'  => 'test',/" october/config/database.php;
+      rm .env
       php october/artisan october:up;
       php october/artisan plugin:install Lovata.Toolbox;
       mkdir -p ./october/plugins/lovata/shopaholic;
