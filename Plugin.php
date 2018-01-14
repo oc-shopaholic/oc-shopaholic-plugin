@@ -2,7 +2,6 @@
 
 use Event;
 use System\Classes\PluginBase;
-use Lovata\Shopaholic\Models\Category;
 
 use Lovata\Shopaholic\Classes\Helper\PriceHelper;
 
@@ -25,6 +24,7 @@ use Lovata\Shopaholic\Classes\Event\BrandModelHandler;
 use Lovata\Shopaholic\Classes\Event\CategoryModelHandler;
 use Lovata\Shopaholic\Classes\Event\OfferModelHandler;
 use Lovata\Shopaholic\Classes\Event\ProductModelHandler;
+use Lovata\Shopaholic\Classes\Event\ExtendMenuHandler;
 
 /**
  * Class Plugin
@@ -100,26 +100,6 @@ class Plugin extends PluginBase
         $this->app->singleton(ProductListStore::class, ProductListStore::class);
 
         $this->addEventListener();
-        
-        /*
-         * Register menu items for the RainLab.Pages plugin
-         */
-        Event::listen('pages.menuitem.listTypes', function() {
-            return [
-                'shop-category'       => 'lovata.shopaholic::lang.menu.shop_category',
-                'all-shop-categories' => 'lovata.shopaholic::lang.menu.all_shop_categories',
-            ];
-        });
-        Event::listen('pages.menuitem.getTypeInfo', function($type) {
-            if ($type == 'shop-category' || $type == 'all-shop-categories') {
-                return Category::getMenuTypeInfo($type);
-            }
-        });
-        Event::listen('pages.menuitem.resolveItem', function($type, $item, $url, $theme) {
-            if ($type == 'shop-category' || $type == 'all-shop-categories') {
-                return Category::resolveMenuItem($item, $url, $theme);
-            }
-        });
     }
 
     /**
@@ -131,5 +111,6 @@ class Plugin extends PluginBase
         Event::subscribe(OfferModelHandler::class);
         Event::subscribe(ProductModelHandler::class);
         Event::subscribe(BrandModelHandler::class);
+        Event::subscribe(ExtendMenuHandler::class);
     }
 }

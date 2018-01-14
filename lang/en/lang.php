@@ -25,8 +25,9 @@
         'categories'          => 'Categories',
         'product'             => 'Products',
         'brands'              => 'Brands',
-        'shop_category'       => 'Shopaholic category',
-        'all_shop_categories' => 'All Shopaholic categories',
+        'shop_catalog'        => 'Catalog of products',
+        'shop_category'       => 'Category of products',
+        'all_shop_categories' => 'All categories of products',
     ],
     'tab'        => [
         'offer'         => 'Offers',
