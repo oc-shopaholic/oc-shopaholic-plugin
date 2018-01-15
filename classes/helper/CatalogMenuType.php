@@ -34,7 +34,7 @@ class CatalogMenuType extends CommonMenuType
         /** @var \Lovata\Shopaholic\Classes\Item\CategoryItem $obCategoryItem */
         foreach ($obCategoryList as $obCategoryItem) {
             $arMenuItem = $this->getCategoryMenuData($obCategoryItem, $obMenuItem->cmsPage, $sURL);
-            $arMenuItem['items'] = $this->getChildrenCategoryList($obCategoryItem, $obMenuItem->cmsPage, $sURL);
+            $arMenuItem['items'] = ($obMenuItem->nesting) ? $this->getChildrenCategoryList($obCategoryItem, $obMenuItem->cmsPage, $sURL) : [];
 
             $arResult['items'][] = $arMenuItem;
         }
