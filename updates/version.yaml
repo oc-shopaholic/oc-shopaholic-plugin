@@ -18,3 +18,5 @@
     - '!!! Add menu types for integration with the StaticPage plugin. Add getPageUrl() method to the CategoryItem class. Requires Toolbox plugin version 1.4.0 and later. Thanks for contribution Alvaro Cánepa.'
 1.3.1:
     - 'Fix: processing of the "nesting" flag for the menu type "catalog"'
+1.4.0:
+    - 'Replace code of product sorting by popularity and rating from Shopaholic to extension plugins. Add event "shopaholic.sorting.get.list" for custom sorting of products.'

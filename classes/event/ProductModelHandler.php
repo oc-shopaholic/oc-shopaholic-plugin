@@ -57,6 +57,17 @@ class ProductModelHandler extends ModelHandler
     }
 
     /**
+     * After create event handler
+     */
+    protected function afterCreate()
+    {
+        parent::afterCreate();
+
+        $this->obListStore->updateCacheBySorting(ProductListStore::SORT_NEW);
+        $this->obListStore->updateCacheBySorting(ProductListStore::SORT_NO);
+    }
+
+    /**
      * After save event handler
      */
     protected function afterSave()
@@ -68,20 +79,6 @@ class ProductModelHandler extends ModelHandler
 
         //Check "brand_id" field
         $this->checkBrandIDField();
-
-        //Check "popularity" field
-        $this->checkPopularityField();
-
-        //Check "rating" field
-        $this->checkRatingField();
-
-        if ($this->obElement->id != $this->obElement->getOriginal('id')) {
-            $this->obListStore->updateCacheBySorting(ProductListStore::SORT_NEW);
-            $this->obListStore->updateCacheBySorting(ProductListStore::SORT_NO);
-            $this->obListStore->updateCacheBySorting(ProductListStore::SORT_POPULARITY_DESC);
-            $this->obListStore->updateCacheBySorting(ProductListStore::SORT_RATING_DESC);
-            $this->obListStore->updateCacheBySorting(ProductListStore::SORT_RATING_ASC);
-        }
     }
 
     /**
@@ -100,9 +97,6 @@ class ProductModelHandler extends ModelHandler
         $this->obListStore->updateCacheBySorting(ProductListStore::SORT_PRICE_ASC);
         $this->obListStore->updateCacheBySorting(ProductListStore::SORT_PRICE_DESC);
         $this->obListStore->updateCacheBySorting(ProductListStore::SORT_NEW);
-        $this->obListStore->updateCacheBySorting(ProductListStore::SORT_POPULARITY_DESC);
-        $this->obListStore->updateCacheBySorting(ProductListStore::SORT_RATING_DESC);
-        $this->obListStore->updateCacheBySorting(ProductListStore::SORT_RATING_ASC);
         $this->obListStore->updateCacheBySorting(ProductListStore::SORT_NO);
     }
 
@@ -173,40 +167,5 @@ class ProductModelHandler extends ModelHandler
         //Update product ID cache list for brand
         $this->obListStore->clearListByBrand($this->obElement->brand_id);
         $this->obListStore->clearListByBrand((int) $this->obElement->getOriginal('brand_id'));
-    }
-
-    /**
-     * Check product "popularity" field, if it was changed, then clear cache
-     */
-    private function checkPopularityField()
-    {
-        //Check "popularity" field
-        $bNeedUpdateCache = PluginManager::instance()->hasPlugin('Lovata.PopularityShopaholic')
-            && $this->obElement->getOriginal('popularity') != $this->obElement->popularity;
-
-        if (!$bNeedUpdateCache) {
-            return;
-        }
-
-        //Update product list with popularity
-        $this->obListStore->updateCacheBySorting(ProductListStore::SORT_POPULARITY_DESC);
-    }
-
-    /**
-     * Check product "rating" field, if it was changed, then clear cache
-     */
-    private function checkRatingField()
-    {
-        //Check "rating" field
-        $bNeedUpdateCache = PluginManager::instance()->hasPlugin('Lovata.ReviewsShopaholic')
-            && $this->obElement->getOriginal('rating') != $this->obElement->rating;
-
-        if (!$bNeedUpdateCache) {
-            return;
-        }
-
-        //Update product list with rating
-        $this->obListStore->updateCacheBySorting(ProductListStore::SORT_RATING_DESC);
-        $this->obListStore->updateCacheBySorting(ProductListStore::SORT_RATING_ASC);
     }
 }
