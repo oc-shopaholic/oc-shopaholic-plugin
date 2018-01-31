@@ -30,6 +30,7 @@ before_script:
   - if [[ "$BUILD" != true ]]; then
       mkdir -p build/logs;
       composer create-project october/october:1.0.431 october;
+      php october/artisan october:env;
       sed -i "s/=database/=test/" october/.env;
       php october/artisan october:up;
       php october/artisan plugin:install Lovata.Toolbox;
