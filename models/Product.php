@@ -62,7 +62,15 @@ use October\Rain\Database\Traits\Purgeable;
  * @property float $rating
  * @property array $rating_data
  * @property \October\Rain\Database\Collection|\Lovata\ReviewsShopaholic\Models\Review[] $review
- * @method static $this \October\Rain\Database\Relations\HasMany|\Lovata\ReviewsShopaholic\Models\Review review()
+ * @method static \October\Rain\Database\Relations\HasMany|\Lovata\ReviewsShopaholic\Models\Review review()
+ *
+ * Related products for Shopaholic
+ * @property \October\Rain\Database\Collection|Product[] $related
+ * @method static \October\Rain\Database\Relations\BelongsToMany|$this related()
+ *
+ * Accessories for Shopaholic
+ * @property \October\Rain\Database\Collection|Product[] $accessory
+ * @method static \October\Rain\Database\Relations\BelongsToMany|$this accessory()
  */
 class Product extends Model
 {
@@ -104,6 +112,7 @@ class Product extends Model
         'category' => [Category::class],
         'brand'    => [Brand::class],
     ];
+    public $belongsToMany = [];
 
     public $appends = [];
     public $purgeable = [];

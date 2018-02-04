@@ -1,5 +1,6 @@
 <?php namespace Lovata\Shopaholic\Classes\Store;
 
+use Event;
 use System\Classes\PluginManager;
 use Kharanenka\Helper\CCache;
 
@@ -103,38 +104,25 @@ class ProductListStore
                 $arProductIDList = array_unique($arProductIDList);
 
                 break;
-            case self::SORT_POPULARITY_DESC:
-                if (!PluginManager::instance()->hasPlugin('Lovata.PopularityShopaholic')) {
-                    return null;
-                }
-
-                /** @var array $arProductIDList */
-                $arProductIDList = Product::orderBy('popularity', 'desc')->lists('id');
-
-                break;
-            case self::SORT_RATING_DESC:
-                if (!PluginManager::instance()->hasPlugin('Lovata.ReviewsShopaholic')) {
-                    return null;
-                }
-
-                /** @var array $arProductIDList */
-                $arProductIDList = Product::orderBy('rating', 'desc')->lists('id');
-
-                break;
-            case self::SORT_RATING_ASC:
-                if (!PluginManager::instance()->hasPlugin('Lovata.ReviewsShopaholic')) {
-                    return null;
-                }
-
-                /** @var array $arProductIDList */
-                $arProductIDList = Product::orderBy('rating', 'asc')->lists('id');
-
-                break;
             case self::SORT_NEW:
                 $arProductIDList = Product::orderBy('id', 'desc')->lists('id');
                 break;
-            default:
+            case self::SORT_NO:
                 $arProductIDList = Product::lists('id');
+                break;
+            default:
+                $arProductIDList = [];
+                $arEventResult = Event::fire('shopaholic.sorting.get.list', [$sSorting]);
+                if (!empty($arEventResult)) {
+                    foreach ($arEventResult as $arEventProductIDList) {
+                        if (empty($arEventProductIDList) || !is_array($arEventProductIDList)) {
+                            continue;
+                        }
+
+                        $arProductIDList = $arEventProductIDList;
+                        break;
+                    }
+                }
                 break;
         }
 
