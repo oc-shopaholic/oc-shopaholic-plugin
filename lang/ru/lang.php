@@ -1,7 +1,7 @@
 <?php return [
     'plugin'     => [
-        'name'        => 'Shopaholic',
-        'description' => 'Catalog of products for eCommerce',
+        'name'        => 'Шопоголик',
+        'description' => 'Каталог продукции для электронной коммерции',
     ],
     'field'      => [
         'vendor_code'        => 'Артикул',
@@ -25,14 +25,14 @@
         'categories'          => 'Категории товаров',
         'product'             => 'Товары',
         'brands'              => 'Бренды',
-        'shop_catalog'        => 'Catalog of products',
-        'shop_category'       => 'Category of products',
-        'all_shop_categories' => 'All categories of products',
+        'shop_catalog'        => 'Каталог продукции',
+        'shop_category'       => 'Каталог продукции',
+        'all_shop_categories' => 'Все категории продуктов',
     ],
     'tab'        => [
         'offer'         => 'Товарные предложения',
         'prices_format' => 'Формат цен',
-        'permissions'   => 'Shopaholic',
+        'permissions'   => 'Шопоголик',
     ],
     'category'   => [
         'name'       => 'категории',
@@ -58,7 +58,7 @@
         'product_data_name'         => 'Данные товара',
         'product_data_description'  => 'Получение данных товара',
         'product_list_name'         => 'Список товаров',
-        'product_list_description'  => 'Get product list',
+        'product_list_description'  => 'Показать список продуктов',
 
         //Brand components
         'brand_page_name'           => 'Страница бренда',
@@ -87,8 +87,8 @@
         'sorting_price_asc'         => 'Дешевые',
         'sorting_new'               => 'Новые',
         'sorting_popularity_desc'   => 'Популярные',
-        'sorting_rating_desc'       => 'High rating',
-        'sorting_rating_asc'        => 'Low rating',
+        'sorting_rating_desc'       => 'Высокий рейтинг',
+        'sorting_rating_asc'        => 'Низкий рейтинг',
     ],
     'permission' => [
         'category' => 'Управление категориями',
