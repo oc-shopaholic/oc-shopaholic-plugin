@@ -41,7 +41,12 @@ use Lovata\Shopaholic\Classes\Collection\OfferCollection;
  * Reviews for Shopaholic
  * @see \Lovata\ReviewsShopaholic\Classes\Event\ProductModelHandler::extendProductItem
  * @property float $rating
+ * @property array $rating_data [1 => 0, 2 => 4, 3 => 7, 4 => 21, 5 => 48]
  * @property \Lovata\ReviewsShopaholic\Classes\Collection\ReviewCollection|\Lovata\ReviewsShopaholic\Classes\Item\ReviewItem[] $review
+ *
+ * @method int getRatingCount(int $iRating)
+ * @method int getRatingPercent(int $iRating)
+ * @method int getRatingTotalCount()
  *
  * Related products for Shopaholic
  * @property \Lovata\Shopaholic\Classes\Collection\ProductCollection|ProductItem[] $related

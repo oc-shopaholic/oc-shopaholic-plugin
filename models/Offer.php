@@ -28,8 +28,8 @@ use October\Rain\Database\Traits\Purgeable;
  * @property string $external_id
  * @property string $preview_text
  * @property string $description
- * @property double $price
- * @property double $old_price
+ * @property float $price
+ * @property float $old_price
  * @property integer $quantity
  * @property int $product_id
  * @property \October\Rain\Argon\Argon $created_at
@@ -100,20 +100,20 @@ class Offer extends Model
 
     /**
      * Get price value
-     * @return double
+     * @return float
      */
     public function getPriceValue()
     {
-        return $this->attributes['price'];
+        return $this->getAttributeFromArray('price');
     }
 
     /**
      * Get price value
-     * @return double
+     * @return float
      */
     public function getOldPriceValue()
     {
-        return $this->attributes['old_price'];
+        return $this->getAttributeFromArray('old_price');
     }
 
     /**

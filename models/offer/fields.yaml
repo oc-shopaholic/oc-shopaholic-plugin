@@ -6,35 +6,35 @@ fields:
         type: switch
     name:
         label: 'lovata.toolbox::lang.field.name'
-        span: full
+        span: left
         required: 1
         type: text
 tabs:
     fields:
         quantity:
             label: 'lovata.shopaholic::lang.field.quantity'
-            span: full
+            span: left
             type: text
             default: 0
             tab: 'lovata.toolbox::lang.tab.settings'
         price:
             label: 'lovata.shopaholic::lang.field.price'
-            span: full
+            span: left
             type: text
             tab: 'lovata.toolbox::lang.tab.settings'
         old_price:
             label: 'lovata.shopaholic::lang.field.old_price'
-            span: full
+            span: left
             type: text
             tab: 'lovata.toolbox::lang.tab.settings'
         code:
             label: 'lovata.shopaholic::lang.field.vendor_code'
-            span: full
+            span: left
             type: text
             tab: 'lovata.toolbox::lang.tab.settings'
         external_id:
             label: 'lovata.toolbox::lang.field.external_id'
-            span: full
+            span: left
             type: text
             tab: 'lovata.toolbox::lang.tab.settings'
         preview_text:

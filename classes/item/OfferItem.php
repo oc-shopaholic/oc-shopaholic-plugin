@@ -2,9 +2,9 @@
 
 use Lovata\Toolbox\Classes\Item\ElementItem;
 
-use Lovata\Shopaholic\Models\Settings;
 use Lovata\Shopaholic\Plugin;
 use Lovata\Shopaholic\Models\Offer;
+use Lovata\Shopaholic\Models\Settings;
 
 /**
  * Class OfferItem
