@@ -128,7 +128,7 @@ class Product extends Model
         'category_id',
     ];
 
-    public $dates = ['created_at', 'created_at', 'deleted_at'];
+    public $dates = ['created_at', 'updated_at', 'deleted_at'];
 
     public $jsonable = [];
 
