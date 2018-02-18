@@ -15,14 +15,17 @@ use Lovata\Shopaholic\Classes\Store\ProductListStore;
  * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/ProductCollection
  *
  * Filter for Shopaholic plugin
- * @method static $this filterByPrice(float $fStartPrice, float $fStopPrice)
- * @method static $this filterByBrandList(array $arBrandIDList)
- * @method static $this filterByDiscount()
- * @method static $this filterByQuantity()
- * @method static $this filterByProperty(array $arFilterList, \Lovata\FilterShopaholic\Classes\Collection\FilterPropertyCollection $obPropertyList)
+ * @method $this filterByPrice(float $fStartPrice, float $fStopPrice)
+ * @method $this filterByBrandList(array $arBrandIDList)
+ * @method $this filterByDiscount()
+ * @method $this filterByQuantity()
+ * @method $this filterByProperty(array $arFilterList, \Lovata\FilterShopaholic\Classes\Collection\FilterPropertyCollection $obPropertyList)
  *
  * Tags for Shopaholic plugin
- * @method static $this tag(int $iTagID)
+ * @method $this tag(int $iTagID)
+ *
+ * Search for Shopaholic, Sphinx for Shopaholic
+ * @method $this search(string $sSearch)
  */
 class ProductCollection extends ElementCollection
 {
