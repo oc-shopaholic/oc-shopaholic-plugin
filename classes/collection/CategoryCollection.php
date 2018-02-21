@@ -12,9 +12,6 @@ use Lovata\Shopaholic\Classes\Store\CategoryListStore;
  *
  * @see \Lovata\Shopaholic\Tests\Unit\Collection\CategoryCollectionTest
  * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/CategoryCollection
- *
- * Search for Shopaholic, Sphinx for Shopaholic
- * @method $this search(string $sSearch)
  */
 class CategoryCollection extends ElementCollection
 {

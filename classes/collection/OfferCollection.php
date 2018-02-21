@@ -14,8 +14,8 @@ use Lovata\Shopaholic\Classes\Store\OfferListStore;
  * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/OfferCollection
  *
  * Filter for Shopaholic plugin
- * @method $this filterByPrice(float $fStartPrice, float $fStopPrice)
- * @method $this filterByProperty(array $arFilterList, \Lovata\FilterShopaholic\Classes\Collection\FilterPropertyCollection $obPropertyList)
+ * @method static $this filterByPrice(float $fStartPrice, float $fStopPrice)
+ * @method static $this filterByProperty(array $arFilterList, \Lovata\FilterShopaholic\Classes\Collection\FilterPropertyCollection $obPropertyList)
  */
 class OfferCollection extends ElementCollection
 {

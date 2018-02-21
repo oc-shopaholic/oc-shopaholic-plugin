@@ -12,9 +12,6 @@ use Lovata\Shopaholic\Classes\Store\BrandListStore;
  *
  * @see \Lovata\Shopaholic\Tests\Unit\Collection\BrandCollectionTest
  * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/BrandCollection
- *
- * Search for Shopaholic, Sphinx for Shopaholic
- * @method $this search(string $sSearch)
  */
 class BrandCollection extends ElementCollection
 {

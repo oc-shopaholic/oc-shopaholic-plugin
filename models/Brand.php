@@ -38,9 +38,6 @@ use October\Rain\Database\Traits\Sortable;
  * @property \October\Rain\Database\Collection|Product[] $product
  * @method \October\Rain\Database\Relations\HasMany|Product product()
  *
- * Search for Shopaholic, Sphinx for Shopaholic
- * @property string $search_synonym
- * @property string $search_content
  */
 class Brand extends Model
 {

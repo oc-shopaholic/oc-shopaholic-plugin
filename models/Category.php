@@ -56,10 +56,6 @@ use October\Rain\Database\Traits\NestedTree;
  * @property \October\Rain\Database\Collection|\Lovata\PropertiesShopaholic\Models\Property[] $offer_property
  * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\PropertiesShopaholic\Models\Property offer_property()
  *
- * Search for Shopaholic, Sphinx for Shopaholic
- * @property string $search_synonym
- * @property string $search_content
- *
  * @method static $this getByParentID(int $iParentID)
  */
 class Category extends Model
