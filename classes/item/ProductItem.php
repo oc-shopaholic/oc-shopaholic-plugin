@@ -53,6 +53,9 @@ use Lovata\Shopaholic\Classes\Collection\OfferCollection;
  *
  * Accessories for Shopaholic
  * @property \Lovata\Shopaholic\Classes\Collection\ProductCollection|ProductItem[] $accessory
+ *
+ * Compare for Shopaholic
+ * @method bool inCompare()
  */
 class ProductItem extends ElementItem
 {

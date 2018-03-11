@@ -9,6 +9,11 @@ use Lovata\Toolbox\Classes\Component\ElementData;
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  *
  * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/ProductData
+ *
+ * Compare for Shopaholic
+ * @method array onAddToCompare()
+ * @method array onRemoveFromCompare()
+ * @method void onClearCompareList()
  */
 class ProductData extends ElementData
 {
