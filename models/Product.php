@@ -71,6 +71,10 @@ use October\Rain\Database\Traits\Purgeable;
  * Accessories for Shopaholic
  * @property \October\Rain\Database\Collection|Product[] $accessory
  * @method static \October\Rain\Database\Relations\BelongsToMany|$this accessory()
+ *
+ * Search for Shopaholic, Sphinx for Shopaholic
+ * @property string $search_synonym
+ * @property string $search_content
  */
 class Product extends Model
 {

@@ -11,6 +11,11 @@ use Lovata\Toolbox\Classes\Component\ElementPage;
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  *
  * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/ProductPage
+ *
+ * Compare for Shopaholic
+ * @method array onAddToCompare()
+ * @method array onRemoveFromCompare()
+ * @method void onClearCompareList()
  */
 class ProductPage extends ElementPage
 {

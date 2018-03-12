@@ -13,6 +13,11 @@ use Lovata\Shopaholic\Classes\Store\ProductListStore;
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  *
  * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/ProductList
+ *
+ * Compare for Shopaholic
+ * @method array onAddToCompare()
+ * @method array onRemoveFromCompare()
+ * @method void onClearCompareList()
  */
 class ProductList extends SortingElementList
 {
