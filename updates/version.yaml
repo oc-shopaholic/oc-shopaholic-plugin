@@ -26,3 +26,5 @@
     - 'Add integration with "Search for Shopaholic","Sphinx for Shopaholic" plugins'
 1.6.0:
     - 'Add integration with "Compare for Shopaholic"'
+1.7.0:
+    - 'Added translation into French. Thanks for contribution philmarc.'
