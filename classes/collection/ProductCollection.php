@@ -29,6 +29,9 @@ use Lovata\Shopaholic\Classes\Store\ProductListStore;
  *
  * Compare for Shopaholic
  * @method $this compare()
+ *
+ * Viewed products for Shopaholic
+ * @method $this viewed()
  */
 class ProductCollection extends ElementCollection
 {

@@ -18,6 +18,10 @@ use Lovata\Shopaholic\Classes\Store\ProductListStore;
  * @method array onAddToCompare()
  * @method array onRemoveFromCompare()
  * @method void onClearCompareList()
+ *
+ * Viewed products for Shopaholic
+ * @method array onRemoveFromViewedProductList()
+ * @method void onClearViewedProductList()
  */
 class ProductList extends SortingElementList
 {

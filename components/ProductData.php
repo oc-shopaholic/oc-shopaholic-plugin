@@ -14,6 +14,10 @@ use Lovata\Toolbox\Classes\Component\ElementData;
  * @method array onAddToCompare()
  * @method array onRemoveFromCompare()
  * @method void onClearCompareList()
+ *
+ * Viewed products for Shopaholic
+ * @method array onRemoveFromViewedProductList()
+ * @method void onClearViewedProductList()
  */
 class ProductData extends ElementData
 {
