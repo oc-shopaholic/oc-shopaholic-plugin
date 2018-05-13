@@ -14,6 +14,8 @@ use October\Rain\Database\Traits\SoftDelete;
 use October\Rain\Database\Traits\Validation;
 use October\Rain\Database\Traits\Purgeable;
 
+use Lovata\Toolbox\Traits\Helpers\TraitCached;
+
 /**
  * Class Product
  * @package Lovata\Shopaholic\Models
@@ -88,6 +90,7 @@ class Product extends Model
     use SlugField;
     use CodeField;
     use ExternalIDField;
+    use TraitCached;
 
     public $table = 'lovata_shopaholic_products';
 
@@ -130,6 +133,19 @@ class Product extends Model
         'description',
         'brand_id',
         'category_id',
+    ];
+
+    public $cached = [
+        'id',
+        'name',
+        'slug',
+        'code',
+        'category_id',
+        'brand_id',
+        'preview_text',
+        'preview_image',
+        'description',
+        'images',
     ];
 
     public $dates = ['created_at', 'updated_at', 'deleted_at'];

@@ -129,7 +129,7 @@ class OfferModelHandler extends ModelHandler
      */
     protected function checkPriceField()
     {
-        if ($this->obElement->getOriginal('price') != $this->obElement->price) {
+        if ($this->obElement->getOriginal('price') != $this->obElement->price_value) {
             $this->obListStore->updateCacheBySorting(OfferListStore::SORT_PRICE_ASC);
             $this->obListStore->updateCacheBySorting(OfferListStore::SORT_PRICE_DESC);
         }
@@ -139,7 +139,7 @@ class OfferModelHandler extends ModelHandler
             || (
                 $this->obElement->active
                 && $this->obElement->getOriginal('active') == $this->obElement->active
-                && $this->obElement->getOriginal('price') != $this->obElement->price
+                && $this->obElement->getOriginal('price') != $this->obElement->price_value
             );
 
         if (!$bNeedUpdateFlag) {

@@ -7,7 +7,8 @@ use Kharanenka\Scope\CodeField;
 use Kharanenka\Scope\ExternalIDField;
 use Kharanenka\Scope\NameField;
 
-use Lovata\Shopaholic\Classes\Helper\PriceHelper;
+use Lovata\Toolbox\Traits\Helpers\TraitCached;
+use Lovata\Toolbox\Traits\Helpers\PriceHelperTrait;
 
 use October\Rain\Database\Traits\Validation;
 use October\Rain\Database\Traits\SoftDelete;
@@ -16,28 +17,30 @@ use October\Rain\Database\Traits\Purgeable;
 /**
  * Class Offer
  * @package Lovata\Shopaholic\Models
- * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  *
  * @mixin \October\Rain\Database\Builder
  * @mixin \Eloquent
  *
- * @property $id
- * @property bool $active
- * @property string $name
- * @property string $code
- * @property string $external_id
- * @property string $preview_text
- * @property string $description
- * @property float $price
- * @property float $old_price
- * @property integer $quantity
- * @property int $product_id
- * @property \October\Rain\Argon\Argon $created_at
- * @property \October\Rain\Argon\Argon $updated_at
- * @property \October\Rain\Argon\Argon $deleted_at
+ * @property                                   $id
+ * @property bool                              $active
+ * @property string                            $name
+ * @property string                            $code
+ * @property string                            $external_id
+ * @property string                            $preview_text
+ * @property string                            $description
+ * @property string                            $price
+ * @property float                             $price_value
+ * @property string                            $old_price
+ * @property float                             $old_price_value
+ * @property integer                           $quantity
+ * @property int                               $product_id
+ * @property \October\Rain\Argon\Argon         $created_at
+ * @property \October\Rain\Argon\Argon         $updated_at
+ * @property \October\Rain\Argon\Argon         $deleted_at
  *
  * Relations
- * @property \System\Models\File $preview_image
+ * @property \System\Models\File               $preview_image
  * @property \October\Rain\Database\Collection $images
  *
  * @property \Lovata\Shopaholic\Models\Product $product
@@ -49,8 +52,8 @@ use October\Rain\Database\Traits\Purgeable;
  * @method static $this getByOldPrice(int $iPrice, string $sCondition = '=')
  *
  * Properties for Shopaholic
- * @see \Lovata\PropertiesShopaholic\Classes\Event\OfferModelHandler::addPropertyMethods
- * @property array $property
+ * @see     \Lovata\PropertiesShopaholic\Classes\Event\OfferModelHandler::addPropertyMethods
+ * @property array                             $property
  */
 class Offer extends Model
 {
@@ -61,6 +64,8 @@ class Offer extends Model
     use NameField;
     use CodeField;
     use ExternalIDField;
+    use PriceHelperTrait;
+    use TraitCached;
 
     public $table = 'lovata_shopaholic_offers';
 
@@ -93,80 +98,26 @@ class Offer extends Model
         'description',
     ];
 
+    public $cached = [
+        'id',
+        'product_id',
+        'name',
+        'code',
+        'preview_text',
+        'preview_image',
+        'description',
+        'images',
+        'price_value',
+        'old_price_value',
+        'quantity',
+    ];
+
     public $dates = ['created_at', 'updated_at', 'deleted_at'];
     public $appends = [];
     public $purgeable = [];
     public $casts = [];
 
-    /**
-     * Get price value
-     * @return float
-     */
-    public function getPriceValue()
-    {
-        return $this->getAttributeFromArray('price');
-    }
-
-    /**
-     * Get price value
-     * @return float
-     */
-    public function getOldPriceValue()
-    {
-        return $this->getAttributeFromArray('old_price');
-    }
-
-    /**
-     * Accessor for price custom format
-     * @param  string $dPrice
-     * @return string
-     */
-    public function getPriceAttribute($dPrice)
-    {
-        /** @var PriceHelper $obPriceHelper */
-        $obPriceHelper = app()->make(PriceHelper::class);
-
-        return $obPriceHelper->get($dPrice);
-    }
-
-    /**
-     * Accessor for discount price custom format
-     * @param  string $dPrice
-     * @return string
-     */
-    public function getOldPriceAttribute($dPrice)
-    {
-        /** @var PriceHelper $obPriceHelper */
-        $obPriceHelper = app()->make(PriceHelper::class);
-
-        return $obPriceHelper->get($dPrice);
-    }
-
-    /**
-     * Format price to decimal format
-     * @param  string $sPrice
-     */
-    public function setPriceAttribute($sPrice)
-    {
-        $sPrice = str_replace(',', '.', $sPrice);
-        $sPrice = (float) preg_replace("/[^0-9\.]/", "", $sPrice);
-        $this->attributes['price'] = $sPrice;
-    }
-
-    /**
-     * Format discount price to decimal format
-     * @param  string $sPrice
-     */
-    public function setOldPriceAttribute($sPrice)
-    {
-        $sPrice = str_replace(',', '.', $sPrice);
-        $sPrice = (float) preg_replace("/[^0-9\.]/", "", $sPrice);
-        if ($sPrice <= $this->getPriceValue()) {
-            $sPrice = 0;
-        }
-
-        $this->attributes['old_price'] = $sPrice;
-    }
+    public $arPriceField = ['price', 'old_price'];
 
     /**
      * Set quantity attribute value
@@ -214,46 +165,6 @@ class Offer extends Model
 
         if (!empty($sCondition)) {
             $obQuery->where('quantity', $sCondition, $sData);
-        }
-
-        return $obQuery;
-    }
-
-    /**
-     * Get by price
-     * @param Offer  $obQuery
-     * @param string $sData
-     * @param string $sCondition
-     * @return Offer
-     */
-    public function scopeGetByPrice($obQuery, $sData, $sCondition = '=')
-    {
-        if (empty($sData)) {
-            $sData = 0;
-        }
-
-        if (!empty($sCondition)) {
-            $obQuery->where('price', $sCondition, $sData);
-        }
-
-        return $obQuery;
-    }
-
-    /**
-     * Get by old price
-     * @param Offer  $obQuery
-     * @param string $sData
-     * @param string $sCondition
-     * @return Offer
-     */
-    public function scopeGetByOldPrice($obQuery, $sData, $sCondition = '=')
-    {
-        if (empty($sData)) {
-            $sData = 0;
-        }
-
-        if (!empty($sCondition)) {
-            $obQuery->where('old_price', $sCondition, $sData);
         }
 
         return $obQuery;

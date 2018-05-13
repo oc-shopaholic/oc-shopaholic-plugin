@@ -37,7 +37,7 @@ use Lovata\Shopaholic\Classes\Collection\OfferCollection;
  * Properties for Shopaholic
  * @see \Lovata\PropertiesShopaholic\Classes\Event\ProductModelHandler::extendProductItem
  * @property \Lovata\PropertiesShopaholic\Classes\Collection\PropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[] $property
- * 
+ *
  * Reviews for Shopaholic
  * @see \Lovata\ReviewsShopaholic\Classes\Event\ProductModelHandler::extendProductItem
  * @property float $rating
@@ -116,16 +116,6 @@ class ProductItem extends ElementItem
         }
 
         $arResult = [
-            'id'            => $this->obElement->id,
-            'name'          => $this->obElement->name,
-            'slug'          => $this->obElement->slug,
-            'code'          => $this->obElement->code,
-            'category_id'   => $this->obElement->category_id,
-            'brand_id'      => $this->obElement->brand_id,
-            'preview_text'  => $this->obElement->preview_text,
-            'preview_image' => $this->obElement->preview_image,
-            'description'   => $this->obElement->description,
-            'images'        => $this->obElement->images,
             'offer_id_list' => $this->obElement->offer()->active()->lists('id'),
         ];
 

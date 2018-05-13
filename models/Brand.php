@@ -12,6 +12,8 @@ use October\Rain\Database\Traits\Sluggable;
 use October\Rain\Database\Traits\Validation;
 use October\Rain\Database\Traits\Sortable;
 
+use Lovata\Toolbox\Traits\Helpers\TraitCached;
+
 /**
  * Class Brand
  * @package Lovata\Shopaholic\Models
@@ -52,6 +54,7 @@ class Brand extends Model
     use CodeField;
     use SlugField;
     use ExternalIDField;
+    use TraitCached;
 
     public $table = 'lovata_shopaholic_brands';
 
@@ -77,6 +80,8 @@ class Brand extends Model
     public $attachMany = ['images' => 'System\Models\File'];
     public $hasMany = ['product' => Product::class];
 
+    public $dates = ['created_at', 'updated_at'];
+
     public $fillable = [
         'active',
         'name',
@@ -87,5 +92,14 @@ class Brand extends Model
         'description',
     ];
 
-    public $dates = ['created_at', 'updated_at'];
+    public $cached = [
+        'id',
+        'name',
+        'slug',
+        'code',
+        'preview_text',
+        'preview_image',
+        'description',
+        'images',
+    ];
 }

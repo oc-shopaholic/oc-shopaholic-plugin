@@ -12,6 +12,8 @@ use October\Rain\Database\Traits\Sluggable;
 use October\Rain\Database\Traits\Validation;
 use October\Rain\Database\Traits\NestedTree;
 
+use Lovata\Toolbox\Traits\Helpers\TraitCached;
+
 /**
  * Class Category
  * @package Lovata\Shopaholic\Models
@@ -68,6 +70,7 @@ class Category extends Model
     use SlugField;
     use CodeField;
     use ExternalIDField;
+    use TraitCached;
 
     public $table = 'lovata_shopaholic_categories';
 
@@ -102,6 +105,19 @@ class Category extends Model
         'external_id',
         'preview_text',
         'description',
+    ];
+
+    public $cached = [
+        'id',
+        'name',
+        'slug',
+        'code',
+        'preview_text',
+        'description',
+        'parent_id',
+        'preview_image',
+        'images',
+        'updated_at',
     ];
 
     public $dates = ['created_at', 'updated_at'];

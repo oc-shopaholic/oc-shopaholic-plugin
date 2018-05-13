@@ -55,29 +55,4 @@ class BrandItem extends ElementItem
     {
         return [Plugin::CACHE_TAG, self::CACHE_TAG_ELEMENT];
     }
-
-    /**
-     * Set element data from model object
-     *
-     * @return array
-     */
-    protected function getElementData()
-    {
-        if (empty($this->obElement)) {
-            return null;
-        }
-
-        $arResult = [
-            'id'            => $this->obElement->id,
-            'name'          => $this->obElement->name,
-            'slug'          => $this->obElement->slug,
-            'code'          => $this->obElement->code,
-            'preview_text'  => $this->obElement->preview_text,
-            'preview_image' => $this->obElement->preview_image,
-            'description'   => $this->obElement->description,
-            'images'        => $this->obElement->images,
-        ];
-
-        return $arResult;
-    }
 }

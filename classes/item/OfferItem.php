@@ -5,6 +5,7 @@ use Lovata\Toolbox\Classes\Item\ElementItem;
 use Lovata\Shopaholic\Plugin;
 use Lovata\Shopaholic\Models\Offer;
 use Lovata\Shopaholic\Models\Settings;
+use Lovata\Toolbox\Traits\Helpers\PriceHelperTrait;
 
 /**
  * Class OfferItem
@@ -40,6 +41,8 @@ use Lovata\Shopaholic\Models\Settings;
  */
 class OfferItem extends ElementItem
 {
+    use PriceHelperTrait;
+
     const CACHE_TAG_ELEMENT = 'shopaholic-offer-element';
 
     /** @var Offer */
@@ -51,6 +54,8 @@ class OfferItem extends ElementItem
             'field' => 'product_id',
         ],
     ];
+
+    public $arPriceField = ['price', 'old_price'];
 
     /**
      * Set element object
@@ -75,36 +80,6 @@ class OfferItem extends ElementItem
     protected static function getCacheTag()
     {
         return [Plugin::CACHE_TAG, self::CACHE_TAG_ELEMENT];
-    }
-
-    /**
-     * Set element data from model object
-     *
-     * @return array
-     */
-    protected function getElementData()
-    {
-        if (empty($this->obElement)) {
-            return null;
-        }
-
-        $arResult = [
-            'id'              => $this->obElement->id,
-            'product_id'      => $this->obElement->product_id,
-            'name'            => $this->obElement->name,
-            'code'            => $this->obElement->code,
-            'preview_text'    => $this->obElement->preview_text,
-            'preview_image'   => $this->obElement->preview_image,
-            'description'     => $this->obElement->description,
-            'images'          => $this->obElement->images,
-            'price'           => $this->obElement->price,
-            'old_price'       => $this->obElement->old_price,
-            'price_value'     => $this->obElement->getPriceValue(),
-            'old_price_value' => $this->obElement->getOldPriceValue(),
-            'quantity'        => $this->obElement->quantity,
-        ];
-
-        return $arResult;
     }
 
     /**

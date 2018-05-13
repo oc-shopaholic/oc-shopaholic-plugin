@@ -163,17 +163,7 @@ class CategoryItem extends ElementItem
         }
 
         $arResult = [
-            'id'            => $this->obElement->id,
-            'name'          => $this->obElement->name,
-            'slug'          => $this->obElement->slug,
-            'code'          => $this->obElement->code,
-            'preview_text'  => $this->obElement->preview_text,
-            'description'   => $this->obElement->description,
             'nest_depth'    => $this->obElement->getDepth(),
-            'parent_id'     => $this->obElement->parent_id,
-            'preview_image' => $this->obElement->preview_image,
-            'images'        => $this->obElement->images,
-            'updated_at'    => $this->obElement->updated_at,
         ];
 
         $arResult['children_id_list'] = $this->obElement->children()

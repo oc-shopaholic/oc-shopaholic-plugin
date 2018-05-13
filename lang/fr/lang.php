@@ -10,13 +10,6 @@
         'quantity'           => 'Quantité',
         'brand'              => 'Marque',
         'offer'              => 'Offres',
-        'decimals'           => 'Nombre de décimales',
-        'dec_point'          => 'Séparateur décimal',
-        'thousands_sep'      => 'Séparateur de milliers',
-        'dot'                => 'Point',
-        'comma'              => 'Virgule',
-        'together'           => 'Fusionner',
-        'space'              => 'Espace',
         'currency'           => 'Devise',
         'check_offer_active' => 'Lorsque vous recevez une liste de produits actifs, recherchez des offres actives',
     ],
@@ -31,7 +24,6 @@
     ],
     'tab'        => [
         'offer'         => 'Offres',
-        'prices_format' => 'Format de prix',
         'permissions'   => 'Shopaholic',
     ],
     'category'   => [
