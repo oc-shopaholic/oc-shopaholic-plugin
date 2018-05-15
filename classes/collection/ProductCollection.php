@@ -63,19 +63,8 @@ class ProductCollection extends ElementCollection
 
         //Get sorting list
         $arResultIDList = $this->obProductListStore->getBySorting($sSorting);
-        if (empty($arResultIDList)) {
-            return $this->clear();
-        }
 
-        if ($this->isClear()) {
-            $this->arElementIDList = $arResultIDList;
-
-            return $this->returnThis();
-        }
-
-        $this->arElementIDList = array_intersect($arResultIDList, $this->arElementIDList);
-
-        return $this->returnThis();
+        return $this->applySorting($arResultIDList);
     }
 
     /**

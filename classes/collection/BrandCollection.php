@@ -43,19 +43,8 @@ class BrandCollection extends ElementCollection
 
         //Get sorting list
         $arResultIDList = $this->obBrandListStore->getBySorting();
-        if (empty($arResultIDList)) {
-            return $this->clear();
-        }
 
-        if ($this->isClear()) {
-            $this->arElementIDList = $arResultIDList;
-
-            return $this->returnThis();
-        }
-
-        $this->arElementIDList = array_intersect($arResultIDList, $this->arElementIDList);
-
-        return $this->returnThis();
+        return $this->applySorting($arResultIDList);
     }
 
     /**
