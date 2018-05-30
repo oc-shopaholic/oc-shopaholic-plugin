@@ -2,7 +2,6 @@
 
 use Lovata\Toolbox\Classes\Item\ElementItem;
 
-use Lovata\Shopaholic\Plugin;
 use Lovata\Shopaholic\Models\Product;
 use Lovata\Shopaholic\Classes\Collection\OfferCollection;
 
@@ -59,7 +58,7 @@ use Lovata\Shopaholic\Classes\Collection\OfferCollection;
  */
 class ProductItem extends ElementItem
 {
-    const CACHE_TAG_ELEMENT = 'shopaholic-product-element';
+    const MODEL_CLASS = Product::class;
 
     /** @var Product */
     protected $obElement = null;
@@ -84,24 +83,7 @@ class ProductItem extends ElementItem
      */
     protected function setElementObject()
     {
-        if (!empty($this->obElement) && !$this->obElement instanceof Product) {
-            $this->obElement = null;
-        }
-
-        if (!empty($this->obElement) || empty($this->iElementID)) {
-            return;
-        }
-
         $this->obElement = Product::active()->find($this->iElementID);
-    }
-
-    /**
-     * Get cache tag array for model
-     * @return array
-     */
-    protected static function getCacheTag()
-    {
-        return [Plugin::CACHE_TAG, self::CACHE_TAG_ELEMENT];
     }
 
     /**
@@ -111,10 +93,6 @@ class ProductItem extends ElementItem
      */
     protected function getElementData()
     {
-        if (empty($this->obElement)) {
-            return null;
-        }
-
         $arResult = [
             'offer_id_list' => $this->obElement->offer()->active()->lists('id'),
         ];

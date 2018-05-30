@@ -35,16 +35,19 @@ use Lovata\Shopaholic\Classes\Store\ProductListStore;
  */
 class ProductCollection extends ElementCollection
 {
-    /** @var ProductListStore */
-    protected $obProductListStore;
+    const ITEM_CLASS = ProductItem::class;
+
+    /**
+     * @var ProductListStore
+     */
+    protected $obListStore;
 
     /**
      * ProductCollection constructor.
-     * @param ProductListStore $obProductListStore
      */
-    public function __construct(ProductListStore $obProductListStore)
+    public function __construct()
     {
-        $this->obProductListStore = $obProductListStore;
+        $this->obListStore = ProductListStore::instance();
         parent::__construct();
     }
 
@@ -57,12 +60,8 @@ class ProductCollection extends ElementCollection
      */
     public function sort($sSorting)
     {
-        if (!$this->isClear() && $this->isEmpty()) {
-            return $this->returnThis();
-        }
-
         //Get sorting list
-        $arResultIDList = $this->obProductListStore->getBySorting($sSorting);
+        $arResultIDList = $this->obListStore->sorting->get($sSorting);
 
         return $this->applySorting($arResultIDList);
     }
@@ -75,7 +74,7 @@ class ProductCollection extends ElementCollection
      */
     public function active()
     {
-        $arResultIDList = $this->obProductListStore->getActiveList();
+        $arResultIDList = $this->obListStore->active->get();
 
         return $this->intersect($arResultIDList);
     }
@@ -88,7 +87,7 @@ class ProductCollection extends ElementCollection
      */
     public function category($iCategoryID)
     {
-        $arResultIDList = $this->obProductListStore->getByCategory($iCategoryID);
+        $arResultIDList = $this->obListStore->category->get($iCategoryID);
 
         return $this->intersect($arResultIDList);
     }
@@ -101,7 +100,7 @@ class ProductCollection extends ElementCollection
      */
     public function brand($iBrandID)
     {
-        $arResultIDList = $this->obProductListStore->getByBrand($iBrandID);
+        $arResultIDList = $this->obListStore->brand->get($iBrandID);
 
         return $this->intersect($arResultIDList);
     }
@@ -164,19 +163,5 @@ class ProductCollection extends ElementCollection
         $obOfferItem = $obOfferCollection->sort(OfferListStore::SORT_PRICE_ASC)->last();
 
         return $obOfferItem;
-    }
-
-    /**
-     * Make element item
-     * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testCollectionItem()
-     *
-     * @param int                               $iElementID
-     * @param \Lovata\Shopaholic\Models\Product $obElement
-     *
-     * @return ProductItem
-     */
-    protected function makeItem($iElementID, $obElement = null)
-    {
-        return ProductItem::make($iElementID, $obElement);
     }
 }

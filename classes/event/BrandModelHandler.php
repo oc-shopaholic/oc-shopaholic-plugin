@@ -16,15 +16,8 @@ class BrandModelHandler extends ModelHandler
     /** @var  BrandListStore */
     protected $obListStore;
 
-    /**
-     * BrandModelHandler constructor.
-     *
-     * @param BrandListStore $obBrandListStore
-     */
-    public function __construct(BrandListStore $obBrandListStore)
-    {
-        $this->obListStore = $obBrandListStore;
-    }
+    /** @var Brand */
+    protected $obElement;
 
     /**
      * Add listeners
@@ -37,6 +30,54 @@ class BrandModelHandler extends ModelHandler
         $obEvent->listen('shopaholic.brand.update.sorting', function () {
             $this->clearSortingList();
         });
+    }
+
+    /**
+     * After create event handler
+     */
+    protected function afterCreate()
+    {
+        parent::afterCreate();
+        $this->clearSortingList();
+    }
+
+    /**
+     * After save event handler
+     */
+    protected function afterSave()
+    {
+        parent::afterSave();
+
+        $this->checkFieldChanges('active', $this->obListStore->active);
+    }
+
+    /**
+     * After delete event handler
+     */
+    protected function afterDelete()
+    {
+        parent::afterDelete();
+        $this->clearSortingList();
+
+        if ($this->obElement->active) {
+            $this->obListStore->active->clear();
+        }
+    }
+
+    /**
+     * Clear sorting list
+     */
+    protected function clearSortingList()
+    {
+        $this->obListStore->sorting->clear();
+    }
+
+    /**
+     * Init store objects
+     */
+    protected function init()
+    {
+        $this->obListStore = BrandListStore::instance();
     }
 
     /**
@@ -55,31 +96,5 @@ class BrandModelHandler extends ModelHandler
     protected function getItemClass()
     {
         return BrandItem::class;
-    }
-
-    /**
-     * After create event handler
-     */
-    protected function afterCreate()
-    {
-        parent::afterCreate();
-        $this->clearSortingList();
-    }
-
-    /**
-     * After delete event handler
-     */
-    protected function afterDelete()
-    {
-        parent::afterDelete();
-        $this->clearSortingList();
-    }
-
-    /**
-     * Clear sorting list
-     */
-    protected function clearSortingList()
-    {
-        $this->obListStore->clearSortingList();
     }
 }

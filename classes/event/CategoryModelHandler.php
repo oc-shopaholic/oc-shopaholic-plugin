@@ -17,17 +17,7 @@ class CategoryModelHandler extends ModelHandler
     protected $obElement;
 
     /** @var  CategoryListStore */
-    protected $obCategoryListStore;
-
-    /**
-     * CategoryModelHandler constructor.
-     *
-     * @param CategoryListStore $obCategoryListStore
-     */
-    public function __construct(CategoryListStore $obCategoryListStore)
-    {
-        $this->obCategoryListStore = $obCategoryListStore;
-    }
+    protected $obListStore;
 
     /**
      * Add listeners
@@ -38,7 +28,7 @@ class CategoryModelHandler extends ModelHandler
         parent::subscribe($obEvent);
 
         $obEvent->listen('shopaholic.category.update.sorting', function () {
-            $this->obCategoryListStore->clearTopLevelList();
+            $this->obListStore->top_level->clear();
 
             //Get category ID list
             $arCategoryIDList = Category::lists('id');
@@ -46,12 +36,42 @@ class CategoryModelHandler extends ModelHandler
                 return;
             }
 
-            $sItemClass = $this->getItemClass();
             //Clear cache for all categories
             foreach ($arCategoryIDList as $iCategoryID) {
-                $sItemClass::clearCache($iCategoryID);
+                CategoryItem::clearCache($iCategoryID);
             }
         });
+    }
+
+    /**
+     * After save event handler
+     */
+    protected function afterSave()
+    {
+        parent::afterSave();
+        $this->obListStore->top_level->clear();
+    }
+
+    /**
+     * After delete event handler
+     */
+    protected function afterDelete()
+    {
+        parent::afterDelete();
+        $this->obListStore->top_level->clear();
+
+        //Clear parent item cache
+        if (!empty($this->obElement->parent_id)) {
+            CategoryItem::clearCache($this->obElement->parent_id);
+        }
+    }
+
+    /**
+     * Init store objects
+     */
+    protected function init()
+    {
+        $this->obListStore = CategoryListStore::instance();
     }
 
     /**
@@ -70,29 +90,5 @@ class CategoryModelHandler extends ModelHandler
     protected function getItemClass()
     {
         return CategoryItem::class;
-    }
-
-    /**
-     * After save event handler
-     */
-    protected function afterSave()
-    {
-        parent::afterSave();
-        $this->obCategoryListStore->clearTopLevelList();
-    }
-
-    /**
-     * After delete event handler
-     */
-    protected function afterDelete()
-    {
-        parent::afterDelete();
-        $this->obCategoryListStore->clearTopLevelList();
-
-        //Clear parent item cache
-        if (!empty($this->obElement->parent_id)) {
-            $sItemClass = $this->getItemClass();
-            $sItemClass::clearCache($this->obElement->parent_id);
-        }
     }
 }

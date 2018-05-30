@@ -2,7 +2,6 @@
 
 use Lovata\Toolbox\Classes\Item\ElementItem;
 
-use Lovata\Shopaholic\Plugin;
 use Lovata\Shopaholic\Models\Offer;
 use Lovata\Shopaholic\Models\Settings;
 use Lovata\Toolbox\Traits\Helpers\PriceHelperTrait;
@@ -43,7 +42,7 @@ class OfferItem extends ElementItem
 {
     use PriceHelperTrait;
 
-    const CACHE_TAG_ELEMENT = 'shopaholic-offer-element';
+    const MODEL_CLASS = Offer::class;
 
     /** @var Offer */
     protected $obElement = null;
@@ -62,24 +61,7 @@ class OfferItem extends ElementItem
      */
     protected function setElementObject()
     {
-        if (!empty($this->obElement) && !$this->obElement instanceof Offer) {
-            $this->obElement = null;
-        }
-
-        if (!empty($this->obElement) || empty($this->iElementID)) {
-            return;
-        }
-
         $this->obElement = Offer::active()->find($this->iElementID);
-    }
-
-    /**
-     * Get cache tag array for model
-     * @return array
-     */
-    protected static function getCacheTag()
-    {
-        return [Plugin::CACHE_TAG, self::CACHE_TAG_ELEMENT];
     }
 
     /**

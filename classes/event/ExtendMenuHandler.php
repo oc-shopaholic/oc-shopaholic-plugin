@@ -1,8 +1,10 @@
 <?php namespace Lovata\Shopaholic\Classes\Event;
 
-use Lovata\Shopaholic\Classes\Helper\AllCategoriesMenuType;
-use Lovata\Shopaholic\Classes\Helper\CatalogMenuType;
-use Lovata\Shopaholic\Classes\Helper\CategoryMenuType;
+use Lovata\Shopaholic\Classes\Helper\{
+    AllCategoriesMenuType,
+    CatalogMenuType,
+    CategoryMenuType
+};
 
 /**
  * Class ExtendMenuHandler

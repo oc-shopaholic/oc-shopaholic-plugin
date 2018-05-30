@@ -31,5 +31,5 @@
 1.8.0:
     - 'Add integration with "Viewed products for Shopaholic" plugin'
 1.9.0:
-    - 'Add PriceHelperTrait, TraitCached in models. Move PriceHelper class from Shopaholic plugin to Toolbox plugin.'
+    - 'Add PriceHelperTrait, TraitCached in models. Move PriceHelper class from Shopaholic plugin to Toolbox plugin. Add new store classes. Refactoring *Store, *Item, *Collection classes.'
     - seeder_price_format.php

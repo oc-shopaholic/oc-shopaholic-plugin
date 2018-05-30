@@ -1,7 +1,5 @@
 <?php namespace Lovata\Shopaholic\Classes\Event;
 
-use System\Classes\PluginManager;
-
 use Lovata\Toolbox\Classes\Event\ModelHandler;
 
 use Lovata\Shopaholic\Models\Product;
@@ -28,14 +26,11 @@ class ProductModelHandler extends ModelHandler
 
     /**
      * ProductModelHandler constructor.
-     *
-     * @param ProductListStore $obProductListStore
-     * @param BrandListStore   $obBrandListStore
      */
-    public function __construct(ProductListStore $obProductListStore, BrandListStore $obBrandListStore)
+    public function __construct()
     {
-        $this->obListStore = $obProductListStore;
-        $this->obBrandListStore = $obBrandListStore;
+        $this->obListStore = ProductListStore::instance();
+        $this->obBrandListStore = BrandListStore::instance();
     }
 
     /**
@@ -63,8 +58,8 @@ class ProductModelHandler extends ModelHandler
     {
         parent::afterCreate();
 
-        $this->obListStore->updateCacheBySorting(ProductListStore::SORT_NEW);
-        $this->obListStore->updateCacheBySorting(ProductListStore::SORT_NO);
+        $this->obListStore->sorting->clear(ProductListStore::SORT_NEW);
+        $this->obListStore->sorting->clear(ProductListStore::SORT_NO);
     }
 
     /**
@@ -79,6 +74,8 @@ class ProductModelHandler extends ModelHandler
 
         //Check "brand_id" field
         $this->checkBrandIDField();
+
+        $this->checkFieldChanges('active', $this->obListStore->active);
     }
 
     /**
@@ -89,15 +86,19 @@ class ProductModelHandler extends ModelHandler
         $this->processOfferAfterDelete();
         parent::afterDelete();
 
-        $this->obListStore->clearListByCategory($this->obElement->category_id);
-        $this->obBrandListStore->clearListByCategory($this->obElement->category_id);
+        $this->obListStore->category->clear($this->obElement->category_id);
+        $this->obBrandListStore->category->clear($this->obElement->category_id);
 
-        $this->obListStore->clearListByBrand($this->obElement->brand_id);
+        $this->obListStore->brand->clear($this->obElement->brand_id);
 
-        $this->obListStore->updateCacheBySorting(ProductListStore::SORT_PRICE_ASC);
-        $this->obListStore->updateCacheBySorting(ProductListStore::SORT_PRICE_DESC);
-        $this->obListStore->updateCacheBySorting(ProductListStore::SORT_NEW);
-        $this->obListStore->updateCacheBySorting(ProductListStore::SORT_NO);
+        $this->obListStore->sorting->clear(ProductListStore::SORT_PRICE_ASC);
+        $this->obListStore->sorting->clear(ProductListStore::SORT_PRICE_DESC);
+        $this->obListStore->sorting->clear(ProductListStore::SORT_NEW);
+        $this->obListStore->sorting->clear(ProductListStore::SORT_NO);
+
+        if ($this->obElement->active) {
+            $this->obListStore->active->clear();
+        }
     }
 
     /**
@@ -126,7 +127,7 @@ class ProductModelHandler extends ModelHandler
             return;
         }
 
-        $this->obListStore->clearActiveList();
+        $this->obListStore->active->clear();
 
         $obCategoryItem = CategoryItem::make($this->obElement->category_id);
         if ($obCategoryItem->isEmpty()) {
@@ -147,11 +148,11 @@ class ProductModelHandler extends ModelHandler
         }
 
         //Update product ID cache list for category
-        $this->obListStore->clearListByCategory($this->obElement->category_id);
-        $this->obListStore->clearListByCategory((int) $this->obElement->getOriginal('category_id'));
+        $this->obListStore->category->clear($this->obElement->category_id);
+        $this->obListStore->category->clear((int) $this->obElement->getOriginal('category_id'));
 
-        $this->obBrandListStore->clearListByCategory($this->obElement->category_id);
-        $this->obBrandListStore->clearListByCategory((int) $this->obElement->getOriginal('category_id'));
+        $this->obBrandListStore->category->clear($this->obElement->category_id);
+        $this->obBrandListStore->category->clear((int) $this->obElement->getOriginal('category_id'));
     }
 
     /**
@@ -165,7 +166,7 @@ class ProductModelHandler extends ModelHandler
         }
 
         //Update product ID cache list for brand
-        $this->obListStore->clearListByBrand($this->obElement->brand_id);
-        $this->obListStore->clearListByBrand((int) $this->obElement->getOriginal('brand_id'));
+        $this->obListStore->brand->clear($this->obElement->brand_id);
+        $this->obListStore->brand->clear((int) $this->obElement->getOriginal('brand_id'));
     }
 }

@@ -2,7 +2,6 @@
 
 use Lovata\Toolbox\Classes\Item\ElementItem;
 
-use Lovata\Shopaholic\Plugin;
 use Lovata\Shopaholic\Models\Brand;
 
 /**
@@ -26,7 +25,7 @@ use Lovata\Shopaholic\Models\Brand;
  */
 class BrandItem extends ElementItem
 {
-    const CACHE_TAG_ELEMENT = 'shopaholic-brand-element';
+    const MODEL_CLASS = Brand::class;
 
     /** @var Brand */
     protected $obElement = null;
@@ -36,23 +35,6 @@ class BrandItem extends ElementItem
      */
     protected function setElementObject()
     {
-        if (!empty($this->obElement) && !$this->obElement instanceof Brand) {
-            $this->obElement = null;
-        }
-
-        if (!empty($this->obElement) || empty($this->iElementID)) {
-            return;
-        }
-
         $this->obElement = Brand::active()->find($this->iElementID);
-    }
-
-    /**
-     * Get cache tag array for model
-     * @return array
-     */
-    protected static function getCacheTag()
-    {
-        return [Plugin::CACHE_TAG, self::CACHE_TAG_ELEMENT];
     }
 }

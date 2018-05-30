@@ -19,16 +19,19 @@ use Lovata\Shopaholic\Classes\Store\OfferListStore;
  */
 class OfferCollection extends ElementCollection
 {
-    /** @var OfferListStore */
-    protected $obOfferListStore;
+    const ITEM_CLASS = OfferItem::class;
+
+    /**
+     * @var OfferListStore
+     */
+    protected $obListStore;
 
     /**
      * OfferCollection constructor.
-     * @param OfferListStore $obOfferListStore
      */
-    public function __construct(OfferListStore $obOfferListStore)
+    public function __construct()
     {
-        $this->obOfferListStore = $obOfferListStore;
+        $this->obListStore = OfferListStore::instance();
         parent::__construct();
     }
 
@@ -40,12 +43,8 @@ class OfferCollection extends ElementCollection
      */
     public function sort($sSorting)
     {
-        if (!$this->isClear() && $this->isEmpty()) {
-            return $this->returnThis();
-        }
-
         //Get sorting list
-        $arResultIDList = $this->obOfferListStore->getBySorting($sSorting);
+        $arResultIDList = $this->obListStore->sorting->get($sSorting);
 
         return $this->applySorting($arResultIDList);
     }
@@ -57,21 +56,8 @@ class OfferCollection extends ElementCollection
      */
     public function active()
     {
-        $arResultIDList = $this->obOfferListStore->getActiveList();
+        $arResultIDList = $this->obListStore->active->get();
 
         return $this->intersect($arResultIDList);
-    }
-
-    /**
-     * Make element item
-     * @see \Lovata\Shopaholic\Tests\Unit\Collection\OfferCollectionTest::testCollectionItem()
-     * @param int                             $iElementID
-     * @param \Lovata\Shopaholic\Models\Offer $obElement
-     *
-     * @return OfferItem
-     */
-    protected function makeItem($iElementID, $obElement = null)
-    {
-        return OfferItem::make($iElementID, $obElement);
     }
 }

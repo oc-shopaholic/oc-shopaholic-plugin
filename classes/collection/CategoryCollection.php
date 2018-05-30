@@ -18,16 +18,19 @@ use Lovata\Shopaholic\Classes\Store\CategoryListStore;
  */
 class CategoryCollection extends ElementCollection
 {
-    /** @var CategoryListStore */
-    protected $obCategoryListStore;
+    const ITEM_CLASS = CategoryItem::class;
+
+    /**
+     * @var CategoryListStore
+     */
+    protected $obListStore;
 
     /**
      * CategoryCollection constructor.
-     * @param CategoryListStore $obCategoryListStore
      */
-    public function __construct(CategoryListStore $obCategoryListStore)
+    public function __construct()
     {
-        $this->obCategoryListStore = $obCategoryListStore;
+        $this->obListStore = CategoryListStore::instance();
         parent::__construct();
     }
 
@@ -38,21 +41,8 @@ class CategoryCollection extends ElementCollection
      */
     public function tree()
     {
-        $this->arElementIDList = $this->obCategoryListStore->getTopLevelList();
+        $this->arElementIDList = $this->obListStore->top_level->get();
 
         return $this->returnThis();
-    }
-
-    /**
-     * Make element item
-     * @see \Lovata\Shopaholic\Tests\Unit\Collection\CategoryCollectionTest::testCollectionItem()
-     * @param int                                $iElementID
-     * @param \Lovata\Shopaholic\Models\Category $obElement
-     *
-     * @return CategoryItem
-     */
-    protected function makeItem($iElementID, $obElement = null)
-    {
-        return CategoryItem::make($iElementID, $obElement);
     }
 }
