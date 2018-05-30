@@ -3,13 +3,7 @@
 use Event;
 use System\Classes\PluginBase;
 
-use Lovata\Shopaholic\Classes\Event\{
-    BrandModelHandler,
-    CategoryModelHandler,
-    OfferModelHandler,
-    ProductModelHandler,
-    ExtendMenuHandler
-};
+use Lovata\Shopaholic\Classes\Event\{BrandModelHandler, CategoryModelHandler, OfferModelHandler, ProductModelHandler, ExtendMenuHandler};
 
 /**
  * Class Plugin

@@ -177,7 +177,7 @@ class OfferModelHandler extends ModelHandler
     /**
      * Init store objects
      */
-    public function init()
+    protected function init()
     {
         $this->obProductListStore = ProductListStore::instance();
         $this->obListStore = OfferListStore::instance();

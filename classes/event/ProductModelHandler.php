@@ -25,33 +25,6 @@ class ProductModelHandler extends ModelHandler
     protected $obBrandListStore;
 
     /**
-     * ProductModelHandler constructor.
-     */
-    public function __construct()
-    {
-        $this->obListStore = ProductListStore::instance();
-        $this->obBrandListStore = BrandListStore::instance();
-    }
-
-    /**
-     * Get model class name
-     * @return string
-     */
-    protected function getModelClass()
-    {
-        return Product::class;
-    }
-
-    /**
-     * Get item class name
-     * @return string
-     */
-    protected function getItemClass()
-    {
-        return ProductItem::class;
-    }
-
-    /**
      * After create event handler
      */
     protected function afterCreate()
@@ -168,5 +141,32 @@ class ProductModelHandler extends ModelHandler
         //Update product ID cache list for brand
         $this->obListStore->brand->clear($this->obElement->brand_id);
         $this->obListStore->brand->clear((int) $this->obElement->getOriginal('brand_id'));
+    }
+
+    /**
+     * Init store objects
+     */
+    protected function init()
+    {
+        $this->obListStore = ProductListStore::instance();
+        $this->obBrandListStore = BrandListStore::instance();
+    }
+
+    /**
+     * Get model class name
+     * @return string
+     */
+    protected function getModelClass()
+    {
+        return Product::class;
+    }
+
+    /**
+     * Get item class name
+     * @return string
+     */
+    protected function getItemClass()
+    {
+        return ProductItem::class;
     }
 }
