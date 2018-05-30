@@ -4,16 +4,12 @@ use Lovata\Toolbox\Classes\Event\ModelHandler;
 
 use Lovata\Shopaholic\Models\Offer;
 use Lovata\Shopaholic\Models\Settings;
-use Lovata\Shopaholic\Classes\Item\{
-    OfferItem,
-    ProductItem,
-    CategoryItem
-};
+use Lovata\Shopaholic\Classes\Item\OfferItem;
+use Lovata\Shopaholic\Classes\Item\ProductItem;
+use Lovata\Shopaholic\Classes\Item\CategoryItem;
 
-use Lovata\Shopaholic\Classes\Store\{
-    OfferListStore,
-    ProductListStore
-};
+use Lovata\Shopaholic\Classes\Store\OfferListStore;
+use Lovata\Shopaholic\Classes\Store\ProductListStore;
 
 /**
  * Class OfferModelHandler

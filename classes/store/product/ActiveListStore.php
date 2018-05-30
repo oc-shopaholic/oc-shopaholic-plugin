@@ -2,11 +2,9 @@
 
 use Lovata\Toolbox\Classes\Store\AbstractStoreWithoutParam;
 
-use Lovata\Shopaholic\Models\{
-    Offer,
-    Product,
-    Settings
-};
+use Lovata\Shopaholic\Models\Offer;
+use Lovata\Shopaholic\Models\Product;
+use Lovata\Shopaholic\Models\Settings;
 
 /**
  * Class ActiveListStore

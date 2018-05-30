@@ -113,7 +113,7 @@ class ProductModelHandler extends ModelHandler
     /**
      * Check product "category_id" field, if it was changed, then clear cache
      */
-    private function checkCategoryIDField()
+    protected function checkCategoryIDField()
     {
         //Check "category_id" field
         if ($this->obElement->getOriginal('category_id') == $this->obElement->category_id) {
@@ -131,7 +131,7 @@ class ProductModelHandler extends ModelHandler
     /**
      * Check product "brand_id" field, if it was changed, then clear cache
      */
-    private function checkBrandIDField()
+    protected function checkBrandIDField()
     {
         //Check "brand_id" field
         if ($this->obElement->getOriginal('brand_id') == $this->obElement->brand_id) {

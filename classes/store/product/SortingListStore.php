@@ -3,10 +3,8 @@
 use Event;
 use Lovata\Toolbox\Classes\Store\AbstractStoreWithParam;
 
-use Lovata\Shopaholic\Models\{
-    Offer,
-    Product
-};
+use Lovata\Shopaholic\Models\Offer;
+use Lovata\Shopaholic\Models\Product;
 use Lovata\Shopaholic\Classes\Store\ProductListStore;
 
 /**

@@ -2,10 +2,8 @@
 
 use Lovata\Toolbox\Classes\Store\AbstractListStore;
 
-use Lovata\Shopaholic\Classes\Store\Offer\{
-    ActiveListStore,
-    SortingListStore
-};
+use Lovata\Shopaholic\Classes\Store\Offer\ActiveListStore;
+use Lovata\Shopaholic\Classes\Store\Offer\SortingListStore;
 
 /**
  * Class OfferListStore

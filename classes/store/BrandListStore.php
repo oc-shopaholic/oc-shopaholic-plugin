@@ -2,11 +2,9 @@
 
 use Lovata\Toolbox\Classes\Store\AbstractListStore;
 
-use Lovata\Shopaholic\Classes\Store\Brand\{
-    ActiveListStore,
-    SortingListStore,
-    ListByCategoryStore
-};
+use Lovata\Shopaholic\Classes\Store\Brand\ActiveListStore;
+use Lovata\Shopaholic\Classes\Store\Brand\SortingListStore;
+use Lovata\Shopaholic\Classes\Store\Brand\ListByCategoryStore;
 
 /**
  * Class BrandListStore
