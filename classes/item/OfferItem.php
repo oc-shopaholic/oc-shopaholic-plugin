@@ -14,7 +14,9 @@ use Lovata\Toolbox\Traits\Helpers\PriceHelperTrait;
  * @see \Lovata\Shopaholic\Tests\Unit\Item\OfferItemTest
  * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/OfferItem
  *
- * @property             $id
+ * @property int         $id
+ * @property bool        $active
+ * @property bool        $trashed
  * @property string      $name
  * @property string      $code
  * @property int         $product_id
@@ -57,11 +59,20 @@ class OfferItem extends ElementItem
     public $arPriceField = ['price', 'old_price'];
 
     /**
+     * Check element, active == true, trashed == false
+     * @return bool
+     */
+    public function isActive()
+    {
+        return $this->active && !$this->trashed;
+    }
+
+    /**
      * Set element object
      */
     protected function setElementObject()
     {
-        $this->obElement = Offer::active()->find($this->iElementID);
+        $this->obElement = Offer::withTrashed()->find($this->iElementID);
     }
 
     /**
@@ -71,5 +82,19 @@ class OfferItem extends ElementItem
     protected function getCurrencyAttribute()
     {
         return Settings::getValue('currency');
+    }
+
+    /**
+     * Set element data from model object
+     *
+     * @return array
+     */
+    protected function getElementData()
+    {
+        $arResult = [
+            'trashed'       => $this->obElement->trashed(),
+        ];
+
+        return $arResult;
     }
 }

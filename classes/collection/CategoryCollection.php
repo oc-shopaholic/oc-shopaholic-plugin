@@ -21,28 +21,26 @@ class CategoryCollection extends ElementCollection
     const ITEM_CLASS = CategoryItem::class;
 
     /**
-     * @var CategoryListStore
-     */
-    protected $obListStore;
-
-    /**
-     * CategoryCollection constructor.
-     */
-    public function __construct()
-    {
-        $this->obListStore = CategoryListStore::instance();
-        parent::__construct();
-    }
-
-    /**
      * Set to element ID list top level category ID list
      * @see \Lovata\Shopaholic\Tests\Unit\Collection\CategoryCollectionTest::testTreeMethod()
      * @return CategoryCollection
      */
     public function tree()
     {
-        $this->arElementIDList = $this->obListStore->top_level->get();
+        $arResultIDList = CategoryListStore::instance()->top_level->get();
 
-        return $this->returnThis();
+        return $this->applySorting($arResultIDList);
+    }
+
+    /**
+     * Apply filter by active field
+     * @see \Lovata\Shopaholic\Tests\Unit\Collection\CategoryCollectionTest::testActiveList()
+     * @return $this
+     */
+    public function active()
+    {
+        $arResultIDList = CategoryListStore::instance()->active->get();
+
+        return $this->intersect($arResultIDList);
     }
 }

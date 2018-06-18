@@ -6,7 +6,6 @@ fields:
         type: switch
     name:
         label: 'lovata.toolbox::lang.field.name'
-        oc.commentPosition: ''
         span: left
         required: 1
         type: text
@@ -22,7 +21,6 @@ tabs:
     fields:
         category:
             label: 'lovata.toolbox::lang.field.category'
-            oc.commentPosition: ''
             nameFrom: name
             descriptionFrom: description
             span: left
@@ -41,7 +39,6 @@ tabs:
             tab: 'lovata.toolbox::lang.tab.settings'
         external_id:
             label: 'lovata.toolbox::lang.field.external_id'
-            oc.commentPosition: ''
             span: left
             type: text
             tab: 'lovata.toolbox::lang.tab.settings'

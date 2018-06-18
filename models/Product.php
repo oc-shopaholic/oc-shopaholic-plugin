@@ -137,6 +137,7 @@ class Product extends Model
 
     public $cached = [
         'id',
+        'active',
         'name',
         'slug',
         'code',

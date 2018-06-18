@@ -125,14 +125,6 @@ class CategoryItem extends ElementItem
     }
 
     /**
-     * Set element object
-     */
-    protected function setElementObject()
-    {
-        $this->obElement = Category::active()->find($this->iElementID);
-    }
-
-    /**
      * Set element data from model object
      *
      * @return array

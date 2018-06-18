@@ -21,27 +21,13 @@ class BrandCollection extends ElementCollection
     const ITEM_CLASS = BrandItem::class;
 
     /**
-     * @var BrandListStore
-     */
-    protected $obListStore;
-
-    /**
-     * BrandCollection constructor.
-     */
-    public function __construct()
-    {
-        $this->obListStore = BrandListStore::instance();
-        parent::__construct();
-    }
-
-    /**
      * Sort list
      * @return $this
      */
     public function sort()
     {
         //Get sorting list
-        $arResultIDList = $this->obListStore->sorting->get();
+        $arResultIDList = BrandListStore::instance()->sorting->get();
 
         return $this->applySorting($arResultIDList);
     }
@@ -53,7 +39,7 @@ class BrandCollection extends ElementCollection
      */
     public function active()
     {
-        $arResultIDList = $this->obListStore->active->get();
+        $arResultIDList = BrandListStore::instance()->active->get();
 
         return $this->intersect($arResultIDList);
     }
@@ -66,7 +52,7 @@ class BrandCollection extends ElementCollection
      */
     public function category($iCategoryID)
     {
-        $arResultIDList = $this->obListStore->category->get($iCategoryID);
+        $arResultIDList = BrandListStore::instance()->category->get($iCategoryID);
 
         return $this->intersect($arResultIDList);
     }

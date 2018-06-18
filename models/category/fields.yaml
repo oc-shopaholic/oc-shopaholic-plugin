@@ -21,33 +21,28 @@ tabs:
     fields:
         code:
             label: 'lovata.toolbox::lang.field.code'
-            oc.commentPosition: ''
             span: left
             type: text
             tab: 'lovata.toolbox::lang.tab.settings'
         external_id:
             label: 'lovata.toolbox::lang.field.external_id'
-            oc.commentPosition: ''
             span: left
             type: text
             tab: 'lovata.toolbox::lang.tab.settings'
         preview_text:
             label: 'lovata.toolbox::lang.field.preview_text'
             size: large
-            oc.commentPosition: ''
             span: full
             type: textarea
             tab: 'lovata.toolbox::lang.tab.description'
         description:
             label: 'lovata.toolbox::lang.field.description'
             size: giant
-            oc.commentPosition: ''
             span: full
             type: richeditor
             tab: 'lovata.toolbox::lang.tab.description'
         preview_image:
             label: 'lovata.toolbox::lang.field.preview_image'
-            oc.commentPosition: ''
             mode: image
             useCaption: true
             thumbOptions:

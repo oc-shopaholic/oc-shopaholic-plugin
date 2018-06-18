@@ -38,20 +38,6 @@ class ProductCollection extends ElementCollection
     const ITEM_CLASS = ProductItem::class;
 
     /**
-     * @var ProductListStore
-     */
-    protected $obListStore;
-
-    /**
-     * ProductCollection constructor.
-     */
-    public function __construct()
-    {
-        $this->obListStore = ProductListStore::instance();
-        parent::__construct();
-    }
-
-    /**
      * Sort list by
      * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testSortingByID()
      * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testSortingByPrice()
@@ -61,20 +47,20 @@ class ProductCollection extends ElementCollection
     public function sort($sSorting)
     {
         //Get sorting list
-        $arResultIDList = $this->obListStore->sorting->get($sSorting);
+        $arResultIDList = ProductListStore::instance()->sorting->get($sSorting);
 
         return $this->applySorting($arResultIDList);
     }
 
     /**
-     * Apply filter by active product list
+     * Apply filter by active field
      * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testActiveList()
      * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testActiveListWithCheckingOffer()
      * @return $this
      */
     public function active()
     {
-        $arResultIDList = $this->obListStore->active->get();
+        $arResultIDList = ProductListStore::instance()->active->get();
 
         return $this->intersect($arResultIDList);
     }
@@ -87,7 +73,7 @@ class ProductCollection extends ElementCollection
      */
     public function category($iCategoryID)
     {
-        $arResultIDList = $this->obListStore->category->get($iCategoryID);
+        $arResultIDList = ProductListStore::instance()->category->get($iCategoryID);
 
         return $this->intersect($arResultIDList);
     }
@@ -100,7 +86,7 @@ class ProductCollection extends ElementCollection
      */
     public function brand($iBrandID)
     {
-        $arResultIDList = $this->obListStore->brand->get($iBrandID);
+        $arResultIDList = ProductListStore::instance()->brand->get($iBrandID);
 
         return $this->intersect($arResultIDList);
     }

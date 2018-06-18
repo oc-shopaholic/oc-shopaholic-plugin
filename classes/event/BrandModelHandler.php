@@ -9,7 +9,7 @@ use Lovata\Shopaholic\Classes\Store\BrandListStore;
 /**
  * Class BrandModelHandler
  * @package Lovata\Shopaholic\Classes\Event
- * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
 class BrandModelHandler extends ModelHandler
 {
@@ -18,6 +18,14 @@ class BrandModelHandler extends ModelHandler
 
     /** @var Brand */
     protected $obElement;
+
+    /**
+     * BrandModelHandler constructor.
+     */
+    public function __construct()
+    {
+        $this->obListStore = BrandListStore::instance();
+    }
 
     /**
      * Add listeners
@@ -70,14 +78,6 @@ class BrandModelHandler extends ModelHandler
     protected function clearSortingList()
     {
         $this->obListStore->sorting->clear();
-    }
-
-    /**
-     * Init store objects
-     */
-    protected function init()
-    {
-        $this->obListStore = BrandListStore::instance();
     }
 
     /**

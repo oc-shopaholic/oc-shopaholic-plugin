@@ -7,6 +7,7 @@ columns:
     active:
         label: 'lovata.toolbox::lang.field.active'
         type: switch
+        searchable: false
         sortable: true
     code:
         label: 'lovata.shopaholic::lang.field.vendor_code'
@@ -26,6 +27,7 @@ columns:
     quantity:
         label: 'lovata.shopaholic::lang.field.quantity'
         type: text
+        searchable: false
         sortable: true
     id:
         label: 'lovata.toolbox::lang.field.id'

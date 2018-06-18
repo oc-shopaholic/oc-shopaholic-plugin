@@ -100,29 +100,6 @@ class CategoryItemTest extends CommonTest
     }
 
     /**
-     * Check item data, after active flag = false
-     */
-    public function testActiveFlag()
-    {
-        $this->createTestData();
-        if(empty($this->obElement)) {
-            return;
-        }
-
-        $sErrorMessage = 'Category item data is not correct, after model active flag = false';
-
-        $obItem = CategoryItem::make($this->obElement->id);
-        self::assertEquals(false, $obItem->isEmpty(), $sErrorMessage);
-
-        //Check active flag in item data
-        $this->obElement->active = false;
-        $this->obElement->save();
-
-        $obItem = CategoryItem::make($this->obElement->id);
-        self::assertEquals(true, $obItem->isEmpty(), $sErrorMessage);
-    }
-
-    /**
      * Check update cache item data, after remove element
      */
     public function testRemoveElement()

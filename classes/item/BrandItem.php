@@ -29,12 +29,4 @@ class BrandItem extends ElementItem
 
     /** @var Brand */
     protected $obElement = null;
-
-    /**
-     * Set element object
-     */
-    protected function setElementObject()
-    {
-        $this->obElement = Brand::active()->find($this->iElementID);
-    }
 }

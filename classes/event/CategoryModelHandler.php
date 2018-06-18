@@ -20,6 +20,14 @@ class CategoryModelHandler extends ModelHandler
     protected $obListStore;
 
     /**
+     * CategoryModelHandler constructor.
+     */
+    public function __construct()
+    {
+        $this->obListStore = CategoryListStore::instance();
+    }
+
+    /**
      * Add listeners
      * @param \Illuminate\Events\Dispatcher $obEvent
      */
@@ -50,6 +58,8 @@ class CategoryModelHandler extends ModelHandler
     {
         parent::afterSave();
         $this->obListStore->top_level->clear();
+
+        $this->checkFieldChanges('active', $this->obListStore->active);
     }
 
     /**
@@ -64,14 +74,10 @@ class CategoryModelHandler extends ModelHandler
         if (!empty($this->obElement->parent_id)) {
             CategoryItem::clearCache($this->obElement->parent_id);
         }
-    }
 
-    /**
-     * Init store objects
-     */
-    protected function init()
-    {
-        $this->obListStore = CategoryListStore::instance();
+        if ($this->obElement->active) {
+            $this->obListStore->active->clear();
+        }
     }
 
     /**

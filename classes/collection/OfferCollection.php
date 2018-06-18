@@ -22,20 +22,6 @@ class OfferCollection extends ElementCollection
     const ITEM_CLASS = OfferItem::class;
 
     /**
-     * @var OfferListStore
-     */
-    protected $obListStore;
-
-    /**
-     * OfferCollection constructor.
-     */
-    public function __construct()
-    {
-        $this->obListStore = OfferListStore::instance();
-        parent::__construct();
-    }
-
-    /**
      * Sort list by
      * @see \Lovata\Shopaholic\Tests\Unit\Collection\OfferCollectionTest::testSortingByPrice()
      * @param string $sSorting
@@ -44,19 +30,19 @@ class OfferCollection extends ElementCollection
     public function sort($sSorting)
     {
         //Get sorting list
-        $arResultIDList = $this->obListStore->sorting->get($sSorting);
+        $arResultIDList = OfferListStore::instance()->sorting->get($sSorting);
 
         return $this->applySorting($arResultIDList);
     }
 
     /**
-     * Apply filter by active product list
+     * Apply filter by active field
      * @see \Lovata\Shopaholic\Tests\Unit\Collection\OfferCollectionTest::testActiveList()
      * @return $this
      */
     public function active()
     {
-        $arResultIDList = $this->obListStore->active->get();
+        $arResultIDList = OfferListStore::instance()->active->get();
 
         return $this->intersect($arResultIDList);
     }

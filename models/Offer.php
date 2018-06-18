@@ -100,6 +100,7 @@ class Offer extends Model
 
     public $cached = [
         'id',
+        'active',
         'product_id',
         'name',
         'code',

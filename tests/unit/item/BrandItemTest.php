@@ -71,29 +71,6 @@ class BrandItemTest extends CommonTest
     }
 
     /**
-     * Check item data, after active flag = false
-     */
-    public function testActiveFlag()
-    {
-        $this->createTestData();
-        if(empty($this->obElement)) {
-            return;
-        }
-
-        $sErrorMessage = 'Brand item data is not correct, after model active flag = false';
-
-        $obItem = BrandItem::make($this->obElement->id);
-        self::assertEquals(false, $obItem->isEmpty(), $sErrorMessage);
-
-        //Check active flag in item data
-        $this->obElement->active = false;
-        $this->obElement->save();
-
-        $obItem = BrandItem::make($this->obElement->id);
-        self::assertEquals(true, $obItem->isEmpty(), $sErrorMessage);
-    }
-
-    /**
      * Check update cache item data, after remove element
      */
     public function testRemoveElement()
