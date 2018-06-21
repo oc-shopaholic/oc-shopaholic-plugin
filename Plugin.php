@@ -16,9 +16,6 @@ use Lovata\Shopaholic\Classes\Event\ExtendMenuHandler;
  */
 class Plugin extends PluginBase
 {
-    const NAME = 'shopaholic';
-    const CACHE_TAG = 'shopaholic';
-
     /** @var array Plugin dependencies */
     public $require = ['Lovata.Toolbox'];
 
