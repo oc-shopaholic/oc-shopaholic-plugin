@@ -39,7 +39,7 @@ before_script:
       cd ..;
       mkdir -p ./october/plugins/lovata/shopaholic;
       mv !(october) october/plugins/lovata/shopaholic;
-      ln -s $HOME/october/plugins/lovata/ $HOME/october/tests/fixtures/plugins/lovata
+      ln -s $HOME/october/plugins/lovata/ $HOME/october/tests/fixtures/plugins/lovata;
       cd october/plugins/lovata/shopaholic;
     fi
 
