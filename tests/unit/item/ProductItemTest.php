@@ -139,29 +139,6 @@ class ProductItemTest extends CommonTest
     }
 
     /**
-     * Check item data, after active flag = false
-     */
-    public function testActiveFlag()
-    {
-        $this->createTestData();
-        if(empty($this->obElement)) {
-            return;
-        }
-
-        $sErrorMessage = 'Product item data is not correct, after model active flag = false';
-
-        $obItem = ProductItem::make($this->obElement->id);
-        self::assertEquals(false, $obItem->isEmpty(), $sErrorMessage);
-
-        //Check active flag in item data
-        $this->obElement->active = false;
-        $this->obElement->save();
-
-        $obItem = ProductItem::make($this->obElement->id);
-        self::assertEquals(true, $obItem->isEmpty(), $sErrorMessage);
-    }
-
-    /**
      * Check item data, after delete model
      */
     public function testDeleteElement()
@@ -180,7 +157,7 @@ class ProductItemTest extends CommonTest
         $this->obElement->delete();
 
         $obItem = ProductItem::make($this->obElement->id);
-        self::assertEquals(true, $obItem->isEmpty(), $sErrorMessage);
+        self::assertEquals(false, $obItem->isEmpty(), $sErrorMessage);
     }
 
     /**

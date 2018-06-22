@@ -7,6 +7,7 @@ use Lovata\Shopaholic\Models\Settings;
 use Lovata\Shopaholic\Classes\Item\OfferItem;
 use Lovata\Shopaholic\Classes\Item\ProductItem;
 use Lovata\Shopaholic\Classes\Item\CategoryItem;
+
 use Lovata\Shopaholic\Classes\Store\OfferListStore;
 use Lovata\Shopaholic\Classes\Store\ProductListStore;
 
@@ -27,36 +28,6 @@ class OfferModelHandler extends ModelHandler
     protected $obListStore;
 
     /**
-     * OfferModelHandler constructor.
-     *
-     * @param ProductListStore $obProductListStore
-     * @param OfferListStore   $obOfferListStore
-     */
-    public function __construct(ProductListStore $obProductListStore, OfferListStore $obOfferListStore)
-    {
-        $this->obProductListStore = $obProductListStore;
-        $this->obListStore = $obOfferListStore;
-    }
-
-    /**
-     * Get model class name
-     * @return string
-     */
-    protected function getModelClass()
-    {
-        return Offer::class;
-    }
-
-    /**
-     * Get item class name
-     * @return string
-     */
-    protected function getItemClass()
-    {
-        return OfferItem::class;
-    }
-
-    /**
      * After save event handler
      */
     protected function afterSave()
@@ -65,6 +36,8 @@ class OfferModelHandler extends ModelHandler
 
         $this->checkProductIDField();
         $this->checkPriceField();
+
+        $this->checkActiveField();
     }
 
     /**
@@ -77,6 +50,7 @@ class OfferModelHandler extends ModelHandler
         if ($this->obElement->active) {
             $this->clearProductActiveList();
             $this->clearProductItemCache($this->obElement->product_id);
+            $this->obListStore->active->clear();
         }
 
         //Get product object
@@ -86,8 +60,8 @@ class OfferModelHandler extends ModelHandler
         }
 
         //Clear sorting product list by offer price
-        $this->obProductListStore->updateCacheBySorting(ProductListStore::SORT_PRICE_ASC);
-        $this->obProductListStore->updateCacheBySorting(ProductListStore::SORT_PRICE_DESC);
+        $this->obProductListStore->sorting->clear(ProductListStore::SORT_PRICE_ASC);
+        $this->obProductListStore->sorting->clear(ProductListStore::SORT_PRICE_DESC);
     }
 
     /**
@@ -120,7 +94,7 @@ class OfferModelHandler extends ModelHandler
         }
 
         if (!empty($iProductID)) {
-            $this->clearProductItemCache($iOriginalProductID);
+            $this->clearProductItemCache($iProductID);
         }
     }
 
@@ -129,9 +103,9 @@ class OfferModelHandler extends ModelHandler
      */
     protected function checkPriceField()
     {
-        if ($this->obElement->getOriginal('price') != $this->obElement->price) {
-            $this->obListStore->updateCacheBySorting(OfferListStore::SORT_PRICE_ASC);
-            $this->obListStore->updateCacheBySorting(OfferListStore::SORT_PRICE_DESC);
+        if ($this->obElement->getOriginal('price') != $this->obElement->price_value) {
+            $this->obListStore->sorting->clear(OfferListStore::SORT_PRICE_ASC);
+            $this->obListStore->sorting->clear(OfferListStore::SORT_PRICE_DESC);
         }
 
         $bNeedUpdateFlag =
@@ -139,7 +113,7 @@ class OfferModelHandler extends ModelHandler
             || (
                 $this->obElement->active
                 && $this->obElement->getOriginal('active') == $this->obElement->active
-                && $this->obElement->getOriginal('price') != $this->obElement->price
+                && $this->obElement->getOriginal('price') != $this->obElement->price_value
             );
 
         if (!$bNeedUpdateFlag) {
@@ -152,8 +126,8 @@ class OfferModelHandler extends ModelHandler
             return;
         }
 
-        $this->obProductListStore->updateCacheBySorting(ProductListStore::SORT_PRICE_ASC);
-        $this->obProductListStore->updateCacheBySorting(ProductListStore::SORT_PRICE_DESC);
+        $this->obProductListStore->sorting->clear(ProductListStore::SORT_PRICE_ASC);
+        $this->obProductListStore->sorting->clear(ProductListStore::SORT_PRICE_DESC);
     }
 
     /**
@@ -167,7 +141,7 @@ class OfferModelHandler extends ModelHandler
         }
 
         $this->clearProductActiveList();
-        $this->obListStore->clearActiveList();
+        $this->obListStore->active->clear();
 
         $obProduct = $this->obElement->product;
         if (empty($obProduct)) {
@@ -193,6 +167,33 @@ class OfferModelHandler extends ModelHandler
             return;
         }
 
-        $this->obProductListStore->clearActiveList();
+        $this->obProductListStore->active->clear();
+    }
+
+    /**
+     * Init store objects
+     */
+    protected function init()
+    {
+        $this->obProductListStore = ProductListStore::instance();
+        $this->obListStore = OfferListStore::instance();
+    }
+
+    /**
+     * Get model class name
+     * @return string
+     */
+    protected function getModelClass()
+    {
+        return Offer::class;
+    }
+
+    /**
+     * Get item class name
+     * @return string
+     */
+    protected function getItemClass()
+    {
+        return OfferItem::class;
     }
 }

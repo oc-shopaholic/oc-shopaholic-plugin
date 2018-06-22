@@ -9,7 +9,7 @@ use Lovata\Shopaholic\Classes\Collection\CategoryCollection;
 /**
  * Class CategoryCollectionTest
  * @package Lovata\Shopaholic\Tests\Unit\Collection
- * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  *
  * @mixin \PHPUnit\Framework\Assert
  */
@@ -35,7 +35,7 @@ class CategoryCollectionTest extends CommonTest
     public function testCollectionItem()
     {
         $this->createTestData();
-        if(empty($this->obElement)) {
+        if (empty($this->obElement)) {
             return;
         }
 
@@ -56,7 +56,7 @@ class CategoryCollectionTest extends CommonTest
     public function testTreeMethod()
     {
         $this->createTestData();
-        if(empty($this->obElement)) {
+        if (empty($this->obElement)) {
             return;
         }
 
@@ -70,6 +70,58 @@ class CategoryCollectionTest extends CommonTest
         self::assertInstanceOf(CategoryItem::class, $obItem, $sErrorMessage);
         self::assertEquals($this->obElement->id, $obItem->id, $sErrorMessage);
         self::assertEquals(1, $obCollection->count(), $sErrorMessage);
+    }
+
+    /**
+     * Check item collection "active" method
+     */
+    public function testActiveList()
+    {
+        CategoryCollection::make()->active();
+
+        $this->createTestData();
+        if (empty($this->obElement)) {
+            return;
+        }
+
+        $sErrorMessage = 'Category collection "active" method is not correct';
+
+        //Check item collection after create
+        $obCollection = CategoryCollection::make()->active();
+
+        /** @var CategoryItem $obItem */
+        $obItem = $obCollection->first();
+        self::assertInstanceOf(CategoryItem::class, $obItem, $sErrorMessage);
+        self::assertEquals($this->obElement->id, $obItem->id, $sErrorMessage);
+
+        $this->obElement->active = false;
+        $this->obElement->save();
+
+
+        //Check item collection, after active = true
+        $obCollection = CategoryCollection::make()->active();
+
+        /** @var CategoryItem $obItem */
+        $obItem = $obCollection->first();
+        self::assertEquals($this->obElement->id + 1, $obItem->id, $sErrorMessage);
+        self::assertEquals(1, $obCollection->count(), $sErrorMessage);
+
+        $this->obElement->active = true;
+        $this->obElement->save();
+
+        //Check item collection, after active = true
+        $obCollection = CategoryCollection::make()->active();
+
+        /** @var CategoryItem $obItem */
+        $obItem = $obCollection->first();
+        self::assertEquals($this->obElement->id, $obItem->id, $sErrorMessage);
+        self::assertEquals(2, $obCollection->count(), $sErrorMessage);
+
+        $this->obElement->delete();
+
+        //Check item collection, after element remove
+        $obCollection = CategoryCollection::make()->active();
+        self::assertEquals(true, $obCollection->isEmpty(), $sErrorMessage);
     }
 
     /**

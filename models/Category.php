@@ -12,6 +12,8 @@ use October\Rain\Database\Traits\Sluggable;
 use October\Rain\Database\Traits\Validation;
 use October\Rain\Database\Traits\NestedTree;
 
+use Lovata\Toolbox\Traits\Helpers\TraitCached;
+
 /**
  * Class Category
  * @package Lovata\Shopaholic\Models
@@ -47,6 +49,9 @@ use October\Rain\Database\Traits\NestedTree;
  * @property \October\Rain\Database\Collection|Product[] $product
  * @method \October\Rain\Database\Relations\HasMany|Product product()
  *
+ * @property \October\Rain\Database\Collection|Product[] $product_link
+ * @method static \October\Rain\Database\Relations\BelongsToMany|Product product_link()
+ *
  * Properties for Shopaholic
  * @see \Lovata\PropertiesShopaholic\Classes\Event\CategoryModelHandler::addModelRelationConfig
  *
@@ -68,6 +73,7 @@ class Category extends Model
     use SlugField;
     use CodeField;
     use ExternalIDField;
+    use TraitCached;
 
     public $table = 'lovata_shopaholic_categories';
 
@@ -91,7 +97,12 @@ class Category extends Model
 
     public $attachOne = ['preview_image' => 'System\Models\File'];
     public $attachMany = ['images' => 'System\Models\File'];
-    public $belongsToMany = [];
+    public $belongsToMany = [
+        'product_link' => [
+            Product::class,
+            'table' => 'lovata_shopaholic_additional_categories',
+        ],
+    ];
     public $hasMany = ['product' => Product::class];
 
     public $fillable = [
@@ -102,6 +113,19 @@ class Category extends Model
         'external_id',
         'preview_text',
         'description',
+    ];
+
+    public $cached = [
+        'id',
+        'name',
+        'slug',
+        'code',
+        'preview_text',
+        'description',
+        'parent_id',
+        'preview_image',
+        'images',
+        'updated_at',
     ];
 
     public $dates = ['created_at', 'updated_at'];

@@ -18,18 +18,7 @@ use Lovata\Shopaholic\Classes\Store\CategoryListStore;
  */
 class CategoryCollection extends ElementCollection
 {
-    /** @var CategoryListStore */
-    protected $obCategoryListStore;
-
-    /**
-     * CategoryCollection constructor.
-     * @param CategoryListStore $obCategoryListStore
-     */
-    public function __construct(CategoryListStore $obCategoryListStore)
-    {
-        $this->obCategoryListStore = $obCategoryListStore;
-        parent::__construct();
-    }
+    const ITEM_CLASS = CategoryItem::class;
 
     /**
      * Set to element ID list top level category ID list
@@ -38,21 +27,20 @@ class CategoryCollection extends ElementCollection
      */
     public function tree()
     {
-        $this->arElementIDList = $this->obCategoryListStore->getTopLevelList();
+        $arResultIDList = CategoryListStore::instance()->top_level->get();
 
-        return $this->returnThis();
+        return $this->applySorting($arResultIDList);
     }
 
     /**
-     * Make element item
-     * @see \Lovata\Shopaholic\Tests\Unit\Collection\CategoryCollectionTest::testCollectionItem()
-     * @param int                                $iElementID
-     * @param \Lovata\Shopaholic\Models\Category $obElement
-     *
-     * @return CategoryItem
+     * Apply filter by active field
+     * @see \Lovata\Shopaholic\Tests\Unit\Collection\CategoryCollectionTest::testActiveList()
+     * @return $this
      */
-    protected function makeItem($iElementID, $obElement = null)
+    public function active()
     {
-        return CategoryItem::make($iElementID, $obElement);
+        $arResultIDList = CategoryListStore::instance()->active->get();
+
+        return $this->intersect($arResultIDList);
     }
 }

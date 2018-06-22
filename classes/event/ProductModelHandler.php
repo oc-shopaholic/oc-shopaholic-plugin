@@ -1,7 +1,5 @@
 <?php namespace Lovata\Shopaholic\Classes\Event;
 
-use System\Classes\PluginManager;
-
 use Lovata\Toolbox\Classes\Event\ModelHandler;
 
 use Lovata\Shopaholic\Models\Product;
@@ -27,33 +25,21 @@ class ProductModelHandler extends ModelHandler
     protected $obBrandListStore;
 
     /**
-     * ProductModelHandler constructor.
-     *
-     * @param ProductListStore $obProductListStore
-     * @param BrandListStore   $obBrandListStore
+     * Add listeners
+     * @param \Illuminate\Events\Dispatcher $obEvent
      */
-    public function __construct(ProductListStore $obProductListStore, BrandListStore $obBrandListStore)
+    public function subscribe($obEvent)
     {
-        $this->obListStore = $obProductListStore;
-        $this->obBrandListStore = $obBrandListStore;
-    }
+        parent::subscribe($obEvent);
 
-    /**
-     * Get model class name
-     * @return string
-     */
-    protected function getModelClass()
-    {
-        return Product::class;
-    }
-
-    /**
-     * Get item class name
-     * @return string
-     */
-    protected function getItemClass()
-    {
-        return ProductItem::class;
+        Product::extend(function ($obElement) {
+            /** @var Product $obElement */
+            $obElement->bindEvent('model.beforeSave', function() use ($obElement) {
+                $this->obElement = $obElement;
+                $this->init();
+                $this->checkAdditionalCategoryList();
+            });
+        });
     }
 
     /**
@@ -63,8 +49,8 @@ class ProductModelHandler extends ModelHandler
     {
         parent::afterCreate();
 
-        $this->obListStore->updateCacheBySorting(ProductListStore::SORT_NEW);
-        $this->obListStore->updateCacheBySorting(ProductListStore::SORT_NO);
+        $this->obListStore->sorting->clear(ProductListStore::SORT_NEW);
+        $this->obListStore->sorting->clear(ProductListStore::SORT_NO);
     }
 
     /**
@@ -79,6 +65,8 @@ class ProductModelHandler extends ModelHandler
 
         //Check "brand_id" field
         $this->checkBrandIDField();
+
+        $this->checkActiveField();
     }
 
     /**
@@ -89,15 +77,19 @@ class ProductModelHandler extends ModelHandler
         $this->processOfferAfterDelete();
         parent::afterDelete();
 
-        $this->obListStore->clearListByCategory($this->obElement->category_id);
-        $this->obBrandListStore->clearListByCategory($this->obElement->category_id);
+        $this->obListStore->category->clear($this->obElement->category_id);
+        $this->obBrandListStore->category->clear($this->obElement->category_id);
 
-        $this->obListStore->clearListByBrand($this->obElement->brand_id);
+        $this->obListStore->brand->clear($this->obElement->brand_id);
 
-        $this->obListStore->updateCacheBySorting(ProductListStore::SORT_PRICE_ASC);
-        $this->obListStore->updateCacheBySorting(ProductListStore::SORT_PRICE_DESC);
-        $this->obListStore->updateCacheBySorting(ProductListStore::SORT_NEW);
-        $this->obListStore->updateCacheBySorting(ProductListStore::SORT_NO);
+        $this->obListStore->sorting->clear(ProductListStore::SORT_PRICE_ASC);
+        $this->obListStore->sorting->clear(ProductListStore::SORT_PRICE_DESC);
+        $this->obListStore->sorting->clear(ProductListStore::SORT_NEW);
+        $this->obListStore->sorting->clear(ProductListStore::SORT_NO);
+
+        if ($this->obElement->active) {
+            $this->obListStore->active->clear();
+        }
     }
 
     /**
@@ -122,42 +114,50 @@ class ProductModelHandler extends ModelHandler
     protected function checkActiveField()
     {
         //check product "active" field
-        if ($this->obElement->getOriginal('active') == $this->obElement->active) {
+        if (!$this->isFieldChanged('active')) {
             return;
         }
 
-        $this->obListStore->clearActiveList();
+        $this->obListStore->active->clear();
 
-        $obCategoryItem = CategoryItem::make($this->obElement->category_id);
-        if ($obCategoryItem->isEmpty()) {
+        $this->clearCategoryProductCount($this->obElement->category_id);
+
+        //Get additional category ID list
+        $arAdditionalCategoryIDList = $this->obElement->additional_category->lists('id');
+        if (empty($arAdditionalCategoryIDList)) {
             return;
         }
 
-        $obCategoryItem->clearProductCount();
+        foreach ($arAdditionalCategoryIDList as $iCategoryID) {
+            $this->clearCategoryProductCount($iCategoryID);
+        }
     }
 
     /**
      * Check product "category_id" field, if it was changed, then clear cache
      */
-    private function checkCategoryIDField()
+    protected function checkCategoryIDField()
     {
         //Check "category_id" field
-        if ($this->obElement->getOriginal('category_id') == $this->obElement->category_id) {
+        if (!$this->isFieldChanged('category_id')) {
             return;
         }
 
         //Update product ID cache list for category
-        $this->obListStore->clearListByCategory($this->obElement->category_id);
-        $this->obListStore->clearListByCategory((int) $this->obElement->getOriginal('category_id'));
+        $this->obListStore->category->clear($this->obElement->category_id);
+        $this->obListStore->category->clear((int) $this->obElement->getOriginal('category_id'));
 
-        $this->obBrandListStore->clearListByCategory($this->obElement->category_id);
-        $this->obBrandListStore->clearListByCategory((int) $this->obElement->getOriginal('category_id'));
+        $this->obBrandListStore->category->clear($this->obElement->category_id);
+        $this->obBrandListStore->category->clear((int) $this->obElement->getOriginal('category_id'));
+
+        $this->clearCategoryProductCount($this->obElement->category_id);
+        $this->clearCategoryProductCount((int) $this->obElement->getOriginal('category_id'));
     }
 
     /**
      * Check product "brand_id" field, if it was changed, then clear cache
      */
-    private function checkBrandIDField()
+    protected function checkBrandIDField()
     {
         //Check "brand_id" field
         if ($this->obElement->getOriginal('brand_id') == $this->obElement->brand_id) {
@@ -165,7 +165,83 @@ class ProductModelHandler extends ModelHandler
         }
 
         //Update product ID cache list for brand
-        $this->obListStore->clearListByBrand($this->obElement->brand_id);
-        $this->obListStore->clearListByBrand((int) $this->obElement->getOriginal('brand_id'));
+        $this->obListStore->brand->clear($this->obElement->brand_id);
+        $this->obListStore->brand->clear((int) $this->obElement->getOriginal('brand_id'));
+    }
+
+    /**
+     * Check product relation with additional category list
+     */
+    protected function checkAdditionalCategoryList()
+    {
+        //Get product model
+        $obProduct = Product::find($this->obElement->id);
+        if (empty($obProduct)) {
+            return;
+        }
+
+        //Get new and old category ID list
+        $arOldAdditionalCategoryIDList = (array) $obProduct->additional_category->lists('id');
+        $arNewAdditionalCategoryIDList = (array) $this->obElement->additional_category->lists('id');
+
+        //Get list of ID categories that have been changed
+        $arCommonCategoryIDList = array_intersect($arOldAdditionalCategoryIDList, $arNewAdditionalCategoryIDList);
+
+        $arNewAdditionalCategoryIDList = array_diff($arNewAdditionalCategoryIDList, $arCommonCategoryIDList);
+        $arOldAdditionalCategoryIDList = array_diff($arOldAdditionalCategoryIDList, $arCommonCategoryIDList);
+
+        $arCategoryIDList = array_merge($arOldAdditionalCategoryIDList, $arNewAdditionalCategoryIDList);
+        $arCategoryIDList = array_unique($arCategoryIDList);
+        if (empty($arCategoryIDList)) {
+            return;
+        }
+
+        //Clear product list cache by category ID
+        foreach ($arCategoryIDList as $iCategoryID) {
+
+            $this->obListStore->category->clear($iCategoryID);
+            $this->obBrandListStore->category->clear($iCategoryID);
+
+            $this->clearCategoryProductCount($iCategoryID);
+        }
+    }
+
+    /**
+     * Clear product count cache in category item
+     * @param int $iCategoryID
+     */
+    protected function clearCategoryProductCount($iCategoryID)
+    {
+        $obCategoryItem = CategoryItem::make($iCategoryID);
+        if ($obCategoryItem->isNotEmpty()) {
+            $obCategoryItem->clearProductCount();
+        }
+    }
+
+    /**
+     * Init store objects
+     */
+    protected function init()
+    {
+        $this->obListStore = ProductListStore::instance();
+        $this->obBrandListStore = BrandListStore::instance();
+    }
+
+    /**
+     * Get model class name
+     * @return string
+     */
+    protected function getModelClass()
+    {
+        return Product::class;
+    }
+
+    /**
+     * Get item class name
+     * @return string
+     */
+    protected function getItemClass()
+    {
+        return ProductItem::class;
     }
 }

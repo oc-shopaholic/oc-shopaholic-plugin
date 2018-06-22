@@ -19,18 +19,7 @@ use Lovata\Shopaholic\Classes\Store\OfferListStore;
  */
 class OfferCollection extends ElementCollection
 {
-    /** @var OfferListStore */
-    protected $obOfferListStore;
-
-    /**
-     * OfferCollection constructor.
-     * @param OfferListStore $obOfferListStore
-     */
-    public function __construct(OfferListStore $obOfferListStore)
-    {
-        $this->obOfferListStore = $obOfferListStore;
-        parent::__construct();
-    }
+    const ITEM_CLASS = OfferItem::class;
 
     /**
      * Sort list by
@@ -40,49 +29,21 @@ class OfferCollection extends ElementCollection
      */
     public function sort($sSorting)
     {
-        if (!$this->isClear() && $this->isEmpty()) {
-            return $this->returnThis();
-        }
-
         //Get sorting list
-        $arResultIDList = $this->obOfferListStore->getBySorting($sSorting);
-        if (empty($arResultIDList)) {
-            return $this->clear();
-        }
+        $arResultIDList = OfferListStore::instance()->sorting->get($sSorting);
 
-        if ($this->isClear()) {
-            $this->arElementIDList = $arResultIDList;
-
-            return $this->returnThis();
-        }
-
-        $this->arElementIDList = array_intersect($arResultIDList, $this->arElementIDList);
-
-        return $this->returnThis();
+        return $this->applySorting($arResultIDList);
     }
 
     /**
-     * Apply filter by active product list
+     * Apply filter by active field
      * @see \Lovata\Shopaholic\Tests\Unit\Collection\OfferCollectionTest::testActiveList()
      * @return $this
      */
     public function active()
     {
-        $arResultIDList = $this->obOfferListStore->getActiveList();
+        $arResultIDList = OfferListStore::instance()->active->get();
 
         return $this->intersect($arResultIDList);
-    }
-
-    /**
-     * Make element item
-     * @see \Lovata\Shopaholic\Tests\Unit\Collection\OfferCollectionTest::testCollectionItem()
-     * @param int                             $iElementID
-     * @param \Lovata\Shopaholic\Models\Offer $obElement
-     *
-     * @return OfferItem
-     */
-    protected function makeItem($iElementID, $obElement = null)
-    {
-        return OfferItem::make($iElementID, $obElement);
     }
 }

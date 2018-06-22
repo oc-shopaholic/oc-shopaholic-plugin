@@ -7,6 +7,7 @@ columns:
     active:
         label: 'lovata.toolbox::lang.field.active'
         type: switch
+        searchable: false
         sortable: true
     slug:
         label: 'lovata.toolbox::lang.field.slug'
@@ -32,6 +33,7 @@ columns:
     sort_order:
         label: 'lovata.toolbox::lang.field.sort_order'
         type: text
+        searchable: false
         sortable: true
         width: 150px
     created_at:

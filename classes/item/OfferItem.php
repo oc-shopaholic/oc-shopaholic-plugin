@@ -2,9 +2,9 @@
 
 use Lovata\Toolbox\Classes\Item\ElementItem;
 
-use Lovata\Shopaholic\Plugin;
 use Lovata\Shopaholic\Models\Offer;
 use Lovata\Shopaholic\Models\Settings;
+use Lovata\Toolbox\Traits\Helpers\PriceHelperTrait;
 
 /**
  * Class OfferItem
@@ -14,7 +14,9 @@ use Lovata\Shopaholic\Models\Settings;
  * @see \Lovata\Shopaholic\Tests\Unit\Item\OfferItemTest
  * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/OfferItem
  *
- * @property             $id
+ * @property int         $id
+ * @property bool        $active
+ * @property bool        $trashed
  * @property string      $name
  * @property string      $code
  * @property int         $product_id
@@ -40,7 +42,9 @@ use Lovata\Shopaholic\Models\Settings;
  */
 class OfferItem extends ElementItem
 {
-    const CACHE_TAG_ELEMENT = 'shopaholic-offer-element';
+    use PriceHelperTrait;
+
+    const MODEL_CLASS = Offer::class;
 
     /** @var Offer */
     protected $obElement = null;
@@ -52,59 +56,23 @@ class OfferItem extends ElementItem
         ],
     ];
 
+    public $arPriceField = ['price', 'old_price'];
+
+    /**
+     * Check element, active == true, trashed == false
+     * @return bool
+     */
+    public function isActive()
+    {
+        return $this->active && !$this->trashed;
+    }
+
     /**
      * Set element object
      */
     protected function setElementObject()
     {
-        if (!empty($this->obElement) && !$this->obElement instanceof Offer) {
-            $this->obElement = null;
-        }
-
-        if (!empty($this->obElement) || empty($this->iElementID)) {
-            return;
-        }
-
-        $this->obElement = Offer::active()->find($this->iElementID);
-    }
-
-    /**
-     * Get cache tag array for model
-     * @return array
-     */
-    protected static function getCacheTag()
-    {
-        return [Plugin::CACHE_TAG, self::CACHE_TAG_ELEMENT];
-    }
-
-    /**
-     * Set element data from model object
-     *
-     * @return array
-     */
-    protected function getElementData()
-    {
-        if (empty($this->obElement)) {
-            return null;
-        }
-
-        $arResult = [
-            'id'              => $this->obElement->id,
-            'product_id'      => $this->obElement->product_id,
-            'name'            => $this->obElement->name,
-            'code'            => $this->obElement->code,
-            'preview_text'    => $this->obElement->preview_text,
-            'preview_image'   => $this->obElement->preview_image,
-            'description'     => $this->obElement->description,
-            'images'          => $this->obElement->images,
-            'price'           => $this->obElement->price,
-            'old_price'       => $this->obElement->old_price,
-            'price_value'     => $this->obElement->getPriceValue(),
-            'old_price_value' => $this->obElement->getOldPriceValue(),
-            'quantity'        => $this->obElement->quantity,
-        ];
-
-        return $arResult;
+        $this->obElement = Offer::withTrashed()->find($this->iElementID);
     }
 
     /**
@@ -114,5 +82,19 @@ class OfferItem extends ElementItem
     protected function getCurrencyAttribute()
     {
         return Settings::getValue('currency');
+    }
+
+    /**
+     * Set element data from model object
+     *
+     * @return array
+     */
+    protected function getElementData()
+    {
+        $arResult = [
+            'trashed'       => $this->obElement->trashed(),
+        ];
+
+        return $arResult;
     }
 }

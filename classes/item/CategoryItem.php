@@ -4,54 +4,53 @@ use Cms\Classes\Page as CmsPage;
 
 use Kharanenka\Helper\CCache;
 
+use Lovata\Toolbox\Classes\Item\ItemStorage;
 use Lovata\Toolbox\Classes\Item\ElementItem;
 use Lovata\Toolbox\Classes\Helper\PageHelper;
 
-use Lovata\Shopaholic\Plugin;
 use Lovata\Shopaholic\Models\Category;
-use Lovata\Shopaholic\Classes\Store\ProductListStore;
 use Lovata\Shopaholic\Classes\Collection\ProductCollection;
 use Lovata\Shopaholic\Classes\Collection\CategoryCollection;
 
 /**
  * Class CategoryItem
  * @package Lovata\Shopaholic\Classes\Item
- * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  *
- * @see \Lovata\Shopaholic\Tests\Unit\Item\CategoryItemTest
- * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/CategoryItem
+ * @see     \Lovata\Shopaholic\Tests\Unit\Item\CategoryItemTest
+ * @link    https://github.com/lovata/oc-shopaholic-plugin/wiki/CategoryItem
  *
- * @property              $id
- * @property string       $name
- * @property string       $slug
- * @property string       $code
- * @property int          $nest_depth
- * @property int          $parent_id
- * @property int          $product_count
+ * @property                                                                                                                               $id
+ * @property string                                                                                                                        $name
+ * @property string                                                                                                                        $slug
+ * @property string                                                                                                                        $code
+ * @property int                                                                                                                           $nest_depth
+ * @property int                                                                                                                           $parent_id
+ * @property int                                                                                                                           $product_count
  *
- * @property string       $preview_text
- * @property \System\Models\File $preview_image
+ * @property string                                                                                                                        $preview_text
+ * @property \System\Models\File                                                                                                           $preview_image
  *
- * @property string       $description
- * @property \October\Rain\Database\Collection|\System\Models\File[]  $images
+ * @property string                                                                                                                        $description
+ * @property \October\Rain\Database\Collection|\System\Models\File[]                                                                       $images
  *
- * @property \October\Rain\Argon\Argon $updated_at
+ * @property \October\Rain\Argon\Argon                                                                                                     $updated_at
  *
- * @property CategoryItem $parent
+ * @property CategoryItem                                                                                                                  $parent
  *
- * @property array                             $children_id_list
- * @property CategoryCollection|CategoryItem[] $children
+ * @property array                                                                                                                         $children_id_list
+ * @property CategoryCollection|CategoryItem[]                                                                                             $children
  *
  * Properties for Shopaholic
- * @see \Lovata\PropertiesShopaholic\Classes\Event\CategoryModelHandler::extendCategoryItem
+ * @see     \Lovata\PropertiesShopaholic\Classes\Event\CategoryModelHandler::extendCategoryItem
  *
  * @method addProductPropertyIDList()
- * @property array $product_property_list
- * @property \Lovata\PropertiesShopaholic\Classes\Collection\PropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[] $product_property
+ * @property array                                                                                                                         $product_property_list
+ * @property \Lovata\PropertiesShopaholic\Classes\Collection\PropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[]   $product_property
  *
  * @method addOfferPropertyIDList()
- * @property array $offer_property_list
- * @property \Lovata\PropertiesShopaholic\Classes\Collection\PropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[] $offer_property
+ * @property array                                                                                                                         $offer_property_list
+ * @property \Lovata\PropertiesShopaholic\Classes\Collection\PropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[]   $offer_property
  *
  * Filter for Shopaholic
  * @property \Lovata\FilterShopaholic\Classes\Collection\FilterPropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[] $product_filter_property
@@ -59,7 +58,7 @@ use Lovata\Shopaholic\Classes\Collection\CategoryCollection;
  */
 class CategoryItem extends ElementItem
 {
-    const CACHE_TAG_ELEMENT = 'shopaholic-category-element';
+    const MODEL_CLASS = Category::class;
 
     /** @var Category */
     protected $obElement = null;
@@ -80,10 +79,11 @@ class CategoryItem extends ElementItem
      */
     public function clearProductCount()
     {
-        $arCacheTag = [Plugin::CACHE_TAG, self::CACHE_TAG_ELEMENT, ProductListStore::CACHE_TAG_LIST];
+        $arCacheTag = [static::class];
         $sCacheKey = 'product_count_'.$this->id;
 
         CCache::clear($arCacheTag, $sCacheKey);
+        ItemStorage::clear(static::class, $this->id);
 
         $obParentItem = $this->parent;
         if ($obParentItem->isEmpty()) {
@@ -127,53 +127,14 @@ class CategoryItem extends ElementItem
     }
 
     /**
-     * Set element object
-     */
-    protected function setElementObject()
-    {
-        if (!empty($this->obElement) && !$this->obElement instanceof Category) {
-            $this->obElement = null;
-        }
-
-        if (!empty($this->obElement) || empty($this->iElementID)) {
-            return;
-        }
-
-        $this->obElement = Category::active()->find($this->iElementID);
-    }
-
-    /**
-     * Get cache tag array for model
-     * @return array
-     */
-    protected static function getCacheTag()
-    {
-        return [Plugin::CACHE_TAG, self::CACHE_TAG_ELEMENT];
-    }
-
-    /**
      * Set element data from model object
      *
      * @return array
      */
     protected function getElementData()
     {
-        if (empty($this->obElement)) {
-            return null;
-        }
-
         $arResult = [
-            'id'            => $this->obElement->id,
-            'name'          => $this->obElement->name,
-            'slug'          => $this->obElement->slug,
-            'code'          => $this->obElement->code,
-            'preview_text'  => $this->obElement->preview_text,
-            'description'   => $this->obElement->description,
-            'nest_depth'    => $this->obElement->getDepth(),
-            'parent_id'     => $this->obElement->parent_id,
-            'preview_image' => $this->obElement->preview_image,
-            'images'        => $this->obElement->images,
-            'updated_at'    => $this->obElement->updated_at,
+            'nest_depth' => $this->obElement->getDepth(),
         ];
 
         $arResult['children_id_list'] = $this->obElement->children()
@@ -196,7 +157,7 @@ class CategoryItem extends ElementItem
         }
 
         //Get product count from cache
-        $arCacheTag = [Plugin::CACHE_TAG, self::CACHE_TAG_ELEMENT, ProductListStore::CACHE_TAG_LIST];
+        $arCacheTag = [static::class];
         $sCacheKey = 'product_count_'.$this->id;
 
         $iProductCount = CCache::get($arCacheTag, $sCacheKey);

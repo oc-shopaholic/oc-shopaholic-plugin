@@ -238,6 +238,101 @@ class ProductCollectionTest extends CommonTest
     }
 
     /**
+     * Check item collection "category" method
+     */
+    public function testParentCategoryFilter()
+    {
+        $this->createTestData();
+        if(empty($this->obElement)) {
+            return;
+        }
+
+        ProductCollection::make()->category($this->obCategory->id);
+
+        $sErrorMessage = 'Product collection "category" method is not correct';
+
+        //Check item collection after create
+        $obCollection = ProductCollection::make()->category($this->obCategory->id - 1, true);
+
+        /** @var ProductItem $obItem */
+        $obItem = $obCollection->first();
+        self::assertInstanceOf(ProductItem::class, $obItem, $sErrorMessage);
+        self::assertEquals($this->obElement->id, $obItem->id, $sErrorMessage);
+
+        $this->obElement->category_id = $this->obCategory->id + 1;
+        $this->obElement->save();
+
+        //Check item collection, after change category_id field
+        $obCollection = ProductCollection::make()->category($this->obCategory->id -1, true);
+        self::assertEquals(true, $obCollection->isEmpty(), $sErrorMessage);
+
+        $this->obElement->category_id = $this->obCategory->id;
+        $this->obElement->save();
+
+        //Check item collection, after change category_id field
+        $obCollection = ProductCollection::make()->category($this->obCategory->id - 1, true);
+
+        /** @var ProductItem $obItem */
+        $obItem = $obCollection->first();
+        self::assertInstanceOf(ProductItem::class, $obItem, $sErrorMessage);
+        self::assertEquals($this->obElement->id, $obItem->id, $sErrorMessage);
+
+        $this->obElement->delete();
+
+        //Check item collection, after element remove
+        $obCollection = ProductCollection::make()->category($this->obCategory->id -1, true);
+        self::assertEquals(true, $obCollection->isEmpty(), $sErrorMessage);
+    }
+
+    /**
+     * Check item collection "category" method
+     */
+    public function testMultiCategoryFilter()
+    {
+        $this->createTestData(1);
+        $this->createTestData(2);
+        if(empty($this->obElement)) {
+            return;
+        }
+
+        ProductCollection::make()->category([$this->obCategory->id - 2, $this->obCategory->id]);
+
+        $sErrorMessage = 'Product collection "category" method is not correct';
+
+        //Check item collection after create
+        $obCollection = ProductCollection::make()->category([$this->obCategory->id - 2, $this->obCategory->id]);
+
+        self::assertEquals(2, $obCollection->count(), $sErrorMessage);
+        self::assertEquals([$this->obElement->id - 1, $this->obElement->id], $obCollection->getIDList(), $sErrorMessage);
+
+        $this->obElement->category_id = $this->obCategory->id + 1;
+        $this->obElement->save();
+
+        //Check item collection, after change category_id field
+        $obCollection = ProductCollection::make()->category([$this->obCategory->id - 2, $this->obCategory->id]);
+
+        self::assertEquals(1, $obCollection->count(), $sErrorMessage);
+        self::assertEquals([$this->obElement->id - 1], $obCollection->getIDList(), $sErrorMessage);
+
+        $this->obElement->category_id = $this->obCategory->id;
+        $this->obElement->save();
+
+        //Check item collection, after change category_id field
+        $obCollection = ProductCollection::make()->category([$this->obCategory->id - 2, $this->obCategory->id]);
+
+        self::assertEquals(2, $obCollection->count(), $sErrorMessage);
+        self::assertEquals([$this->obElement->id - 1, $this->obElement->id], $obCollection->getIDList(), $sErrorMessage);
+
+        $this->obElement->delete();
+
+        $obCollection = ProductCollection::make()->category([$this->obCategory->id - 2, $this->obCategory->id]);
+
+        //Check item collection, after element remove
+        self::assertEquals(1, $obCollection->count(), $sErrorMessage);
+        self::assertEquals([$this->obElement->id - 1], $obCollection->getIDList(), $sErrorMessage);
+    }
+
+    /**
      * Check item collection "brand" method
      */
     public function testBrandFilter()
@@ -426,8 +521,14 @@ class ProductCollectionTest extends CommonTest
     {
         //Create category data
         $arCreateData = $this->arCategoryData;
+        $arCreateData['slug'] = $arCreateData['slug'].'_parent_'.$iCount;
+        $this->obCategory = Category::create($arCreateData);
+
+        $arCreateData = $this->arCategoryData;
         $arCreateData['slug'] = $arCreateData['slug'].$iCount;
         $this->obCategory = Category::create($arCreateData);
+        $this->obCategory->parent_id = $this->obCategory->id -1;
+        $this->obCategory->save();
 
         //Create brand data
         $arCreateData = $this->arBrandData;

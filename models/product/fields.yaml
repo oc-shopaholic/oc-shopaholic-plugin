@@ -6,7 +6,6 @@ fields:
         type: switch
     name:
         label: 'lovata.toolbox::lang.field.name'
-        oc.commentPosition: ''
         span: left
         required: 1
         type: text
@@ -22,11 +21,16 @@ tabs:
     fields:
         category:
             label: 'lovata.toolbox::lang.field.category'
-            oc.commentPosition: ''
             nameFrom: name
             descriptionFrom: description
             span: left
             type: relation
+            tab: 'lovata.toolbox::lang.tab.settings'
+        additional_category:
+            label: 'lovata.shopaholic::lang.field.additional_category'
+            type: relation
+            span: right
+            nameFrom: name
             tab: 'lovata.toolbox::lang.tab.settings'
         brand:
             label: 'lovata.shopaholic::lang.field.brand'
@@ -41,7 +45,6 @@ tabs:
             tab: 'lovata.toolbox::lang.tab.settings'
         external_id:
             label: 'lovata.toolbox::lang.field.external_id'
-            oc.commentPosition: ''
             span: left
             type: text
             tab: 'lovata.toolbox::lang.tab.settings'

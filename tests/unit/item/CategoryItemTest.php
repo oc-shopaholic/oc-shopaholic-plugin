@@ -1,7 +1,9 @@
 <?php namespace Lovata\Shopaholic\Tests\Unit\Item;
 
+use Lovata\Shopaholic\Classes\Collection\ProductCollection;
 use Lovata\Toolbox\Tests\CommonTest;
 
+use Lovata\Shopaholic\Models\Product;
 use Lovata\Shopaholic\Models\Category;
 use Lovata\Shopaholic\Classes\Item\CategoryItem;
 use Lovata\Shopaholic\Classes\Collection\CategoryCollection;
@@ -9,7 +11,7 @@ use Lovata\Shopaholic\Classes\Collection\CategoryCollection;
 /**
  * Class CategoryItemTest
  * @package Lovata\Shopaholic\Tests\Unit\Item
- * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  *
  * @mixin \PHPUnit\Framework\Assert
  */
@@ -21,7 +23,19 @@ class CategoryItemTest extends CommonTest
     /** @var  Category */
     protected $obChildElement;
 
+    /** @var Product */
+    protected $obProduct;
+
     protected $arCreateData = [
+        'name'         => 'name',
+        'slug'         => 'slug',
+        'code'         => 'code',
+        'preview_text' => 'preview_text',
+        'description'  => 'description',
+    ];
+
+    protected $arProductData = [
+        'active'       => true,
         'name'         => 'name',
         'slug'         => 'slug',
         'code'         => 'code',
@@ -35,7 +49,7 @@ class CategoryItemTest extends CommonTest
     public function testItemFields()
     {
         $this->createTestData();
-        if(empty($this->obElement)) {
+        if (empty($this->obElement)) {
             return;
         }
 
@@ -53,7 +67,7 @@ class CategoryItemTest extends CommonTest
             self::assertEquals($sValue, $obItem->$sField, $sErrorMessage);
         }
 
-        if(empty($this->obChildElement)) {
+        if (empty($this->obChildElement)) {
             return;
         }
 
@@ -82,7 +96,7 @@ class CategoryItemTest extends CommonTest
     public function testItemClearCache()
     {
         $this->createTestData();
-        if(empty($this->obElement)) {
+        if (empty($this->obElement)) {
             return;
         }
 
@@ -100,35 +114,12 @@ class CategoryItemTest extends CommonTest
     }
 
     /**
-     * Check item data, after active flag = false
-     */
-    public function testActiveFlag()
-    {
-        $this->createTestData();
-        if(empty($this->obElement)) {
-            return;
-        }
-
-        $sErrorMessage = 'Category item data is not correct, after model active flag = false';
-
-        $obItem = CategoryItem::make($this->obElement->id);
-        self::assertEquals(false, $obItem->isEmpty(), $sErrorMessage);
-
-        //Check active flag in item data
-        $this->obElement->active = false;
-        $this->obElement->save();
-
-        $obItem = CategoryItem::make($this->obElement->id);
-        self::assertEquals(true, $obItem->isEmpty(), $sErrorMessage);
-    }
-
-    /**
      * Check update cache item data, after remove element
      */
     public function testRemoveElement()
     {
         $this->createTestData();
-        if(empty($this->obElement)) {
+        if (empty($this->obElement)) {
             return;
         }
 
@@ -146,6 +137,75 @@ class CategoryItemTest extends CommonTest
         $obItem = CategoryItem::make($this->obElement->id);
         $obChildCollection = $obItem->children;
         self::assertEquals(true, $obChildCollection->isEmpty(), $sErrorMessage);
+    }
+
+    /**
+     * Test product_count field for main category
+     */
+    public function testProductCountField()
+    {
+        $this->createTestData();
+        if (empty($this->obElement)) {
+            return;
+        }
+
+        $obParentItem = CategoryItem::make($this->obElement->id);
+        $obItem = CategoryItem::make($this->obChildElement->id);
+
+        self::assertEquals(1, $obParentItem->product_count);
+        self::assertEquals(1, $obItem->product_count);
+
+        //Set empty category_id in Product object
+        $this->obProduct->category_id = null;
+        $this->obProduct->save();
+
+        $obParentItem = CategoryItem::make($this->obElement->id);
+        $obItem = CategoryItem::make($this->obChildElement->id);
+
+        self::assertEquals(0, $obParentItem->product_count);
+        self::assertEquals(0, $obItem->product_count);
+
+        //Set parent category_id in Product object
+        $this->obProduct->category_id = $this->obElement->id;
+        $this->obProduct->save();
+
+        $obParentItem = CategoryItem::make($this->obElement->id);
+        $obItem = CategoryItem::make($this->obChildElement->id);
+
+        self::assertEquals(1, $obParentItem->product_count);
+        self::assertEquals(0, $obItem->product_count);
+
+        //Set child category_id in Product object
+        $this->obProduct->category_id = $this->obChildElement->id;
+        $this->obProduct->save();
+
+        $obParentItem = CategoryItem::make($this->obElement->id);
+        $obItem = CategoryItem::make($this->obChildElement->id);
+
+        self::assertEquals(1, $obParentItem->product_count);
+        self::assertEquals(1, $obItem->product_count);
+
+        //Set active == false in Product object
+        $this->obProduct->active = false;
+        $this->obProduct->save();
+
+        ProductCollection::make()->active()->save(CategoryItem::class.'_active');
+        $obParentItem = CategoryItem::make($this->obElement->id);
+        $obItem = CategoryItem::make($this->obChildElement->id);
+
+        self::assertEquals(0, $obParentItem->product_count);
+        self::assertEquals(0, $obItem->product_count);
+
+        //Set active == true in Product object
+        $this->obProduct->active = true;
+        $this->obProduct->save();
+
+        ProductCollection::make()->active()->save(CategoryItem::class.'_active');
+        $obParentItem = CategoryItem::make($this->obElement->id);
+        $obItem = CategoryItem::make($this->obChildElement->id);
+
+        self::assertEquals(1, $obParentItem->product_count);
+        self::assertEquals(1, $obItem->product_count);
     }
 
     /**
@@ -168,5 +228,10 @@ class CategoryItemTest extends CommonTest
         $this->obChildElement->parent_id = $this->obElement->id;
         $this->obChildElement->nest_depth = 1;
         $this->obChildElement->save();
+
+        $arProductData = $this->arProductData;
+        $arProductData['category_id'] = $this->obChildElement->id;
+
+        $this->obProduct = Product::create($arProductData);
     }
 }

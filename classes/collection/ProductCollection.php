@@ -1,5 +1,6 @@
 <?php namespace Lovata\Shopaholic\Classes\Collection;
 
+use Lovata\Shopaholic\Classes\Item\CategoryItem;
 use Lovata\Toolbox\Classes\Collection\ElementCollection;
 
 use Lovata\Shopaholic\Classes\Item\OfferItem;
@@ -35,18 +36,7 @@ use Lovata\Shopaholic\Classes\Store\ProductListStore;
  */
 class ProductCollection extends ElementCollection
 {
-    /** @var ProductListStore */
-    protected $obProductListStore;
-
-    /**
-     * ProductCollection constructor.
-     * @param ProductListStore $obProductListStore
-     */
-    public function __construct(ProductListStore $obProductListStore)
-    {
-        $this->obProductListStore = $obProductListStore;
-        parent::__construct();
-    }
+    const ITEM_CLASS = ProductItem::class;
 
     /**
      * Sort list by
@@ -57,36 +47,21 @@ class ProductCollection extends ElementCollection
      */
     public function sort($sSorting)
     {
-        if (!$this->isClear() && $this->isEmpty()) {
-            return $this->returnThis();
-        }
-
         //Get sorting list
-        $arResultIDList = $this->obProductListStore->getBySorting($sSorting);
-        if (empty($arResultIDList)) {
-            return $this->clear();
-        }
+        $arResultIDList = ProductListStore::instance()->sorting->get($sSorting);
 
-        if ($this->isClear()) {
-            $this->arElementIDList = $arResultIDList;
-
-            return $this->returnThis();
-        }
-
-        $this->arElementIDList = array_intersect($arResultIDList, $this->arElementIDList);
-
-        return $this->returnThis();
+        return $this->applySorting($arResultIDList);
     }
 
     /**
-     * Apply filter by active product list
+     * Apply filter by active field
      * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testActiveList()
      * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testActiveListWithCheckingOffer()
      * @return $this
      */
     public function active()
     {
-        $arResultIDList = $this->obProductListStore->getActiveList();
+        $arResultIDList = ProductListStore::instance()->active->get();
 
         return $this->intersect($arResultIDList);
     }
@@ -94,12 +69,23 @@ class ProductCollection extends ElementCollection
     /**
      * Filter product list by category ID
      * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testCategoryFilter()
-     * @param int $iCategoryID
+     * @param int|array $arCategoryIDList
+     * @param bool $bWithChildren
      * @return $this
      */
-    public function category($iCategoryID)
+    public function category($arCategoryIDList, $bWithChildren = false)
     {
-        $arResultIDList = $this->obProductListStore->getByCategory($iCategoryID);
+        if (!is_array($arCategoryIDList)) {
+            $arCategoryIDList = [$arCategoryIDList];
+        }
+
+        $arResultIDList = [];
+        foreach ($arCategoryIDList as $iCategoryID) {
+            $arResultIDList = array_merge($arResultIDList, ProductListStore::instance()->category->get($iCategoryID));
+            if ($bWithChildren) {
+                $arResultIDList = array_merge($arResultIDList, $this->getIDListChildrenCategory($iCategoryID));
+            }
+        }
 
         return $this->intersect($arResultIDList);
     }
@@ -112,7 +98,7 @@ class ProductCollection extends ElementCollection
      */
     public function brand($iBrandID)
     {
-        $arResultIDList = $this->obProductListStore->getByBrand($iBrandID);
+        $arResultIDList = ProductListStore::instance()->brand->get($iBrandID);
 
         return $this->intersect($arResultIDList);
     }
@@ -178,16 +164,24 @@ class ProductCollection extends ElementCollection
     }
 
     /**
-     * Make element item
-     * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testCollectionItem()
-     *
-     * @param int                               $iElementID
-     * @param \Lovata\Shopaholic\Models\Product $obElement
-     *
-     * @return ProductItem
+     * Get product ID list for children categories
+     * @param int $iCategoryID
+     * @return array
      */
-    protected function makeItem($iElementID, $obElement = null)
+    protected function getIDListChildrenCategory($iCategoryID) : array
     {
-        return ProductItem::make($iElementID, $obElement);
+        //Get category item
+        $obCategoryItem = CategoryItem::make($iCategoryID);
+        if ($obCategoryItem->isEmpty() || $obCategoryItem->children->isEmpty()) {
+            return [];
+        }
+
+        $arResultIDList = [];
+        foreach ($obCategoryItem->children as $obChildCategoryItem) {
+            $arResultIDList = array_merge($arResultIDList, ProductListStore::instance()->category->get($obChildCategoryItem->id));
+            $arResultIDList = array_merge($arResultIDList, $this->getIDListChildrenCategory($obChildCategoryItem->id));
+        }
+
+        return $arResultIDList;
     }
 }

@@ -8,28 +8,17 @@ use Lovata\Shopaholic\Classes\Store\BrandListStore;
 /**
  * Class BrandCollection
  * @package Lovata\Shopaholic\Classes\Collection
- * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  *
- * @see \Lovata\Shopaholic\Tests\Unit\Collection\BrandCollectionTest
- * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/BrandCollection
+ * @see     \Lovata\Shopaholic\Tests\Unit\Collection\BrandCollectionTest
+ * @link    https://github.com/lovata/oc-shopaholic-plugin/wiki/BrandCollection
  *
  * Search for Shopaholic, Sphinx for Shopaholic
  * @method $this search(string $sSearch)
  */
 class BrandCollection extends ElementCollection
 {
-    /** @var BrandListStore */
-    protected $obBrandListStore;
-
-    /**
-     * BrandCollection constructor.
-     * @param BrandListStore $obBrandListStore
-     */
-    public function __construct(BrandListStore $obBrandListStore)
-    {
-        $this->obBrandListStore = $obBrandListStore;
-        parent::__construct();
-    }
+    const ITEM_CLASS = BrandItem::class;
 
     /**
      * Sort list
@@ -37,25 +26,10 @@ class BrandCollection extends ElementCollection
      */
     public function sort()
     {
-        if (!$this->isClear() && $this->isEmpty()) {
-            return $this->returnThis();
-        }
-
         //Get sorting list
-        $arResultIDList = $this->obBrandListStore->getBySorting();
-        if (empty($arResultIDList)) {
-            return $this->clear();
-        }
+        $arResultIDList = BrandListStore::instance()->sorting->get();
 
-        if ($this->isClear()) {
-            $this->arElementIDList = $arResultIDList;
-
-            return $this->returnThis();
-        }
-
-        $this->arElementIDList = array_intersect($arResultIDList, $this->arElementIDList);
-
-        return $this->returnThis();
+        return $this->applySorting($arResultIDList);
     }
 
     /**
@@ -65,7 +39,7 @@ class BrandCollection extends ElementCollection
      */
     public function active()
     {
-        $arResultIDList = $this->obBrandListStore->getActiveList();
+        $arResultIDList = BrandListStore::instance()->active->get();
 
         return $this->intersect($arResultIDList);
     }
@@ -78,21 +52,8 @@ class BrandCollection extends ElementCollection
      */
     public function category($iCategoryID)
     {
-        $arResultIDList = $this->obBrandListStore->getByCategory($iCategoryID);
+        $arResultIDList = BrandListStore::instance()->category->get($iCategoryID);
 
         return $this->intersect($arResultIDList);
-    }
-
-    /**
-     * Make element item
-     * @see \Lovata\Shopaholic\Tests\Unit\Collection\BrandCollectionTest::testCollectionItem()
-     * @param int                             $iElementID
-     * @param \Lovata\Shopaholic\Models\Brand $obElement
-     *
-     * @return BrandItem
-     */
-    protected function makeItem($iElementID, $obElement = null)
-    {
-        return BrandItem::make($iElementID, $obElement);
     }
 }

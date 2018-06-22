@@ -5,26 +5,6 @@ tabs:
             span: left
             label: lovata.shopaholic::lang.field.check_offer_active
             type: checkbox
-        decimals:
-            tab: lovata.shopaholic::lang.tab.prices_format
-            span: left
-            label: lovata.shopaholic::lang.field.decimals
-        dec_point:
-            tab: lovata.shopaholic::lang.tab.prices_format
-            span: left
-            label: lovata.shopaholic::lang.field.dec_point
-            type: dropdown
-            options:
-                dot: lovata.shopaholic::lang.field.dot
-                comma: lovata.shopaholic::lang.field.comma
-        thousands_sep:
-            tab: lovata.shopaholic::lang.tab.prices_format
-            span: left
-            label: lovata.shopaholic::lang.field.thousands_sep
-            type: dropdown
-            options:
-                together: lovata.shopaholic::lang.field.together
-                space: lovata.shopaholic::lang.field.space
         currency:
             tab: lovata.shopaholic::lang.tab.prices_format
             span: left

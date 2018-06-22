@@ -25,9 +25,6 @@ use Lovata\Shopaholic\Classes\Store\ProductListStore;
  */
 class ProductList extends SortingElementList
 {
-    /** @var  ProductListStore */
-    protected $obProductListStore;
-
     /** @var array */
     protected $arPropertyList = [];
 
@@ -77,15 +74,6 @@ class ProductList extends SortingElementList
     }
 
     /**
-     * Init start component data
-     */
-    public function init()
-    {
-        $this->obProductListStore = app()->make(ProductListStore::class);
-        parent::init();
-    }
-
-    /**
      * Make element collection
      * @param array $arElementIDList
      *
@@ -103,14 +91,5 @@ class ProductList extends SortingElementList
     public function onAjaxRequest()
     {
         return true;
-    }
-
-    /**
-     * Get available sorting array
-     * @return array
-     */
-    protected function getAvailableSorting()
-    {
-        return $this->obProductListStore->getAvailableSorting();
     }
 }

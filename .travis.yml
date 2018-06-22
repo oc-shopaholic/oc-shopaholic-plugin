@@ -39,6 +39,8 @@ before_script:
       cd ..;
       mkdir -p ./october/plugins/lovata/shopaholic;
       mv !(october) october/plugins/lovata/shopaholic;
+      FOLDER_PATH=$(pwd);
+      ln -s $FOLDER_PATH/october/plugins/lovata/ $FOLDER_PATH/october/tests/fixtures/plugins/lovata;
       cd october/plugins/lovata/shopaholic;
     fi
 
