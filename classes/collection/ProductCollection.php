@@ -1,5 +1,6 @@
 <?php namespace Lovata\Shopaholic\Classes\Collection;
 
+use Lovata\Shopaholic\Classes\Item\CategoryItem;
 use Lovata\Toolbox\Classes\Collection\ElementCollection;
 
 use Lovata\Shopaholic\Classes\Item\OfferItem;
@@ -68,12 +69,23 @@ class ProductCollection extends ElementCollection
     /**
      * Filter product list by category ID
      * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testCategoryFilter()
-     * @param int $iCategoryID
+     * @param int|array $arCategoryIDList
+     * @param bool $bWithChildren
      * @return $this
      */
-    public function category($iCategoryID)
+    public function category($arCategoryIDList, $bWithChildren = false)
     {
-        $arResultIDList = ProductListStore::instance()->category->get($iCategoryID);
+        if (!is_array($arCategoryIDList)) {
+            $arCategoryIDList = [$arCategoryIDList];
+        }
+
+        $arResultIDList = [];
+        foreach ($arCategoryIDList as $iCategoryID) {
+            $arResultIDList = array_merge($arResultIDList, ProductListStore::instance()->category->get($iCategoryID));
+            if ($bWithChildren) {
+                $arResultIDList = array_merge($arResultIDList, $this->getIDListChildrenCategory($iCategoryID));
+            }
+        }
 
         return $this->intersect($arResultIDList);
     }
@@ -149,5 +161,27 @@ class ProductCollection extends ElementCollection
         $obOfferItem = $obOfferCollection->sort(OfferListStore::SORT_PRICE_ASC)->last();
 
         return $obOfferItem;
+    }
+
+    /**
+     * Get product ID list for children categories
+     * @param int $iCategoryID
+     * @return array
+     */
+    protected function getIDListChildrenCategory($iCategoryID) : array
+    {
+        //Get category item
+        $obCategoryItem = CategoryItem::make($iCategoryID);
+        if ($obCategoryItem->isEmpty() || $obCategoryItem->children->isEmpty()) {
+            return [];
+        }
+
+        $arResultIDList = [];
+        foreach ($obCategoryItem->children as $obChildCategoryItem) {
+            $arResultIDList = array_merge($arResultIDList, ProductListStore::instance()->category->get($obChildCategoryItem->id));
+            $arResultIDList = array_merge($arResultIDList, $this->getIDListChildrenCategory($obChildCategoryItem->id));
+        }
+
+        return $arResultIDList;
     }
 }

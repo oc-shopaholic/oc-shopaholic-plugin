@@ -4,6 +4,7 @@ use Cms\Classes\Page as CmsPage;
 
 use Kharanenka\Helper\CCache;
 
+use Lovata\Toolbox\Classes\Item\ItemStorage;
 use Lovata\Toolbox\Classes\Item\ElementItem;
 use Lovata\Toolbox\Classes\Helper\PageHelper;
 
@@ -82,6 +83,7 @@ class CategoryItem extends ElementItem
         $sCacheKey = 'product_count_'.$this->id;
 
         CCache::clear($arCacheTag, $sCacheKey);
+        ItemStorage::clear(static::class, $this->id);
 
         $obParentItem = $this->parent;
         if ($obParentItem->isEmpty()) {

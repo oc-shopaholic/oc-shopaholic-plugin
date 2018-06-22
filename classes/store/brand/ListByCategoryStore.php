@@ -1,5 +1,6 @@
 <?php namespace Lovata\Shopaholic\Classes\Store\Brand;
 
+use Lovata\Shopaholic\Models\Category;
 use Lovata\Toolbox\Classes\Store\AbstractStoreWithParam;
 
 use Lovata\Shopaholic\Models\Product;
@@ -23,6 +24,15 @@ class ListByCategoryStore extends AbstractStoreWithParam
         $arElementIDList = (array) Product::getByCategory($this->sValue)
             ->where('brand_id', '>', 0)
             ->lists('brand_id', 'id');
+
+        $obCategory = Category::find($this->sValue);
+        if (!empty($obCategory)) {
+            $arAdditionalElementIDList = (array) $obCategory->product_link()
+                ->where('brand_id', '>', 0)
+                ->lists('brand_id', 'id');
+
+            $arElementIDList = $arElementIDList + $arAdditionalElementIDList;
+        }
 
         return $arElementIDList;
     }

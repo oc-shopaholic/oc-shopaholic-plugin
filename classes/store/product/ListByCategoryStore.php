@@ -1,5 +1,6 @@
 <?php namespace Lovata\Shopaholic\Classes\Store\Product;
 
+use DB;
 use Lovata\Toolbox\Classes\Store\AbstractStoreWithParam;
 
 use Lovata\Shopaholic\Models\Product;
@@ -20,6 +21,11 @@ class ListByCategoryStore extends AbstractStoreWithParam
     protected function getIDListFromDB() : array
     {
         $arElementIDList = (array) Product::getByCategory($this->sValue)->lists('id');
+
+        //Get product ID list for additional category relation
+        $arAdditionalElementIDList = (array) DB::table('lovata_shopaholic_additional_categories')->where('category_id', $this->sValue)->lists('product_id');
+        $arElementIDList = array_merge($arElementIDList, $arAdditionalElementIDList);
+        $arElementIDList = array_unique($arElementIDList);
 
         return $arElementIDList;
     }

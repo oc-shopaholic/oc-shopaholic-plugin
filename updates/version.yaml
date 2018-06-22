@@ -33,3 +33,6 @@
 1.9.0:
     - 'Add PriceHelperTrait, TraitCached in models. Add active() method to CategoryCollection class. Move PriceHelper class from Shopaholic plugin to Toolbox plugin. Add new store classes. Refactoring *Store, *Item, *Collection classes. Requires Toolbox plugin version 1.10.0 and later.'
     - seeder_price_format.php
+1.10.0:
+    - 'Adding relation between Product model and additional categories. Adding ability to get list of products by category ID list, by the parent category ID.'
+    - create_table_additional_categories.php
