@@ -1,6 +1,9 @@
 <?php namespace Lovata\Shopaholic\Classes\Item;
 
+use Cms\Classes\Page as CmsPage;
+
 use Lovata\Toolbox\Classes\Item\ElementItem;
+use Lovata\Toolbox\Classes\Helper\PageHelper;
 
 use Lovata\Shopaholic\Models\Product;
 use Lovata\Shopaholic\Classes\Collection\OfferCollection;
@@ -87,6 +90,49 @@ class ProductItem extends ElementItem
     public function isActive()
     {
         return $this->active && !$this->trashed;
+    }
+
+    /**
+     * Returns URL of a category page.
+     *
+     * @param string $sPageCode
+     *
+     * @return string
+     */
+    public function getPageUrl($sPageCode = 'product')
+    {
+        //Get URL params
+        $arParamList = $this->getPageParamList($sPageCode);
+
+        //Generate page URL
+        $sURL = CmsPage::url($sPageCode, $arParamList);
+
+        return $sURL;
+    }
+
+    /**
+     * Get URL param list by page code
+     * @param string $sPageCode
+     * @return array
+     */
+    public function getPageParamList($sPageCode) : array
+    {
+        $arPageParamList = [];
+
+        //Get URL params for categories
+        $aCategoryParamList = $this->category->getPageParamList($sPageCode);
+        $aBrandParamList = $this->brand->getPageParamList($sPageCode);
+
+        //Get URL params for page
+        $arParamList = (array) PageHelper::instance()->getUrlParamList($sPageCode, 'ProductPage');
+        if (!empty($arParamList)) {
+            $sPageParam = array_shift($arParamList);
+            $arPageParamList[$sPageParam] = $this->slug;
+        }
+
+        $arPageParamList = array_merge($aCategoryParamList, $aBrandParamList, $arPageParamList);
+
+        return $arPageParamList;
     }
 
     /**

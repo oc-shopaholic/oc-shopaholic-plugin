@@ -36,3 +36,5 @@
 1.10.0:
     - 'Adding relation between Product model and additional categories. Adding ability to get list of products by category ID list, by the parent category ID.'
     - create_table_additional_categories.php
+1.11.0:
+    - 'Adding getPageUrl() method to ProductItem, BrandItem classes.'

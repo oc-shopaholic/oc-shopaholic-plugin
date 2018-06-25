@@ -102,28 +102,58 @@ class CategoryItem extends ElementItem
      */
     public function getPageUrl($sPageCode)
     {
+        //Get URL params
+        $arParamList = $this->getPageParamList($sPageCode);
+
+        //Generate page URL
+        $sURL = CmsPage::url($sPageCode, $arParamList);
+
+        return $sURL;
+    }
+
+    /**
+     * Get URL param list by page code
+     * @param string $sPageCode
+     * @return array
+     */
+    public function getPageParamList($sPageCode) : array
+    {
         //Get URL params for page
         $arParamList = PageHelper::instance()->getUrlParamList($sPageCode, 'CategoryPage');
         if (empty($arParamList)) {
-            //Generate page URL
-            $sURL = CmsPage::url($sPageCode, ['slug' => $this->slug]);
-
-            return $sURL;
+            return [];
         }
+
+        $arParamList = array_reverse($arParamList);
+
+        //Get slug list
+        $arSlugList = $this->getSlugList();
+        $arSlugList = array_reverse($arSlugList);
 
         //Prepare page property list
         $arPagePropertyList = [];
-        $obCategoryItem = $this;
-
         foreach ($arParamList as $sParamName) {
-            $arPagePropertyList[$sParamName] = $obCategoryItem->slug;
-            $obCategoryItem = $obCategoryItem->parent;
+            $arPagePropertyList[$sParamName] = array_shift($arSlugList);
         }
 
-        //Generate page URL
-        $sURL = CmsPage::url($sPageCode, $arPagePropertyList);
+        return $arPagePropertyList;
+    }
 
-        return $sURL;
+    /**
+     * Get array with categories slugs
+     * @return array
+     */
+    protected function getSlugList() : array
+    {
+        $arResult = [$this->slug];
+
+        $obParentCategory = $this->parent;
+        while ($obParentCategory->isNotEmpty()) {
+            $arResult[] = $obParentCategory->slug;
+            $obParentCategory = $obParentCategory->parent;
+        }
+
+        return $arResult;
     }
 
     /**
