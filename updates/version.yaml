@@ -38,3 +38,5 @@
     - create_table_additional_categories.php
 1.11.0:
     - 'Adding getPageUrl() method to ProductItem, BrandItem classes.'
+1.11.1:
+    - 'Adding "field.additional_category" value to lang files. Fixed displaying "additional categories" field only for update/preview forms.'
