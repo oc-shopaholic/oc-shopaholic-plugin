@@ -31,6 +31,9 @@ tabs:
             type: relation
             span: right
             nameFrom: name
+            context:
+                - update
+                - preview
             tab: 'lovata.toolbox::lang.tab.settings'
         brand:
             label: 'lovata.shopaholic::lang.field.brand'
