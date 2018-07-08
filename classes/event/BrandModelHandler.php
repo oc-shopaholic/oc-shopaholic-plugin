@@ -13,19 +13,8 @@ use Lovata\Shopaholic\Classes\Store\BrandListStore;
  */
 class BrandModelHandler extends ModelHandler
 {
-    /** @var  BrandListStore */
-    protected $obListStore;
-
     /** @var Brand */
     protected $obElement;
-
-    /**
-     * BrandModelHandler constructor.
-     */
-    public function __construct()
-    {
-        $this->obListStore = BrandListStore::instance();
-    }
 
     /**
      * Add listeners
@@ -56,7 +45,7 @@ class BrandModelHandler extends ModelHandler
     {
         parent::afterSave();
 
-        $this->checkFieldChanges('active', $this->obListStore->active);
+        $this->checkFieldChanges('active', BrandListStore::instance()->active);
     }
 
     /**
@@ -68,7 +57,7 @@ class BrandModelHandler extends ModelHandler
         $this->clearSortingList();
 
         if ($this->obElement->active) {
-            $this->obListStore->active->clear();
+            BrandListStore::instance()->active->clear();
         }
     }
 
@@ -77,7 +66,7 @@ class BrandModelHandler extends ModelHandler
      */
     protected function clearSortingList()
     {
-        $this->obListStore->sorting->clear();
+        BrandListStore::instance()->sorting->clear();
     }
 
     /**

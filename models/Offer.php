@@ -54,6 +54,9 @@ use October\Rain\Database\Traits\Purgeable;
  * Properties for Shopaholic
  * @see     \Lovata\PropertiesShopaholic\Classes\Event\OfferModelHandler::addPropertyMethods
  * @property array                             $property
+ *
+ * @property \October\Rain\Database\Collection|\Lovata\PropertiesShopaholic\Models\PropertyValueLink[] $property_value
+ * @method static \October\Rain\Database\Relations\MorphMany|\Lovata\PropertiesShopaholic\Models\PropertyValueLink property_value()
  */
 class Offer extends Model
 {
@@ -84,6 +87,7 @@ class Offer extends Model
     public $attachOne = ['preview_image' => 'System\Models\File'];
     public $attachMany = ['images' => 'System\Models\File'];
     public $belongsTo = ['product' => [Product::class]];
+    public $morphMany = [];
 
     public $fillable = [
         'active',

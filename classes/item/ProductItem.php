@@ -40,6 +40,7 @@ use Lovata\Shopaholic\Classes\Collection\OfferCollection;
  *
  * Properties for Shopaholic
  * @see     \Lovata\PropertiesShopaholic\Classes\Event\ProductModelHandler::extendProductItem
+ * @property array                                                   $property_value_array
  * @property \Lovata\PropertiesShopaholic\Classes\Collection\PropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[] $property
  *
  * Reviews for Shopaholic

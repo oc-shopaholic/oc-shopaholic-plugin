@@ -44,11 +44,12 @@ use Lovata\Shopaholic\Classes\Collection\CategoryCollection;
  * Properties for Shopaholic
  * @see     \Lovata\PropertiesShopaholic\Classes\Event\CategoryModelHandler::extendCategoryItem
  *
- * @method addProductPropertyIDList()
+ * @property array                                                                                                                             $property_set_id
+ * @property \Lovata\PropertiesShopaholic\Classes\Collection\PropertySetCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertySetItem[] $property_set
+ *
  * @property array                                                                                                                         $product_property_list
  * @property \Lovata\PropertiesShopaholic\Classes\Collection\PropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[]   $product_property
  *
- * @method addOfferPropertyIDList()
  * @property array                                                                                                                         $offer_property_list
  * @property \Lovata\PropertiesShopaholic\Classes\Collection\PropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[]   $offer_property
  *
@@ -209,12 +210,7 @@ class CategoryItem extends ElementItem
             }
         }
 
-        $obProductCollection = ProductCollection::make()->saved(self::class.'_active');
-        if (empty($obProductCollection)) {
-            $obProductCollection = ProductCollection::make()->active()->save(self::class.'_active');
-        }
-
-        $iProductCount += $obProductCollection->category($this->id)->count();
+        $iProductCount += ProductCollection::make()->active()->category($this->id)->count();
 
         CCache::forever($arCacheTag, $sCacheKey, $iProductCount);
         $this->setAttribute('product_count', $iProductCount);
