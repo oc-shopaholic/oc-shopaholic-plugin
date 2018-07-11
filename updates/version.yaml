@@ -40,3 +40,5 @@
     - 'Adding getPageUrl() method to ProductItem, BrandItem classes.'
 1.11.1:
     - 'Adding "field.additional_category" value to lang files. Fixed displaying "additional categories" field only for update/preview forms.'
+1.11.2:
+    - 'Fix work with *Store classes in *Handler classes.'

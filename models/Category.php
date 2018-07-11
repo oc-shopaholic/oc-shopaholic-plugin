@@ -55,11 +55,11 @@ use Lovata\Toolbox\Traits\Helpers\TraitCached;
  * Properties for Shopaholic
  * @see \Lovata\PropertiesShopaholic\Classes\Event\CategoryModelHandler::addModelRelationConfig
  *
- * @property \October\Rain\Database\Collection|\Lovata\PropertiesShopaholic\Models\Property[] $product_property
- * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\PropertiesShopaholic\Models\Property product_property()
+ * @property \October\Rain\Database\Collection|\Lovata\PropertiesShopaholic\Models\PropertySet[] $property_set
+ * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\PropertiesShopaholic\Models\PropertySet property_set()
  *
+ * @property \October\Rain\Database\Collection|\Lovata\PropertiesShopaholic\Models\Property[] $product_property
  * @property \October\Rain\Database\Collection|\Lovata\PropertiesShopaholic\Models\Property[] $offer_property
- * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\PropertiesShopaholic\Models\Property offer_property()
  *
  * @method static $this getByParentID(int $iParentID)
  */
@@ -105,6 +105,8 @@ class Category extends Model
     ];
     public $hasMany = ['product' => Product::class];
 
+    public $appends = [];
+    public $purgeable = [];
     public $fillable = [
         'active',
         'name',

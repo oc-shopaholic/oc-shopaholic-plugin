@@ -18,12 +18,6 @@ class ProductModelHandler extends ModelHandler
     /** @var  Product */
     protected $obElement;
 
-    /** @var  ProductListStore */
-    protected $obListStore;
-
-    /** @var  BrandListStore */
-    protected $obBrandListStore;
-
     /**
      * Add listeners
      * @param \Illuminate\Events\Dispatcher $obEvent
@@ -49,8 +43,8 @@ class ProductModelHandler extends ModelHandler
     {
         parent::afterCreate();
 
-        $this->obListStore->sorting->clear(ProductListStore::SORT_NEW);
-        $this->obListStore->sorting->clear(ProductListStore::SORT_NO);
+        ProductListStore::instance()->sorting->clear(ProductListStore::SORT_NEW);
+        ProductListStore::instance()->sorting->clear(ProductListStore::SORT_NO);
     }
 
     /**
@@ -77,18 +71,18 @@ class ProductModelHandler extends ModelHandler
         $this->processOfferAfterDelete();
         parent::afterDelete();
 
-        $this->obListStore->category->clear($this->obElement->category_id);
-        $this->obBrandListStore->category->clear($this->obElement->category_id);
+        ProductListStore::instance()->category->clear($this->obElement->category_id);
+        BrandListStore::instance()->category->clear($this->obElement->category_id);
 
-        $this->obListStore->brand->clear($this->obElement->brand_id);
+        ProductListStore::instance()->brand->clear($this->obElement->brand_id);
 
-        $this->obListStore->sorting->clear(ProductListStore::SORT_PRICE_ASC);
-        $this->obListStore->sorting->clear(ProductListStore::SORT_PRICE_DESC);
-        $this->obListStore->sorting->clear(ProductListStore::SORT_NEW);
-        $this->obListStore->sorting->clear(ProductListStore::SORT_NO);
+        ProductListStore::instance()->sorting->clear(ProductListStore::SORT_PRICE_ASC);
+        ProductListStore::instance()->sorting->clear(ProductListStore::SORT_PRICE_DESC);
+        ProductListStore::instance()->sorting->clear(ProductListStore::SORT_NEW);
+        ProductListStore::instance()->sorting->clear(ProductListStore::SORT_NO);
 
         if ($this->obElement->active) {
-            $this->obListStore->active->clear();
+            ProductListStore::instance()->active->clear();
         }
     }
 
@@ -118,7 +112,7 @@ class ProductModelHandler extends ModelHandler
             return;
         }
 
-        $this->obListStore->active->clear();
+        ProductListStore::instance()->active->clear();
 
         $this->clearCategoryProductCount($this->obElement->category_id);
 
@@ -144,11 +138,11 @@ class ProductModelHandler extends ModelHandler
         }
 
         //Update product ID cache list for category
-        $this->obListStore->category->clear($this->obElement->category_id);
-        $this->obListStore->category->clear((int) $this->obElement->getOriginal('category_id'));
+        ProductListStore::instance()->category->clear($this->obElement->category_id);
+        ProductListStore::instance()->category->clear((int) $this->obElement->getOriginal('category_id'));
 
-        $this->obBrandListStore->category->clear($this->obElement->category_id);
-        $this->obBrandListStore->category->clear((int) $this->obElement->getOriginal('category_id'));
+        BrandListStore::instance()->category->clear($this->obElement->category_id);
+        BrandListStore::instance()->category->clear((int) $this->obElement->getOriginal('category_id'));
 
         $this->clearCategoryProductCount($this->obElement->category_id);
         $this->clearCategoryProductCount((int) $this->obElement->getOriginal('category_id'));
@@ -165,8 +159,8 @@ class ProductModelHandler extends ModelHandler
         }
 
         //Update product ID cache list for brand
-        $this->obListStore->brand->clear($this->obElement->brand_id);
-        $this->obListStore->brand->clear((int) $this->obElement->getOriginal('brand_id'));
+        ProductListStore::instance()->brand->clear($this->obElement->brand_id);
+        ProductListStore::instance()->brand->clear((int) $this->obElement->getOriginal('brand_id'));
     }
 
     /**
@@ -199,8 +193,8 @@ class ProductModelHandler extends ModelHandler
         //Clear product list cache by category ID
         foreach ($arCategoryIDList as $iCategoryID) {
 
-            $this->obListStore->category->clear($iCategoryID);
-            $this->obBrandListStore->category->clear($iCategoryID);
+            ProductListStore::instance()->category->clear($iCategoryID);
+            BrandListStore::instance()->category->clear($iCategoryID);
 
             $this->clearCategoryProductCount($iCategoryID);
         }
@@ -216,15 +210,6 @@ class ProductModelHandler extends ModelHandler
         if ($obCategoryItem->isNotEmpty()) {
             $obCategoryItem->clearProductCount();
         }
-    }
-
-    /**
-     * Init store objects
-     */
-    protected function init()
-    {
-        $this->obListStore = ProductListStore::instance();
-        $this->obBrandListStore = BrandListStore::instance();
     }
 
     /**

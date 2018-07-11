@@ -21,12 +21,6 @@ class OfferModelHandler extends ModelHandler
     /** @var  Offer */
     protected $obElement;
 
-    /** @var  ProductListStore */
-    protected $obProductListStore;
-
-    /** @var  OfferListStore */
-    protected $obListStore;
-
     /**
      * After save event handler
      */
@@ -50,7 +44,7 @@ class OfferModelHandler extends ModelHandler
         if ($this->obElement->active) {
             $this->clearProductActiveList();
             $this->clearProductItemCache($this->obElement->product_id);
-            $this->obListStore->active->clear();
+            OfferListStore::instance()->active->clear();
         }
 
         //Get product object
@@ -60,8 +54,8 @@ class OfferModelHandler extends ModelHandler
         }
 
         //Clear sorting product list by offer price
-        $this->obProductListStore->sorting->clear(ProductListStore::SORT_PRICE_ASC);
-        $this->obProductListStore->sorting->clear(ProductListStore::SORT_PRICE_DESC);
+        ProductListStore::instance()->sorting->clear(ProductListStore::SORT_PRICE_ASC);
+        ProductListStore::instance()->sorting->clear(ProductListStore::SORT_PRICE_DESC);
     }
 
     /**
@@ -104,8 +98,8 @@ class OfferModelHandler extends ModelHandler
     protected function checkPriceField()
     {
         if ($this->obElement->getOriginal('price') != $this->obElement->price_value) {
-            $this->obListStore->sorting->clear(OfferListStore::SORT_PRICE_ASC);
-            $this->obListStore->sorting->clear(OfferListStore::SORT_PRICE_DESC);
+            OfferListStore::instance()->sorting->clear(OfferListStore::SORT_PRICE_ASC);
+            OfferListStore::instance()->sorting->clear(OfferListStore::SORT_PRICE_DESC);
         }
 
         $bNeedUpdateFlag =
@@ -126,8 +120,8 @@ class OfferModelHandler extends ModelHandler
             return;
         }
 
-        $this->obProductListStore->sorting->clear(ProductListStore::SORT_PRICE_ASC);
-        $this->obProductListStore->sorting->clear(ProductListStore::SORT_PRICE_DESC);
+        ProductListStore::instance()->sorting->clear(ProductListStore::SORT_PRICE_ASC);
+        ProductListStore::instance()->sorting->clear(ProductListStore::SORT_PRICE_DESC);
     }
 
     /**
@@ -141,7 +135,7 @@ class OfferModelHandler extends ModelHandler
         }
 
         $this->clearProductActiveList();
-        $this->obListStore->active->clear();
+        OfferListStore::instance()->active->clear();
 
         $obProduct = $this->obElement->product;
         if (empty($obProduct)) {
@@ -167,16 +161,7 @@ class OfferModelHandler extends ModelHandler
             return;
         }
 
-        $this->obProductListStore->active->clear();
-    }
-
-    /**
-     * Init store objects
-     */
-    protected function init()
-    {
-        $this->obProductListStore = ProductListStore::instance();
-        $this->obListStore = OfferListStore::instance();
+        ProductListStore::instance()->active->clear();
     }
 
     /**

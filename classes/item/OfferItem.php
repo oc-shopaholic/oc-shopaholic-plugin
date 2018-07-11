@@ -38,6 +38,7 @@ use Lovata\Toolbox\Traits\Helpers\PriceHelperTrait;
  *
  * Properties for Shopaholic
  * @see \Lovata\PropertiesShopaholic\Classes\Event\OfferModelHandler::extendOfferItem
+ * @property array       $property_value_array
  * @property \Lovata\PropertiesShopaholic\Classes\Collection\PropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[] $property
  */
 class OfferItem extends ElementItem

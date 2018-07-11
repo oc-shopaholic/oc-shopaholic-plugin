@@ -60,6 +60,9 @@ use Lovata\Toolbox\Traits\Helpers\TraitCached;
  * @see     \Lovata\PropertiesShopaholic\Classes\Event\ProductModelHandler::addPropertyMethods
  * @property array                                                                       $property
  *
+ * @property \October\Rain\Database\Collection|\Lovata\PropertiesShopaholic\Models\PropertyValueLink[] $property_value
+ * @method static \October\Rain\Database\Relations\MorphMany|\Lovata\PropertiesShopaholic\Models\PropertyValueLink property_value()
+ *
  * Popularity for Shopaholic
  * @property int                                                                         $popularity
  *
@@ -128,6 +131,8 @@ class Product extends Model
             'table'      => 'lovata_shopaholic_additional_categories',
         ],
     ];
+
+    public $morphMany = [];
 
     public $appends = [];
     public $purgeable = [];

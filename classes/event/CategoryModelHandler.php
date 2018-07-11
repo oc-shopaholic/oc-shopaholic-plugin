@@ -16,17 +16,6 @@ class CategoryModelHandler extends ModelHandler
     /** @var  Category */
     protected $obElement;
 
-    /** @var  CategoryListStore */
-    protected $obListStore;
-
-    /**
-     * CategoryModelHandler constructor.
-     */
-    public function __construct()
-    {
-        $this->obListStore = CategoryListStore::instance();
-    }
-
     /**
      * Add listeners
      * @param \Illuminate\Events\Dispatcher $obEvent
@@ -36,7 +25,7 @@ class CategoryModelHandler extends ModelHandler
         parent::subscribe($obEvent);
 
         $obEvent->listen('shopaholic.category.update.sorting', function () {
-            $this->obListStore->top_level->clear();
+            CategoryListStore::instance()->top_level->clear();
 
             //Get category ID list
             $arCategoryIDList = Category::lists('id');
@@ -57,9 +46,9 @@ class CategoryModelHandler extends ModelHandler
     protected function afterSave()
     {
         parent::afterSave();
-        $this->obListStore->top_level->clear();
+        CategoryListStore::instance()->top_level->clear();
 
-        $this->checkFieldChanges('active', $this->obListStore->active);
+        $this->checkFieldChanges('active', CategoryListStore::instance()->active);
     }
 
     /**
@@ -68,7 +57,7 @@ class CategoryModelHandler extends ModelHandler
     protected function afterDelete()
     {
         parent::afterDelete();
-        $this->obListStore->top_level->clear();
+        CategoryListStore::instance()->top_level->clear();
 
         //Clear parent item cache
         if (!empty($this->obElement->parent_id)) {
@@ -76,7 +65,7 @@ class CategoryModelHandler extends ModelHandler
         }
 
         if ($this->obElement->active) {
-            $this->obListStore->active->clear();
+            CategoryListStore::instance()->active->clear();
         }
     }
 

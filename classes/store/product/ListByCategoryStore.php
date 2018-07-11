@@ -1,6 +1,7 @@
 <?php namespace Lovata\Shopaholic\Classes\Store\Product;
 
 use DB;
+use Event;
 use Lovata\Toolbox\Classes\Store\AbstractStoreWithParam;
 
 use Lovata\Shopaholic\Models\Product;
@@ -13,6 +14,17 @@ use Lovata\Shopaholic\Models\Product;
 class ListByCategoryStore extends AbstractStoreWithParam
 {
     protected static $instance;
+
+    /**
+     * Clear element ID list
+     * @param string $sFilterValue
+     */
+    public function clear($sFilterValue)
+    {
+        parent::clear($sFilterValue);
+
+        Event::fire('shopaholic.product.category.clear', [$sFilterValue]);
+    }
 
     /**
      * Get ID list from database
