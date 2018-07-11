@@ -59,9 +59,7 @@ use Lovata\Toolbox\Traits\Helpers\TraitCached;
  * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\PropertiesShopaholic\Models\PropertySet property_set()
  *
  * @property \October\Rain\Database\Collection|\Lovata\PropertiesShopaholic\Models\Property[] $product_property
- *
  * @property \October\Rain\Database\Collection|\Lovata\PropertiesShopaholic\Models\Property[] $offer_property
- *
  *
  * @method static $this getByParentID(int $iParentID)
  */
