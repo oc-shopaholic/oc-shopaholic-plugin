@@ -16,6 +16,17 @@ class ListByCategoryStore extends AbstractStoreWithParam
     protected static $instance;
 
     /**
+     * Clear element ID list
+     * @param string $sFilterValue
+     */
+    public function clear($sFilterValue)
+    {
+        parent::clear($sFilterValue);
+
+        Event::fire('shopaholic.product.category.clear', [$sFilterValue]);
+    }
+
+    /**
      * Get ID list from database
      * @return array
      */
@@ -29,15 +40,5 @@ class ListByCategoryStore extends AbstractStoreWithParam
         $arElementIDList = array_unique($arElementIDList);
 
         return $arElementIDList;
-    }
-
-    /**
-     * Clear element ID list
-     */
-    public function clear($sFilterValue)
-    {
-        parent::clear($sFilterValue);
-
-        Event::fire('shopaholic.product.category.clear', [$sFilterValue]);
     }
 }
