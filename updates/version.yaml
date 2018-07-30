@@ -42,3 +42,5 @@
     - 'Adding "field.additional_category" value to lang files. Fixed displaying "additional categories" field only for update/preview forms.'
 1.11.2:
     - 'Fix work with *Store classes in *Handler classes.'
+1.11.3:
+    - 'Fix error in ProductCollection class, if product list by category is empty.'
