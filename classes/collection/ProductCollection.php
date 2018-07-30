@@ -81,9 +81,9 @@ class ProductCollection extends ElementCollection
 
         $arResultIDList = [];
         foreach ($arCategoryIDList as $iCategoryID) {
-            $arResultIDList = array_merge($arResultIDList, ProductListStore::instance()->category->get($iCategoryID));
+            $arResultIDList = array_merge($arResultIDList, (array) ProductListStore::instance()->category->get($iCategoryID));
             if ($bWithChildren) {
-                $arResultIDList = array_merge($arResultIDList, $this->getIDListChildrenCategory($iCategoryID));
+                $arResultIDList = array_merge($arResultIDList, (array) $this->getIDListChildrenCategory($iCategoryID));
             }
         }
 
@@ -178,7 +178,7 @@ class ProductCollection extends ElementCollection
 
         $arResultIDList = [];
         foreach ($obCategoryItem->children as $obChildCategoryItem) {
-            $arResultIDList = array_merge($arResultIDList, ProductListStore::instance()->category->get($obChildCategoryItem->id));
+            $arResultIDList = array_merge($arResultIDList, (array) ProductListStore::instance()->category->get($obChildCategoryItem->id));
             $arResultIDList = array_merge($arResultIDList, $this->getIDListChildrenCategory($obChildCategoryItem->id));
         }
 
