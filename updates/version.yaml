@@ -44,3 +44,5 @@
     - 'Fix work with *Store classes in *Handler classes.'
 1.11.3:
     - 'Fix error in ProductCollection class, if product list by category is empty.'
+1.12.0:
+    - 'Added type returned by methods in AbstractStore * classes'
