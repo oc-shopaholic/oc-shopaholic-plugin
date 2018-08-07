@@ -17,7 +17,7 @@ class SortingListStore extends AbstractStoreWithoutParam
      * Get ID list from database
      * @return array
      */
-    protected function getIDListFromDB()
+    protected function getIDListFromDB() : array
     {
         $arElementIDList = (array) Brand::orderBy('sort_order', 'asc')->lists('id');
 
