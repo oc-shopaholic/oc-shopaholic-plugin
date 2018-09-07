@@ -46,3 +46,7 @@
     - 'Fix error in ProductCollection class, if product list by category is empty.'
 1.12.0:
     - 'Added type returned by methods in AbstractStore * classes'
+1.13.0:
+    - 'Added PromoBlock model, controller, item, collection classes.'
+    - create_table_promo_block.php
+    - create_table_promo_block_relation.php

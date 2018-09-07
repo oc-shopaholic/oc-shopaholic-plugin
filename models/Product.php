@@ -83,6 +83,10 @@ use Lovata\Toolbox\Traits\Helpers\TraitCached;
  * Search for Shopaholic, Sphinx for Shopaholic
  * @property string                                                                      $search_synonym
  * @property string                                                                      $search_content
+ *
+ * Discounts for Shopaholic
+ * @property \October\Rain\Database\Collection|\Lovata\DiscountsShopaholic\Models\Discount[] $discount
+ * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\DiscountsShopaholic\Models\Discount discount()
  */
 class Product extends Model
 {

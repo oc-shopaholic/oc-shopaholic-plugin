@@ -3,7 +3,7 @@
         'name'        => 'Shopaholic',
         'description' => 'Catalog of products for eCommerce',
     ],
-    'field' => [
+    'field'      => [
         'vendor_code'         => 'Vendor code',
         'price'               => 'Price',
         'old_price'           => 'Old price',
@@ -13,6 +13,7 @@
         'currency'            => 'Currency',
         'check_offer_active'  => 'When you receive a list of active products, check for active offers',
         'additional_category' => 'Additional categories',
+        'promo_block_type'    => 'Promo block with product list',
     ],
     'menu'       => [
         'main'                => 'Catalog',
@@ -22,10 +23,13 @@
         'shop_catalog'        => 'Catalog of products',
         'shop_category'       => 'Category of products',
         'all_shop_categories' => 'All categories of products',
+        'promo_block'         => 'Promo blocks',
+        'promo'               => 'Promo',
     ],
     'tab'        => [
-        'offer'         => 'Offers',
-        'permissions'   => 'Shopaholic',
+        'offer'       => 'Offers',
+        'price'       => 'Prices',
+        'permissions' => 'Shopaholic',
     ],
     'category'   => [
         'name'       => 'category',
@@ -43,50 +47,63 @@
         'name'       => 'offer',
         'list_title' => 'Offer list',
     ],
+    'promo_block'      => [
+        'name'       => 'promo block',
+        'list_title' => 'Promo block list',
+    ],
     'component'  => [
 
         //Product components
-        'product_page_name'         => 'Product page',
-        'product_page_description'  => 'Get data for product page',
-        'product_data_name'         => 'Product data',
-        'product_data_description'  => 'Get product data by ID',
-        'product_list_name'         => 'Product list',
-        'product_list_description'  => 'Get product list',
+        'product_page_name'            => 'Product page',
+        'product_page_description'     => 'Get data for product page',
+        'product_data_name'            => 'Product data',
+        'product_data_description'     => 'Get product data by ID',
+        'product_list_name'            => 'Product list',
+        'product_list_description'     => 'Get product list',
 
         //Brand components
-        'brand_page_name'           => 'Brand page',
-        'brand_page_description'    => 'Get data for brand page',
-        'brand_data_name'           => 'Brand data',
-        'brand_data_description'    => 'Get brand data by ID',
-        'brand_list_name'           => 'Brand list',
-        'brand_list_description'    => 'Get brand list',
+        'brand_page_name'              => 'Brand page',
+        'brand_page_description'       => 'Get data for brand page',
+        'brand_data_name'              => 'Brand data',
+        'brand_data_description'       => 'Get brand data by ID',
+        'brand_list_name'              => 'Brand list',
+        'brand_list_description'       => 'Get brand list',
+
+        //Promo block components
+        'promo_block_page_name'        => 'Promo block page',
+        'promo_block_page_description' => 'Get data for promo block page',
+        'promo_block_data_name'        => 'Promo block data',
+        'promo_block_data_description' => 'Get promo block data by ID',
+        'promo_block_list_name'        => 'Promo block list',
+        'promo_block_list_description' => 'Get promo block list',
 
         //Category components
-        'category_page_name'        => 'Category page',
-        'category_page_description' => 'Get data for category page',
-        'category_data_name'        => 'Category data',
-        'category_data_description' => 'Get category data by ID',
-        'category_list_name'        => 'Category list',
-        'category_list_description' => 'Get category tree',
+        'category_page_name'           => 'Category page',
+        'category_page_description'    => 'Get data for category page',
+        'category_data_name'           => 'Category data',
+        'category_data_description'    => 'Get category data by ID',
+        'category_list_name'           => 'Category list',
+        'category_list_description'    => 'Get category tree',
 
         //Common components
-        'breadcrumbs_name'          => 'Breadcrumbs',
-        'breadcrumbs_description'   => 'Get data for catalog breadcrumbs',
+        'breadcrumbs_name'             => 'Breadcrumbs',
+        'breadcrumbs_description'      => 'Get data for catalog breadcrumbs',
 
         //Components settings
-        'product_list_sorting'      => 'Default sorting',
-        'sorting_no'                => 'Without sorting',
-        'sorting_price_desc'        => 'Expensive',
-        'sorting_price_asc'         => 'Cheap',
-        'sorting_new'               => 'New',
-        'sorting_popularity_desc'   => 'More popular',
-        'sorting_rating_desc'       => 'High rating',
-        'sorting_rating_asc'        => 'Low rating',
+        'product_list_sorting'         => 'Default sorting',
+        'sorting_no'                   => 'Without sorting',
+        'sorting_price_desc'           => 'Expensive',
+        'sorting_price_asc'            => 'Cheap',
+        'sorting_new'                  => 'New',
+        'sorting_popularity_desc'      => 'More popular',
+        'sorting_rating_desc'          => 'High rating',
+        'sorting_rating_asc'           => 'Low rating',
     ],
     'permission' => [
-        'category' => 'Manage categories',
-        'brand'    => 'Manage brands',
-        'product'  => 'Manage products',
-        'settings' => 'Manage settings',
+        'category'    => 'Manage categories',
+        'brand'       => 'Manage brands',
+        'product'     => 'Manage products',
+        'settings'    => 'Manage settings',
+        'promo_block' => 'Manage promo blocks',
     ],
 ];

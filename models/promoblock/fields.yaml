@@ -9,34 +9,36 @@ fields:
         span: left
         required: 1
         type: text
+    slug:
+        label: 'lovata.toolbox::lang.field.slug'
+        span: right
+        required: 1
+        preset:
+            field: name
+            type: slug
+        type: text
 tabs:
     fields:
-        quantity:
-            label: 'lovata.shopaholic::lang.field.quantity'
-            span: left
-            type: text
-            default: 0
+        type:
+            label: 'lovata.toolbox::lang.field.type'
             tab: 'lovata.toolbox::lang.tab.settings'
+            span: left
+            type: dropdown
         code:
-            label: 'lovata.shopaholic::lang.field.vendor_code'
-            span: left
-            type: text
+            label: 'lovata.toolbox::lang.field.code'
             tab: 'lovata.toolbox::lang.tab.settings'
-        external_id:
-            label: 'lovata.toolbox::lang.field.external_id'
-            span: left
-            type: text
-            tab: 'lovata.toolbox::lang.tab.settings'
-        price:
-            label: 'lovata.shopaholic::lang.field.price'
-            span: left
-            type: text
-            tab: 'lovata.shopaholic::lang.tab.price'
-        old_price:
-            label: 'lovata.shopaholic::lang.field.old_price'
             span: right
             type: text
-            tab: 'lovata.shopaholic::lang.tab.price'
+        date_begin:
+            label: 'lovata.toolbox::lang.field.date_begin'
+            tab: 'lovata.toolbox::lang.tab.settings'
+            span: left
+            type: datepicker
+        date_end:
+            label: 'lovata.toolbox::lang.field.date_end'
+            tab: 'lovata.toolbox::lang.tab.settings'
+            span: right
+            type: datepicker
         preview_text:
             label: 'lovata.toolbox::lang.field.preview_text'
             size: large
@@ -56,7 +58,7 @@ tabs:
             thumbOptions:
                 mode: crop
                 extension: auto
-            span: full
+            span: left
             type: fileupload
             tab: 'lovata.toolbox::lang.tab.images'
         images:
@@ -66,6 +68,6 @@ tabs:
             thumbOptions:
                 mode: crop
                 extension: auto
-            span: full
+            span: left
             type: fileupload
             tab: 'lovata.toolbox::lang.tab.images'

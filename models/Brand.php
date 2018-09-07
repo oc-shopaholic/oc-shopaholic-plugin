@@ -17,32 +17,36 @@ use Lovata\Toolbox\Traits\Helpers\TraitCached;
 /**
  * Class Brand
  * @package Lovata\Shopaholic\Models
- * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  *
  * @mixin \October\Rain\Database\Builder
  * @mixin \Eloquent
  *
- * @property $id
- * @property bool $active
- * @property string $name
- * @property string $slug
- * @property string $code
- * @property string $external_id
- * @property string $preview_text
- * @property string $description
- * @property \October\Rain\Argon\Argon $created_at
- * @property \October\Rain\Argon\Argon $updated_at
+ * @property                                                                                 $id
+ * @property bool                                                                            $active
+ * @property string                                                                          $name
+ * @property string                                                                          $slug
+ * @property string                                                                          $code
+ * @property string                                                                          $external_id
+ * @property string                                                                          $preview_text
+ * @property string                                                                          $description
+ * @property \October\Rain\Argon\Argon                                                       $created_at
+ * @property \October\Rain\Argon\Argon                                                       $updated_at
  *
  * Relations
- * @property \System\Models\File $preview_image
- * @property \October\Rain\Database\Collection|\System\Models\File[] $images
+ * @property \System\Models\File                                                             $preview_image
+ * @property \October\Rain\Database\Collection|\System\Models\File[]                         $images
  *
- * @property \October\Rain\Database\Collection|Product[] $product
+ * @property \October\Rain\Database\Collection|Product[]                                     $product
  * @method \October\Rain\Database\Relations\HasMany|Product product()
  *
  * Search for Shopaholic, Sphinx for Shopaholic
- * @property string $search_synonym
- * @property string $search_content
+ * @property string                                                                          $search_synonym
+ * @property string                                                                          $search_content
+ *
+ * Discounts for Shopaholic
+ * @property \October\Rain\Database\Collection|\Lovata\DiscountsShopaholic\Models\Discount[] $discount
+ * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\DiscountsShopaholic\Models\Discount discount()
  */
 class Brand extends Model
 {
@@ -79,8 +83,14 @@ class Brand extends Model
     public $attachOne = ['preview_image' => 'System\Models\File'];
     public $attachMany = ['images' => 'System\Models\File'];
     public $hasMany = ['product' => Product::class];
+    public $belongsToMany = [];
+    public $morphMany = [];
+    public $belongsTo = [];
 
     public $dates = ['created_at', 'updated_at'];
+
+    public $appends = [];
+    public $purgeable = [];
 
     public $fillable = [
         'active',

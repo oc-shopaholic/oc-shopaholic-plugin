@@ -62,6 +62,10 @@ use Lovata\Toolbox\Traits\Helpers\TraitCached;
  * @property \October\Rain\Database\Collection|\Lovata\PropertiesShopaholic\Models\Property[] $offer_property
  *
  * @method static $this getByParentID(int $iParentID)
+ *
+ * Discounts for Shopaholic
+ * @property \October\Rain\Database\Collection|\Lovata\DiscountsShopaholic\Models\Discount[] $discount
+ * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\DiscountsShopaholic\Models\Discount discount()
  */
 class Category extends Model
 {

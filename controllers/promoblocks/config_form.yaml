@@ -1,0 +1,16 @@
+name: 'lovata.shopaholic::lang.promo_block.name'
+modelClass: Lovata\Shopaholic\Models\PromoBlock
+form: $/lovata/shopaholic/models/promoblock/fields.yaml
+defaultRedirect: lovata/shopaholic/promoblocks
+create:
+    title: 'backend::lang.form.create_title'
+    redirect: 'lovata/shopaholic/promoblocks/update/:id'
+    redirectClose: lovata/shopaholic/promoblocks
+    flashSave: 'lovata.toolbox::lang.message.create_success'
+update:
+    title: 'backend::lang.form.update_title'
+    redirect: lovata/shopaholic/promoblocks
+    redirectClose: lovata/shopaholic/promoblocks
+    flashSave: 'lovata.toolbox::lang.message.update_success'
+    flashDelete: 'lovata.toolbox::lang.message.delete_success'
+preview: {  }

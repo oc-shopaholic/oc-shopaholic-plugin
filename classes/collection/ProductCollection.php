@@ -1,10 +1,10 @@
 <?php namespace Lovata\Shopaholic\Classes\Collection;
 
-use Lovata\Shopaholic\Classes\Item\CategoryItem;
 use Lovata\Toolbox\Classes\Collection\ElementCollection;
 
 use Lovata\Shopaholic\Classes\Item\OfferItem;
 use Lovata\Shopaholic\Classes\Item\ProductItem;
+use Lovata\Shopaholic\Classes\Item\CategoryItem;
 use Lovata\Shopaholic\Classes\Store\OfferListStore;
 use Lovata\Shopaholic\Classes\Store\ProductListStore;
 
@@ -24,6 +24,9 @@ use Lovata\Shopaholic\Classes\Store\ProductListStore;
  *
  * Tags for Shopaholic plugin
  * @method $this tag(int $iTagID)
+ *
+ * Discounts for Shopaholic plugin
+ * @method $this discount(int $iDiscountID)
  *
  * Search for Shopaholic, Sphinx for Shopaholic
  * @method $this search(string $sSearch)
@@ -99,6 +102,19 @@ class ProductCollection extends ElementCollection
     public function brand($iBrandID)
     {
         $arResultIDList = ProductListStore::instance()->brand->get($iBrandID);
+
+        return $this->intersect($arResultIDList);
+    }
+
+    /**
+     * Filter product list by promo block ID
+     * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testPromoBlockFilter()
+     * @param int $iPromoBlockID
+     * @return $this
+     */
+    public function promo($iPromoBlockID)
+    {
+        $arResultIDList = ProductListStore::instance()->promo->get($iPromoBlockID);
 
         return $this->intersect($arResultIDList);
     }
