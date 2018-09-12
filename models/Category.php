@@ -66,6 +66,10 @@ use Lovata\Toolbox\Traits\Helpers\TraitCached;
  * Discounts for Shopaholic
  * @property \October\Rain\Database\Collection|\Lovata\DiscountsShopaholic\Models\Discount[] $discount
  * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\DiscountsShopaholic\Models\Discount discount()
+ *
+ * Coupons for Shopaholic
+ * @property \October\Rain\Database\Collection|\Lovata\CouponsShopaholic\Models\CouponGroup[] $coupon_group
+ * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\CouponsShopaholic\Models\CouponGroup coupon_group()
  */
 class Category extends Model
 {
