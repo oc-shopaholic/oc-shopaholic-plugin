@@ -18,7 +18,7 @@ class ListByPromoBlockStore extends AbstractStoreWithParam
      */
     protected function getIDListFromDB() : array
     {
-        $arElementIDList = (array) DB::table('lovata_shopaholic_promo_block')->where('promo_id', $this->sValue)->lists('product_id');
+        $arElementIDList = (array) DB::table('lovata_shopaholic_promo_block_relation')->where('promo_id', $this->sValue)->lists('product_id');
 
         return $arElementIDList;
     }

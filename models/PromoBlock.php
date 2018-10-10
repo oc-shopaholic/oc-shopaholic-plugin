@@ -3,8 +3,8 @@
 use Lang;
 use Model;
 use Event;
-use October\Rain\Argon\Argon;
 
+use Kharanenka\Scope\ActiveField;
 use Kharanenka\Scope\CodeField;
 use Kharanenka\Scope\NameField;
 use Kharanenka\Scope\SlugField;
@@ -25,7 +25,6 @@ use Lovata\Toolbox\Traits\Helpers\TraitCached;
  *
  * @property                                                                                 $id
  * @property bool                                                                            $active
- * @property bool                                                                            $hidden
  * @property string                                                                          $name
  * @property string                                                                          $slug
  * @property string                                                                          $code
@@ -42,13 +41,16 @@ use Lovata\Toolbox\Traits\Helpers\TraitCached;
  * @property \System\Models\File                                                             $preview_image
  * @property \October\Rain\Database\Collection|\System\Models\File[]                         $images
  *
- *
  * @property \October\Rain\Database\Collection|\Lovata\Shopaholic\Models\Product[]           $product
  * @method static \October\Rain\Database\Relations\BelongsToMany|Product product()
  *
  * Discounts for Shopaholic
  * @property \October\Rain\Database\Collection|\Lovata\DiscountsShopaholic\Models\Discount[] $discount
  * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\DiscountsShopaholic\Models\Discount discount()
+ *
+ * Campaign for Shopaholic
+ * @property \October\Rain\Database\Collection|\Lovata\CampaignsShopaholic\Models\Campaign[] $campaign
+ * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\CampaignsShopaholic\Models\Campaign campaign()
  *
  * @method static $this active()
  * @method static $this hidden()
@@ -59,6 +61,7 @@ class PromoBlock extends Model
     use Validation;
     use Sortable;
     use Sluggable;
+    use ActiveField;
     use NameField;
     use CodeField;
     use SlugField;
@@ -171,41 +174,5 @@ class PromoBlock extends Model
     public function getTypeOptions() : array
     {
         return self::getTypeList();
-    }
-
-    /**
-     * Get active elements
-     * @param PromoBlock $obQuery
-     * @return PromoBlock
-     */
-    public function scopeActive($obQuery)
-    {
-        $sDateNow = Argon::now()->toDateTimeString();
-
-        return $obQuery->where('active', true)->where('date_begin', '<=', $sDateNow)
-            ->where(function ($obQuery) use ($sDateNow) {
-                /** @var PromoBlock $obQuery */
-                $obQuery->whereNull('date_end')->orWhere('date_end', '>', $sDateNow);
-            });
-    }
-
-    /**
-     * Get hidden elements
-     * @param PromoBlock $obQuery
-     * @return PromoBlock
-     */
-    public function scopeHidden($obQuery)
-    {
-        return $obQuery->where('hidden', true);
-    }
-
-    /**
-     * Get not hidden elements
-     * @param PromoBlock $obQuery
-     * @return PromoBlock
-     */
-    public function scopeNotHidden($obQuery)
-    {
-        return $obQuery->where('hidden', false);
     }
 }

@@ -1,7 +1,9 @@
 <?php namespace Lovata\Shopaholic\Classes\Collection;
 
+use Event;
 use Lovata\Toolbox\Classes\Collection\ElementCollection;
 
+use Lovata\Shopaholic\Models\PromoBlock;
 use Lovata\Shopaholic\Classes\Item\OfferItem;
 use Lovata\Shopaholic\Classes\Item\ProductItem;
 use Lovata\Shopaholic\Classes\Item\CategoryItem;
@@ -28,11 +30,20 @@ use Lovata\Shopaholic\Classes\Store\ProductListStore;
  * Discounts for Shopaholic plugin
  * @method $this discount(int $iDiscountID)
  *
+ * Coupons for Shopaholic plugin
+ * @method $this couponGroup(int $iCouponGroupID)
+ *
+ * Campaigns for Shopaholic plugin
+ * @method $this campaign(int $iCampaignID)
+ *
  * Search for Shopaholic, Sphinx for Shopaholic
  * @method $this search(string $sSearch)
  *
  * Compare for Shopaholic
  * @method $this compare()
+ *
+ * Wish list for Shopaholic
+ * @method $this wishList()
  *
  * Viewed products for Shopaholic
  * @method $this viewed()
@@ -107,12 +118,42 @@ class ProductCollection extends ElementCollection
     }
 
     /**
+     * Filter product list by promo block ID + different extensions
+     * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testPromoFilter()
+     * @param int $iPromoBlockID
+     * @return $this
+     */
+    public function promo($iPromoBlockID)
+    {
+        $arResultIDList = ProductListStore::instance()->promo->get($iPromoBlockID);
+
+        //Fire event, get additional product ID list
+        $arEventDataList = Event::fire(PromoBlock::EVENT_GET_PRODUCT_LIST, $iPromoBlockID);
+        if (empty($arEventDataList)) {
+            return $this->intersect($arResultIDList);
+        }
+
+        //Process event data
+        foreach ($arEventDataList as $arProductIDList) {
+            if (empty($arProductIDList) || !is_array($arProductIDList)) {
+                continue;
+            }
+
+            $arResultIDList = array_merge($arResultIDList, $arProductIDList);
+        }
+
+        $arResultIDList = array_unique($arResultIDList);
+
+        return $this->intersect($arResultIDList);
+    }
+
+    /**
      * Filter product list by promo block ID
      * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testPromoBlockFilter()
      * @param int $iPromoBlockID
      * @return $this
      */
-    public function promo($iPromoBlockID)
+    public function promoBlock($iPromoBlockID)
     {
         $arResultIDList = ProductListStore::instance()->promo->get($iPromoBlockID);
 

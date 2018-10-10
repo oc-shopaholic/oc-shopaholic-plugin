@@ -14,6 +14,7 @@
         'check_offer_active'  => 'При получении списка активных товаров проверять наличие активных предложений',
         'additional_category' => 'Дополнительные категории',
         'promo_block_type'    => 'Промо блок со списком товаров',
+        'promo_block'         => 'Промо блок',
     ],
     'menu'       => [
         'main'                => 'Каталог товаров',
@@ -98,6 +99,10 @@
         'sorting_popularity_desc'      => 'Популярные',
         'sorting_rating_desc'          => 'Высокий рейтинг',
         'sorting_rating_asc'           => 'Низкий рейтинг',
+        'sorting_date_begin_asc'       => 'Дата начала (ASC)',
+        'sorting_date_begin_desc'      => 'Дата начала (DESC)',
+        'sorting_date_end_asc'         => 'Дата окончания (ASC)',
+        'sorting_date_end_desc'        => 'Дата окончания (DESC)',
     ],
     'permission' => [
         'category'    => 'Управление категориями',

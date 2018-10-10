@@ -18,8 +18,6 @@ use Lovata\Shopaholic\Models\PromoBlock;
  * Clear cache in:
  * @see \Lovata\Shopaholic\Classes\Event\PromoBlock\PromoBlockModelHandler::afterSave()
  * @see \Lovata\Shopaholic\Classes\Event\PromoBlock\PromoBlockModelHandler::afterDelete()
- *
- * TODO: Add cache clearing
  */
 class ActiveListStore extends AbstractStoreWithoutParam
 {

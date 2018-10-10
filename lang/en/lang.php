@@ -1,9 +1,9 @@
 <?php return [
-    'plugin'     => [
+    'plugin'      => [
         'name'        => 'Shopaholic',
         'description' => 'Catalog of products for eCommerce',
     ],
-    'field'      => [
+    'field'       => [
         'vendor_code'         => 'Vendor code',
         'price'               => 'Price',
         'old_price'           => 'Old price',
@@ -14,8 +14,9 @@
         'check_offer_active'  => 'When you receive a list of active products, check for active offers',
         'additional_category' => 'Additional categories',
         'promo_block_type'    => 'Promo block with product list',
+        'promo_block'         => 'Promo block',
     ],
-    'menu'       => [
+    'menu'        => [
         'main'                => 'Catalog',
         'categories'          => 'Categories',
         'product'             => 'Products',
@@ -26,32 +27,32 @@
         'promo_block'         => 'Promo blocks',
         'promo'               => 'Promo',
     ],
-    'tab'        => [
+    'tab'         => [
         'offer'       => 'Offers',
         'price'       => 'Prices',
         'permissions' => 'Shopaholic',
     ],
-    'category'   => [
+    'category'    => [
         'name'       => 'category',
         'list_title' => 'Category list',
     ],
-    'brand'      => [
+    'brand'       => [
         'name'       => 'brand',
         'list_title' => 'Brand list',
     ],
-    'product'    => [
+    'product'     => [
         'name'       => 'product',
         'list_title' => 'Product list',
     ],
-    'offer'      => [
+    'offer'       => [
         'name'       => 'offer',
         'list_title' => 'Offer list',
     ],
-    'promo_block'      => [
+    'promo_block' => [
         'name'       => 'promo block',
         'list_title' => 'Promo block list',
     ],
-    'component'  => [
+    'component'   => [
 
         //Product components
         'product_page_name'            => 'Product page',
@@ -98,8 +99,12 @@
         'sorting_popularity_desc'      => 'More popular',
         'sorting_rating_desc'          => 'High rating',
         'sorting_rating_asc'           => 'Low rating',
+        'sorting_date_begin_asc'       => 'Date begin (ASC)',
+        'sorting_date_begin_desc'      => 'Date begin (DESC)',
+        'sorting_date_end_asc'         => 'Date end (ASC)',
+        'sorting_date_end_desc'        => 'Date end (DESC)',
     ],
-    'permission' => [
+    'permission'  => [
         'category'    => 'Manage categories',
         'brand'       => 'Manage brands',
         'product'     => 'Manage products',

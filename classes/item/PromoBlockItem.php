@@ -1,10 +1,8 @@
 <?php namespace Lovata\Shopaholic\Classes\Item;
 
-use Event;
 use Lovata\Toolbox\Classes\Item\ElementItem;
 
 use Lovata\Shopaholic\Models\PromoBlock;
-use Lovata\Shopaholic\Classes\Store\ProductListStore;
 use Lovata\Shopaholic\Classes\Collection\ProductCollection;
 
 /**
@@ -41,46 +39,8 @@ class PromoBlockItem extends ElementItem
      */
     protected function getProductAttribute() : ProductCollection
     {
-        $obProductList = $this->getAttribute('product');
-        if (!empty($obProductList) && $obProductList instanceof ProductCollection) {
-            return $obProductList;
-        }
-
-        $arPromoProductIDList = ProductListStore::instance()->promo->get($this->id);
-        $arPromoProductIDList = array_merge($arPromoProductIDList, $this->getAdditionalProductIDList());
-        $arPromoProductIDList = array_unique($arPromoProductIDList);
-
-        $obProductList = ProductCollection::make()->intersect($arPromoProductIDList);
-        $this->setAttribute('product', $obProductList);
+        $obProductList = ProductCollection::make()->promo($this->id);
 
         return $obProductList;
-    }
-
-    /**
-     * Get additional product ID list attached to promo block
-     * @return array
-     */
-    protected function getAdditionalProductIDList() : array
-    {
-        $arResult = [];
-
-        //Fire event, get additional product ID list
-        $arEventDataList = Event::fire(PromoBlock::EVENT_GET_PRODUCT_LIST, $this);
-        if (empty($arEventDataList)) {
-            return $arResult;
-        }
-
-        //Process event data
-        foreach ($arEventDataList as $arProductIDList) {
-            if (empty($arProductIDList) || !is_array($arProductIDList)) {
-                continue;
-            }
-
-            $arResult = array_merge($arResult, $arProductIDList);
-        }
-
-        $arResult = array_unique($arResult);
-
-        return $arResult;
     }
 }

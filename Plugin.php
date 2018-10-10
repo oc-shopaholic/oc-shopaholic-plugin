@@ -13,7 +13,7 @@ use Lovata\Shopaholic\Classes\Event\PromoBlock\PromoBlockModelHandler;
 /**
  * Class Plugin
  * @package Lovata\Shopaholic
- * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
 class Plugin extends PluginBase
 {
@@ -26,16 +26,19 @@ class Plugin extends PluginBase
     public function registerComponents()
     {
         return [
-            'Lovata\Shopaholic\Components\CategoryList' => 'CategoryList',
-            'Lovata\Shopaholic\Components\CategoryPage' => 'CategoryPage',
-            'Lovata\Shopaholic\Components\CategoryData' => 'CategoryData',
-            'Lovata\Shopaholic\Components\Breadcrumbs'  => 'CatalogBreadcrumbs',
-            'Lovata\Shopaholic\Components\ProductData'  => 'ProductData',
-            'Lovata\Shopaholic\Components\ProductPage'  => 'ProductPage',
-            'Lovata\Shopaholic\Components\ProductList'  => 'ProductList',
-            'Lovata\Shopaholic\Components\BrandData'    => 'BrandData',
-            'Lovata\Shopaholic\Components\BrandPage'    => 'BrandPage',
-            'Lovata\Shopaholic\Components\BrandList'    => 'BrandList',
+            'Lovata\Shopaholic\Components\CategoryList'   => 'CategoryList',
+            'Lovata\Shopaholic\Components\CategoryPage'   => 'CategoryPage',
+            'Lovata\Shopaholic\Components\CategoryData'   => 'CategoryData',
+            'Lovata\Shopaholic\Components\Breadcrumbs'    => 'CatalogBreadcrumbs',
+            'Lovata\Shopaholic\Components\ProductData'    => 'ProductData',
+            'Lovata\Shopaholic\Components\ProductPage'    => 'ProductPage',
+            'Lovata\Shopaholic\Components\ProductList'    => 'ProductList',
+            'Lovata\Shopaholic\Components\BrandData'      => 'BrandData',
+            'Lovata\Shopaholic\Components\BrandPage'      => 'BrandPage',
+            'Lovata\Shopaholic\Components\BrandList'      => 'BrandList',
+            'Lovata\Shopaholic\Components\PromoBlockData' => 'PromoBlockData',
+            'Lovata\Shopaholic\Components\PromoBlockPage' => 'PromoBlockPage',
+            'Lovata\Shopaholic\Components\PromoBlockList' => 'PromoBlockList',
         ];
     }
 
