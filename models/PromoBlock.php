@@ -152,7 +152,7 @@ class PromoBlock extends Model
         ];
 
         $arEventDataList = Event::fire(self::EVENT_GET_TYPE_LIST);
-        if (emptY($arEventDataList)) {
+        if (empty($arEventDataList)) {
             return $arResult;
         }
 

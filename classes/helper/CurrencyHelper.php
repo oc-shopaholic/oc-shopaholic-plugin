@@ -7,7 +7,7 @@ use October\Rain\Support\Traits\Singleton;
 /**
  * Class CurrencyHelper
  * @package Lovata\Shopaholic\Classes\Helper
- * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
 class CurrencyHelper
 {
@@ -37,6 +37,4 @@ class CurrencyHelper
             $this->sActiveCurrency = Settings::getValue('currency');
         }
     }
-
-
 }

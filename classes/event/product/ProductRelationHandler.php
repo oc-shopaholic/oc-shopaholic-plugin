@@ -17,8 +17,8 @@ class ProductRelationHandler extends AbstractModelRelationHandler
     /**
      * After attach event handler
      * @param \Model $obModel
-     * @param array $arAttachedIDList
-     * @param array $arInsertData
+     * @param array  $arAttachedIDList
+     * @param array  $arInsertData
      */
     protected function afterAttach($obModel, $arAttachedIDList, $arInsertData)
     {
@@ -28,7 +28,7 @@ class ProductRelationHandler extends AbstractModelRelationHandler
     /**
      * After detach event handler
      * @param \Model $obModel
-     * @param array $arAttachedIDList
+     * @param array  $arAttachedIDList
      */
     protected function afterDetach($obModel, $arAttachedIDList)
     {
@@ -50,7 +50,7 @@ class ProductRelationHandler extends AbstractModelRelationHandler
      * Get model class name
      * @return string
      */
-    protected function getModelClass() :string
+    protected function getModelClass() : string
     {
         return Product::class;
     }

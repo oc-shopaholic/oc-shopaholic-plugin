@@ -11,7 +11,7 @@ use Lovata\Shopaholic\Classes\Store\ProductListStore;
 /**
  * Class ProductModelHandler
  * @package Lovata\Shopaholic\Classes\Event\Product
- * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
 class ProductModelHandler extends ModelHandler
 {
@@ -28,7 +28,7 @@ class ProductModelHandler extends ModelHandler
 
         Product::extend(function ($obElement) {
             /** @var Product $obElement */
-            $obElement->bindEvent('model.beforeSave', function() use ($obElement) {
+            $obElement->bindEvent('model.beforeSave', function () use ($obElement) {
                 $this->obElement = $obElement;
                 $this->init();
                 $this->checkAdditionalCategoryList();
@@ -192,7 +192,6 @@ class ProductModelHandler extends ModelHandler
 
         //Clear product list cache by category ID
         foreach ($arCategoryIDList as $iCategoryID) {
-
             ProductListStore::instance()->category->clear($iCategoryID);
             BrandListStore::instance()->category->clear($iCategoryID);
 
