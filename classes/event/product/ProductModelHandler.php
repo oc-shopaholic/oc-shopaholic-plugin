@@ -1,4 +1,4 @@
-<?php namespace Lovata\Shopaholic\Classes\Event;
+<?php namespace Lovata\Shopaholic\Classes\Event\Product;
 
 use Lovata\Toolbox\Classes\Event\ModelHandler;
 
@@ -10,7 +10,7 @@ use Lovata\Shopaholic\Classes\Store\ProductListStore;
 
 /**
  * Class ProductModelHandler
- * @package Lovata\Shopaholic\Classes\Event
+ * @package Lovata\Shopaholic\Classes\Event\Product
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
 class ProductModelHandler extends ModelHandler

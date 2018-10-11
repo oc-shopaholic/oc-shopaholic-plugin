@@ -1,0 +1,17 @@
+title: 'lovata.shopaholic::lang.promo_block.list_title'
+modelClass: Lovata\Shopaholic\Models\PromoBlock
+list: $/lovata/shopaholic/models/promoblock/columns.yaml
+recordUrl: 'lovata/shopaholic/promoblocks/update/:id'
+noRecordsMessage: 'backend::lang.list.no_records'
+recordsPerPage: '10'
+showSetup: true
+showCheckboxes: true
+showSorting: 1
+defaultSort:
+    column: sort_order
+    direction: asc
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: 'backend::lang.list.search_prompt'
+filter: _config_filter.yaml

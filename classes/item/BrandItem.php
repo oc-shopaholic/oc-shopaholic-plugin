@@ -34,7 +34,7 @@ class BrandItem extends ElementItem
     protected $obElement = null;
 
     /**
-     * Returns URL of a category page.
+     * Returns URL of a brand page.
      *
      * @param string $sPageCode
      *

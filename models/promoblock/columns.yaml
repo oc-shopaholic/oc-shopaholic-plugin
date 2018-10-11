@@ -14,6 +14,16 @@ columns:
         type: text
         searchable: true
         sortable: true
+    date_begin:
+        label: 'lovata.toolbox::lang.field.date_begin'
+        type: datetime
+        sortable: true
+        searchable: false
+    date_end:
+        label: 'lovata.toolbox::lang.field.date_end'
+        type: datetime
+        sortable: true
+        searchable: false
     slug:
         label: 'lovata.toolbox::lang.field.slug'
         type: text
@@ -25,11 +35,6 @@ columns:
         searchable: true
         sortable: true
         width: 100px
-    external_id:
-        label: 'lovata.toolbox::lang.field.external_id'
-        type: text
-        searchable: true
-        sortable: true
     sort_order:
         label: 'lovata.toolbox::lang.field.sort_order'
         type: text

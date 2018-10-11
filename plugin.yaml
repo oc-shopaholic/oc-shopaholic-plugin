@@ -33,6 +33,20 @@ navigation:
                 order: 300
                 permissions:
                     - shopaholic-menu-brand
+    shopaholic-menu-promo:
+        label: 'lovata.shopaholic::lang.menu.promo'
+        url: lovata/shopaholic/promoblocks
+        icon: oc-icon-money
+        permissions:
+            - 'shopaholic-menu-promo'
+        sideMenu:
+            shopaholic-menu-promo-block:
+                label: 'lovata.shopaholic::lang.menu.promo_block'
+                url: lovata/shopaholic/promoblocks
+                icon: oc-icon-line-chart
+                order: 100
+                permissions:
+                    - shopaholic-menu-promo-block
 permissions:
     shopaholic-menu-category:
         tab: 'lovata.shopaholic::lang.tab.permissions'
@@ -46,3 +60,6 @@ permissions:
     shopaholic-settings:
         tab: 'lovata.shopaholic::lang.tab.permissions'
         label: 'lovata.shopaholic::lang.permission.settings'
+    shopaholic-menu-promo-block:
+        tab: 'lovata.shopaholic::lang.tab.permissions'
+        label: 'lovata.shopaholic::lang.permission.promo_block'

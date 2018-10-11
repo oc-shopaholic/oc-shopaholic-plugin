@@ -57,6 +57,28 @@ use October\Rain\Database\Traits\Purgeable;
  *
  * @property \October\Rain\Database\Collection|\Lovata\PropertiesShopaholic\Models\PropertyValueLink[] $property_value
  * @method static \October\Rain\Database\Relations\MorphMany|\Lovata\PropertiesShopaholic\Models\PropertyValueLink property_value()
+ *
+ * Discounts for Shopaholic
+ * @property string $discount_price
+ * @property float  $discount_price_value
+ * @property int    $discount_id
+ * @property float  $discount_value
+ * @property string $discount_type
+ *
+ * Discounts for Shopaholic
+ * @property \Lovata\DiscountsShopaholic\Models\Discount $active_discount
+ * @method \October\Rain\Database\Relations\BelongsTo|\Lovata\DiscountsShopaholic\Models\Discount active_discount()
+ *
+ * @property \October\Rain\Database\Collection|\Lovata\DiscountsShopaholic\Models\Discount[] $discount
+ * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\DiscountsShopaholic\Models\Discount discount()
+ *
+ * Coupons for Shopaholic
+ * @property \October\Rain\Database\Collection|\Lovata\CouponsShopaholic\Models\CouponGroup[] $coupon_group
+ * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\CouponsShopaholic\Models\CouponGroup coupon_group()
+ *
+ * Campaign for Shopaholic
+ * @property \October\Rain\Database\Collection|\Lovata\CampaignsShopaholic\Models\Campaign[] $campaign
+ * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\CampaignsShopaholic\Models\Campaign campaign()
  */
 class Offer extends Model
 {
@@ -88,6 +110,7 @@ class Offer extends Model
     public $attachMany = ['images' => 'System\Models\File'];
     public $belongsTo = ['product' => [Product::class]];
     public $morphMany = [];
+    public $belongsToMany = [];
 
     public $fillable = [
         'active',

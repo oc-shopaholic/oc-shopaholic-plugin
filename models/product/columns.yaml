@@ -27,6 +27,11 @@ columns:
         type: text
         searchable: true
         sortable: true
+    slug:
+        label: 'lovata.toolbox::lang.field.slug'
+        type: text
+        searchable: true
+        sortable: true
     id:
         label: 'lovata.toolbox::lang.field.id'
         type: text

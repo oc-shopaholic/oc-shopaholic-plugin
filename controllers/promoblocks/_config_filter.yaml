@@ -1,0 +1,19 @@
+# ===================================
+# Filter Scope Definitions
+# ===================================
+
+scopes:
+    active:
+        label: 'lovata.toolbox::lang.field.active'
+        type: switch
+        conditions:
+            - active <> true
+            - active = true
+    date_begin:
+        label: 'lovata.toolbox::lang.field.date_begin'
+        type: daterange
+        conditions: date_begin >= ':after' AND date_begin <= ':before'
+    date_end:
+        label: 'lovata.toolbox::lang.field.date_end'
+        type: daterange
+        conditions: date_end >= ':after' AND date_end <= ':before'

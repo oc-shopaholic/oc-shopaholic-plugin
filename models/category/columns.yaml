@@ -20,6 +20,11 @@ columns:
         searchable: true
         sortable: true
         width: 100px
+    slug:
+        label: 'lovata.toolbox::lang.field.slug'
+        type: text
+        searchable: true
+        sortable: true
     external_id:
         label: 'lovata.toolbox::lang.field.external_id'
         type: text
