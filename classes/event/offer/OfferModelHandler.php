@@ -1,4 +1,4 @@
-<?php namespace Lovata\Shopaholic\Classes\Event;
+<?php namespace Lovata\Shopaholic\Classes\Event\Offer;
 
 use Lovata\Toolbox\Classes\Event\ModelHandler;
 
@@ -13,7 +13,7 @@ use Lovata\Shopaholic\Classes\Store\ProductListStore;
 
 /**
  * Class OfferModelHandler
- * @package Lovata\Shopaholic\Classes\Event
+ * @package Lovata\Shopaholic\Classes\Event\Offer
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
 class OfferModelHandler extends ModelHandler

@@ -3,12 +3,20 @@
 use Event;
 use System\Classes\PluginBase;
 
-use Lovata\Shopaholic\Classes\Event\BrandModelHandler;
-use Lovata\Shopaholic\Classes\Event\CategoryModelHandler;
+//Event list
 use Lovata\Shopaholic\Classes\Event\ExtendMenuHandler;
-use Lovata\Shopaholic\Classes\Event\OfferModelHandler;
-use Lovata\Shopaholic\Classes\Event\ProductModelHandler;
+//Brand events
+use Lovata\Shopaholic\Classes\Event\Brand\BrandModelHandler;
+//Category events
+use Lovata\Shopaholic\Classes\Event\Category\CategoryModelHandler;
+//Offer events
+use Lovata\Shopaholic\Classes\Event\Offer\OfferModelHandler;
+//Product events
+use Lovata\Shopaholic\Classes\Event\Product\ProductModelHandler;
+use Lovata\Shopaholic\Classes\Event\Product\ProductRelationHandler;
+//Promo block events
 use Lovata\Shopaholic\Classes\Event\PromoBlock\PromoBlockModelHandler;
+use Lovata\Shopaholic\Classes\Event\PromoBlock\PromoBlockRelationHandler;
 
 /**
  * Class Plugin
@@ -74,11 +82,18 @@ class Plugin extends PluginBase
      */
     protected function addEventListener()
     {
-        Event::subscribe(BrandModelHandler::class);
-        Event::subscribe(CategoryModelHandler::class);
         Event::subscribe(ExtendMenuHandler::class);
+        //Brand events
+        Event::subscribe(BrandModelHandler::class);
+        //Category events
+        Event::subscribe(CategoryModelHandler::class);
+        //Offer events
         Event::subscribe(OfferModelHandler::class);
+        //Product events
         Event::subscribe(ProductModelHandler::class);
+        Event::subscribe(ProductRelationHandler::class);
+        //Promo block events
         Event::subscribe(PromoBlockModelHandler::class);
+        Event::subscribe(PromoBlockRelationHandler::class);
     }
 }

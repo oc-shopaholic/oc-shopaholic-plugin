@@ -142,6 +142,11 @@ class Product extends Model
             Category::class,
             'table'      => 'lovata_shopaholic_additional_categories',
         ],
+        'promo_block' => [
+            PromoBlock::class,
+            'table'    => 'lovata_shopaholic_promo_block_relation',
+            'otherKey' => 'promo_id',
+        ],
     ];
 
     public $morphMany = [];

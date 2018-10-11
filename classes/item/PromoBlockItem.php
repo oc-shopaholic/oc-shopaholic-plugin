@@ -1,6 +1,8 @@
 <?php namespace Lovata\Shopaholic\Classes\Item;
 
+use Cms\Classes\Page as CmsPage;
 use Lovata\Toolbox\Classes\Item\ElementItem;
+use Lovata\Toolbox\Classes\Helper\PageHelper;
 
 use Lovata\Shopaholic\Models\PromoBlock;
 use Lovata\Shopaholic\Classes\Collection\ProductCollection;
@@ -15,7 +17,6 @@ use Lovata\Shopaholic\Classes\Collection\ProductCollection;
  * @property string                    $slug
  * @property string                    $code
  * @property string                    $type
- * @property string $
  * @property \October\Rain\Argon\Argon $date_begin
  * @property \October\Rain\Argon\Argon $date_end
  *
@@ -42,5 +43,42 @@ class PromoBlockItem extends ElementItem
         $obProductList = ProductCollection::make()->promo($this->id);
 
         return $obProductList;
+    }
+
+    /**
+     * Returns URL of a promo block page.
+     *
+     * @param string $sPageCode
+     *
+     * @return string
+     */
+    public function getPageUrl($sPageCode = 'promo-block')
+    {
+        //Get URL params
+        $arParamList = $this->getPageParamList($sPageCode);
+
+        //Generate page URL
+        $sURL = CmsPage::url($sPageCode, $arParamList);
+
+        return $sURL;
+    }
+
+    /**
+     * Get URL param list by page code
+     * @param string $sPageCode
+     * @return array
+     */
+    public function getPageParamList($sPageCode) : array
+    {
+        $arPageParamList = [];
+
+        //Get URL params for page
+        $arParamList = PageHelper::instance()->getUrlParamList($sPageCode, 'PromoBlockPage');
+        if (!empty($arParamList)) {
+            $sPageParam = array_shift($arParamList);
+            $arPageParamList[$sPageParam] = $this->slug;
+        }
+
+        return $arPageParamList;
     }
 }

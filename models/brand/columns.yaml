@@ -9,13 +9,13 @@ columns:
         type: switch
         searchable: false
         sortable: true
-    slug:
-        label: 'lovata.toolbox::lang.field.slug'
+    code:
+        label: 'lovata.toolbox::lang.field.code'
         type: text
         searchable: true
         sortable: true
-    code:
-        label: 'lovata.toolbox::lang.field.code'
+    slug:
+        label: 'lovata.toolbox::lang.field.slug'
         type: text
         searchable: true
         sortable: true

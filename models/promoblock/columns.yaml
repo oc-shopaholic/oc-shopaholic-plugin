@@ -9,11 +9,6 @@ columns:
         type: switch
         searchable: false
         sortable: true
-    slug:
-        label: 'lovata.toolbox::lang.field.slug'
-        type: text
-        searchable: true
-        sortable: true
     code:
         label: 'lovata.toolbox::lang.field.code'
         type: text
@@ -29,6 +24,11 @@ columns:
         type: datetime
         sortable: true
         searchable: false
+    slug:
+        label: 'lovata.toolbox::lang.field.slug'
+        type: text
+        searchable: true
+        sortable: true
     id:
         label: 'lovata.toolbox::lang.field.id'
         type: text

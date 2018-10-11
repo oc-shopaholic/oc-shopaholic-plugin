@@ -60,8 +60,6 @@ class PromoBlockModelHandler extends ModelHandler
         $this->checkFieldChanges('hidden', PromoBlockListStore::instance()->not_hidden);
 
         $this->checkFieldChanges('active', PromoBlockListStore::instance()->active);
-
-        ProductListStore::instance()->promo->clear($this->obElement->id);
     }
 
     /**
@@ -72,7 +70,7 @@ class PromoBlockModelHandler extends ModelHandler
         parent::afterDelete();
         $this->clearSortingList();
 
-        ProductListStore::instance()->promo->clear($this->obElement->id);
+        ProductListStore::instance()->promo_block->clear($this->obElement->id);
 
         $this->clearCacheNotEmptyValue('hidden', PromoBlockListStore::instance()->hidden);
         $this->clearCacheEmptyValue('hidden', PromoBlockListStore::instance()->not_hidden);

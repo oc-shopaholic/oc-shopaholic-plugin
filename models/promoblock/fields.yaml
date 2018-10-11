@@ -71,3 +71,11 @@ tabs:
             span: left
             type: fileupload
             tab: 'lovata.toolbox::lang.tab.images'
+        product:
+            span: full
+            context:
+            - update
+            - preview
+            type: partial
+            path: ~/plugins/lovata/shopaholic/controllers/promoblocks/_product.htm
+            tab: 'lovata.shopaholic::lang.menu.product'
