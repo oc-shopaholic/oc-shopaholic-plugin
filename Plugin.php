@@ -3,16 +3,25 @@
 use Event;
 use System\Classes\PluginBase;
 
-use Lovata\Shopaholic\Classes\Event\BrandModelHandler;
-use Lovata\Shopaholic\Classes\Event\CategoryModelHandler;
-use Lovata\Shopaholic\Classes\Event\OfferModelHandler;
-use Lovata\Shopaholic\Classes\Event\ProductModelHandler;
+//Event list
 use Lovata\Shopaholic\Classes\Event\ExtendMenuHandler;
+//Brand events
+use Lovata\Shopaholic\Classes\Event\Brand\BrandModelHandler;
+//Category events
+use Lovata\Shopaholic\Classes\Event\Category\CategoryModelHandler;
+//Offer events
+use Lovata\Shopaholic\Classes\Event\Offer\OfferModelHandler;
+//Product events
+use Lovata\Shopaholic\Classes\Event\Product\ProductModelHandler;
+use Lovata\Shopaholic\Classes\Event\Product\ProductRelationHandler;
+//Promo block events
+use Lovata\Shopaholic\Classes\Event\PromoBlock\PromoBlockModelHandler;
+use Lovata\Shopaholic\Classes\Event\PromoBlock\PromoBlockRelationHandler;
 
 /**
  * Class Plugin
  * @package Lovata\Shopaholic
- * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
 class Plugin extends PluginBase
 {
@@ -25,16 +34,19 @@ class Plugin extends PluginBase
     public function registerComponents()
     {
         return [
-            'Lovata\Shopaholic\Components\CategoryList' => 'CategoryList',
-            'Lovata\Shopaholic\Components\CategoryPage' => 'CategoryPage',
-            'Lovata\Shopaholic\Components\CategoryData' => 'CategoryData',
-            'Lovata\Shopaholic\Components\Breadcrumbs'  => 'CatalogBreadcrumbs',
-            'Lovata\Shopaholic\Components\ProductData'  => 'ProductData',
-            'Lovata\Shopaholic\Components\ProductPage'  => 'ProductPage',
-            'Lovata\Shopaholic\Components\ProductList'  => 'ProductList',
-            'Lovata\Shopaholic\Components\BrandData'    => 'BrandData',
-            'Lovata\Shopaholic\Components\BrandPage'    => 'BrandPage',
-            'Lovata\Shopaholic\Components\BrandList'    => 'BrandList',
+            'Lovata\Shopaholic\Components\CategoryList'   => 'CategoryList',
+            'Lovata\Shopaholic\Components\CategoryPage'   => 'CategoryPage',
+            'Lovata\Shopaholic\Components\CategoryData'   => 'CategoryData',
+            'Lovata\Shopaholic\Components\Breadcrumbs'    => 'CatalogBreadcrumbs',
+            'Lovata\Shopaholic\Components\ProductData'    => 'ProductData',
+            'Lovata\Shopaholic\Components\ProductPage'    => 'ProductPage',
+            'Lovata\Shopaholic\Components\ProductList'    => 'ProductList',
+            'Lovata\Shopaholic\Components\BrandData'      => 'BrandData',
+            'Lovata\Shopaholic\Components\BrandPage'      => 'BrandPage',
+            'Lovata\Shopaholic\Components\BrandList'      => 'BrandList',
+            'Lovata\Shopaholic\Components\PromoBlockData' => 'PromoBlockData',
+            'Lovata\Shopaholic\Components\PromoBlockPage' => 'PromoBlockPage',
+            'Lovata\Shopaholic\Components\PromoBlockList' => 'PromoBlockList',
         ];
     }
 
@@ -70,10 +82,18 @@ class Plugin extends PluginBase
      */
     protected function addEventListener()
     {
-        Event::subscribe(CategoryModelHandler::class);
-        Event::subscribe(OfferModelHandler::class);
-        Event::subscribe(ProductModelHandler::class);
-        Event::subscribe(BrandModelHandler::class);
         Event::subscribe(ExtendMenuHandler::class);
+        //Brand events
+        Event::subscribe(BrandModelHandler::class);
+        //Category events
+        Event::subscribe(CategoryModelHandler::class);
+        //Offer events
+        Event::subscribe(OfferModelHandler::class);
+        //Product events
+        Event::subscribe(ProductModelHandler::class);
+        Event::subscribe(ProductRelationHandler::class);
+        //Promo block events
+        Event::subscribe(PromoBlockModelHandler::class);
+        Event::subscribe(PromoBlockRelationHandler::class);
     }
 }

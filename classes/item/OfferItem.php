@@ -1,10 +1,10 @@
 <?php namespace Lovata\Shopaholic\Classes\Item;
 
 use Lovata\Toolbox\Classes\Item\ElementItem;
+use Lovata\Toolbox\Traits\Helpers\PriceHelperTrait;
 
 use Lovata\Shopaholic\Models\Offer;
-use Lovata\Shopaholic\Models\Settings;
-use Lovata\Toolbox\Traits\Helpers\PriceHelperTrait;
+use Lovata\Shopaholic\Classes\Helper\CurrencyHelper;
 
 /**
  * Class OfferItem
@@ -82,7 +82,7 @@ class OfferItem extends ElementItem
      */
     protected function getCurrencyAttribute()
     {
-        return Settings::getValue('currency');
+        return CurrencyHelper::instance()->getActive();
     }
 
     /**

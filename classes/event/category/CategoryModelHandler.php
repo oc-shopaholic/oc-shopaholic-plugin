@@ -1,4 +1,4 @@
-<?php namespace Lovata\Shopaholic\Classes\Event;
+<?php namespace Lovata\Shopaholic\Classes\Event\Category;
 
 use Lovata\Toolbox\Classes\Event\ModelHandler;
 
@@ -8,7 +8,7 @@ use Lovata\Shopaholic\Classes\Store\CategoryListStore;
 
 /**
  * Class CategoryModelHandler
- * @package Lovata\Shopaholic\Classes\Event
+ * @package Lovata\Shopaholic\Classes\Event\Category
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
 class CategoryModelHandler extends ModelHandler

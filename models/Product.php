@@ -83,6 +83,18 @@ use Lovata\Toolbox\Traits\Helpers\TraitCached;
  * Search for Shopaholic, Sphinx for Shopaholic
  * @property string                                                                      $search_synonym
  * @property string                                                                      $search_content
+ *
+ * Discounts for Shopaholic
+ * @property \October\Rain\Database\Collection|\Lovata\DiscountsShopaholic\Models\Discount[] $discount
+ * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\DiscountsShopaholic\Models\Discount discount()
+ *
+ * Coupons for Shopaholic
+ * @property \October\Rain\Database\Collection|\Lovata\CouponsShopaholic\Models\CouponGroup[] $coupon_group
+ * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\CouponsShopaholic\Models\CouponGroup coupon_group()
+ *
+ * Campaign for Shopaholic
+ * @property \October\Rain\Database\Collection|\Lovata\CampaignsShopaholic\Models\Campaign[] $campaign
+ * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\CampaignsShopaholic\Models\Campaign campaign()
  */
 class Product extends Model
 {
@@ -129,6 +141,11 @@ class Product extends Model
         'additional_category' => [
             Category::class,
             'table'      => 'lovata_shopaholic_additional_categories',
+        ],
+        'promo_block' => [
+            PromoBlock::class,
+            'table'    => 'lovata_shopaholic_promo_block_relation',
+            'otherKey' => 'promo_id',
         ],
     ];
 

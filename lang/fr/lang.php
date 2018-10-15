@@ -3,7 +3,7 @@
         'name'        => 'Shopaholic',
         'description' => 'Catalogue de produits pour le eCommerce',
     ],
-    'field' => [
+    'field'      => [
         'vendor_code'         => 'Code vendeur',
         'price'               => 'Prix',
         'old_price'           => 'Ancien prix',
@@ -24,8 +24,9 @@
         'all_shop_categories' => 'Toutes les catégories de produits',
     ],
     'tab'        => [
-        'offer'         => 'Offres',
-        'permissions'   => 'Shopaholic',
+        'offer'       => 'Offres',
+        'price'       => 'Des prix',
+        'permissions' => 'Shopaholic',
     ],
     'category'   => [
         'name'       => 'category',

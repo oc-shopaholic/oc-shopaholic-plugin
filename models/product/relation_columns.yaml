@@ -9,13 +9,21 @@ columns:
         type: switch
         searchable: false
         sortable: true
-    code:
-        label: 'lovata.toolbox::lang.field.code'
+    category_name:
+        label: 'lovata.toolbox::lang.field.category'
         type: text
         searchable: true
         sortable: true
-    slug:
-        label: 'lovata.toolbox::lang.field.slug'
+        relation: category
+        select: name
+    brand_name:
+        label: 'lovata.shopaholic::lang.field.brand'
+        type: text
+        sortable: true
+        relation: brand
+        select: name
+    code:
+        label: 'lovata.shopaholic::lang.field.vendor_code'
         type: text
         searchable: true
         sortable: true
@@ -30,19 +38,3 @@ columns:
         type: text
         searchable: true
         sortable: true
-    sort_order:
-        label: 'lovata.toolbox::lang.field.sort_order'
-        type: text
-        searchable: false
-        sortable: true
-        width: 150px
-    created_at:
-        label: 'lovata.toolbox::lang.field.created_at'
-        type: timetense
-        sortable: true
-        invisible: true
-    updated_at:
-        label: 'lovata.toolbox::lang.field.updated_at'
-        type: timetense
-        sortable: true
-        invisible: true

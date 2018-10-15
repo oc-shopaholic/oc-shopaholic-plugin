@@ -1,4 +1,4 @@
-<?php namespace Lovata\Shopaholic\Classes\Event;
+<?php namespace Lovata\Shopaholic\Classes\Event\Offer;
 
 use Lovata\Toolbox\Classes\Event\ModelHandler;
 
@@ -13,13 +13,22 @@ use Lovata\Shopaholic\Classes\Store\ProductListStore;
 
 /**
  * Class OfferModelHandler
- * @package Lovata\Shopaholic\Classes\Event
+ * @package Lovata\Shopaholic\Classes\Event\Offer
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
 class OfferModelHandler extends ModelHandler
 {
     /** @var  Offer */
     protected $obElement;
+
+    /**
+     * After save event handler
+     */
+    protected function afterCreate()
+    {
+        OfferListStore::instance()->sorting->clear(OfferListStore::SORT_NO);
+        OfferListStore::instance()->sorting->clear(OfferListStore::SORT_NEW);
+    }
 
     /**
      * After save event handler
@@ -56,6 +65,11 @@ class OfferModelHandler extends ModelHandler
         //Clear sorting product list by offer price
         ProductListStore::instance()->sorting->clear(ProductListStore::SORT_PRICE_ASC);
         ProductListStore::instance()->sorting->clear(ProductListStore::SORT_PRICE_DESC);
+
+        OfferListStore::instance()->sorting->clear(OfferListStore::SORT_NO);
+        OfferListStore::instance()->sorting->clear(OfferListStore::SORT_NEW);
+        OfferListStore::instance()->sorting->clear(OfferListStore::SORT_PRICE_ASC);
+        OfferListStore::instance()->sorting->clear(OfferListStore::SORT_PRICE_DESC);
     }
 
     /**

@@ -46,4 +46,22 @@ class OfferCollection extends ElementCollection
 
         return $this->intersect($arResultIDList);
     }
+
+    /**
+     * Get the total count of all order positions
+     * @return int
+     */
+    public function getTotalQuantity()
+    {
+        $iQuantityCount = 0;
+
+        $arOfferList = $this->all();
+
+        /** @var \Lovata\Shopaholic\Classes\Item\OfferItem $arOfferItem */
+        foreach ($arOfferList as $arOfferItem) {
+            $iQuantityCount += $arOfferItem->quantity;
+        }
+
+        return $iQuantityCount;
+    }
 }

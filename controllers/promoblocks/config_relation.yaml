@@ -1,0 +1,14 @@
+product:
+    label: 'lovata.shopaholic::lang.product.name'
+    manage:
+        list: $/lovata/shopaholic/models/product/relation_columns.yaml
+        showSearch: true
+        showSorting: true
+        recordsPerPage: 10
+    view:
+        list: $/lovata/shopaholic/models/product/relation_columns.yaml
+        recordUrl: lovata/shopaholic/products/update/:id
+        toolbarButtons: 'add|remove'
+        showSearch: true
+        showSorting: true
+        recordsPerPage: 10
