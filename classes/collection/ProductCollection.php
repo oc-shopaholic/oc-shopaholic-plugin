@@ -125,7 +125,7 @@ class ProductCollection extends ElementCollection
      */
     public function promo($iPromoBlockID)
     {
-        $arResultIDList = ProductListStore::instance()->promo->get($iPromoBlockID);
+        $arResultIDList = ProductListStore::instance()->promo_block->get($iPromoBlockID);
 
         //Fire event, get additional product ID list
         $arEventDataList = Event::fire(PromoBlock::EVENT_GET_PRODUCT_LIST, $iPromoBlockID);
@@ -155,7 +155,7 @@ class ProductCollection extends ElementCollection
      */
     public function promoBlock($iPromoBlockID)
     {
-        $arResultIDList = ProductListStore::instance()->promo->get($iPromoBlockID);
+        $arResultIDList = ProductListStore::instance()->promo_block->get($iPromoBlockID);
 
         return $this->intersect($arResultIDList);
     }

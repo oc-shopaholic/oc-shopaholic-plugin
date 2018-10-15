@@ -24,6 +24,15 @@ class OfferModelHandler extends ModelHandler
     /**
      * After save event handler
      */
+    protected function afterCreate()
+    {
+        OfferListStore::instance()->sorting->clear(OfferListStore::SORT_NO);
+        OfferListStore::instance()->sorting->clear(OfferListStore::SORT_NEW);
+    }
+
+    /**
+     * After save event handler
+     */
     protected function afterSave()
     {
         parent::afterSave();
@@ -56,6 +65,11 @@ class OfferModelHandler extends ModelHandler
         //Clear sorting product list by offer price
         ProductListStore::instance()->sorting->clear(ProductListStore::SORT_PRICE_ASC);
         ProductListStore::instance()->sorting->clear(ProductListStore::SORT_PRICE_DESC);
+
+        OfferListStore::instance()->sorting->clear(OfferListStore::SORT_NO);
+        OfferListStore::instance()->sorting->clear(OfferListStore::SORT_NEW);
+        OfferListStore::instance()->sorting->clear(OfferListStore::SORT_PRICE_ASC);
+        OfferListStore::instance()->sorting->clear(OfferListStore::SORT_PRICE_DESC);
     }
 
     /**
