@@ -52,6 +52,10 @@ use Lovata\Toolbox\Traits\Helpers\TraitCached;
  * @property \October\Rain\Database\Collection|\Lovata\CampaignsShopaholic\Models\Campaign[] $campaign
  * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\CampaignsShopaholic\Models\Campaign campaign()
  *
+ * Coupons for Shopaholic
+ * @property \October\Rain\Database\Collection|\Lovata\CouponsShopaholic\Models\CouponGroup[] $coupon_group
+ * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\CouponsShopaholic\Models\CouponGroup coupon_group()
+ *
  * @method static $this active()
  * @method static $this hidden()
  * @method static $this notHidden()
