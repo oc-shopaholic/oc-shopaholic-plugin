@@ -40,6 +40,13 @@ use Lovata\Shopaholic\Classes\Helper\CurrencyHelper;
  * @see \Lovata\PropertiesShopaholic\Classes\Event\OfferModelHandler::extendOfferItem
  * @property array       $property_value_array
  * @property \Lovata\PropertiesShopaholic\Classes\Collection\PropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[] $property
+ *
+ * Discounts for Shopaholic
+ * @property string $discount_price
+ * @property float  $discount_price_value
+ * @property int    $discount_id
+ * @property float  $discount_value
+ * @property string $discount_type
  */
 class OfferItem extends ElementItem
 {

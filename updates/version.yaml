@@ -50,3 +50,5 @@
     - 'Added PromoBlock model. Promo blocks are sections of content that you can place throughout your eCommerce website and advertise products, offers, discounts, campaigns, and other activity. Added PromoBlockData, PromoBlockPage, PromoBlockList components. Added PromoBlockItem, PromoBlockCollection classes.'
     - create_table_promo_block.php
     - create_table_promo_block_relation.php
+1.13.1:
+    - 'Added annotations for integration with Coupons for Shopaholic, Discounts for Shopaholic, Campaigns for Shopaholic plugins.'
