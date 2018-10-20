@@ -3,6 +3,8 @@
 use Lovata\Toolbox\Classes\Event\AbstractModelRelationHandler;
 
 use Lovata\Shopaholic\Models\Product;
+use Lovata\Shopaholic\Classes\Store\BrandListStore;
+use Lovata\Shopaholic\Classes\Item\CategoryItem;
 use Lovata\Shopaholic\Classes\Store\ProductListStore;
 
 /**
@@ -22,7 +24,8 @@ class ProductRelationHandler extends AbstractModelRelationHandler
      */
     protected function afterAttach($obModel, $arAttachedIDList, $arInsertData)
     {
-        $this->clearProductList($arAttachedIDList);
+        $this->clearListByPromoBlock($arAttachedIDList);
+        $this->clearListByCategory($arAttachedIDList);
     }
 
     /**
@@ -32,17 +35,43 @@ class ProductRelationHandler extends AbstractModelRelationHandler
      */
     protected function afterDetach($obModel, $arAttachedIDList)
     {
-        $this->clearProductList($arAttachedIDList);
+        $this->clearListByPromoBlock($arAttachedIDList);
+        $this->clearListByCategory($arAttachedIDList);
     }
 
     /**
-     * Clear cached product list
+     * Clear cached product list by promo block ID
      * @param array $arAttachedIDList
      */
-    protected function clearProductList($arAttachedIDList)
+    protected function clearListByPromoBlock($arAttachedIDList)
     {
+        if ($this->sRelationName != 'promo_block') {
+            return;
+        }
+
         foreach ($arAttachedIDList as $iPromoBlockID) {
             ProductListStore::instance()->promo_block->clear($iPromoBlockID);
+        }
+    }
+
+    /**
+     * Clear cached product list by category ID
+     * @param array $arAttachedIDList
+     */
+    protected function clearListByCategory($arAttachedIDList)
+    {
+        if ($this->sRelationName != 'additional_category') {
+            return;
+        }
+
+        foreach ($arAttachedIDList as $iCategoryID) {
+            BrandListStore::instance()->category->clear($iCategoryID);
+            ProductListStore::instance()->category->clear($iCategoryID);
+
+            $obCategoryItem = CategoryItem::make($iCategoryID);
+            if ($obCategoryItem->isNotEmpty()) {
+                $obCategoryItem->clearProductCount();
+            }
         }
     }
 
@@ -61,6 +90,6 @@ class ProductRelationHandler extends AbstractModelRelationHandler
      */
     protected function getRelationName()
     {
-        return ['promo_block'];
+        return ['promo_block', 'additional_category'];
     }
 }
