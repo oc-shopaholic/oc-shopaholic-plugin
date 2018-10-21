@@ -1,0 +1,16 @@
+{
+    "name": "lovata/oc-shopaholic-plugin",
+    "type": "october-plugin",
+    "description": "eCommerce plugin for October CMS",
+    "license": "GPL-3.0-only",
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/lovata/oc-toolbox-plugin"
+        }
+    ],
+    "require": {
+        "php": ">=7.0",
+        "lovata/oc-toolbox-plugin": "~1.16"
+    }
+}

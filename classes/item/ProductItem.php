@@ -6,6 +6,7 @@ use Lovata\Toolbox\Classes\Item\ElementItem;
 use Lovata\Toolbox\Classes\Helper\PageHelper;
 
 use Lovata\Shopaholic\Models\Product;
+use Lovata\Shopaholic\Classes\Collection\CategoryCollection;
 use Lovata\Shopaholic\Classes\Collection\OfferCollection;
 
 /**
@@ -16,31 +17,33 @@ use Lovata\Shopaholic\Classes\Collection\OfferCollection;
  * @see     \Lovata\Shopaholic\Tests\Unit\Item\ProductItemTest
  * @link    https://github.com/lovata/oc-shopaholic-plugin/wiki/ProductItem
  *
- * @property int                                                     $id
- * @property bool                                                    $active
- * @property bool                                                    $trashed
- * @property string                                                  $name
- * @property string                                                  $slug
- * @property string                                                  $code
+ * @property int                                                                                                                         $id
+ * @property bool                                                                                                                        $active
+ * @property bool                                                                                                                        $trashed
+ * @property string                                                                                                                      $name
+ * @property string                                                                                                                      $slug
+ * @property string                                                                                                                      $code
  *
- * @property int                                                     $category_id
- * @property CategoryItem                                            $category
+ * @property int                                                                                                                         $category_id
+ * @property CategoryItem                                                                                                                $category
+ * @property array                                                                                                                       $additional_category_id
+ * @property CategoryCollection|CategoryItem[]                                                                                           $additional_category
  *
- * @property int                                                     $brand_id
- * @property BrandItem                                               $brand
+ * @property int                                                                                                                         $brand_id
+ * @property BrandItem                                                                                                                   $brand
  *
- * @property string                                                  $preview_text
- * @property \System\Models\File                                     $preview_image
+ * @property string                                                                                                                      $preview_text
+ * @property \System\Models\File                                                                                                         $preview_image
  *
- * @property string                                                  $description
- * @property \October\Rain\Database\Collection|\System\Models\File[] $images
+ * @property string                                                                                                                      $description
+ * @property \October\Rain\Database\Collection|\System\Models\File[]                                                                     $images
  *
- * @property array                                                   $offer_id_list
- * @property OfferCollection|OfferItem[]                             $offer
+ * @property array                                                                                                                       $offer_id_list
+ * @property OfferCollection|OfferItem[]                                                                                                 $offer
  *
  * Properties for Shopaholic
  * @see     \Lovata\PropertiesShopaholic\Classes\Event\ProductModelHandler::extendProductItem
- * @property array                                                   $property_value_array
+ * @property array                                                                                                                       $property_value_array
  * @property \Lovata\PropertiesShopaholic\Classes\Collection\PropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[] $property
  *
  * Reviews for Shopaholic
@@ -77,6 +80,10 @@ class ProductItem extends ElementItem
         'category' => [
             'class' => CategoryItem::class,
             'field' => 'category_id',
+        ],
+        'additional_category' => [
+            'class' => CategoryCollection::class,
+            'field' => 'additional_category_id',
         ],
         'brand'    => [
             'class' => BrandItem::class,
@@ -152,8 +159,9 @@ class ProductItem extends ElementItem
     protected function getElementData()
     {
         $arResult = [
-            'offer_id_list' => $this->obElement->offer()->active()->lists('id'),
-            'trashed'       => $this->obElement->trashed(),
+            'offer_id_list'          => $this->obElement->offer()->active()->lists('id'),
+            'additional_category_id' => $this->obElement->additional_category()->lists('id'),
+            'trashed'                => $this->obElement->trashed(),
         ];
 
         return $arResult;

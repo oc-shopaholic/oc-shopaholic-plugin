@@ -19,24 +19,6 @@ class ProductModelHandler extends ModelHandler
     protected $obElement;
 
     /**
-     * Add listeners
-     * @param \Illuminate\Events\Dispatcher $obEvent
-     */
-    public function subscribe($obEvent)
-    {
-        parent::subscribe($obEvent);
-
-        Product::extend(function ($obElement) {
-            /** @var Product $obElement */
-            $obElement->bindEvent('model.beforeSave', function () use ($obElement) {
-                $this->obElement = $obElement;
-                $this->init();
-                $this->checkAdditionalCategoryList();
-            });
-        });
-    }
-
-    /**
      * After create event handler
      */
     protected function afterCreate()
@@ -83,6 +65,16 @@ class ProductModelHandler extends ModelHandler
 
         if ($this->obElement->active) {
             ProductListStore::instance()->active->clear();
+        }
+
+        $arAdditionalCategoryIDList = $this->obElement->additional_category->lists('id');
+        if (empty($arAdditionalCategoryIDList)) {
+            return;
+        }
+
+        foreach ($arAdditionalCategoryIDList as $iCategoryID) {
+            $this->clearCategoryProductCount($iCategoryID);
+            ProductListStore::instance()->category->clear($iCategoryID);
         }
     }
 
@@ -161,42 +153,6 @@ class ProductModelHandler extends ModelHandler
         //Update product ID cache list for brand
         ProductListStore::instance()->brand->clear($this->obElement->brand_id);
         ProductListStore::instance()->brand->clear((int) $this->obElement->getOriginal('brand_id'));
-    }
-
-    /**
-     * Check product relation with additional category list
-     */
-    protected function checkAdditionalCategoryList()
-    {
-        //Get product model
-        $obProduct = Product::find($this->obElement->id);
-        if (empty($obProduct)) {
-            return;
-        }
-
-        //Get new and old category ID list
-        $arOldAdditionalCategoryIDList = (array) $obProduct->additional_category->lists('id');
-        $arNewAdditionalCategoryIDList = (array) $this->obElement->additional_category->lists('id');
-
-        //Get list of ID categories that have been changed
-        $arCommonCategoryIDList = array_intersect($arOldAdditionalCategoryIDList, $arNewAdditionalCategoryIDList);
-
-        $arNewAdditionalCategoryIDList = array_diff($arNewAdditionalCategoryIDList, $arCommonCategoryIDList);
-        $arOldAdditionalCategoryIDList = array_diff($arOldAdditionalCategoryIDList, $arCommonCategoryIDList);
-
-        $arCategoryIDList = array_merge($arOldAdditionalCategoryIDList, $arNewAdditionalCategoryIDList);
-        $arCategoryIDList = array_unique($arCategoryIDList);
-        if (empty($arCategoryIDList)) {
-            return;
-        }
-
-        //Clear product list cache by category ID
-        foreach ($arCategoryIDList as $iCategoryID) {
-            ProductListStore::instance()->category->clear($iCategoryID);
-            BrandListStore::instance()->category->clear($iCategoryID);
-
-            $this->clearCategoryProductCount($iCategoryID);
-        }
     }
 
     /**
