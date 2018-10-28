@@ -59,7 +59,7 @@ jobs:
         - BUILD=true
       script:
         - NAME="shopaholic"
-        - zip -r $NAME ./ -x .git/\* -x .gitignore -x .travis.yml -x crowdin.yml -x .editorconfig -x .codeclimate.yml -x PHPMD_custom.xml
+        - zip -r $NAME ./ -x .git/\* -x .gitignore -x .travis.yml -x crowdin.yml -x .editorconfig -x .codeclimate.yml -x PHPMD_custom.xml -x composer.json -x composer.lock -x vendor/\*
         - TAG=$(git describe --tags)
         - FILE="./$NAME.zip"
         - if [[ -e $FILE ]]; then
