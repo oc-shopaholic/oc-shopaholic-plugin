@@ -54,3 +54,5 @@
     - 'Added annotations for integration with Coupons for Shopaholic, Discounts for Shopaholic, Campaigns for Shopaholic plugins.'
 1.14.0:
     - 'Added "additional_category" field to ProductItem class.'
+1.14.1:
+    - 'Remove vendor folder from plugin.'
