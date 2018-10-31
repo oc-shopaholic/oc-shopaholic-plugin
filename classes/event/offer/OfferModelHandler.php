@@ -20,6 +20,7 @@ class OfferModelHandler extends ModelHandler
 {
     /** @var  Offer */
     protected $obElement;
+    protected $bWithRestore = true;
 
     /**
      * After save event handler
@@ -49,6 +50,35 @@ class OfferModelHandler extends ModelHandler
     protected function afterDelete()
     {
         parent::afterDelete();
+
+        if ($this->obElement->active) {
+            $this->clearProductActiveList();
+            $this->clearProductItemCache($this->obElement->product_id);
+            OfferListStore::instance()->active->clear();
+        }
+
+        //Get product object
+        $obProduct = $this->obElement->product;
+        if (empty($obProduct) || !$this->obElement->active) {
+            return;
+        }
+
+        //Clear sorting product list by offer price
+        ProductListStore::instance()->sorting->clear(ProductListStore::SORT_PRICE_ASC);
+        ProductListStore::instance()->sorting->clear(ProductListStore::SORT_PRICE_DESC);
+
+        OfferListStore::instance()->sorting->clear(OfferListStore::SORT_NO);
+        OfferListStore::instance()->sorting->clear(OfferListStore::SORT_NEW);
+        OfferListStore::instance()->sorting->clear(OfferListStore::SORT_PRICE_ASC);
+        OfferListStore::instance()->sorting->clear(OfferListStore::SORT_PRICE_DESC);
+    }
+
+    /**
+     * After restore event handler
+     */
+    protected function afterRestore()
+    {
+        parent::afterRestore();
 
         if ($this->obElement->active) {
             $this->clearProductActiveList();

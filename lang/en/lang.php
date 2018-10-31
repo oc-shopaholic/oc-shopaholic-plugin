@@ -15,6 +15,8 @@
         'additional_category' => 'Additional categories',
         'promo_block_type'    => 'Promo block with product list',
         'promo_block'         => 'Promo block',
+        'category_parent_id'  => 'Category parent ID',
+        'product_id'          => 'Product ID',
     ],
     'menu'        => [
         'main'                => 'Catalog',
@@ -33,20 +35,28 @@
         'permissions' => 'Shopaholic',
     ],
     'category'    => [
-        'name'       => 'category',
-        'list_title' => 'Category list',
+        'name'         => 'category',
+        'list_title'   => 'Category list',
+        'import_title' => 'Import categories',
+        'export_title' => 'Export categories',
     ],
     'brand'       => [
-        'name'       => 'brand',
-        'list_title' => 'Brand list',
+        'name'         => 'brand',
+        'list_title'   => 'Brand list',
+        'import_title' => 'Import brands',
+        'export_title' => 'Export brands',
     ],
     'product'     => [
-        'name'       => 'product',
-        'list_title' => 'Product list',
+        'name'         => 'product',
+        'list_title'   => 'Product list',
+        'import_title' => 'Import products',
+        'export_title' => 'Export products',
     ],
     'offer'       => [
-        'name'       => 'offer',
-        'list_title' => 'Offer list',
+        'name'         => 'offer',
+        'list_title'   => 'Offer list',
+        'import_title' => 'Import offers',
+        'export_title' => 'Export offers',
     ],
     'promo_block' => [
         'name'       => 'promo block',
@@ -110,5 +120,11 @@
         'product'     => 'Manage products',
         'settings'    => 'Manage settings',
         'promo_block' => 'Manage promo blocks',
+    ],
+    'message'     => [
+        'import_additional_category_info' => 'Set list of additional product categories, separated by commas.',
+    ],
+    'button'      => [
+        'import_offer_button' => 'Import offers from CSV',
     ],
 ];

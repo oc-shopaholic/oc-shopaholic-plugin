@@ -1,9 +1,9 @@
 <?php return [
-    'plugin'     => [
+    'plugin'      => [
         'name'        => 'Shopaholic',
         'description' => 'Каталог товаров',
     ],
-    'field'      => [
+    'field'       => [
         'vendor_code'         => 'Артикул',
         'price'               => 'Цена',
         'old_price'           => 'Старая цена',
@@ -15,8 +15,10 @@
         'additional_category' => 'Дополнительные категории',
         'promo_block_type'    => 'Промо блок со списком товаров',
         'promo_block'         => 'Промо блок',
+        'category_parent_id'  => 'ID родительской категории',
+        'product_id'          => 'ID товара',
     ],
-    'menu'       => [
+    'menu'        => [
         'main'                => 'Каталог товаров',
         'categories'          => 'Категории товаров',
         'product'             => 'Товары',
@@ -27,32 +29,40 @@
         'promo_block'         => 'Промо блоки',
         'promo'               => 'Промо-акции',
     ],
-    'tab'        => [
+    'tab'         => [
         'offer'       => 'Товарные предложения',
         'price'       => 'Цены',
         'permissions' => 'Shopaholic',
     ],
-    'category'   => [
-        'name'       => 'категории',
-        'list_title' => 'Список категорий',
+    'category'    => [
+        'name'         => 'категории',
+        'list_title'   => 'Список категорий',
+        'import_title' => 'Импорт категорий',
+        'export_title' => 'Экспорт категорий',
     ],
-    'brand'      => [
-        'name'       => 'бренда',
-        'list_title' => 'Список брендов',
+    'brand'       => [
+        'name'         => 'бренда',
+        'list_title'   => 'Список брендов',
+        'import_title' => 'Импорт брендов',
+        'export_title' => 'Экспорт брендов',
     ],
-    'product'    => [
-        'name'       => 'товара',
-        'list_title' => 'Список товаров',
+    'product'     => [
+        'name'         => 'товара',
+        'list_title'   => 'Список товаров',
+        'import_title' => 'Импорт товаров',
+        'export_title' => 'Экспорт товаров',
     ],
-    'offer'      => [
-        'name'       => 'предложения',
-        'list_title' => 'Список предложений',
+    'offer'       => [
+        'name'         => 'предложения',
+        'list_title'   => 'Список предложений',
+        'import_title' => 'Импорт предложений',
+        'export_title' => 'Экспорт предложений',
     ],
-    'promo_block'      => [
+    'promo_block' => [
         'name'       => 'промо блока',
         'list_title' => 'Список промо блоков',
     ],
-    'component'  => [
+    'component'   => [
 
         //Product components
         'product_page_name'            => 'Страница товара',
@@ -104,11 +114,17 @@
         'sorting_date_end_asc'         => 'Дата окончания (ASC)',
         'sorting_date_end_desc'        => 'Дата окончания (DESC)',
     ],
-    'permission' => [
+    'permission'  => [
         'category'    => 'Управление категориями',
         'brand'       => 'Управление брендами',
         'product'     => 'Управление товарами',
         'settings'    => 'Управление настройками',
         'promo_block' => 'Управление промо блоками',
+    ],
+    'message'     => [
+        'import_additional_category_info' => 'Укажите список дополнительных категорий товаров через запятую.',
+    ],
+    'button'      => [
+        'import_offer_button' => 'Импорт предложений из CSV',
     ],
 ];

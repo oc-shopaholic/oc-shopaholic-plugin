@@ -17,4 +17,10 @@
         data-stripe-load-indicator>
             <?= e(trans('backend::lang.list.delete_selected')) ?>
     </button>
+    <a href="<?= Backend::url('lovata/shopaholic/products/import') ?>" class="btn btn-primary oc-icon-download">
+        <?= e(trans('lovata.toolbox::lang.button.import_from_csv')) ?>
+    </a>
+    <a href="<?= Backend::url('lovata/shopaholic/offers/import') ?>" class="btn btn-primary oc-icon-download">
+        <?= e(trans('lovata.shopaholic::lang.button.import_offer_button')) ?>
+    </a>
 </div>
