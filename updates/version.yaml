@@ -56,3 +56,5 @@
     - 'Added "additional_category" field to ProductItem class.'
 1.14.1:
     - 'Remove vendor folder from plugin.'
+1.15.0:
+    - 'Added import product, offers, categories, brands from CSV file in backend.'
