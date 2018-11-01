@@ -1,0 +1,28 @@
+import:
+  title: 'lovata.shopaholic::lang.brand.import_title'
+  modelClass: Lovata\Shopaholic\Models\Brand
+  redirect: lovata/shopaholic/brands
+  list:
+    columns:
+      external_id:
+        label: 'lovata.toolbox::lang.field.external_id'
+      active:
+        label: 'lovata.toolbox::lang.field.active'
+      name:
+        label: 'lovata.toolbox::lang.field.name'
+      code:
+        label: 'lovata.toolbox::lang.field.code'
+      preview_text:
+        label: 'lovata.toolbox::lang.field.preview_text'
+      description:
+        label: 'lovata.toolbox::lang.field.description'
+      preview_image:
+        label: 'lovata.toolbox::lang.field.preview_image'
+      images:
+        label: 'lovata.toolbox::lang.field.images'
+  form:
+    fields:
+      deactivate:
+        label: 'lovata.toolbox::lang.field.import_deactivate'
+        comment: 'lovata.toolbox::lang.field.import_deactivate_description'
+        type: checkbox

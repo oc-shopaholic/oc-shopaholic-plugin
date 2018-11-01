@@ -1,6 +1,6 @@
 <?php namespace Lovata\Shopaholic\Models;
 
-use Model;
+use Backend\Models\ImportModel;
 
 use Kharanenka\Scope\ActiveField;
 use Kharanenka\Scope\CategoryBelongsTo;
@@ -15,6 +15,7 @@ use October\Rain\Database\Traits\Validation;
 use October\Rain\Database\Traits\Purgeable;
 
 use Lovata\Toolbox\Traits\Helpers\TraitCached;
+use Lovata\Shopaholic\Classes\Import\ImportProductModel;
 
 /**
  * Class Product
@@ -96,7 +97,7 @@ use Lovata\Toolbox\Traits\Helpers\TraitCached;
  * @property \October\Rain\Database\Collection|\Lovata\CampaignsShopaholic\Models\Campaign[] $campaign
  * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\CampaignsShopaholic\Models\Campaign campaign()
  */
-class Product extends Model
+class Product extends ImportModel
 {
     use Validation;
     use SoftDelete;
@@ -130,7 +131,10 @@ class Product extends Model
 
     public $slugs = ['slug' => 'name'];
 
-    public $attachOne = ['preview_image' => 'System\Models\File'];
+    public $attachOne = [
+        'preview_image' => 'System\Models\File',
+        'import_file'   => [\System\Models\File::class, 'public' => false],
+    ];
     public $attachMany = ['images' => 'System\Models\File'];
     public $hasMany = ['offer' => [Offer::class]];
     public $belongsTo = [
@@ -196,5 +200,44 @@ class Product extends Model
         }
 
         return $obQuery;
+    }
+
+    /**
+     * Before validate event handler
+     */
+    public function beforeValidate()
+    {
+        if (empty($this->slug)) {
+            $this->slugAttributes();
+        }
+    }
+
+    /**
+     * Import item list from CSV file
+     * @param array $arElementList
+     * @param null  $sSessionKey
+     * @throws \Throwable
+     */
+    public function importData($arElementList, $sSessionKey = null)
+    {
+        if (empty($arElementList)) {
+            return;
+        }
+
+        $obImport = new ImportProductModel();
+        $obImport->setDeactivateFlag();
+
+        foreach ($arElementList as $iKey => $arImportData) {
+            $obImport->import($arImportData);
+            $sResultMethod = $obImport->getResultMethod();
+            if (in_array($sResultMethod, ['logUpdated', 'logCreated'])) {
+                $this->$sResultMethod();
+            } else {
+                $sErrorMessage = $obImport->getResultError();
+                $this->$sResultMethod($iKey, $sErrorMessage);
+            }
+        }
+
+        $obImport->deactivateElements();
     }
 }

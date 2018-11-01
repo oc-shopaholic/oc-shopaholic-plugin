@@ -3,6 +3,8 @@
 use Event;
 use BackendMenu;
 use Backend\Classes\Controller;
+use Backend\Classes\BackendController;
+use Lovata\Shopaholic\Models\Category;
 
 /**
  * Class Categories
@@ -16,18 +18,26 @@ class Categories extends Controller
         'Backend.Behaviors.FormController',
         'Backend.Behaviors.ReorderController',
         'Backend.Behaviors.RelationController',
+        'Backend.Behaviors.ImportExportController',
     ];
 
     public $listConfig = 'config_list.yaml';
     public $formConfig = 'config_form.yaml';
     public $reorderConfig = 'config_reorder.yaml';
     public $relationConfig = 'config_relation.yaml';
+    public $importExportConfig = 'config_import_export.yaml';
 
     /**
      * Categories constructor.
      */
     public function __construct()
     {
+        if (BackendController::$action == 'import') {
+            Category::extend(function ($obModel) {
+                $obModel->rules['external_id'] = 'required';
+            });
+        }
+
         parent::__construct();
         BackendMenu::setContext('Lovata.Shopaholic', 'shopaholic-menu-main', 'shopaholic-menu-categories');
     }

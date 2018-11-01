@@ -17,6 +17,7 @@ class ProductModelHandler extends ModelHandler
 {
     /** @var  Product */
     protected $obElement;
+    protected $bWithRestore = true;
 
     /**
      * After create event handler
@@ -55,6 +56,40 @@ class ProductModelHandler extends ModelHandler
 
         ProductListStore::instance()->category->clear($this->obElement->category_id);
         BrandListStore::instance()->category->clear($this->obElement->category_id);
+        $this->clearCategoryProductCount($this->obElement->category_id);
+
+        ProductListStore::instance()->brand->clear($this->obElement->brand_id);
+
+        ProductListStore::instance()->sorting->clear(ProductListStore::SORT_PRICE_ASC);
+        ProductListStore::instance()->sorting->clear(ProductListStore::SORT_PRICE_DESC);
+        ProductListStore::instance()->sorting->clear(ProductListStore::SORT_NEW);
+        ProductListStore::instance()->sorting->clear(ProductListStore::SORT_NO);
+
+        if ($this->obElement->active) {
+            ProductListStore::instance()->active->clear();
+        }
+
+        $arAdditionalCategoryIDList = $this->obElement->additional_category->lists('id');
+        if (empty($arAdditionalCategoryIDList)) {
+            return;
+        }
+
+        foreach ($arAdditionalCategoryIDList as $iCategoryID) {
+            $this->clearCategoryProductCount($iCategoryID);
+            ProductListStore::instance()->category->clear($iCategoryID);
+        }
+    }
+
+    /**
+     * After restore event handler
+     */
+    protected function afterRestore()
+    {
+        parent::afterRestore();
+
+        ProductListStore::instance()->category->clear($this->obElement->category_id);
+        BrandListStore::instance()->category->clear($this->obElement->category_id);
+        $this->clearCategoryProductCount($this->obElement->category_id);
 
         ProductListStore::instance()->brand->clear($this->obElement->brand_id);
 

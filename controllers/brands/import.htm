@@ -1,0 +1,36 @@
+<?php Block::put('breadcrumb') ?>
+<ul>
+    <li><a href="<?= Backend::url('lovata/shopaholic/brands') ?>"><?= e(trans('lovata.shopaholic::lang.brand.list_title')) ?></a></li>
+    <li><?= e($this->pageTitle) ?></li>
+</ul>
+<?php Block::endPut() ?>
+
+<?= Form::open(['class' => 'layout']) ?>
+
+<div class="callout fade in callout-info">
+    <div class="header">
+        <i class="icon-info"></i>
+        <h3><?= trans('lovata.toolbox::lang.message.import_additional_info') ?></h3>
+        <ul>
+            <li><?= trans('lovata.toolbox::lang.message.import_active_field_info') ?></li>
+            <li><?= trans('lovata.toolbox::lang.message.import_preview_image_field_info') ?></li>
+            <li><?= trans('lovata.toolbox::lang.message.import_images_field_info') ?></li>
+        </ul>
+    </div>
+</div>
+<div class="layout-row">
+    <?= $this->importRender() ?>
+</div>
+
+<div class="form-buttons">
+    <button
+            type="submit"
+            data-control="popup"
+            data-handler="onImportLoadForm"
+            data-keyboard="false"
+            class="btn btn-primary">
+        <?= trans('lovata.toolbox::lang.button.import_button') ?>
+    </button>
+</div>
+
+<?= Form::close() ?>
