@@ -57,4 +57,4 @@
 1.14.1:
     - 'Remove vendor folder from plugin.'
 1.15.0:
-    - 'Added import product, offers, categories, brands from CSV file in backend.'
+    - 'Added import product, offers, categories, brands from CSV file in backend. Requires Toolbox plugin version 1.18.0 and later'
