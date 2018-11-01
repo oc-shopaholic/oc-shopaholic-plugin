@@ -55,7 +55,7 @@ class ImportCategoryModel extends AbstractImportModel
     protected function processModelObject()
     {
         if ($this->obParentCategory === false) {
-            $this->obModel->parent_id =null;
+            $this->obModel->parent_id = null;
             $this->obModel->save();
         } elseif (!empty($this->obParentCategory)) {
             $this->obModel->makeChildOf($this->obParentCategory);
@@ -78,6 +78,7 @@ class ImportCategoryModel extends AbstractImportModel
         array_forget($this->arImportData, 'parent_id');
         if (empty($iParentID)) {
             $this->obParentCategory = false;
+
             return;
         }
 

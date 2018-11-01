@@ -122,6 +122,7 @@ class ImportProductModel extends AbstractImportModel
 
         if (empty($arCategoryIDList)) {
             $this->arAdditionalCategoryList = [];
+
             return;
         }
 
