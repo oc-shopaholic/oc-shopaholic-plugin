@@ -15,6 +15,8 @@
         'additional_category' => 'Additional categories',
         'promo_block_type'    => 'Promo block with product list',
         'promo_block'         => 'Promo block',
+        'category_parent_id'  => 'Category parent ID',
+        'product_id'          => 'Product ID',
     ],
     'menu'        => [
         'main'                => 'Каталог товаров',
@@ -33,20 +35,28 @@
         'permissions' => 'Шопоголик',
     ],
     'category'    => [
-        'name'       => 'категории',
-        'list_title' => 'Список категорий',
+        'name'         => 'категории',
+        'list_title'   => 'Список категорий',
+        'import_title' => 'Import categories',
+        'export_title' => 'Export categories',
     ],
     'brand'       => [
-        'name'       => 'бренда',
-        'list_title' => 'Список брендов',
+        'name'         => 'бренда',
+        'list_title'   => 'Список брендов',
+        'import_title' => 'Import brands',
+        'export_title' => 'Export brands',
     ],
     'product'     => [
-        'name'       => 'товара',
-        'list_title' => 'Список товаров',
+        'name'         => 'товара',
+        'list_title'   => 'Список товаров',
+        'import_title' => 'Import products',
+        'export_title' => 'Export products',
     ],
     'offer'       => [
-        'name'       => 'предложения',
-        'list_title' => 'Список предложений',
+        'name'         => 'предложения',
+        'list_title'   => 'Список предложений',
+        'import_title' => 'Import offers',
+        'export_title' => 'Export offers',
     ],
     'promo_block' => [
         'name'       => 'promo block',
@@ -110,5 +120,11 @@
         'product'     => 'Управление товарами',
         'settings'    => 'Управление настройками',
         'promo_block' => 'Manage promo blocks',
+    ],
+    'message'     => [
+        'import_additional_category_info' => 'Set list of additional product categories, separated by commas.',
+    ],
+    'button'      => [
+        'import_offer_button' => 'Import offers from CSV',
     ],
 ];
