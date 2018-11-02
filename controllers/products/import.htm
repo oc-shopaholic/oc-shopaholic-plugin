@@ -16,6 +16,9 @@
             <li><?= trans('lovata.toolbox::lang.message.import_preview_image_field_info') ?></li>
             <li><?= trans('lovata.toolbox::lang.message.import_images_field_info') ?></li>
             <li><?= trans('lovata.shopaholic::lang.message.import_additional_category_info') ?></li>
+            <?php if (\System\Classes\PluginManager::instance()->hasPlugin('Lovata.PropertiesShopaholic')) {?>
+            <li><?= trans('lovata.propertiesshopaholic::lang.message.import_available_property_value') ?></li>
+            <?php }?>
         </ul>
     </div>
 </div>
