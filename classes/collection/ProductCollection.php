@@ -22,7 +22,7 @@ use Lovata\Shopaholic\Classes\Store\ProductListStore;
  * @method $this filterByBrandList(array $arBrandIDList)
  * @method $this filterByDiscount()
  * @method $this filterByQuantity()
- * @method $this filterByProperty(array $arFilterList, \Lovata\FilterShopaholic\Classes\Collection\FilterPropertyCollection $obPropertyList)
+ * @method $this filterByProperty(array $arFilterList, \Lovata\FilterShopaholic\Classes\Collection\FilterPropertyCollection $obPropertyList, OfferCollection $obOfferList = null)
  *
  * Tags for Shopaholic plugin
  * @method $this tag(int $iTagID)
