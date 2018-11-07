@@ -62,3 +62,5 @@
     - 'Added block with description about import of product/offer properties from CSV file.'
 1.16.1:
     - 'Added annotations of filterByDiscount(), filterByQuantity() methods to OfferCollection class.'
+1.17.0:
+    - 'Added Japanese language. Thanks for contribution pikanji.'
