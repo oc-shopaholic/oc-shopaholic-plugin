@@ -20,6 +20,11 @@ use Lovata\Toolbox\Classes\Component\ElementPage;
  * Viewed products for Shopaholic
  * @method array onRemoveFromViewedProductList()
  * @method void onClearViewedProductList()
+ *
+ * Wish list for Shopaholic
+ * @method array onAddToWishList()
+ * @method array onRemoveFromWishList()
+ * @method void onClearWishList()
  */
 class ProductPage extends ElementPage
 {
