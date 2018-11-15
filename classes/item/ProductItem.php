@@ -64,6 +64,9 @@ use Lovata\Shopaholic\Classes\Collection\OfferCollection;
  *
  * Compare for Shopaholic
  * @method bool inCompare()
+ *
+ * Wish list for Shopaholic
+ * @method bool inWishList()
  */
 class ProductItem extends ElementItem
 {

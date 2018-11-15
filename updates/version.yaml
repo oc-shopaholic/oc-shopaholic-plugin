@@ -64,3 +64,5 @@
     - 'Added annotations of filterByDiscount(), filterByQuantity() methods to OfferCollection class.'
 1.17.0:
     - 'Added Japanese language. Thanks for contribution pikanji.'
+1.18.0:
+    - 'Added German language. Thanks for contribution Gerald.'
