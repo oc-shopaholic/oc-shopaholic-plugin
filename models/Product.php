@@ -187,6 +187,7 @@ class Product extends ImportModel
 
     public $jsonable = [];
 
+    public $visible = [];
     public $hidden = [];
 
     /**

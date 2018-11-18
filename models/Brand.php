@@ -125,6 +125,7 @@ class Brand extends ImportModel
         'images',
     ];
 
+    public $visible = [];
     public $hidden = [];
 
     /**
