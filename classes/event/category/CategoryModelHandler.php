@@ -1,5 +1,6 @@
 <?php namespace Lovata\Shopaholic\Classes\Event\Category;
 
+use Lovata\Toolbox\Models\Settings;
 use Lovata\Toolbox\Classes\Event\ModelHandler;
 
 use Lovata\Shopaholic\Models\Category;
@@ -23,6 +24,14 @@ class CategoryModelHandler extends ModelHandler
     public function subscribe($obEvent)
     {
         parent::subscribe($obEvent);
+
+        Category::extend(function ($obElement) {
+            /** @var Category $obElement */
+            $bSlugIsTranslatable = Settings::getValue('slug_is_translatable');
+            if ($bSlugIsTranslatable) {
+                $obElement->translatable[] = ['slug', 'index' => true];
+            }
+        });
 
         $obEvent->listen('shopaholic.category.update.sorting', function () {
             CategoryListStore::instance()->top_level->clear();

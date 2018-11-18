@@ -1,5 +1,6 @@
 <?php namespace Lovata\Shopaholic\Classes\Event\Brand;
 
+use Lovata\Toolbox\Models\Settings;
 use Lovata\Toolbox\Classes\Event\ModelHandler;
 
 use Lovata\Shopaholic\Models\Brand;
@@ -23,6 +24,14 @@ class BrandModelHandler extends ModelHandler
     public function subscribe($obEvent)
     {
         parent::subscribe($obEvent);
+
+        Brand::extend(function ($obElement) {
+            /** @var Brand $obElement */
+            $bSlugIsTranslatable = Settings::getValue('slug_is_translatable');
+            if ($bSlugIsTranslatable) {
+                $obElement->translatable[] = ['slug', 'index' => true];
+            }
+        });
 
         $obEvent->listen('shopaholic.brand.update.sorting', function () {
             $this->clearSortingList();

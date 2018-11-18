@@ -66,3 +66,5 @@
     - 'Added Japanese language. Thanks for contribution pikanji.'
 1.18.0:
     - 'Added German language. Thanks for contribution Gerald.'
+1.19.0:
+    - 'Added translatable slug in Product, Brand, Category, PromoBlock models.'
