@@ -25,11 +25,11 @@ class CategoryModelHandler extends ModelHandler
     {
         parent::subscribe($obEvent);
 
-        Category::extend(function ($obElement) {
-            /** @var Category $obElement */
+        Category::extend(function ($obModel) {
+            /** @var Category $obModel */
             $bSlugIsTranslatable = Settings::getValue('slug_is_translatable');
             if ($bSlugIsTranslatable) {
-                $obElement->translatable[] = ['slug', 'index' => true];
+                $obModel->translatable[] = ['slug', 'index' => true];
             }
         });
 

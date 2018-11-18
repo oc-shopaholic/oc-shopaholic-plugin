@@ -26,11 +26,11 @@ class PromoBlockModelHandler extends ModelHandler
     {
         parent::subscribe($obEvent);
 
-        PromoBlock::extend(function ($obElement) {
-            /** @var PromoBlock $obElement */
+        PromoBlock::extend(function ($obModel) {
+            /** @var PromoBlock $obModel */
             $bSlugIsTranslatable = Settings::getValue('slug_is_translatable');
             if ($bSlugIsTranslatable) {
-                $obElement->translatable[] = ['slug', 'index' => true];
+                $obModel->translatable[] = ['slug', 'index' => true];
             }
         });
 

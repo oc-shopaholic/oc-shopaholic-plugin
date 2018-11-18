@@ -25,11 +25,11 @@ class BrandModelHandler extends ModelHandler
     {
         parent::subscribe($obEvent);
 
-        Brand::extend(function ($obElement) {
-            /** @var Brand $obElement */
+        Brand::extend(function ($obModel) {
+            /** @var Brand $obModel */
             $bSlugIsTranslatable = Settings::getValue('slug_is_translatable');
             if ($bSlugIsTranslatable) {
-                $obElement->translatable[] = ['slug', 'index' => true];
+                $obModel->translatable[] = ['slug', 'index' => true];
             }
         });
 

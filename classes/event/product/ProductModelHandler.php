@@ -28,11 +28,11 @@ class ProductModelHandler extends ModelHandler
     {
         parent::subscribe($obEvent);
 
-        Product::extend(function ($obElement) {
-            /** @var Product $obElement */
+        Product::extend(function ($obModel) {
+            /** @var Product $obModel */
             $bSlugIsTranslatable = Settings::getValue('slug_is_translatable');
             if ($bSlugIsTranslatable) {
-                $obElement->translatable[] = ['slug', 'index' => true];
+                $obModel->translatable[] = ['slug', 'index' => true];
             }
         });
     }
