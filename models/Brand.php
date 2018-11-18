@@ -125,6 +125,8 @@ class Brand extends ImportModel
         'images',
     ];
 
+    public $hidden = [];
+
     /**
      * Before validate event handler
      */
