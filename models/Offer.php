@@ -151,6 +151,9 @@ class Offer extends ImportModel
 
     public $arPriceField = ['price', 'old_price'];
 
+    public $visible = [];
+    public $hidden = [];
+
     /**
      * Set quantity attribute value
      * @param  int $iQuantity
