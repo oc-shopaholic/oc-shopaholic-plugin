@@ -187,6 +187,9 @@ class Product extends ImportModel
 
     public $jsonable = [];
 
+    public $visible = [];
+    public $hidden = [];
+
     /**
      * Get element by brand ID
      * @param Product $obQuery
