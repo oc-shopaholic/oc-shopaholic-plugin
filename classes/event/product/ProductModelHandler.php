@@ -1,5 +1,6 @@
 <?php namespace Lovata\Shopaholic\Classes\Event\Product;
 
+use Lovata\Toolbox\Models\Settings;
 use Lovata\Toolbox\Classes\Event\ModelHandler;
 
 use Lovata\Shopaholic\Models\Product;
@@ -18,6 +19,23 @@ class ProductModelHandler extends ModelHandler
     /** @var  Product */
     protected $obElement;
     protected $bWithRestore = true;
+
+    /**
+     * Add listeners
+     * @param \Illuminate\Events\Dispatcher $obEvent
+     */
+    public function subscribe($obEvent)
+    {
+        parent::subscribe($obEvent);
+
+        Product::extend(function ($obModel) {
+            /** @var Product $obModel */
+            $bSlugIsTranslatable = Settings::getValue('slug_is_translatable');
+            if ($bSlugIsTranslatable) {
+                $obModel->translatable[] = ['slug', 'index' => true];
+            }
+        });
+    }
 
     /**
      * After create event handler

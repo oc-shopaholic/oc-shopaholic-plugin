@@ -145,6 +145,9 @@ class PromoBlock extends Model
         'date_end',
     ];
 
+    public $visible = [];
+    public $hidden = [];
+
     /**
      * Fire event and get promo content type list
      * @return array

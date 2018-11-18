@@ -1,9 +1,10 @@
 <?php namespace Lovata\Shopaholic\Components;
 
 use Event;
-use Lovata\Shopaholic\Classes\Item\BrandItem;
 use Lovata\Toolbox\Classes\Component\ElementPage;
+
 use Lovata\Shopaholic\Models\Brand;
+use Lovata\Shopaholic\Classes\Item\BrandItem;
 
 /**
  * Class BrandPage
@@ -14,6 +15,14 @@ use Lovata\Shopaholic\Models\Brand;
  */
 class BrandPage extends ElementPage
 {
+    protected $bNeedSmartURLCheck = true;
+
+    /** @var \Lovata\Shopaholic\Models\Brand */
+    protected $obElement;
+
+    /** @var \Lovata\Shopaholic\Classes\Item\BrandItem */
+    protected $obElementItem;
+
     /**
      * @return array
      */
@@ -36,7 +45,14 @@ class BrandPage extends ElementPage
             return null;
         }
 
-        $obElement = Brand::active()->getBySlug($sElementSlug)->first();
+        if ($this->isSlugTranslatable()) {
+            $obElement = Brand::active()->transWhere('slug', $sElementSlug)->first();
+            if (!$this->checkTransSlug($obElement, $sElementSlug)) {
+                $obElement = null;
+            }
+        } else {
+            $obElement = Brand::active()->getBySlug($sElementSlug)->first();
+        }
         if (!empty($obElement)) {
             Event::fire('shopaholic.brand.open', [$obElement]);
         }

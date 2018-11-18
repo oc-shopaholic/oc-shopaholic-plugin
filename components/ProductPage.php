@@ -1,9 +1,10 @@
 <?php namespace Lovata\Shopaholic\Components;
 
 use Event;
+use Lovata\Toolbox\Classes\Component\ElementPage;
+
 use Lovata\Shopaholic\Models\Product;
 use Lovata\Shopaholic\Classes\Item\ProductItem;
-use Lovata\Toolbox\Classes\Component\ElementPage;
 
 /**
  * Class ProductPage
@@ -28,6 +29,14 @@ use Lovata\Toolbox\Classes\Component\ElementPage;
  */
 class ProductPage extends ElementPage
 {
+    protected $bNeedSmartURLCheck = true;
+
+    /** @var \Lovata\Shopaholic\Models\Product */
+    protected $obElement;
+
+    /** @var \Lovata\Shopaholic\Classes\Item\ProductItem */
+    protected $obElementItem;
+
     /**
      * @return array
      */
@@ -50,7 +59,15 @@ class ProductPage extends ElementPage
             return null;
         }
 
-        $obElement = Product::active()->getBySlug($sElementSlug)->first();
+
+        if ($this->isSlugTranslatable()) {
+            $obElement = Product::active()->transWhere('slug', $sElementSlug)->first();
+            if (!$this->checkTransSlug($obElement, $sElementSlug)) {
+                $obElement = null;
+            }
+        } else {
+            $obElement = Product::active()->getBySlug($sElementSlug)->first();
+        }
         if (!empty($obElement)) {
             Event::fire('shopaholic.product.open', [$obElement]);
         }

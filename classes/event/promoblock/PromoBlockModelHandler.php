@@ -1,5 +1,6 @@
 <?php namespace Lovata\Shopaholic\Classes\Event\PromoBlock;
 
+use Lovata\Toolbox\Models\Settings;
 use Lovata\Toolbox\Classes\Event\ModelHandler;
 
 use Lovata\Shopaholic\Models\PromoBlock;
@@ -24,6 +25,14 @@ class PromoBlockModelHandler extends ModelHandler
     public function subscribe($obEvent)
     {
         parent::subscribe($obEvent);
+
+        PromoBlock::extend(function ($obModel) {
+            /** @var PromoBlock $obModel */
+            $bSlugIsTranslatable = Settings::getValue('slug_is_translatable');
+            if ($bSlugIsTranslatable) {
+                $obModel->translatable[] = ['slug', 'index' => true];
+            }
+        });
 
         $obEvent->listen('shopaholic.promo_block.update.sorting', function () {
             $this->clearSortingList();

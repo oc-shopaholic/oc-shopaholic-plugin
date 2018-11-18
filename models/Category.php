@@ -149,6 +149,9 @@ class Category extends ImportModel
     public $dates = ['created_at', 'updated_at'];
     public $casts = [];
 
+    public $visible = [];
+    public $hidden = [];
+
     /**
      * Before validate event handler
      */
