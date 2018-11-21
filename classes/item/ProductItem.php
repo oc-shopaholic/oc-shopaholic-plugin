@@ -62,6 +62,9 @@ use Lovata\Shopaholic\Classes\Collection\OfferCollection;
  * Accessories for Shopaholic
  * @property \Lovata\Shopaholic\Classes\Collection\ProductCollection|ProductItem[]                                                       $accessory
  *
+ * Labels for Shopaholic
+ * @property \Lovata\LabelsShopaholic\Classes\Collection\LabelCollection|\Lovata\LabelsShopaholic\Classes\Item\LabelItem[]               $label
+ *
  * Compare for Shopaholic
  * @method bool inCompare()
  *
@@ -76,11 +79,11 @@ class ProductItem extends ElementItem
     protected $obElement = null;
 
     public $arRelationList = [
-        'offer'    => [
+        'offer'               => [
             'class' => OfferCollection::class,
             'field' => 'offer_id_list',
         ],
-        'category' => [
+        'category'            => [
             'class' => CategoryItem::class,
             'field' => 'category_id',
         ],
@@ -88,7 +91,7 @@ class ProductItem extends ElementItem
             'class' => CategoryCollection::class,
             'field' => 'additional_category_id',
         ],
-        'brand'    => [
+        'brand'               => [
             'class' => BrandItem::class,
             'field' => 'brand_id',
         ],

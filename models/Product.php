@@ -96,6 +96,10 @@ use Lovata\Shopaholic\Classes\Import\ImportProductModel;
  * Campaign for Shopaholic
  * @property \October\Rain\Database\Collection|\Lovata\CampaignsShopaholic\Models\Campaign[] $campaign
  * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\CampaignsShopaholic\Models\Campaign campaign()
+ *
+ * Labels for Shopaholic
+ * @property \October\Rain\Database\Collection|\Lovata\LabelsShopaholic\Models\Label[] $label
+ * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\LabelsShopaholic\Models\Label label()
  */
 class Product extends ImportModel
 {

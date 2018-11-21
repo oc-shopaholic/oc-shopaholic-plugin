@@ -68,3 +68,5 @@
     - 'Added German language. Thanks for contribution Gerald.'
 1.19.0:
     - 'Added translatable slug in Product, Brand, Category, PromoBlock models.'
+1.19.1:
+    - 'Fixed permissions for promo block menu item. Thanks for contribution Andreas Kosmowicz.'

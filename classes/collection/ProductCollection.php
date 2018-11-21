@@ -47,6 +47,9 @@ use Lovata\Shopaholic\Classes\Store\ProductListStore;
  *
  * Viewed products for Shopaholic
  * @method $this viewed()
+ *
+ * Labels for Shopaholic
+ * @method $this label($iLabelID)
  */
 class ProductCollection extends ElementCollection
 {
