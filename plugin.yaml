@@ -38,7 +38,7 @@ navigation:
         url: lovata/shopaholic/promoblocks
         icon: oc-icon-money
         permissions:
-            - 'shopaholic-menu-promo-*'
+            - 'shopaholic-menu-promo-block'
         sideMenu:
             shopaholic-menu-promo-block:
                 label: 'lovata.shopaholic::lang.menu.promo_block'
