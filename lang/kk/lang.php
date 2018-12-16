@@ -20,8 +20,8 @@
     ],
     'menu'        => [
         'main'                => 'Каталог',
-        'categories'          => 'Categories',
-        'product'             => 'Products',
+        'categories'          => 'Категориялар',
+        'product'             => 'Тауарлар',
         'brands'              => 'Брендтар',
         'shop_catalog'        => 'Тауарлар каталогы',
         'shop_category'       => 'Тауарлар категориясы',
@@ -50,26 +50,26 @@
         'name'         => 'тауар',
         'list_title'   => 'Тауар тізімі',
         'import_title' => 'Тауарларды импорттау',
-        'export_title' => 'Export products',
+        'export_title' => 'Тауарларды экспорттау',
     ],
     'offer'       => [
-        'name'         => 'offer',
-        'list_title'   => 'Offer list',
-        'import_title' => 'Import offers',
-        'export_title' => 'Export offers',
+        'name'         => 'ұсыныстар',
+        'list_title'   => 'Ұсыныстар тізімі',
+        'import_title' => 'Ұсыныстарды импорттау',
+        'export_title' => 'Ұсыныстарды импорттау',
     ],
     'promo_block' => [
-        'name'       => 'promo block',
-        'list_title' => 'Promo block list',
+        'name'       => 'промо блоктар',
+        'list_title' => 'Промо блоктар тізімі',
     ],
     'component'   => [
 
         //Product components
-        'product_page_name'            => 'Product page',
+        'product_page_name'            => 'Тауар парағы',
         'product_page_description'     => 'Get data for product page',
         'product_data_name'            => 'Product data',
         'product_data_description'     => 'Get product data by ID',
-        'product_list_name'            => 'Product list',
+        'product_list_name'            => 'Тауар тізімі',
         'product_list_description'     => 'Get product list',
 
         //Brand components
@@ -77,11 +77,11 @@
         'brand_page_description'       => 'Get data for brand page',
         'brand_data_name'              => 'Brand data',
         'brand_data_description'       => 'Get brand data by ID',
-        'brand_list_name'              => 'Brand list',
-        'brand_list_description'       => 'Get brand list',
+        'brand_list_name'              => 'Брендтер тізімі',
+        'brand_list_description'       => 'Брендтер тізімін алу',
 
         //Promo block components
-        'promo_block_page_name'        => 'Promo block page',
+        'promo_block_page_name'        => 'Промо блок парағы',
         'promo_block_page_description' => 'Get data for promo block page',
         'promo_block_data_name'        => 'Promo block data',
         'promo_block_data_description' => 'Get promo block data by ID',
@@ -89,11 +89,11 @@
         'promo_block_list_description' => 'Get promo block list',
 
         //Category components
-        'category_page_name'           => 'Category page',
+        'category_page_name'           => 'Категория парағы',
         'category_page_description'    => 'Get data for category page',
         'category_data_name'           => 'Category data',
         'category_data_description'    => 'Get category data by ID',
-        'category_list_name'           => 'Category list',
+        'category_list_name'           => 'Категория тізімі',
         'category_list_description'    => 'Get category tree',
 
         //Common components
@@ -104,7 +104,7 @@
         'product_list_sorting'         => 'Default sorting',
         'sorting_no'                   => 'Without sorting',
         'sorting_price_desc'           => 'Expensive',
-        'sorting_price_asc'            => 'Cheap',
+        'sorting_price_asc'            => 'Арзан',
         'sorting_new'                  => 'Жаңа',
         'sorting_popularity_desc'      => 'More popular',
         'sorting_rating_desc'          => 'High rating',
