@@ -80,7 +80,7 @@
         'brand_list_name'              => 'Список брендов',
         'brand_list_description'       => 'Получение списка брендов',
 
-        //Promo content components
+        //Promo block components
         'promo_block_page_name'        => 'Страница промо блока',
         'promo_block_page_description' => 'Получение данных для страницы промо блока',
         'promo_block_data_name'        => 'Данные промо блока',
