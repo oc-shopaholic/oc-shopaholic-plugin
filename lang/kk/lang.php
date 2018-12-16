@@ -97,7 +97,7 @@
         'category_list_description'    => 'Категория тізімін алу',
 
         //Common components
-        'breadcrumbs_name'             => 'Breadcrumbs',
+        'breadcrumbs_name'             => 'Нан үгіндісі',
         'breadcrumbs_description'      => 'Get data for catalog breadcrumbs',
 
         //Components settings
