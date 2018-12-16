@@ -93,7 +93,7 @@
         'category_page_description'    => 'Get data for category page',
         'category_data_name'           => 'Category data',
         'category_data_description'    => 'Get category data by ID',
-        'category_list_name'           => 'Category list',
+        'category_list_name'           => 'Спіс катэгорый',
         'category_list_description'    => 'Get category tree',
 
         //Common components
