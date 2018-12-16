@@ -12,7 +12,7 @@
         'offer'               => 'Offers',
         'currency'            => 'Currency',
         'check_offer_active'  => 'When you receive a list of active products, check for active offers',
-        'additional_category' => 'Additional categories',
+        'additional_category' => 'Дадатковыя катэгорыі',
         'promo_block_type'    => 'Promo block with product list',
         'promo_block'         => 'Promo block',
         'category_parent_id'  => 'Category parent ID',
