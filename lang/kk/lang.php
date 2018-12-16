@@ -98,7 +98,7 @@
 
         //Common components
         'breadcrumbs_name'             => 'Нан үгіндісі',
-        'breadcrumbs_description'      => 'Get data for catalog breadcrumbs',
+        'breadcrumbs_description'      => 'Каталогтын нан үгіндісін құрастыру үшін деректерді алу',
 
         //Components settings
         'product_list_sorting'         => 'Әдепкі сұрыптау',
