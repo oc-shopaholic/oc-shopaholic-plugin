@@ -10,7 +10,7 @@
         'quantity'            => 'Quantity',
         'brand'               => 'Брэнд',
         'offer'               => 'Offers',
-        'currency'            => 'Currency',
+        'currency'            => 'Валюта',
         'check_offer_active'  => 'When you receive a list of active products, check for active offers',
         'additional_category' => 'Дадатковыя катэгорыі',
         'promo_block_type'    => 'Promo block with product list',
