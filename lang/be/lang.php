@@ -16,7 +16,7 @@
         'promo_block_type'    => 'Promo block with product list',
         'promo_block'         => 'Promo block',
         'category_parent_id'  => 'Category parent ID',
-        'product_id'          => 'Product ID',
+        'product_id'          => 'ID тавару',
     ],
     'menu'        => [
         'main'                => 'Catalog',
@@ -89,7 +89,7 @@
         'promo_block_list_description' => 'Get promo block list',
 
         //Category components
-        'category_page_name'           => 'Category page',
+        'category_page_name'           => 'Старонка катэгорыі',
         'category_page_description'    => 'Get data for category page',
         'category_data_name'           => 'Category data',
         'category_data_description'    => 'Get category data by ID',
@@ -101,7 +101,7 @@
         'breadcrumbs_description'      => 'Get data for catalog breadcrumbs',
 
         //Components settings
-        'product_list_sorting'         => 'Default sorting',
+        'product_list_sorting'         => 'Сартаванне па змаўчанні',
         'sorting_no'                   => 'Without sorting',
         'sorting_price_desc'           => 'Expensive',
         'sorting_price_asc'            => 'Cheap',
