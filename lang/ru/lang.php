@@ -85,7 +85,7 @@
         'promo_block_page_description' => 'Получение данных для страницы промо блока',
         'promo_block_data_name'        => 'Данные промо блока',
         'promo_block_data_description' => 'Получение данных промо блока',
-        'promo_block_list_name'        => 'Список брендов',
+        'promo_block_list_name'        => 'Список промо блоков',
         'promo_block_list_description' => 'Получение списка брендов',
 
         //Category components
