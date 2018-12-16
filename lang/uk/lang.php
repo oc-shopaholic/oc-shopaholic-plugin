@@ -1,10 +1,10 @@
 <?php return [
     'plugin'      => [
         'name'        => 'Shopaholic',
-        'description' => 'Catalog of products for eCommerce',
+        'description' => 'Каталог товарів для eCommerce',
     ],
     'field'       => [
-        'vendor_code'         => 'Vendor code',
+        'vendor_code'         => 'Код виробника',
         'price'               => 'Ціна',
         'old_price'           => 'Стара ціна',
         'quantity'            => 'Кількість',
@@ -12,16 +12,16 @@
         'offer'               => 'Offers',
         'currency'            => 'Валюта',
         'check_offer_active'  => 'When you receive a list of active products, check for active offers',
-        'additional_category' => 'Additional categories',
+        'additional_category' => 'Додаткові категорії',
         'promo_block_type'    => 'Promo block with product list',
         'promo_block'         => 'Promo block',
-        'category_parent_id'  => 'Category parent ID',
+        'category_parent_id'  => 'Ідентифікатор батьківського категорії',
         'product_id'          => 'Ідентифікатор товару',
     ],
     'menu'        => [
         'main'                => 'Каталог',
         'categories'          => 'Категорії',
-        'product'             => 'Products',
+        'product'             => 'Товари',
         'brands'              => 'Brands',
         'shop_catalog'        => 'Catalog of products',
         'shop_category'       => 'Category of products',
@@ -49,8 +49,8 @@
     'product'     => [
         'name'         => 'товар',
         'list_title'   => 'Список товарів',
-        'import_title' => 'Import products',
-        'export_title' => 'Export products',
+        'import_title' => 'Імпорт товарів',
+        'export_title' => 'Експорт товарів',
     ],
     'offer'       => [
         'name'         => 'offer',
@@ -89,7 +89,7 @@
         'promo_block_list_description' => 'Get promo block list',
 
         //Category components
-        'category_page_name'           => 'Category page',
+        'category_page_name'           => 'Сторінка категорії',
         'category_page_description'    => 'Get data for category page',
         'category_data_name'           => 'Category data',
         'category_data_description'    => 'Get category data by ID',
@@ -101,11 +101,11 @@
         'breadcrumbs_description'      => 'Get data for catalog breadcrumbs',
 
         //Components settings
-        'product_list_sorting'         => 'Default sorting',
-        'sorting_no'                   => 'Without sorting',
+        'product_list_sorting'         => 'Сортування за замовчуванням',
+        'sorting_no'                   => 'Без сортування',
         'sorting_price_desc'           => 'Expensive',
         'sorting_price_asc'            => 'Cheap',
-        'sorting_new'                  => 'New',
+        'sorting_new'                  => 'Новий',
         'sorting_popularity_desc'      => 'More popular',
         'sorting_rating_desc'          => 'High rating',
         'sorting_rating_asc'           => 'Low rating',
