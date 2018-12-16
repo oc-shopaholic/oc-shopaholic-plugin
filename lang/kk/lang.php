@@ -14,9 +14,9 @@
         'check_offer_active'  => 'When you receive a list of active products, check for active offers',
         'additional_category' => 'Additional categories',
         'promo_block_type'    => 'Promo block with product list',
-        'promo_block'         => 'Promo block',
+        'promo_block'         => 'Промо блок',
         'category_parent_id'  => 'Category parent ID',
-        'product_id'          => 'Product ID',
+        'product_id'          => 'Тауар ID',
     ],
     'menu'        => [
         'main'                => 'Каталог',
@@ -73,7 +73,7 @@
         'product_list_description'     => 'Get product list',
 
         //Brand components
-        'brand_page_name'              => 'Brand page',
+        'brand_page_name'              => 'Бренд парағы',
         'brand_page_description'       => 'Get data for brand page',
         'brand_data_name'              => 'Brand data',
         'brand_data_description'       => 'Get brand data by ID',
@@ -104,7 +104,7 @@
         'product_list_sorting'         => 'Default sorting',
         'sorting_no'                   => 'Without sorting',
         'sorting_price_desc'           => 'Expensive',
-        'sorting_price_asc'            => 'Арзан',
+        'sorting_price_asc'            => 'Арзандар',
         'sorting_new'                  => 'Жаңа',
         'sorting_popularity_desc'      => 'More popular',
         'sorting_rating_desc'          => 'High rating',
@@ -115,9 +115,9 @@
         'sorting_date_end_desc'        => 'Date end (DESC)',
     ],
     'permission'  => [
-        'category'    => 'Manage categories',
-        'brand'       => 'Manage brands',
-        'product'     => 'Manage products',
+        'category'    => 'Категорияларды басқару',
+        'brand'       => 'Брендтарды басқару',
+        'product'     => 'Тауарларды басқару',
         'settings'    => 'Manage settings',
         'promo_block' => 'Manage promo blocks',
     ],
