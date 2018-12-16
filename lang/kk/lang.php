@@ -125,6 +125,6 @@
         'import_additional_category_info' => 'Set list of additional product categories, separated by commas.',
     ],
     'button'      => [
-        'import_offer_button' => 'Import offers from CSV',
+        'import_offer_button' => 'CSV файлдан ұсыныстарды импорттау',
     ],
 ];
