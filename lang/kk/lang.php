@@ -75,7 +75,7 @@
         //Brand components
         'brand_page_name'              => 'Бренд парағы',
         'brand_page_description'       => 'Get data for brand page',
-        'brand_data_name'              => 'Brand data',
+        'brand_data_name'              => 'Бренд туралы мәліметтер',
         'brand_data_description'       => 'Get brand data by ID',
         'brand_list_name'              => 'Брендтер тізімі',
         'brand_list_description'       => 'Брендтер тізімін алу',
@@ -91,7 +91,7 @@
         //Category components
         'category_page_name'           => 'Категория парағы',
         'category_page_description'    => 'Get data for category page',
-        'category_data_name'           => 'Category data',
+        'category_data_name'           => 'Категория туралы мәліметтер',
         'category_data_description'    => 'Get category data by ID',
         'category_list_name'           => 'Категория тізімі',
         'category_list_description'    => 'Get category tree',
