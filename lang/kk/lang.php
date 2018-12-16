@@ -1,10 +1,10 @@
 <?php return [
     'plugin'      => [
         'name'        => 'Shopaholic',
-        'description' => 'Catalog of products for eCommerce',
+        'description' => 'Электрондық коммерцияға арналған тауарлар каталогы',
     ],
     'field'       => [
-        'vendor_code'         => 'Vendor code',
+        'vendor_code'         => 'Артикул',
         'price'               => 'Бағасы',
         'old_price'           => 'Ескі бағасы',
         'quantity'            => 'Сан',
@@ -12,10 +12,10 @@
         'offer'               => 'Ұсыныстар',
         'currency'            => 'Валюта',
         'check_offer_active'  => 'When you receive a list of active products, check for active offers',
-        'additional_category' => 'Additional categories',
+        'additional_category' => 'Қосымша категориялар',
         'promo_block_type'    => 'Promo block with product list',
         'promo_block'         => 'Промо блок',
-        'category_parent_id'  => 'Category parent ID',
+        'category_parent_id'  => 'Жоғарғы категория ID',
         'product_id'          => 'Тауар ID',
     ],
     'menu'        => [
@@ -70,7 +70,7 @@
         'product_data_name'            => 'Product data',
         'product_data_description'     => 'Get product data by ID',
         'product_list_name'            => 'Тауар тізімі',
-        'product_list_description'     => 'Get product list',
+        'product_list_description'     => 'Тауарлар тізімін алу',
 
         //Brand components
         'brand_page_name'              => 'Бренд парағы',
@@ -86,7 +86,7 @@
         'promo_block_data_name'        => 'Promo block data',
         'promo_block_data_description' => 'Get promo block data by ID',
         'promo_block_list_name'        => 'Promo block list',
-        'promo_block_list_description' => 'Get promo block list',
+        'promo_block_list_description' => 'Промо блоктар тізімін алу',
 
         //Category components
         'category_page_name'           => 'Категория парағы',
@@ -107,8 +107,8 @@
         'sorting_price_asc'            => 'Арзандар',
         'sorting_new'                  => 'Жаңа',
         'sorting_popularity_desc'      => 'More popular',
-        'sorting_rating_desc'          => 'High rating',
-        'sorting_rating_asc'           => 'Low rating',
+        'sorting_rating_desc'          => 'Рейтингі жоғары',
+        'sorting_rating_asc'           => 'Рейтингі төмен',
         'sorting_date_begin_asc'       => 'Date begin (ASC)',
         'sorting_date_begin_desc'      => 'Date begin (DESC)',
         'sorting_date_end_asc'         => 'Date end (ASC)',
@@ -118,8 +118,8 @@
         'category'    => 'Категорияларды басқару',
         'brand'       => 'Брендтарды басқару',
         'product'     => 'Тауарларды басқару',
-        'settings'    => 'Manage settings',
-        'promo_block' => 'Manage promo blocks',
+        'settings'    => 'Баптауларды басқару',
+        'promo_block' => 'Промо блоктармен басқару',
     ],
     'message'     => [
         'import_additional_category_info' => 'Set list of additional product categories, separated by commas.',
