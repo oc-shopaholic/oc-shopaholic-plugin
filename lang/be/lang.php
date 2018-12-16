@@ -9,7 +9,7 @@
         'old_price'           => 'Старая цана',
         'quantity'            => 'Колькасць',
         'brand'               => 'Брэнд',
-        'offer'               => 'Offers',
+        'offer'               => 'Таварныя прапановы',
         'currency'            => 'Валюта',
         'check_offer_active'  => 'When you receive a list of active products, check for active offers',
         'additional_category' => 'Дадатковыя катэгорыі',
