@@ -4,8 +4,8 @@
         'description' => 'Catalog of products for eCommerce',
     ],
     'field'       => [
-        'vendor_code'         => 'Vendor code',
-        'price'               => 'Price',
+        'vendor_code'         => 'Артыкул',
+        'price'               => 'Цана',
         'old_price'           => 'Old price',
         'quantity'            => 'Quantity',
         'brand'               => 'Brand',
