@@ -125,6 +125,6 @@
         'import_additional_category_info' => 'Укажите список дополнительных категорий товаров через запятую.',
     ],
     'button'      => [
-        'import_offer_button' => 'Импорт предложений из CSV',
+        'import_offer_button' => 'Импортировать предложения из CSV',
     ],
 ];
