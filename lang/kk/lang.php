@@ -13,7 +13,7 @@
         'currency'            => 'Валюта',
         'check_offer_active'  => 'When you receive a list of active products, check for active offers',
         'additional_category' => 'Қосымша категориялар',
-        'promo_block_type'    => 'Promo block with product list',
+        'promo_block_type'    => 'Промо блок тауаралар тізімімен',
         'promo_block'         => 'Промо блок',
         'category_parent_id'  => 'Жоғарғы категория ID',
         'product_id'          => 'Тауар ID',
@@ -66,23 +66,23 @@
 
         //Product components
         'product_page_name'            => 'Тауар парағы',
-        'product_page_description'     => 'Get data for product page',
+        'product_page_description'     => 'Тауар парағына деректерді алу',
         'product_data_name'            => 'Тауар деректері',
-        'product_data_description'     => 'Get product data by ID',
+        'product_data_description'     => 'Тауар туралы деректерді ID арқылы алу',
         'product_list_name'            => 'Тауар тізімі',
         'product_list_description'     => 'Тауарлар тізімін алу',
 
         //Brand components
         'brand_page_name'              => 'Бренд парағы',
-        'brand_page_description'       => 'Get data for brand page',
+        'brand_page_description'       => 'Бренд парағына арналған деректерді алу',
         'brand_data_name'              => 'Бренд деректері',
-        'brand_data_description'       => 'Get brand data by ID',
+        'brand_data_description'       => 'Бренд деректерін ID арқылы алу',
         'brand_list_name'              => 'Брендтер тізімі',
         'brand_list_description'       => 'Брендтер тізімін алу',
 
         //Promo block components
         'promo_block_page_name'        => 'Промо блок парағы',
-        'promo_block_page_description' => 'Get data for promo block page',
+        'promo_block_page_description' => 'Промо блок парағы үшін деректерді алу',
         'promo_block_data_name'        => 'Промо блок деректері',
         'promo_block_data_description' => 'Промо блок деректерін алу',
         'promo_block_list_name'        => 'Промо блоктар тізімі',
