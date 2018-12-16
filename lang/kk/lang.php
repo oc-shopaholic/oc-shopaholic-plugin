@@ -11,7 +11,7 @@
         'brand'               => 'Бренд',
         'offer'               => 'Ұсыныстар',
         'currency'            => 'Валюта',
-        'check_offer_active'  => 'When you receive a list of active products, check for active offers',
+        'check_offer_active'  => 'Белсенді тауарлар тізімін алған кезде, белсенді ұсыныстардын болуын тексеру',
         'additional_category' => 'Қосымша категориялар',
         'promo_block_type'    => 'Промо блок тауаралар тізімімен',
         'promo_block'         => 'Промо блок',
@@ -94,7 +94,7 @@
         'category_data_name'           => 'Категория деректері',
         'category_data_description'    => 'Категория деректерін ID арқылы алу',
         'category_list_name'           => 'Категория тізімі',
-        'category_list_description'    => 'Get category tree',
+        'category_list_description'    => 'Категория тізімін алу',
 
         //Common components
         'breadcrumbs_name'             => 'Breadcrumbs',
