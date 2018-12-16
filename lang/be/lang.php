@@ -36,7 +36,7 @@
     ],
     'category'    => [
         'name'         => 'category',
-        'list_title'   => 'Category list',
+        'list_title'   => 'Cпіс катэгорый',
         'import_title' => 'Import categories',
         'export_title' => 'Export categories',
     ],
