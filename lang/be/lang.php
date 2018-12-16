@@ -21,7 +21,7 @@
     'menu'        => [
         'main'                => 'Catalog',
         'categories'          => 'Categories',
-        'product'             => 'Products',
+        'product'             => 'Тавары',
         'brands'              => 'Brands',
         'shop_catalog'        => 'Catalog of products',
         'shop_category'       => 'Category of products',
