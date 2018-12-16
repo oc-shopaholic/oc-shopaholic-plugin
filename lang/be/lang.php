@@ -6,8 +6,8 @@
     'field'       => [
         'vendor_code'         => 'Артыкул',
         'price'               => 'Цана',
-        'old_price'           => 'Old price',
-        'quantity'            => 'Quantity',
+        'old_price'           => 'Старая цана',
+        'quantity'            => 'Колькасць',
         'brand'               => 'Брэнд',
         'offer'               => 'Offers',
         'currency'            => 'Валюта',
@@ -31,7 +31,7 @@
     ],
     'tab'         => [
         'offer'       => 'Offers',
-        'price'       => 'Prices',
+        'price'       => 'Цэны',
         'permissions' => 'Shopaholic',
     ],
     'category'    => [
@@ -48,7 +48,7 @@
     ],
     'product'     => [
         'name'         => 'product',
-        'list_title'   => 'Product list',
+        'list_title'   => 'Спіс тавараў',
         'import_title' => 'Import products',
         'export_title' => 'Export products',
     ],
@@ -69,7 +69,7 @@
         'product_page_description'     => 'Get data for product page',
         'product_data_name'            => 'Product data',
         'product_data_description'     => 'Get product data by ID',
-        'product_list_name'            => 'Product list',
+        'product_list_name'            => 'Спіс тавараў',
         'product_list_description'     => 'Get product list',
 
         //Brand components
