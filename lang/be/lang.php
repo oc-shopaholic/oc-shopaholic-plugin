@@ -8,7 +8,7 @@
         'price'               => 'Цана',
         'old_price'           => 'Old price',
         'quantity'            => 'Quantity',
-        'brand'               => 'Brand',
+        'brand'               => 'Брэнд',
         'offer'               => 'Offers',
         'currency'            => 'Currency',
         'check_offer_active'  => 'When you receive a list of active products, check for active offers',
