@@ -90,9 +90,9 @@
 
         //Category components
         'category_page_name'           => 'Категория парағы',
-        'category_page_description'    => 'Get data for category page',
+        'category_page_description'    => 'Категория парағында деректерді шығару',
         'category_data_name'           => 'Категория деректері',
-        'category_data_description'    => 'Get category data by ID',
+        'category_data_description'    => 'Категория деректерін ID арқылы алу',
         'category_list_name'           => 'Категория тізімі',
         'category_list_description'    => 'Get category tree',
 
@@ -122,7 +122,7 @@
         'promo_block' => 'Промо блоктармен басқару',
     ],
     'message'     => [
-        'import_additional_category_info' => 'Set list of additional product categories, separated by commas.',
+        'import_additional_category_info' => 'Қосымша тауарлар категорияларынын тізімін үтірмен бөліп көрсетіңіз.',
     ],
     'button'      => [
         'import_offer_button' => 'CSV файлдан ұсыныстарды импорттау',
