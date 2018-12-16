@@ -111,8 +111,8 @@
         'sorting_rating_asc'           => 'Рейтингі төмен',
         'sorting_date_begin_asc'       => 'Date begin (ASC)',
         'sorting_date_begin_desc'      => 'Date begin (DESC)',
-        'sorting_date_end_asc'         => 'Date end (ASC)',
-        'sorting_date_end_desc'        => 'Date end (DESC)',
+        'sorting_date_end_asc'         => 'Аяқталу күні (ASC)',
+        'sorting_date_end_desc'        => 'Аяқталу күні (DESC)',
     ],
     'permission'  => [
         'category'    => 'Категорияларды басқару',
