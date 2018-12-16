@@ -42,7 +42,7 @@
     ],
     'brand'       => [
         'name'         => 'brand',
-        'list_title'   => 'Brand list',
+        'list_title'   => 'Спіс брэндаў',
         'import_title' => 'Import brands',
         'export_title' => 'Export brands',
     ],
