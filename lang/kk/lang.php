@@ -67,7 +67,7 @@
         //Product components
         'product_page_name'            => 'Тауар парағы',
         'product_page_description'     => 'Get data for product page',
-        'product_data_name'            => 'Product data',
+        'product_data_name'            => 'Тауар деректері',
         'product_data_description'     => 'Get product data by ID',
         'product_list_name'            => 'Тауар тізімі',
         'product_list_description'     => 'Тауарлар тізімін алу',
@@ -83,9 +83,9 @@
         //Promo block components
         'promo_block_page_name'        => 'Промо блок парағы',
         'promo_block_page_description' => 'Get data for promo block page',
-        'promo_block_data_name'        => 'Promo block data',
-        'promo_block_data_description' => 'Get promo block data by ID',
-        'promo_block_list_name'        => 'Promo block list',
+        'promo_block_data_name'        => 'Промо блок деректері',
+        'promo_block_data_description' => 'Промо блок деректерін алу',
+        'promo_block_list_name'        => 'Промо блоктар тізімі',
         'promo_block_list_description' => 'Промо блоктар тізімін алу',
 
         //Category components
