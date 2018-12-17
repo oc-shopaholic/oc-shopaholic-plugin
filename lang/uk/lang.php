@@ -1,7 +1,7 @@
 <?php return [
     'plugin'      => [
         'name'        => 'Shopaholic',
-        'description' => 'Каталог товарів для eCommerce',
+        'description' => 'Каталог товарів',
     ],
     'field'       => [
         'vendor_code'         => 'Код виробника',
@@ -119,12 +119,12 @@
         'brand'       => 'Управління брендами',
         'product'     => 'Управління товарами',
         'settings'    => 'Керування налаштуваннями',
-        'promo_block' => 'Manage promo blocks',
+        'promo_block' => 'Управління промо блоками',
     ],
     'message'     => [
-        'import_additional_category_info' => 'Set list of additional product categories, separated by commas.',
+        'import_additional_category_info' => 'Вкажіть список додаткових категорій продуктів, розділених комами.',
     ],
     'button'      => [
-        'import_offer_button' => 'Import offers from CSV',
+        'import_offer_button' => 'Імпортувати пропозиції з CSV',
     ],
 ];
