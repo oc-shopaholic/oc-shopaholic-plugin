@@ -48,26 +48,26 @@
     ],
     'product'     => [
         'name'         => 'буюм',
-        'list_title'   => 'Product list',
-        'import_title' => 'Import products',
-        'export_title' => 'Export products',
+        'list_title'   => 'Буюмдар тизмеги',
+        'import_title' => 'Буюмдарды импорттоо',
+        'export_title' => 'Буюмдарды экспорттоо',
     ],
     'offer'       => [
-        'name'         => 'offer',
-        'list_title'   => 'Offer list',
-        'import_title' => 'Import offers',
-        'export_title' => 'Export offers',
+        'name'         => 'сунуш',
+        'list_title'   => 'Сунуштар тизмеги',
+        'import_title' => 'Сунуштарды импорттоо',
+        'export_title' => 'Сунуштарды экпорттоо',
     ],
     'promo_block' => [
-        'name'       => 'promo block',
-        'list_title' => 'Promo block list',
+        'name'       => 'жарнамалык тосмо',
+        'list_title' => 'Жарнамалык тозмолор тизмеги',
     ],
     'component'   => [
 
         //Product components
-        'product_page_name'            => 'Product page',
-        'product_page_description'     => 'Get data for product page',
-        'product_data_name'            => 'Product data',
+        'product_page_name'            => 'Буюм барагы',
+        'product_page_description'     => 'Буюм барагындагы маалыматты алуу',
+        'product_data_name'            => 'Буюм маалыматы',
         'product_data_description'     => 'Get product data by ID',
         'product_list_name'            => 'Product list',
         'product_list_description'     => 'Get product list',
