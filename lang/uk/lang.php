@@ -84,15 +84,15 @@
         'promo_block_page_name'        => 'Сторінка промо блоку',
         'promo_block_page_description' => 'Отримайте дані про сторінку рекламного блоку',
         'promo_block_data_name'        => 'Отримайте дані про сторінку промо блоку',
-        'promo_block_data_description' => 'Get promo block data by ID',
-        'promo_block_list_name'        => 'Promo block list',
-        'promo_block_list_description' => 'Get promo block list',
+        'promo_block_data_description' => 'Отримати дані рекламного блоку за ID',
+        'promo_block_list_name'        => 'Список промо блоків',
+        'promo_block_list_description' => 'Отримати список промо блоків',
 
         //Category components
         'category_page_name'           => 'Сторінка категорії',
-        'category_page_description'    => 'Get data for category page',
-        'category_data_name'           => 'Category data',
-        'category_data_description'    => 'Get category data by ID',
+        'category_page_description'    => 'Отримати дані для сторінки категорії',
+        'category_data_name'           => 'Дані категорії',
+        'category_data_description'    => 'Отримати дані категорій за ID',
         'category_list_name'           => 'Список категорій',
         'category_list_description'    => 'Отримати дерево категорій',
 
