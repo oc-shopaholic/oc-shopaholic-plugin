@@ -67,16 +67,16 @@
         //Product components
         'product_page_name'            => 'Сторінка товару',
         'product_page_description'     => 'Отримати дані для сторінки товару',
-        'product_data_name'            => 'Product data',
-        'product_data_description'     => 'Get product data by ID',
+        'product_data_name'            => 'Опис товару',
+        'product_data_description'     => 'Отримайте дані про товар за ID',
         'product_list_name'            => 'Список товарів',
-        'product_list_description'     => 'Get product list',
+        'product_list_description'     => 'Отримати список товарів',
 
         //Brand components
-        'brand_page_name'              => 'Brand page',
-        'brand_page_description'       => 'Get data for brand page',
-        'brand_data_name'              => 'Brand data',
-        'brand_data_description'       => 'Get brand data by ID',
+        'brand_page_name'              => 'Сторінка бренда',
+        'brand_page_description'       => 'Отримайте дані для сторінки бренда',
+        'brand_data_name'              => 'Дані бренда',
+        'brand_data_description'       => 'Отримайте дані про бренд за ID',
         'brand_list_name'              => 'Brand list',
         'brand_list_description'       => 'Get brand list',
 
