@@ -30,7 +30,7 @@
         'promo'               => 'Промо-акції',
     ],
     'tab'         => [
-        'offer'       => 'Offers',
+        'offer'       => 'Товарні пропозиції',
         'price'       => 'Ціни',
         'permissions' => 'Shopaholic',
     ],
@@ -41,10 +41,10 @@
         'export_title' => 'Експорт категорій',
     ],
     'brand'       => [
-        'name'         => 'brand',
-        'list_title'   => 'Brand list',
-        'import_title' => 'Import brands',
-        'export_title' => 'Export brands',
+        'name'         => 'бренд',
+        'list_title'   => 'Список брендів',
+        'import_title' => 'Імпорт брендів',
+        'export_title' => 'Експорт брендів',
     ],
     'product'     => [
         'name'         => 'товар',
@@ -53,20 +53,20 @@
         'export_title' => 'Експорт товарів',
     ],
     'offer'       => [
-        'name'         => 'offer',
-        'list_title'   => 'Offer list',
-        'import_title' => 'Import offers',
-        'export_title' => 'Export offers',
+        'name'         => 'пропозиція',
+        'list_title'   => 'Список пропозицій',
+        'import_title' => 'Імпорт пропозицій',
+        'export_title' => 'Експорт пропозицій',
     ],
     'promo_block' => [
-        'name'       => 'promo block',
-        'list_title' => 'Promo block list',
+        'name'       => 'промо блок',
+        'list_title' => 'Список промо блоків',
     ],
     'component'   => [
 
         //Product components
         'product_page_name'            => 'Сторінка товару',
-        'product_page_description'     => 'Get data for product page',
+        'product_page_description'     => 'Отримати дані для сторінки товару',
         'product_data_name'            => 'Product data',
         'product_data_description'     => 'Get product data by ID',
         'product_list_name'            => 'Список товарів',
@@ -110,7 +110,7 @@
         'sorting_rating_desc'          => 'High rating',
         'sorting_rating_asc'           => 'Low rating',
         'sorting_date_begin_asc'       => 'Дата початку (ASC)',
-        'sorting_date_begin_desc'      => 'Date begin (DESC)',
+        'sorting_date_begin_desc'      => 'Дата початку (DESC)',
         'sorting_date_end_asc'         => 'Дата завершення (ASC)',
         'sorting_date_end_desc'        => 'Дата завершення (DESC)',
     ],
