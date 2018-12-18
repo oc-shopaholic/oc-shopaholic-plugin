@@ -65,7 +65,7 @@
     'component'   => [
 
         //Product components
-        'product_page_name'            => 'Product page',
+        'product_page_name'            => 'Старонка тавару',
         'product_page_description'     => 'Get data for product page',
         'product_data_name'            => 'Product data',
         'product_data_description'     => 'Get product data by ID',
