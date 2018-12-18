@@ -35,9 +35,9 @@
         'permissions' => 'Shopaholic',
     ],
     'category'    => [
-        'name'         => 'category',
+        'name'         => 'катэгорыі',
         'list_title'   => 'Cпіс катэгорый',
-        'import_title' => 'Import categories',
+        'import_title' => 'Iмпарт катэгорый',
         'export_title' => 'Export categories',
     ],
     'brand'       => [
