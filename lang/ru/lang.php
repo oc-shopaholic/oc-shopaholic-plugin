@@ -104,7 +104,7 @@
         'product_list_sorting'         => 'Сортировка по умолчанию',
         'sorting_no'                   => 'Без сортировки',
         'sorting_price_desc'           => 'Дорогие',
-        'sorting_price_asc'            => 'Дешевые',
+        'sorting_price_asc'            => 'Дешёвые',
         'sorting_new'                  => 'Новые',
         'sorting_popularity_desc'      => 'Популярные',
         'sorting_rating_desc'          => 'Высокий рейтинг',
