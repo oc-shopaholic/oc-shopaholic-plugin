@@ -97,15 +97,15 @@
         'category_list_description'    => 'Get category tree',
 
         //Common components
-        'breadcrumbs_name'             => 'Breadcrumbs',
+        'breadcrumbs_name'             => 'Хлебныя крошкі',
         'breadcrumbs_description'      => 'Get data for catalog breadcrumbs',
 
         //Components settings
         'product_list_sorting'         => 'Сартаванне па змаўчанні',
-        'sorting_no'                   => 'Without sorting',
-        'sorting_price_desc'           => 'Expensive',
-        'sorting_price_asc'            => 'Cheap',
-        'sorting_new'                  => 'New',
+        'sorting_no'                   => 'Без сартавання',
+        'sorting_price_desc'           => 'Дарагiя',
+        'sorting_price_asc'            => 'Танныя',
+        'sorting_new'                  => 'Новыя',
         'sorting_popularity_desc'      => 'More popular',
         'sorting_rating_desc'          => 'High rating',
         'sorting_rating_asc'           => 'Low rating',
