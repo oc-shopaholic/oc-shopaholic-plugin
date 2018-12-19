@@ -74,9 +74,9 @@
 
         //Brand components
         'brand_page_name'              => 'Страница бренда',
-        'brand_page_description'       => 'Получение данных для страницы бренда',
+        'brand_page_description'       => 'Получить данные для страницы бренда',
         'brand_data_name'              => 'Данные бренда',
-        'brand_data_description'       => 'Получение данных бренда',
+        'brand_data_description'       => 'Получить данные бренда по ID',
         'brand_list_name'              => 'Список брендов',
         'brand_list_description'       => 'Получить список брендов',
 
