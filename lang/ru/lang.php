@@ -66,7 +66,7 @@
 
         //Product components
         'product_page_name'            => 'Страница товара',
-        'product_page_description'     => 'Получение данных для страницы товара',
+        'product_page_description'     => 'Получить данные для страницы товара',
         'product_data_name'            => 'Данные товара',
         'product_data_description'     => 'Получение данных товара',
         'product_list_name'            => 'Список товаров',
