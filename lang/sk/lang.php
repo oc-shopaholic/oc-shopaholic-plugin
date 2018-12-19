@@ -63,6 +63,7 @@
         'list_title' => 'Zoznam promo blokov',
     ],
     'component'   => [
+
         //Product components
         'product_page_name'            => 'Stránka produktu',
         'product_page_description'     => 'Získa dáta pre stránku produktu',
@@ -70,6 +71,7 @@
         'product_data_description'     => 'Získať dáta produktu podľa ID',
         'product_list_name'            => 'Zoznam produktov',
         'product_list_description'     => 'Získa zoznam produktov',
+
         //Brand components
         'brand_page_name'              => 'Stránka značky',
         'brand_page_description'       => 'Získa dáta pre stránku značky',
@@ -77,6 +79,7 @@
         'brand_data_description'       => 'ískať dáta značky podľa ID',
         'brand_list_name'              => 'Zoznam značiek',
         'brand_list_description'       => 'Získa zoznam značiek',
+
         //Promo block components
         'promo_block_page_name'        => 'Stránka promo blok',
         'promo_block_page_description' => 'Získa dáta pre stránku promo bloku',
@@ -84,6 +87,7 @@
         'promo_block_data_description' => 'ískať dáta promo bloku podľa ID',
         'promo_block_list_name'        => 'Zoznam promo blokov',
         'promo_block_list_description' => 'Získa zoznam promo blokov',
+
         //Category components
         'category_page_name'           => 'Stránka kategórie',
         'category_page_description'    => 'Získa dáta pre stránku kategórie',
@@ -91,9 +95,11 @@
         'category_data_description'    => 'ískať dáta kategórie podľa ID',
         'category_list_name'           => 'Zoznam kategórií',
         'category_list_description'    => 'Získa strom kategórií',
+
         //Common components
         'breadcrumbs_name'             => 'Breadcrumbs',
         'breadcrumbs_description'      => 'Získa dáta pre breadcrumbs katalógu',
+
         //Components settings
         'product_list_sorting'         => 'Predvolené zoradenie',
         'sorting_no'                   => 'Bez zoradenia',

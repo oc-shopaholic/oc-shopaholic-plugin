@@ -19,8 +19,8 @@
         'product_id'          => 'ID товара',
     ],
     'menu'        => [
-        'main'                => 'Каталог товаров',
-        'categories'          => 'Категории товаров',
+        'main'                => 'Каталог',
+        'categories'          => 'Категории',
         'product'             => 'Товары',
         'brands'              => 'Бренды',
         'shop_catalog'        => 'Каталог товаров',
@@ -80,12 +80,12 @@
         'brand_list_name'              => 'Список брендов',
         'brand_list_description'       => 'Получение списка брендов',
 
-        //Promo content components
+        //Promo block components
         'promo_block_page_name'        => 'Страница промо блока',
         'promo_block_page_description' => 'Получение данных для страницы промо блока',
         'promo_block_data_name'        => 'Данные промо блока',
         'promo_block_data_description' => 'Получение данных промо блока',
-        'promo_block_list_name'        => 'Список брендов',
+        'promo_block_list_name'        => 'Список промо блоков',
         'promo_block_list_description' => 'Получение списка брендов',
 
         //Category components
@@ -104,7 +104,7 @@
         'product_list_sorting'         => 'Сортировка по умолчанию',
         'sorting_no'                   => 'Без сортировки',
         'sorting_price_desc'           => 'Дорогие',
-        'sorting_price_asc'            => 'Дешевые',
+        'sorting_price_asc'            => 'Дешёвые',
         'sorting_new'                  => 'Новые',
         'sorting_popularity_desc'      => 'Популярные',
         'sorting_rating_desc'          => 'Высокий рейтинг',
@@ -125,6 +125,6 @@
         'import_additional_category_info' => 'Укажите список дополнительных категорий товаров через запятую.',
     ],
     'button'      => [
-        'import_offer_button' => 'Импорт предложений из CSV',
+        'import_offer_button' => 'Импортировать предложения из CSV',
     ],
 ];
