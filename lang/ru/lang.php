@@ -70,7 +70,7 @@
         'product_data_name'            => 'Данные товара',
         'product_data_description'     => 'Получить данные товара по ID',
         'product_list_name'            => 'Список товаров',
-        'product_list_description'     => 'Получение списка товаров',
+        'product_list_description'     => 'Получить список товаров',
 
         //Brand components
         'brand_page_name'              => 'Страница бренда',
