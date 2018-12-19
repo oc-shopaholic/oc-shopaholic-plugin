@@ -66,7 +66,7 @@
 
         //Product components
         'product_page_name'            => 'Старонка тавару',
-        'product_page_description'     => 'Get data for product page',
+        'product_page_description'     => 'Атрымаць даныя для старонкі тавару',
         'product_data_name'            => 'Product data',
         'product_data_description'     => 'Get product data by ID',
         'product_list_name'            => 'Спіс тавараў',
