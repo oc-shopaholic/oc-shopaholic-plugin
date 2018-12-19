@@ -70,3 +70,5 @@
     - 'Added translatable slug in Product, Brand, Category, PromoBlock models.'
 1.19.1:
     - 'Fixed permissions for promo block menu item. Thanks for contribution Andreas Kosmowicz.'
+1.20.0:
+    - 'Added Slovak language. Thanks for contribution vosco88.'
