@@ -68,7 +68,7 @@
         'product_page_name'            => 'Старонка тавару',
         'product_page_description'     => 'Атрымаць даныя для старонкі тавару',
         'product_data_name'            => 'Product data',
-        'product_data_description'     => 'Get product data by ID',
+        'product_data_description'     => 'Атрымаць дадзеныя тавару па ID',
         'product_list_name'            => 'Спіс тавараў',
         'product_list_description'     => 'Get product list',
 
