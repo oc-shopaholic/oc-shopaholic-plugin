@@ -22,7 +22,7 @@
         'main'                => 'Каталог',
         'categories'          => 'Катэгорыі',
         'product'             => 'Тавары',
-        'brands'              => 'Brands',
+        'brands'              => 'Брэнды',
         'shop_catalog'        => 'Catalog of products',
         'shop_category'       => 'Category of products',
         'all_shop_categories' => 'All categories of products',
@@ -73,11 +73,11 @@
         'product_list_description'     => 'Get product list',
 
         //Brand components
-        'brand_page_name'              => 'Brand page',
+        'brand_page_name'              => 'Старонка брэнду',
         'brand_page_description'       => 'Атрымаць даныя для старонкі брэнда',
         'brand_data_name'              => 'Brand data',
         'brand_data_description'       => 'Атрымаць дадзеныя брэнда па ID',
-        'brand_list_name'              => 'Brand list',
+        'brand_list_name'              => 'Спіс брэндаў',
         'brand_list_description'       => 'Атрымаць спіс брэндаў',
 
         //Promo block components
