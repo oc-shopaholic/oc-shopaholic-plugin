@@ -98,7 +98,7 @@
 
         //Common components
         'breadcrumbs_name'             => 'Хлебныя крошкі',
-        'breadcrumbs_description'      => 'Get data for catalog breadcrumbs',
+        'breadcrumbs_description'      => 'Атрымаць даныя для фарміравання хлебных крошак на старонцы каталога',
 
         //Components settings
         'product_list_sorting'         => 'Сартаванне па змаўчанні',
