@@ -78,7 +78,7 @@
         'brand_data_name'              => 'Brand data',
         'brand_data_description'       => 'Get brand data by ID',
         'brand_list_name'              => 'Brand list',
-        'brand_list_description'       => 'Get brand list',
+        'brand_list_description'       => 'Атрымаць спіс брэндаў',
 
         //Promo block components
         'promo_block_page_name'        => 'Promo block page',
@@ -94,7 +94,7 @@
         'category_data_name'           => 'Category data',
         'category_data_description'    => 'Get category data by ID',
         'category_list_name'           => 'Спіс катэгорый',
-        'category_list_description'    => 'Get category tree',
+        'category_list_description'    => 'Атрымаць дрэва катэгорый',
 
         //Common components
         'breadcrumbs_name'             => 'Хлебныя крошкі',
