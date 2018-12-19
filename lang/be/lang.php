@@ -90,7 +90,7 @@
 
         //Category components
         'category_page_name'           => 'Старонка катэгорыі',
-        'category_page_description'    => 'Get data for category page',
+        'category_page_description'    => 'Атрымаць даныя для старонкі катэгорыі',
         'category_data_name'           => 'Category data',
         'category_data_description'    => 'Атрымаць даныя катэгорыі па ID',
         'category_list_name'           => 'Спіс катэгорый',
