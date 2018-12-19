@@ -90,7 +90,7 @@
 
         //Category components
         'category_page_name'           => 'Страница категории',
-        'category_page_description'    => 'Вывод данных на странице категории',
+        'category_page_description'    => 'Получить данные для страницы категории',
         'category_data_name'           => 'Данные категории',
         'category_data_description'    => 'Получить данные категории по ID',
         'category_list_name'           => 'Список категорий',
