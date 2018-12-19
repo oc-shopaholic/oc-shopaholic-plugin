@@ -70,7 +70,7 @@
         'product_data_name'            => 'Product data',
         'product_data_description'     => 'Атрымаць дадзеныя тавару па ID',
         'product_list_name'            => 'Спіс тавараў',
-        'product_list_description'     => 'Get product list',
+        'product_list_description'     => 'Атрымаць спіс тавараў',
 
         //Brand components
         'brand_page_name'              => 'Старонка брэнду',
