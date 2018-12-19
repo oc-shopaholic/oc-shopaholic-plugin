@@ -98,7 +98,7 @@
 
         //Common components
         'breadcrumbs_name'             => 'Хлебные крошки',
-        'breadcrumbs_description'      => 'Получение данных для формирования хлебных крошек каталога',
+        'breadcrumbs_description'      => 'Получить данные для формирования хлебных крошек на странице каталога',
 
         //Components settings
         'product_list_sorting'         => 'Сортировка по умолчанию',
