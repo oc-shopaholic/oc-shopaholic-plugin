@@ -68,7 +68,7 @@
         'product_page_name'            => 'Страница товара',
         'product_page_description'     => 'Получить данные для страницы товара',
         'product_data_name'            => 'Данные товара',
-        'product_data_description'     => 'Получение данных товара',
+        'product_data_description'     => 'Получить данные товара по ID',
         'product_list_name'            => 'Список товаров',
         'product_list_description'     => 'Получение списка товаров',
 
