@@ -78,7 +78,7 @@
         'brand_data_name'              => 'Данные бренда',
         'brand_data_description'       => 'Получение данных бренда',
         'brand_list_name'              => 'Список брендов',
-        'brand_list_description'       => 'Получение списка брендов',
+        'brand_list_description'       => 'Получить список брендов',
 
         //Promo block components
         'promo_block_page_name'        => 'Страница промо блока',
@@ -94,7 +94,7 @@
         'category_data_name'           => 'Данные категории',
         'category_data_description'    => 'Получение данных категории',
         'category_list_name'           => 'Список категорий',
-        'category_list_description'    => 'Получение дерева категорий',
+        'category_list_description'    => 'Получить дерево категорий',
 
         //Common components
         'breadcrumbs_name'             => 'Хлебные крошки',
