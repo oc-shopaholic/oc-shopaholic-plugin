@@ -67,7 +67,7 @@
         //Product components
         'product_page_name'            => 'Старонка тавару',
         'product_page_description'     => 'Атрымаць даныя для старонкі тавару',
-        'product_data_name'            => 'Product data',
+        'product_data_name'            => 'Дадзеныя тавару',
         'product_data_description'     => 'Атрымаць дадзеныя тавару па ID',
         'product_list_name'            => 'Спіс тавараў',
         'product_list_description'     => 'Атрымаць спіс тавараў',
@@ -75,23 +75,23 @@
         //Brand components
         'brand_page_name'              => 'Старонка брэнду',
         'brand_page_description'       => 'Атрымаць даныя для старонкі брэнда',
-        'brand_data_name'              => 'Brand data',
+        'brand_data_name'              => 'Дадзеныя брэнду',
         'brand_data_description'       => 'Атрымаць дадзеныя брэнда па ID',
         'brand_list_name'              => 'Спіс брэндаў',
         'brand_list_description'       => 'Атрымаць спіс брэндаў',
 
         //Promo block components
-        'promo_block_page_name'        => 'Promo block page',
-        'promo_block_page_description' => 'Get data for promo block page',
-        'promo_block_data_name'        => 'Promo block data',
-        'promo_block_data_description' => 'Get promo block data by ID',
-        'promo_block_list_name'        => 'Promo block list',
-        'promo_block_list_description' => 'Get promo block list',
+        'promo_block_page_name'        => 'Страница промо-блока',
+        'promo_block_page_description' => 'Атрымаць даныя для старонкі прома-блоку',
+        'promo_block_data_name'        => 'Дадзеныя прома-блоку',
+        'promo_block_data_description' => 'Получить данные промо-блока по ID',
+        'promo_block_list_name'        => 'Спіс прома-блокаў',
+        'promo_block_list_description' => 'Атрымаць спіс прома-блокаў',
 
         //Category components
         'category_page_name'           => 'Старонка катэгорыі',
         'category_page_description'    => 'Атрымаць даныя для старонкі катэгорыі',
-        'category_data_name'           => 'Category data',
+        'category_data_name'           => 'Дадзеныя катэгорыі',
         'category_data_description'    => 'Атрымаць даныя катэгорыі па ID',
         'category_list_name'           => 'Спіс катэгорый',
         'category_list_description'    => 'Атрымаць дрэва катэгорый',
