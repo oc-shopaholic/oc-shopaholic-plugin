@@ -115,11 +115,11 @@
         'sorting_date_end_desc'        => 'Дата заканчэння (DESC)',
     ],
     'permission'  => [
-        'category'    => 'Manage categories',
-        'brand'       => 'Manage brands',
-        'product'     => 'Manage products',
-        'settings'    => 'Manage settings',
-        'promo_block' => 'Manage promo blocks',
+        'category'    => 'Кіраванне катэгорыямі',
+        'brand'       => 'Кіраванне брэндамi',
+        'product'     => 'Кіраванне таварамі',
+        'settings'    => 'Кіраванне наладамі',
+        'promo_block' => 'Кіраванне прома-блокамі',
     ],
     'message'     => [
         'import_additional_category_info' => 'Set list of additional product categories, separated by commas.',
