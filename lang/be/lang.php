@@ -26,11 +26,11 @@
         'shop_catalog'        => 'Catalog of products',
         'shop_category'       => 'Category of products',
         'all_shop_categories' => 'All categories of products',
-        'promo_block'         => 'Promo blocks',
+        'promo_block'         => 'Прома-блокі',
         'promo'               => 'Promo',
     ],
     'tab'         => [
-        'offer'       => 'Offers',
+        'offer'       => 'Гандлёвыя прапановы',
         'price'       => 'Цэны',
         'permissions' => 'Shopaholic',
     ],
@@ -59,8 +59,8 @@
         'export_title' => 'Export offers',
     ],
     'promo_block' => [
-        'name'       => 'promo block',
-        'list_title' => 'Promo block list',
+        'name'       => 'прома-блока',
+        'list_title' => 'Спіс прома-блокаў',
     ],
     'component'   => [
 
