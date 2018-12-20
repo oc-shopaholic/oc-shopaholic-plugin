@@ -27,7 +27,7 @@
         'shop_category'       => 'Category of products',
         'all_shop_categories' => 'All categories of products',
         'promo_block'         => 'Прома-блокі',
-        'promo'               => 'Promo',
+        'promo'               => 'Прома-акцыі',
     ],
     'tab'         => [
         'offer'       => 'Гандлёвыя прапановы',
@@ -41,13 +41,13 @@
         'export_title' => 'Export categories',
     ],
     'brand'       => [
-        'name'         => 'brand',
+        'name'         => 'брэнду',
         'list_title'   => 'Спіс брэндаў',
         'import_title' => 'Import brands',
         'export_title' => 'Export brands',
     ],
     'product'     => [
-        'name'         => 'product',
+        'name'         => 'тавару',
         'list_title'   => 'Спіс тавараў',
         'import_title' => 'Import products',
         'export_title' => 'Export products',
