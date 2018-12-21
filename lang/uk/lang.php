@@ -9,7 +9,7 @@
         'old_price'           => 'Стара ціна',
         'quantity'            => 'Кількість',
         'brand'               => 'Бренд',
-        'offer'               => 'Пропозиції',
+        'offer'               => 'Торгові пропозиції',
         'currency'            => 'Валюта',
         'check_offer_active'  => 'При отриманні списка активних товарів, перевірте наявність активних пропозицій',
         'additional_category' => 'Додаткові категорії',
@@ -24,30 +24,30 @@
         'product'             => 'Товари',
         'brands'              => 'Бренди',
         'shop_catalog'        => 'Каталог товарів',
-        'shop_category'       => 'Категорії товарів',
+        'shop_category'       => 'Категорія товарів',
         'all_shop_categories' => 'Всі категорії товарів',
         'promo_block'         => 'Рекламні блоки',
         'promo'               => 'Промо-акції',
     ],
     'tab'         => [
-        'offer'       => 'Товарні пропозиції',
+        'offer'       => 'Торгові пропозиції',
         'price'       => 'Ціни',
         'permissions' => 'Shopaholic',
     ],
     'category'    => [
-        'name'         => 'категорія',
+        'name'         => 'категорії',
         'list_title'   => 'Список категорій',
         'import_title' => 'Імпорт категорій',
         'export_title' => 'Експорт категорій',
     ],
     'brand'       => [
-        'name'         => 'бренд',
+        'name'         => 'бренду',
         'list_title'   => 'Список брендів',
         'import_title' => 'Імпорт брендів',
         'export_title' => 'Експорт брендів',
     ],
     'product'     => [
-        'name'         => 'товар',
+        'name'         => 'товару',
         'list_title'   => 'Список товарів',
         'import_title' => 'Імпорт товарів',
         'export_title' => 'Експорт товарів',
@@ -67,16 +67,16 @@
         //Product components
         'product_page_name'            => 'Сторінка товару',
         'product_page_description'     => 'Отримати дані для сторінки товару',
-        'product_data_name'            => 'Опис товару',
-        'product_data_description'     => 'Отримайте дані про товар за ID',
+        'product_data_name'            => 'Дані товару',
+        'product_data_description'     => 'Отримати дані товару по ID',
         'product_list_name'            => 'Список товарів',
         'product_list_description'     => 'Отримати список товарів',
 
         //Brand components
         'brand_page_name'              => 'Сторінка бренда',
-        'brand_page_description'       => 'Отримайте дані для сторінки бренда',
+        'brand_page_description'       => 'Отримати дані для сторінки бренда',
         'brand_data_name'              => 'Дані бренда',
-        'brand_data_description'       => 'Отримайте дані про бренд за ID',
+        'brand_data_description'       => 'Отримати дані бренду за ID',
         'brand_list_name'              => 'Список брендів',
         'brand_list_description'       => 'Отримати список брендів',
 
@@ -98,7 +98,7 @@
 
         //Common components
         'breadcrumbs_name'             => 'Хлібні крихти',
-        'breadcrumbs_description'      => 'Отримання даних для формування хлібних крихт каталогу',
+        'breadcrumbs_description'      => 'Отримати дані для формування хлібних крихт каталогу',
 
         //Components settings
         'product_list_sorting'         => 'Сортування за замовчуванням',
