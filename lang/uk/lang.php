@@ -13,7 +13,7 @@
         'currency'            => 'Валюта',
         'check_offer_active'  => 'Перевіряти наявність активних пропозицій при отриманні списку активних товарів',
         'additional_category' => 'Додаткові категорії',
-        'promo_block_type'    => 'Рекламний блок із списком товарів',
+        'promo_block_type'    => 'Промо-блок зі списком товарів',
         'promo_block'         => 'Промо-блок',
         'category_parent_id'  => 'ID батьківського категорії',
         'product_id'          => 'ID товару',
@@ -54,8 +54,8 @@
     ],
     'offer'       => [
         'name'         => 'торгової пропозиції',
-        'list_title'   => 'Список пропозицій',
-        'import_title' => 'Імпорт пропозицій',
+        'list_title'   => 'Список торгових пропозицій',
+        'import_title' => 'Імпорт торгових пропозицій',
         'export_title' => 'Експорт торгових пропозицій',
     ],
     'promo_block' => [
@@ -82,8 +82,8 @@
 
         //Promo block components
         'promo_block_page_name'        => 'Сторінка промо-блоку',
-        'promo_block_page_description' => 'Отримайте дані про сторінку рекламного блоку',
-        'promo_block_data_name'        => 'Отримайте дані про сторінку промо блоку',
+        'promo_block_page_description' => 'Отримати дані для сторінки промо-блоку',
+        'promo_block_data_name'        => 'Дані промо-блоку',
         'promo_block_data_description' => 'Отримати дані промо-блоку за ID',
         'promo_block_list_name'        => 'Список промо-блоків',
         'promo_block_list_description' => 'Отримати список промо-блоків',
@@ -122,7 +122,7 @@
         'promo_block' => 'Управління промо-блоками',
     ],
     'message'     => [
-        'import_additional_category_info' => 'Вкажіть список додаткових категорій продуктів, розділених комами.',
+        'import_additional_category_info' => 'Вкажіть через кому список додаткових категорій товарів.',
     ],
     'button'      => [
         'import_offer_button' => 'Імпортувати пропозиції з CSV',
