@@ -4,7 +4,7 @@
         'description' => 'Каталог товарів',
     ],
     'field'       => [
-        'vendor_code'         => 'Код виробника',
+        'vendor_code'         => 'Артикул',
         'price'               => 'Ціна',
         'old_price'           => 'Стара ціна',
         'quantity'            => 'Кількість',
@@ -92,7 +92,7 @@
         'category_page_name'           => 'Сторінка категорії',
         'category_page_description'    => 'Отримати дані для сторінки категорії',
         'category_data_name'           => 'Дані категорії',
-        'category_data_description'    => 'Отримати дані категорій за ID',
+        'category_data_description'    => 'Отримати дані категорії по ID',
         'category_list_name'           => 'Список категорій',
         'category_list_description'    => 'Отримати дерево категорій',
 
@@ -105,8 +105,8 @@
         'sorting_no'                   => 'Без сортування',
         'sorting_price_desc'           => 'Дорогі',
         'sorting_price_asc'            => 'Дешеві',
-        'sorting_new'                  => 'Новий',
-        'sorting_popularity_desc'      => 'Популярний',
+        'sorting_new'                  => 'Нові',
+        'sorting_popularity_desc'      => 'Популярні',
         'sorting_rating_desc'          => 'Високий рейтинг',
         'sorting_rating_asc'           => 'Низький рейтинг',
         'sorting_date_begin_asc'       => 'Дата початку (ASC)',
