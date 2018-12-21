@@ -49,7 +49,7 @@
     'product'     => [
         'name'         => 'тавару',
         'list_title'   => 'Спіс тавараў',
-        'import_title' => 'Import products',
+        'import_title' => 'Iмпарт тавараў',
         'export_title' => 'Export products',
     ],
     'offer'       => [
