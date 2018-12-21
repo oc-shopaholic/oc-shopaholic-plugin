@@ -53,8 +53,8 @@
         'export_title' => 'Export products',
     ],
     'offer'       => [
-        'name'         => 'прапановы',
-        'list_title'   => 'Offer list',
+        'name'         => 'гандлёвай прапановы',
+        'list_title'   => 'Спіс гандлёвых прапаноў',
         'import_title' => 'Import offers',
         'export_title' => 'Export offers',
     ],
