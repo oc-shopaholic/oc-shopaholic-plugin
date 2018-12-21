@@ -82,7 +82,7 @@
 
         //Promo block components
         'promo_block_page_name'        => 'Страница промо-блока',
-        'promo_block_page_description' => 'Получение данных для страницы промо блока',
+        'promo_block_page_description' => 'Получить данные для страницы промо-блока',
         'promo_block_data_name'        => 'Данные промо-блока',
         'promo_block_data_description' => 'Получить данные промо-блока по ID',
         'promo_block_list_name'        => 'Список промо-блоков',
@@ -98,7 +98,7 @@
 
         //Common components
         'breadcrumbs_name'             => 'Хлебные крошки',
-        'breadcrumbs_description'      => 'Получить данные для формирования хлебных крошек на странице каталога',
+        'breadcrumbs_description'      => 'Получить данные для формирования хлебных крошек каталога',
 
         //Components settings
         'product_list_sorting'         => 'Сортировка по умолчанию',
