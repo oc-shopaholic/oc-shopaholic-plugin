@@ -85,8 +85,8 @@
         'promo_block_page_description' => 'Отримайте дані про сторінку рекламного блоку',
         'promo_block_data_name'        => 'Отримайте дані про сторінку промо блоку',
         'promo_block_data_description' => 'Отримати дані рекламного блоку за ID',
-        'promo_block_list_name'        => 'Список промо блоків',
-        'promo_block_list_description' => 'Отримати список промо блоків',
+        'promo_block_list_name'        => 'Список промо-блоків',
+        'promo_block_list_description' => 'Отримати список промо-блоків',
 
         //Category components
         'category_page_name'           => 'Сторінка категорії',
@@ -118,8 +118,8 @@
         'category'    => 'Управління категоріями',
         'brand'       => 'Управління брендами',
         'product'     => 'Управління товарами',
-        'settings'    => 'Керування налаштуваннями',
-        'promo_block' => 'Управління промо блоками',
+        'settings'    => 'Управління налаштуваннями',
+        'promo_block' => 'Управління промо-блоками',
     ],
     'message'     => [
         'import_additional_category_info' => 'Вкажіть список додаткових категорій продуктів, розділених комами.',
