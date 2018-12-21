@@ -1,7 +1,7 @@
 <?php return [
     'plugin'      => [
         'name'        => 'Shopaholic',
-        'description' => 'Catalog of products for eCommerce',
+        'description' => '🛍️ Бясплатны eCommerce-плагін з вялікім наборам пашырэнняў.',
     ],
     'field'       => [
         'vendor_code'         => 'Артыкул',
@@ -15,7 +15,7 @@
         'additional_category' => 'Дадатковыя катэгорыі',
         'promo_block_type'    => 'Промо-блок со списком товаров',
         'promo_block'         => 'Прома-блок',
-        'category_parent_id'  => 'Category parent ID',
+        'category_parent_id'  => 'ID бацькоўскай катэгорыі',
         'product_id'          => 'ID тавару',
     ],
     'menu'        => [
