@@ -53,7 +53,7 @@
         'export_title' => 'Export products',
     ],
     'offer'       => [
-        'name'         => 'offer',
+        'name'         => 'прапановы',
         'list_title'   => 'Offer list',
         'import_title' => 'Import offers',
         'export_title' => 'Export offers',
@@ -106,7 +106,7 @@
         'sorting_price_desc'           => 'Дарагiя',
         'sorting_price_asc'            => 'Танныя',
         'sorting_new'                  => 'Новыя',
-        'sorting_popularity_desc'      => 'More popular',
+        'sorting_popularity_desc'      => 'Папулярныя',
         'sorting_rating_desc'          => 'Высокі рэйтынг',
         'sorting_rating_asc'           => 'Нізкі рэйтынг',
         'sorting_date_begin_asc'       => 'Дата пачатку (ASC)',
