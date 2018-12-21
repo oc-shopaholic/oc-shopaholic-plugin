@@ -68,15 +68,15 @@
         'product_page_name'            => 'Старонка тавару',
         'product_page_description'     => 'Атрымаць даныя для старонкі тавару',
         'product_data_name'            => 'Дадзеныя тавару',
-        'product_data_description'     => 'Атрымаць дадзеныя тавару па ID',
+        'product_data_description'     => 'Атрымаць даныя тавару па ID',
         'product_list_name'            => 'Спіс тавараў',
         'product_list_description'     => 'Атрымаць спіс тавараў',
 
         //Brand components
         'brand_page_name'              => 'Старонка брэнду',
-        'brand_page_description'       => 'Атрымаць даныя для старонкі брэнда',
+        'brand_page_description'       => 'Атрымаць даныя для старонкі брэнду',
         'brand_data_name'              => 'Дадзеныя брэнду',
-        'brand_data_description'       => 'Атрымаць дадзеныя брэнда па ID',
+        'brand_data_description'       => 'Атрымаць дадзеныя брэнду па ID',
         'brand_list_name'              => 'Спіс брэндаў',
         'brand_list_description'       => 'Атрымаць спіс брэндаў',
 
@@ -84,7 +84,7 @@
         'promo_block_page_name'        => 'Страница промо-блока',
         'promo_block_page_description' => 'Атрымаць даныя для старонкі прома-блоку',
         'promo_block_data_name'        => 'Дадзеныя прома-блоку',
-        'promo_block_data_description' => 'Получить данные промо-блока по ID',
+        'promo_block_data_description' => 'Атрымаць даныя прома-блоку па ID',
         'promo_block_list_name'        => 'Спіс прома-блокаў',
         'promo_block_list_description' => 'Атрымаць спіс прома-блокаў',
 
