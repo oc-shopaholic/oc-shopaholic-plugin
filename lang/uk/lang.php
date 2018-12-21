@@ -59,8 +59,8 @@
         'export_title' => 'Експорт пропозицій',
     ],
     'promo_block' => [
-        'name'       => 'промо блок',
-        'list_title' => 'Список промо блоків',
+        'name'       => 'промо-блоку',
+        'list_title' => 'Список промо-блоків',
     ],
     'component'   => [
 
@@ -81,7 +81,7 @@
         'brand_list_description'       => 'Отримати список брендів',
 
         //Promo block components
-        'promo_block_page_name'        => 'Сторінка промо блоку',
+        'promo_block_page_name'        => 'Сторінка промо-блоку',
         'promo_block_page_description' => 'Отримайте дані про сторінку рекламного блоку',
         'promo_block_data_name'        => 'Отримайте дані про сторінку промо блоку',
         'promo_block_data_description' => 'Отримати дані рекламного блоку за ID',
