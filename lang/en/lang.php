@@ -11,6 +11,7 @@
         'brand'               => 'Brand',
         'offer'               => 'Offers',
         'currency'            => 'Currency',
+        'iso_currency'        => 'Currency code',
         'check_offer_active'  => 'When you receive a list of active products, check for active offers',
         'additional_category' => 'Additional categories',
         'promo_block_type'    => 'Promo block with product list',

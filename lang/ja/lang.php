@@ -11,6 +11,7 @@
         'brand'               => 'ブランド',
         'offer'               => 'オファー',
         'currency'            => '通貨',
+        'iso_currency'        => '通貨コード',
         'check_offer_active'  => '有効な製品のリストを取得する際、有効なオファーを持つものに限定する',
         'additional_category' => '追加のカテゴリ',
         'promo_block_type'    => '製品リストを含む販促ブロック',

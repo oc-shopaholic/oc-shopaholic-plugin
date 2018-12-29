@@ -11,6 +11,7 @@
         'brand'               => 'Marke',
         'offer'               => 'Angebote',
         'currency'            => 'Währung',
+        'iso_currency'        => 'Währungscode',
         'check_offer_active'  => 'Wenn Sie eine Liste aktiver Produkte erhalten, suchen Sie nach aktiven Angeboten.',
         'additional_category' => 'Weitere Kategorien',
         'promo_block_type'    => 'Werbeblock mit Produktliste',

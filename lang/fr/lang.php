@@ -11,6 +11,7 @@
         'brand'               => 'Marque',
         'offer'               => 'Offres',
         'currency'            => 'Devise',
+        'iso_currency'        => 'Code de devise',
         'check_offer_active'  => 'Lorsque vous recevez une liste de produits actifs, recherchez des offres actives',
         'additional_category' => 'Catégories supplémentaires',
     ],

@@ -33,6 +33,7 @@ use Lovata\Shopaholic\Classes\Helper\CurrencyHelper;
  * @property float       $price_value
  * @property float       $old_price_value
  * @property string      $currency
+ * @property string      $iso_currency
  *
  * @property int         $quantity
  *
@@ -93,6 +94,15 @@ class OfferItem extends ElementItem
     }
 
     /**
+     * Get iso_currency value
+     * @return null|string
+     */
+    protected function getIsoCurrencyAttribute()
+    {
+        return CurrencyHelper::instance()->getIsoActive();
+    }
+
+    /**
      * Set element data from model object
      *
      * @return array
@@ -100,7 +110,7 @@ class OfferItem extends ElementItem
     protected function getElementData()
     {
         $arResult = [
-            'trashed'       => $this->obElement->trashed(),
+            'trashed' => $this->obElement->trashed(),
         ];
 
         return $arResult;

@@ -9,3 +9,7 @@ tabs:
             tab: lovata.toolbox::lang.tab.prices_format
             span: left
             label: lovata.shopaholic::lang.field.currency
+        iso_currency:
+            tab: lovata.toolbox::lang.tab.prices_format
+            span: left
+            label: lovata.shopaholic::lang.field.iso_currency
