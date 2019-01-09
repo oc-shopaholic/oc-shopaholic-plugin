@@ -1,7 +1,7 @@
 <?php return [
     'plugin'      => [
         'name'        => 'Shopaholic',
-        'description' => '🛍️ Бясплатны eCommerce-плагін з вялікім наборам пашырэнняў.',
+        'description' => '🛍️ Free eCommerce plugin with a large set of extensions.',
     ],
     'field'       => [
         'vendor_code'         => 'Артыкул',
@@ -15,7 +15,7 @@
         'additional_category' => 'Дадатковыя катэгорыі',
         'promo_block_type'    => 'Промо-блок со списком товаров',
         'promo_block'         => 'Прома-блок',
-        'category_parent_id'  => 'ID бацькоўскай катэгорыі',
+        'category_parent_id'  => 'Parent category ID',
         'product_id'          => 'ID тавару',
     ],
     'menu'        => [
@@ -23,14 +23,14 @@
         'categories'          => 'Катэгорыі',
         'product'             => 'Тавары',
         'brands'              => 'Брэнды',
-        'shop_catalog'        => 'Каталог тавараў',
-        'shop_category'       => 'Катэгорыя тавараў',
+        'shop_catalog'        => 'Product catalog',
+        'shop_category'       => 'Product category',
         'all_shop_categories' => 'Усе катэгорыі тавараў',
         'promo_block'         => 'Прома-блокі',
-        'promo'               => 'Прома-акцыі',
+        'promo'               => 'Promotions',
     ],
     'tab'         => [
-        'offer'       => 'Гандлёвыя прапановы',
+        'offer'       => 'Trade offers',
         'price'       => 'Цэны',
         'permissions' => 'Shopaholic',
     ],
@@ -106,7 +106,7 @@
         'sorting_price_desc'           => 'Дарагiя',
         'sorting_price_asc'            => 'Танныя',
         'sorting_new'                  => 'Новыя',
-        'sorting_popularity_desc'      => 'Папулярныя',
+        'sorting_popularity_desc'      => 'Popular',
         'sorting_rating_desc'          => 'Высокі рэйтынг',
         'sorting_rating_asc'           => 'Нізкі рэйтынг',
         'sorting_date_begin_asc'       => 'Дата пачатку (ASC)',
@@ -122,7 +122,7 @@
         'promo_block' => 'Кіраванне прома-блокамі',
     ],
     'message'     => [
-        'import_additional_category_info' => 'Пазначце праз коску спіс дадатковых катэгорый тавараў.',
+        'import_additional_category_info' => 'Set the list of additional product categories separated by commas.',
     ],
     'button'      => [
         'import_offer_button' => 'Імпартаваць прапановы з CSV',
