@@ -1,7 +1,7 @@
 <?php return [
     'plugin'      => [
         'name'        => 'Shopaholic',
-        'description' => '🛍️ Free eCommerce plugin with a large set of extensions.',
+        'description' => '🛍️ Бесплатный eCommerce-плагин с большим набором расширений.',
     ],
     'field'       => [
         'vendor_code'         => 'Артикул',
@@ -15,7 +15,7 @@
         'additional_category' => 'Дополнительные категории',
         'promo_block_type'    => 'Промо-блок со списком товаров',
         'promo_block'         => 'Промо-блок',
-        'category_parent_id'  => 'Parent category ID',
+        'category_parent_id'  => 'ID родительской категории',
         'product_id'          => 'ID товара',
     ],
     'menu'        => [
@@ -23,14 +23,14 @@
         'categories'          => 'Категории',
         'product'             => 'Товары',
         'brands'              => 'Бренды',
-        'shop_catalog'        => 'Product catalog',
-        'shop_category'       => 'Product category',
+        'shop_catalog'        => 'Каталог товаров',
+        'shop_category'       => 'Категория товаров',
         'all_shop_categories' => 'Все категории товаров',
         'promo_block'         => 'Промо-блоки',
-        'promo'               => 'Promotions',
+        'promo'               => 'Промо-акции',
     ],
     'tab'         => [
-        'offer'       => 'Trade offers',
+        'offer'       => 'Торговые предложения',
         'price'       => 'Цены',
         'permissions' => 'Shopaholic',
     ],
@@ -106,7 +106,7 @@
         'sorting_price_desc'           => 'Дорогие',
         'sorting_price_asc'            => 'Дешёвые',
         'sorting_new'                  => 'Новые',
-        'sorting_popularity_desc'      => 'Popular',
+        'sorting_popularity_desc'      => 'Популярные',
         'sorting_rating_desc'          => 'Высокий рейтинг',
         'sorting_rating_asc'           => 'Низкий рейтинг',
         'sorting_date_begin_asc'       => 'Дата начала (ASC)',
@@ -122,7 +122,7 @@
         'promo_block' => 'Управление промо-блоками',
     ],
     'message'     => [
-        'import_additional_category_info' => 'Set the list of additional product categories separated by commas.',
+        'import_additional_category_info' => 'Укажите через запятую список дополнительных категорий товаров.',
     ],
     'button'      => [
         'import_offer_button' => 'Импортировать предложения из CSV',
