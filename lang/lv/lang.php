@@ -1,7 +1,7 @@
 <?php return [
     'plugin'      => [
         'name'        => 'Shopaholic',
-        'description' => 'Catalog of products for eCommerce',
+        'description' => '🛍️ Free eCommerce plugin with a large set of extensions.',
     ],
     'field'       => [
         'vendor_code'         => 'Vendor code',
@@ -15,7 +15,7 @@
         'additional_category' => 'Additional categories',
         'promo_block_type'    => 'Promo block with product list',
         'promo_block'         => 'Promo block',
-        'category_parent_id'  => 'Category parent ID',
+        'category_parent_id'  => 'Parent category ID',
         'product_id'          => 'Product ID',
     ],
     'menu'        => [
@@ -23,14 +23,14 @@
         'categories'          => 'Categories',
         'product'             => 'Products',
         'brands'              => 'Brands',
-        'shop_catalog'        => 'Catalog of products',
-        'shop_category'       => 'Category of products',
+        'shop_catalog'        => 'Product catalog',
+        'shop_category'       => 'Product category',
         'all_shop_categories' => 'All categories of products',
         'promo_block'         => 'Promo blocks',
-        'promo'               => 'Promo',
+        'promo'               => 'Promotions',
     ],
     'tab'         => [
-        'offer'       => 'Offers',
+        'offer'       => 'Trade offers',
         'price'       => 'Prices',
         'permissions' => 'Shopaholic',
     ],
@@ -106,7 +106,7 @@
         'sorting_price_desc'           => 'Expensive',
         'sorting_price_asc'            => 'Cheap',
         'sorting_new'                  => 'New',
-        'sorting_popularity_desc'      => 'More popular',
+        'sorting_popularity_desc'      => 'Popular',
         'sorting_rating_desc'          => 'High rating',
         'sorting_rating_asc'           => 'Low rating',
         'sorting_date_begin_asc'       => 'Date begin (ASC)',
@@ -122,7 +122,7 @@
         'promo_block' => 'Manage promo blocks',
     ],
     'message'     => [
-        'import_additional_category_info' => 'Set list of additional product categories, separated by commas.',
+        'import_additional_category_info' => 'Set the list of additional product categories separated by commas.',
     ],
     'button'      => [
         'import_offer_button' => 'Import offers from CSV',
