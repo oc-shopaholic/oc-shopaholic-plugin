@@ -31,7 +31,7 @@
     ],
     'tab'         => [
         'offer'       => 'Trade offers',
-        'price'       => 'Prices',
+        'price'       => 'Preise',
         'permissions' => 'Shopaholic',
     ],
     'category'    => [
@@ -67,13 +67,13 @@
         //Product components
         'product_page_name'            => 'Product page',
         'product_page_description'     => 'Get data for product page',
-        'product_data_name'            => 'Product data',
+        'product_data_name'            => 'Produktdaten',
         'product_data_description'     => 'Get product data by ID',
-        'product_list_name'            => 'Product list',
+        'product_list_name'            => 'Produktliste',
         'product_list_description'     => 'Get product list',
 
         //Brand components
-        'brand_page_name'              => 'Brand page',
+        'brand_page_name'              => 'Markenseite',
         'brand_page_description'       => 'Get data for brand page',
         'brand_data_name'              => 'Brand data',
         'brand_data_description'       => 'Get brand data by ID',
