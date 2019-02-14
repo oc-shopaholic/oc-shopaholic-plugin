@@ -1,7 +1,7 @@
 <?php return [
     'plugin'      => [
         'name'        => 'Shopaholic',
-        'description' => '🛍️ Free eCommerce plugin with a large set of extensions.',
+        'description' => '🛍️ Kostenlose E-Commerce-Plugin mit einer großen Reihe von Erweiterungen.',
     ],
     'field'       => [
         'vendor_code'         => 'Vendor code',
@@ -22,9 +22,9 @@
         'main'                => 'Katalog',
         'categories'          => 'Categories',
         'product'             => 'Produkte',
-        'brands'              => 'Brands',
-        'shop_catalog'        => 'Product catalog',
-        'shop_category'       => 'Product category',
+        'brands'              => 'Marken',
+        'shop_catalog'        => 'Produktkatalog',
+        'shop_category'       => 'Produktkategorie',
         'all_shop_categories' => 'All categories of products',
         'promo_block'         => 'Promo blocks',
         'promo'               => 'Promotions',
@@ -106,7 +106,7 @@
         'sorting_price_desc'           => 'Expensive',
         'sorting_price_asc'            => 'Cheap',
         'sorting_new'                  => 'New',
-        'sorting_popularity_desc'      => 'Popular',
+        'sorting_popularity_desc'      => 'Populär',
         'sorting_rating_desc'          => 'High rating',
         'sorting_rating_asc'           => 'Low rating',
         'sorting_date_begin_asc'       => 'Date begin (ASC)',
