@@ -15,8 +15,6 @@ use Lovata\Shopaholic\Classes\Store\ProductListStore;
  * @package Lovata\Shopaholic\Classes\Collection
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  *
- * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/ProductCollection
- *
  * Filter for Shopaholic plugin
  * @method $this filterByPrice(float $fStartPrice, float $fStopPrice)
  * @method $this filterByBrandList(array $arBrandIDList)
@@ -56,15 +54,12 @@ class ProductCollection extends ElementCollection
     const ITEM_CLASS = ProductItem::class;
 
     /**
-     * Sort list by
-     * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testSortingByID()
-     * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testSortingByPrice()
+     * Apply sorting
      * @param string $sSorting
      * @return $this
      */
     public function sort($sSorting)
     {
-        //Get sorting list
         $arResultIDList = ProductListStore::instance()->sorting->get($sSorting);
 
         return $this->applySorting($arResultIDList);
@@ -72,8 +67,6 @@ class ProductCollection extends ElementCollection
 
     /**
      * Apply filter by active field
-     * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testActiveList()
-     * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testActiveListWithCheckingOffer()
      * @return $this
      */
     public function active()
@@ -85,7 +78,6 @@ class ProductCollection extends ElementCollection
 
     /**
      * Filter product list by category ID
-     * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testCategoryFilter()
      * @param int|array $arCategoryIDList
      * @param bool $bWithChildren
      * @return $this
@@ -108,8 +100,7 @@ class ProductCollection extends ElementCollection
     }
 
     /**
-     * Filter product list by category ID
-     * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testBrandFilter()
+     * Filter product list by brand ID
      * @param int $iBrandID
      * @return $this
      */
@@ -122,7 +113,6 @@ class ProductCollection extends ElementCollection
 
     /**
      * Filter product list by promo block ID + different extensions
-     * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testPromoFilter()
      * @param int $iPromoBlockID
      * @return $this
      */
@@ -152,7 +142,6 @@ class ProductCollection extends ElementCollection
 
     /**
      * Filter product list by promo block ID
-     * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testPromoBlockFilter()
      * @param int $iPromoBlockID
      * @return $this
      */
@@ -165,13 +154,19 @@ class ProductCollection extends ElementCollection
 
     /**
      * Get offer with min price
-     * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testOfferMinPriceMethod()
+     * @param string $sPriceTypeCode
      * @return OfferItem
      */
-    public function getOfferMinPrice()
+    public function getOfferMinPrice($sPriceTypeCode = null)
     {
         $obProductList = clone $this;
-        $obProductList->sort(ProductListStore::SORT_PRICE_ASC);
+
+        $sSorting = ProductListStore::SORT_PRICE_ASC;
+        if (!empty($sPriceTypeCode)) {
+            $sSorting .= '|'.$sPriceTypeCode;
+        }
+
+        $obProductList->sort($sSorting);
 
         //Get product with min price
         /** @var \Lovata\Shopaholic\Classes\Item\ProductItem $obProductItem */
@@ -187,21 +182,32 @@ class ProductCollection extends ElementCollection
             return OfferItem::make(null);
         }
 
+        $sSorting = OfferListStore::SORT_PRICE_ASC;
+        if (!empty($sPriceTypeCode)) {
+            $sSorting .= '|'.$sPriceTypeCode;
+        }
+
         /** @var OfferItem $obOfferItem */
-        $obOfferItem = $obOfferCollection->sort(OfferListStore::SORT_PRICE_ASC)->first();
+        $obOfferItem = $obOfferCollection->sort($sSorting)->first();
 
         return $obOfferItem;
     }
 
     /**
      * Get offer with max price
-     * @see \Lovata\Shopaholic\Tests\Unit\Collection\ProductCollectionTest::testOfferMaxPriceMethod()
+     * @param string $sPriceTypeCode
      * @return OfferItem
      */
-    public function getOfferMaxPrice()
+    public function getOfferMaxPrice($sPriceTypeCode = null)
     {
         $obProductList = clone $this;
-        $obProductList->sort(ProductListStore::SORT_PRICE_ASC);
+
+        $sSorting = ProductListStore::SORT_PRICE_ASC;
+        if (!empty($sPriceTypeCode)) {
+            $sSorting .= '|'.$sPriceTypeCode;
+        }
+
+        $obProductList->sort($sSorting);
 
         //Get product with min price
         /** @var \Lovata\Shopaholic\Classes\Item\ProductItem $obProductItem */
@@ -217,8 +223,13 @@ class ProductCollection extends ElementCollection
             return OfferItem::make(null);
         }
 
+        $sSorting = OfferListStore::SORT_PRICE_ASC;
+        if (!empty($sPriceTypeCode)) {
+            $sSorting .= '|'.$sPriceTypeCode;
+        }
+
         /** @var OfferItem $obOfferItem */
-        $obOfferItem = $obOfferCollection->sort(OfferListStore::SORT_PRICE_ASC)->last();
+        $obOfferItem = $obOfferCollection->sort($sSorting)->last();
 
         return $obOfferItem;
     }

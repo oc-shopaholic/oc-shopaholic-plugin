@@ -1,0 +1,43 @@
+columns:
+    name:
+        label: 'lovata.toolbox::lang.field.name'
+        type: text
+        searchable: true
+        sortable: true
+    active:
+        label: 'lovata.toolbox::lang.field.active'
+        type: switch
+        searchable: false
+        sortable: true
+    is_global:
+        label: 'lovata.shopaholic::lang.field.tax_is_global'
+        type: switch
+        searchable: false
+        sortable: true
+    percent:
+        label: 'lovata.shopaholic::lang.field.tax_percent'
+        type: text
+        searchable: true
+        sortable: true
+    id:
+        label: 'lovata.toolbox::lang.field.id'
+        type: text
+        searchable: true
+        sortable: true
+        width: 100px
+    sort_order:
+        label: 'lovata.toolbox::lang.field.sort_order'
+        type: text
+        searchable: false
+        sortable: true
+        width: 150px
+    created_at:
+        label: 'lovata.toolbox::lang.field.created_at'
+        type: timetense
+        sortable: true
+        invisible: true
+    updated_at:
+        label: 'lovata.toolbox::lang.field.updated_at'
+        type: timetense
+        sortable: true
+        invisible: true

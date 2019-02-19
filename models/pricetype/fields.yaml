@@ -1,0 +1,21 @@
+fields:
+    active:
+        label: 'lovata.toolbox::lang.field.active'
+        span: left
+        default: 1
+        type: switch
+    name:
+        label: 'lovata.toolbox::lang.field.name'
+        span: left
+        required: 1
+        type: text
+    code:
+        label: 'lovata.toolbox::lang.field.code'
+        span: left
+        type: text
+        tab: 'lovata.toolbox::lang.tab.settings'
+    external_id:
+        label: 'lovata.toolbox::lang.field.external_id'
+        span: left
+        type: text
+        tab: 'lovata.toolbox::lang.tab.settings'

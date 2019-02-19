@@ -1,0 +1,54 @@
+category:
+    label: 'lovata.shopaholic::lang.category.name'
+    manage:
+        list: $/lovata/shopaholic/models/category/columns.yaml
+        showSearch: true
+        showSorting: true
+        recordsPerPage: 10
+    view:
+        list: $/lovata/shopaholic/models/category/columns.yaml
+        recordUrl: lovata/shopaholic/categories/update/:id
+        toolbarButtons: 'add|remove'
+        showSearch: true
+        showSorting: true
+        recordsPerPage: 10
+product:
+    label: 'lovata.shopaholic::lang.product.name'
+    manage:
+        list: $/lovata/shopaholic/models/product/columns.yaml
+        showSearch: true
+        showSorting: true
+        recordsPerPage: 10
+    view:
+        list: $/lovata/shopaholic/models/product/columns.yaml
+        recordUrl: lovata/shopaholic/products/update/:id
+        toolbarButtons: 'add|remove'
+        showSearch: true
+        showSorting: true
+        recordsPerPage: 10
+country:
+    label: 'lovata.shopaholic::lang.country.name'
+    manage:
+        list: $/rainlab/location/models/country/columns.yaml
+        showSearch: true
+        showSorting: true
+        recordsPerPage: 10
+    view:
+        list: $/rainlab/location/models/country/columns.yaml
+        toolbarButtons: 'add|remove'
+        showSearch: true
+        showSorting: true
+        recordsPerPage: 10
+state:
+    label: 'lovata.shopaholic::lang.state.name'
+    manage:
+        list: $/rainlab/location/models/state/columns.yaml
+        showSearch: true
+        showSorting: true
+        recordsPerPage: 10
+    view:
+        list: $/rainlab/location/models/state/columns.yaml
+        toolbarButtons: 'add|remove'
+        showSearch: true
+        showSorting: true
+        recordsPerPage: 10

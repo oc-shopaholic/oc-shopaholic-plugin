@@ -10,9 +10,6 @@ use Lovata\Shopaholic\Classes\Store\OfferListStore;
  * @package Lovata\Shopaholic\Classes\Collection
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  *
- * @see \Lovata\Shopaholic\Tests\Unit\Collection\OfferCollectionTest
- * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/OfferCollection
- *
  * Filter for Shopaholic plugin
  * @method $this filterByPrice(float $fStartPrice, float $fStopPrice)
  * @method $this filterByDiscount()
@@ -24,14 +21,12 @@ class OfferCollection extends ElementCollection
     const ITEM_CLASS = OfferItem::class;
 
     /**
-     * Sort list by
-     * @see \Lovata\Shopaholic\Tests\Unit\Collection\OfferCollectionTest::testSortingByPrice()
+     * Apply sorting
      * @param string $sSorting
      * @return $this
      */
     public function sort($sSorting)
     {
-        //Get sorting list
         $arResultIDList = OfferListStore::instance()->sorting->get($sSorting);
 
         return $this->applySorting($arResultIDList);
