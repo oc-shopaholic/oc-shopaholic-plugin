@@ -17,22 +17,38 @@
         'promo_block'         => 'Promo block',
         'category_parent_id'  => 'Parent category ID',
         'product_id'          => 'Product ID',
+        'rate'                => 'Rate',
+        'tax_is_global'       => 'Tax will apply to all products',
+        'tax_percent'         => 'Tax percent',
+        'countries'           => 'Countries',
+        'states'              => 'States',
+        'main_price_type'     => 'Main price',
     ],
     'menu'        => [
-        'main'                => 'Catalog',
-        'categories'          => 'Categories',
-        'product'             => 'Products',
-        'brands'              => 'Brands',
-        'shop_catalog'        => 'Product catalog',
-        'shop_category'       => 'Product category',
-        'all_shop_categories' => 'All categories of products',
-        'promo_block'         => 'Promo blocks',
-        'promo'               => 'Promotions',
+        'main'                      => 'Catalog',
+        'categories'                => 'Categories',
+        'product'                   => 'Products',
+        'brands'                    => 'Brands',
+        'shop_catalog'              => 'Product catalog',
+        'shop_category'             => 'Product category',
+        'all_shop_categories'       => 'All categories of products',
+        'promo_block'               => 'Promo blocks',
+        'promo'                     => 'Promotions',
+        'price_type'                => 'Price types',
+        'price_type_description'    => 'Manage price types',
+        'currency'                  => 'Currency',
+        'currency_description'      => 'Manage currencies',
+        'tax'                       => 'Taxes',
+        'tax_description'           => 'Manage taxes',
+        'configuration'             => 'Catalog settings',
+        'main_settings'             => 'Basic settings',
+        'main_settings_description' => 'Basic settings of your catalog',
     ],
     'tab'         => [
         'offer'       => 'Trade offers',
         'price'       => 'Prices',
         'permissions' => 'Shopaholic',
+        'settings'    => 'Catalog configuration',
     ],
     'category'    => [
         'name'         => 'category',
@@ -61,6 +77,26 @@
     'promo_block' => [
         'name'       => 'promo block',
         'list_title' => 'Promo block list',
+    ],
+    'price_type'  => [
+        'name'       => 'price type',
+        'list_title' => 'Price type list',
+    ],
+    'currency'    => [
+        'name'       => 'currency',
+        'list_title' => 'Currency list',
+    ],
+    'tax'         => [
+        'name'       => 'tax',
+        'list_title' => 'Tax list',
+    ],
+    'country'     => [
+        'name'       => 'country',
+        'list_title' => 'Country list',
+    ],
+    'state'       => [
+        'name'       => 'state',
+        'list_title' => 'State list',
     ],
     'component'   => [
 
@@ -96,6 +132,10 @@
         'category_list_name'           => 'Category list',
         'category_list_description'    => 'Get category tree',
 
+        //Currency components
+        'currency_list_name'           => 'Currency list',
+        'currency_list_description'    => '',
+
         //Common components
         'breadcrumbs_name'             => 'Breadcrumbs',
         'breadcrumbs_description'      => 'Get data for catalog breadcrumbs',
@@ -104,7 +144,7 @@
         'product_list_sorting'         => 'Default sorting',
         'sorting_no'                   => 'Without sorting',
         'sorting_price_desc'           => 'Expensive',
-        'sorting_price_asc'            => 'Cheap',
+        'sorting_price_asc'            => 'Baratos',
         'sorting_new'                  => 'New',
         'sorting_popularity_desc'      => 'Popular',
         'sorting_rating_desc'          => 'High rating',
@@ -120,6 +160,9 @@
         'product'     => 'Manage products',
         'settings'    => 'Manage settings',
         'promo_block' => 'Manage promo blocks',
+        'currency'    => 'Manage currencies',
+        'tax'         => 'Manage taxes',
+        'price_type'  => 'Manage price types',
     ],
     'message'     => [
         'import_additional_category_info' => 'Set the list of additional product categories separated by commas.',
