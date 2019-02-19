@@ -23,6 +23,7 @@
         'countries'           => 'Countries',
         'states'              => 'States',
         'main_price_type'     => 'Main price',
+        'price_include_tax'   => 'Price includes taxes',
     ],
     'menu'        => [
         'main'                      => 'Catalog',
