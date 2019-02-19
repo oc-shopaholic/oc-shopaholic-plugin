@@ -4,6 +4,9 @@ use Event;
 use Backend;
 use System\Classes\PluginBase;
 
+//Console command
+use Lovata\Shopaholic\Classes\Console\CheckTableIntegrity;
+
 //Event list
 use Lovata\Shopaholic\Classes\Event\ExtendMenuHandler;
 //Brand events
@@ -22,6 +25,10 @@ use Lovata\Shopaholic\Classes\Event\Product\ProductRelationHandler;
 //Promo block events
 use Lovata\Shopaholic\Classes\Event\PromoBlock\PromoBlockModelHandler;
 use Lovata\Shopaholic\Classes\Event\PromoBlock\PromoBlockRelationHandler;
+//Tax events
+use Lovata\Shopaholic\Classes\Event\Tax\TaxModelHandler;
+use Lovata\Shopaholic\Classes\Event\Tax\TaxRelationHandler;
+use Lovata\Shopaholic\Classes\Event\Tax\ExtendTaxFieldsHandler;
 
 /**
  * Class Plugin
@@ -32,6 +39,14 @@ class Plugin extends PluginBase
 {
     /** @var array Plugin dependencies */
     public $require = ['Lovata.Toolbox'];
+
+    /**
+     * Register artisan command
+     */
+    public function register()
+    {
+        $this->registerConsoleCommand('shopaholic:check.table.integrity', CheckTableIntegrity::class);
+    }
 
     /**
      * @return array
@@ -139,5 +154,9 @@ class Plugin extends PluginBase
         //Promo block events
         Event::subscribe(PromoBlockModelHandler::class);
         Event::subscribe(PromoBlockRelationHandler::class);
+        //Tax events
+        Event::subscribe(TaxModelHandler::class);
+        Event::subscribe(TaxRelationHandler::class);
+        Event::subscribe(ExtendTaxFieldsHandler::class);
     }
 }

@@ -22,19 +22,25 @@ use Lovata\Toolbox\Traits\Helpers\TraitCached;
  * @mixin \October\Rain\Database\Builder
  * @mixin \Eloquent
  *
- * @property                                    $id
- * @property bool                               $active
- * @property bool                               $is_global
- * @property string                             $name
- * @property string                             $description
- * @property float                              $percent
- * @property int                                $sort_order
- * @property \October\Rain\Argon\Argon          $created_at
- * @property \October\Rain\Argon\Argon          $updated_at
- * @property \October\Rain\Argon\Argon          $deleted_at
+ * @property                                                                      $id
+ * @property bool                                                                 $active
+ * @property bool                                                                 $is_global
+ * @property string                                                               $name
+ * @property string                                                               $description
+ * @property float                                                                $percent
+ * @property int                                                                  $sort_order
+ * @property \October\Rain\Argon\Argon                                            $created_at
+ * @property \October\Rain\Argon\Argon                                            $updated_at
+ * @property \October\Rain\Argon\Argon                                            $deleted_at
  *
- * @property \Lovata\Shopaholic\Models\Currency $currency
- * @method \October\Rain\Database\Relations\BelongsTo|Currency currency()
+ * @property \October\Rain\Database\Collection|Category[]                         $category
+ * @method static \October\Rain\Database\Relations\BelongsToMany|Category category()
+ * @property \October\Rain\Database\Collection|Product[]                          $product
+ * @method static \October\Rain\Database\Relations\BelongsToMany|Product product()
+ * @property \October\Rain\Database\Collection|\RainLab\Location\Models\Country[] $country
+ * @method static \October\Rain\Database\Relations\BelongsToMany|\RainLab\Location\Models\Country country()
+ * @property \October\Rain\Database\Collection|\RainLab\Location\Models\State[]   $state
+ * @method static \October\Rain\Database\Relations\BelongsToMany|\RainLab\Location\Models\State state()
  */
 class Tax extends Model
 {

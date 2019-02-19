@@ -31,7 +31,7 @@ class Taxes extends Controller
     {
         parent::__construct();
         BackendMenu::setContext('October.System', 'system', 'settings');
-        SettingsManager::setContext('Lovata.Shopaholic', 'shopaholic-menu-currency');
+        SettingsManager::setContext('Lovata.Shopaholic', 'shopaholic-menu-tax');
     }
 
     /**
@@ -42,7 +42,7 @@ class Taxes extends Controller
     public function onReorder()
     {
         $obResult = parent::onReorder();
-        Event::fire('shopaholic.currency.update.sorting');
+        Event::fire('shopaholic.tax.update.sorting');
 
         return $obResult;
     }
