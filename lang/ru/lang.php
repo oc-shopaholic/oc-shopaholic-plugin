@@ -17,22 +17,38 @@
         'promo_block'         => 'Промо-блок',
         'category_parent_id'  => 'ID родительской категории',
         'product_id'          => 'ID товара',
+        'rate'                => 'Rate',
+        'tax_is_global'       => 'Tax will apply to all products',
+        'tax_percent'         => 'Tax percent',
+        'countries'           => 'Countries',
+        'states'              => 'States',
+        'main_price_type'     => 'Main price',
     ],
     'menu'        => [
-        'main'                => 'Каталог',
-        'categories'          => 'Категории',
-        'product'             => 'Товары',
-        'brands'              => 'Бренды',
-        'shop_catalog'        => 'Каталог товаров',
-        'shop_category'       => 'Категория товаров',
-        'all_shop_categories' => 'Все категории товаров',
-        'promo_block'         => 'Промо-блоки',
-        'promo'               => 'Промо-акции',
+        'main'                      => 'Каталог',
+        'categories'                => 'Категории',
+        'product'                   => 'Товары',
+        'brands'                    => 'Бренды',
+        'shop_catalog'              => 'Каталог товаров',
+        'shop_category'             => 'Категория товаров',
+        'all_shop_categories'       => 'Все категории товаров',
+        'promo_block'               => 'Промо-блоки',
+        'promo'                     => 'Промо-акции',
+        'price_type'                => 'Price types',
+        'price_type_description'    => 'Manage price types',
+        'currency'                  => 'Currency',
+        'currency_description'      => 'Manage currencies',
+        'tax'                       => 'Taxes',
+        'tax_description'           => 'Manage taxes',
+        'configuration'             => 'Catalog settings',
+        'main_settings'             => 'Basic settings',
+        'main_settings_description' => 'Basic settings of your catalog',
     ],
     'tab'         => [
         'offer'       => 'Торговые предложения',
         'price'       => 'Цены',
         'permissions' => 'Shopaholic',
+        'settings'    => 'Catalog configuration',
     ],
     'category'    => [
         'name'         => 'категории',
@@ -61,6 +77,26 @@
     'promo_block' => [
         'name'       => 'промо-блока',
         'list_title' => 'Список промо-блоков',
+    ],
+    'price_type'  => [
+        'name'       => 'price type',
+        'list_title' => 'Price type list',
+    ],
+    'currency'    => [
+        'name'       => 'currency',
+        'list_title' => 'Currency list',
+    ],
+    'tax'         => [
+        'name'       => 'tax',
+        'list_title' => 'Tax list',
+    ],
+    'country'     => [
+        'name'       => 'country',
+        'list_title' => 'Country list',
+    ],
+    'state'       => [
+        'name'       => 'state',
+        'list_title' => 'State list',
     ],
     'component'   => [
 
@@ -96,6 +132,10 @@
         'category_list_name'           => 'Список категорий',
         'category_list_description'    => 'Получить дерево категорий',
 
+        //Currency components
+        'currency_list_name'           => 'Currency list',
+        'currency_list_description'    => '',
+
         //Common components
         'breadcrumbs_name'             => 'Хлебные крошки',
         'breadcrumbs_description'      => 'Получить данные для формирования хлебных крошек каталога',
@@ -120,6 +160,9 @@
         'product'     => 'Управление товарами',
         'settings'    => 'Управление настройками',
         'promo_block' => 'Управление промо-блоками',
+        'currency'    => 'Manage currencies',
+        'tax'         => 'Manage taxes',
+        'price_type'  => 'Manage price types',
     ],
     'message'     => [
         'import_additional_category_info' => 'Укажите через запятую список дополнительных категорий товаров.',
