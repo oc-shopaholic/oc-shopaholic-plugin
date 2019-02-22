@@ -50,6 +50,7 @@
         'price'       => 'Цены',
         'permissions' => 'Shopaholic',
         'settings'    => 'Catalog configuration',
+        'taxes'       => 'Taxes',
     ],
     'category'    => [
         'name'         => 'категории',
