@@ -1,5 +1,6 @@
 <?php namespace Lovata\Shopaholic\Classes\Item;
 
+use Lovata\Toolbox\Classes\Helper\PriceHelper;
 use Lovata\Toolbox\Classes\Item\ElementItem;
 use Lovata\Toolbox\Traits\Helpers\PriceHelperTrait;
 
@@ -35,11 +36,17 @@ use Lovata\Shopaholic\Classes\Helper\CurrencyHelper;
  * @property string                                                                                                                      $currency_code
  *
  * @property string                                                                                                                      $tax_price
+ * @property string                                                                                                                      $tax_old_price
  * @property string                                                                                                                      $price_with_tax
+ * @property string                                                                                                                      $old_price_with_tax
  * @property string                                                                                                                      $price_without_tax
+ * @property string                                                                                                                      $old_price_without_tax
  * @property float                                                                                                                       $tax_price_value
- * @property float                                                                                                                       $price_with_value
- * @property float                                                                                                                       $price_without_value
+ * @property float                                                                                                                       $tax_old_price_value
+ * @property float                                                                                                                       $price_with_tax_value
+ * @property float                                                                                                                       $old_price_with_tax_value
+ * @property float                                                                                                                       $price_without_tax_value
+ * @property float                                                                                                                       $old_price_without_tax_value
  * @property float                                                                                                                       $tax_percent
  * @property \Lovata\Shopaholic\Classes\Collection\TaxCollection|\Lovata\Shopaholic\Classes\Item\TaxItem[]                               $tax_list
  *
@@ -73,11 +80,15 @@ class OfferItem extends ElementItem
         ],
     ];
 
-    public $arPriceField = ['price',
-                            'old_price',
-                            'tax_price',
-                            'price_with_tax',
-                            'price_without_tax',
+    public $arPriceField = [
+        'price',
+        'old_price',
+        'tax_price',
+        'tax_old_price',
+        'price_with_tax',
+        'old_price_with_tax',
+        'price_without_tax',
+        'old_price_without_tax',
     ];
 
     protected $iActivePriceType = null;
@@ -139,6 +150,14 @@ class OfferItem extends ElementItem
     }
 
     /**
+     * Set element object
+     */
+    protected function setElementObject()
+    {
+        $this->obElement = Offer::withTrashed()->with('main_price', 'price_link')->find($this->iElementID);
+    }
+
+    /**
      * Get price_value attribute
      * @return float
      */
@@ -172,14 +191,6 @@ class OfferItem extends ElementItem
         $this->setActiveCurrency(null);
 
         return $fPrice;
-    }
-
-    /**
-     * Set element object
-     */
-    protected function setElementObject()
-    {
-        $this->obElement = Offer::withTrashed()->with('main_price', 'price_link')->find($this->iElementID);
     }
 
     /**
@@ -220,7 +231,18 @@ class OfferItem extends ElementItem
      */
     protected function getTaxPriceValueAttribute()
     {
-        $fPrice = TaxHelper::instance()->getTaxPrice($this);
+        $fPrice = PriceHelper::round($this->price_with_tax_value - $this->price_without_tax_value);
+
+        return $fPrice;
+    }
+
+    /**
+     * Get tax_old_price_value attribute value
+     * @return float
+     */
+    protected function getTaxOldPriceValueAttribute()
+    {
+        $fPrice = PriceHelper::round($this->old_price_with_tax_value - $this->old_price_without_tax_value);
 
         return $fPrice;
     }
@@ -231,7 +253,18 @@ class OfferItem extends ElementItem
      */
     protected function getPriceWithTaxValueAttribute()
     {
-        $fPrice = TaxHelper::instance()->getPriceWithTax($this);
+        $fPrice = TaxHelper::instance()->getPriceWithTax($this->price_value, $this->tax_percent);
+
+        return $fPrice;
+    }
+
+    /**
+     * Get old_price_with_tax_value attribute value
+     * @return float
+     */
+    protected function getOldPriceWithTaxValueAttribute()
+    {
+        $fPrice = TaxHelper::instance()->getPriceWithTax($this->old_price_value, $this->tax_percent);
 
         return $fPrice;
     }
@@ -242,7 +275,18 @@ class OfferItem extends ElementItem
      */
     protected function getPriceWithoutTaxValueAttribute()
     {
-        $fPrice = TaxHelper::instance()->getPriceWithoutTax($this);
+        $fPrice = TaxHelper::instance()->getPriceWithoutTax($this->price_value, $this->tax_percent);
+
+        return $fPrice;
+    }
+
+    /**
+     * Get old_price_without_tax_value attribute value
+     * @return float
+     */
+    protected function getOldPriceWithoutTaxValueAttribute()
+    {
+        $fPrice = TaxHelper::instance()->getPriceWithoutTax($this->old_price_value, $this->tax_percent);
 
         return $fPrice;
     }
@@ -253,9 +297,13 @@ class OfferItem extends ElementItem
      */
     protected function getTaxPercentAttribute()
     {
-        $fPrice = TaxHelper::instance()->getTaxPercent($this);
+        $fTaxPercent = $this->getAttribute('tax_percent');
+        if ($fTaxPercent === null) {
+            $fTaxPercent = TaxHelper::instance()->getTaxPercent($this->tax_list);
+            $this->setAttribute('tax_percent', $fTaxPercent);
+        }
 
-        return $fPrice;
+        return $fTaxPercent;
     }
 
     /**
@@ -264,9 +312,39 @@ class OfferItem extends ElementItem
      */
     protected function getTaxListAttribute()
     {
-        $obTaxList = TaxHelper::instance()->getAppliedTaxList($this);
+        $obTaxList = $this->getAttribute('tax_list');
+        if ($obTaxList === null) {
+            $obTaxList = $this->getAppliedTaxList();
+            $this->setAttribute('tax_list', $obTaxList);
+        }
 
         return $obTaxList;
+    }
+
+    /**
+     * Get applied tax list
+     * @return \Lovata\Shopaholic\Classes\Collection\TaxCollection|\Lovata\Shopaholic\Classes\Item\TaxItem[]
+     */
+    protected function getAppliedTaxList()
+    {
+        $obResultTaxList = TaxHelper::instance()->getTaxList();
+        if ($obResultTaxList->isEmpty()) {
+            return $obResultTaxList;
+        }
+
+        foreach ($obResultTaxList as $obTaxItem) {
+            $bSkipTax = !$obTaxItem->is_global
+                && !$obTaxItem->isAvailableForCategory($this->product->category)
+                && !$obTaxItem->isAvailableForProduct($this->product)
+                && !$obTaxItem->isAvailableForCountry(TaxHelper::instance()->getActiveCountry())
+                && !$obTaxItem->isAvailableForState(TaxHelper::instance()->getActiveState());
+
+            if ($bSkipTax) {
+                $obResultTaxList->exclude($obTaxItem->id);
+            }
+        }
+
+        return $obResultTaxList;
     }
 
     /**

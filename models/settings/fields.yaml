@@ -6,7 +6,7 @@ tabs:
             label: lovata.shopaholic::lang.field.check_offer_active
             type: checkbox
         price_include_tax:
-            tab: lovata.toolbox::lang.tab.settings
+            tab: lovata.shopaholic::lang.tab.taxes
             span: left
             type: checkbox
             label: lovata.shopaholic::lang.field.price_include_tax

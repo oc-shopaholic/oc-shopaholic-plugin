@@ -23,13 +23,19 @@ class TaxHelper
     /** @var bool */
     protected $bPriceIncludeTax;
 
-    /** @var array */
-    protected $arTaxPriceData = [];
-
     /** @var \RainLab\Location\Models\Country */
     protected $obActiveCountry;
     /** @var \RainLab\Location\Models\State */
     protected $obActiveState;
+
+    /**
+     * Return flag "price include tax" from settings
+     * @return bool
+     */
+    public function isPriceIncludeTax()
+    {
+        return $this->bPriceIncludeTax;
+    }
 
     /**
      * Switch active country by code
@@ -42,6 +48,15 @@ class TaxHelper
         }
 
         $this->obActiveCountry = \RainLab\Location\Models\Country::whereCode($sCountryCode)->first();
+    }
+
+    /**
+     * Get active country object
+     * @return \RainLab\Location\Models\Country
+     */
+    public function getActiveCountry()
+    {
+        return $this->obActiveCountry;
     }
 
     /**
@@ -58,171 +73,53 @@ class TaxHelper
     }
 
     /**
-     * Get tax price value
-     * @param \Lovata\Shopaholic\Classes\Item\OfferItem $obOfferItem
-     * @return float
+     * Get active state object
+     * @return \RainLab\Location\Models\State
      */
-    public function getTaxPrice($obOfferItem)
+    public function getActiveState()
     {
-        if (empty($obOfferItem)) {
-            return 0;
-        }
-
-        $this->calculate($obOfferItem);
-
-        $fPrice = (float) array_get($this->arTaxPriceData, $obOfferItem->id.'.tax_price');
-
-        return $fPrice;
-    }
-
-    /**
-     * Get price value without tax
-     * @param \Lovata\Shopaholic\Classes\Item\OfferItem $obOfferItem
-     * @return float
-     */
-    public function getPriceWithoutTax($obOfferItem)
-    {
-        if (empty($obOfferItem)) {
-            return 0;
-        }
-
-        $this->calculate($obOfferItem);
-
-        $fPrice = (float) array_get($this->arTaxPriceData, $obOfferItem->id.'.price_without_tax');
-
-        return $fPrice;
-    }
-
-    /**
-     * Get price value with tax
-     * @param \Lovata\Shopaholic\Classes\Item\OfferItem $obOfferItem
-     * @return float
-     */
-    public function getPriceWithTax($obOfferItem)
-    {
-        if (empty($obOfferItem)) {
-            return 0;
-        }
-
-        $this->calculate($obOfferItem);
-
-        $fPrice = (float) array_get($this->arTaxPriceData, $obOfferItem->id.'.price_with_tax');
-
-        return $fPrice;
-    }
-
-    /**
-     * Get tax percent
-     * @param \Lovata\Shopaholic\Classes\Item\OfferItem $obOfferItem
-     * @return float
-     */
-    public function getTaxPercent($obOfferItem)
-    {
-        if (empty($obOfferItem)) {
-            return 0;
-        }
-
-        $this->calculate($obOfferItem);
-
-        $fPrice = (float) array_get($this->arTaxPriceData, $obOfferItem->id.'.tax_percent');
-
-        return $fPrice;
+        return $this->obActiveState;
     }
 
     /**
      * Get applied tax list
-     * @param \Lovata\Shopaholic\Classes\Item\OfferItem $obOfferItem
      * @return \Lovata\Shopaholic\Classes\Collection\TaxCollection|\Lovata\Shopaholic\Classes\Item\TaxItem[]
      */
-    public function getAppliedTaxList($obOfferItem)
+    public function getTaxList()
     {
-        if (empty($obOfferItem)) {
-            return TaxCollection::make()->clear();
-        }
-
-        $this->calculate($obOfferItem);
-
-        $obTaxList = array_get($this->arTaxPriceData, $obOfferItem->id.'.tax_list');
-        if (empty($obTaxList)) {
-            return TaxCollection::make()->clear();
-        }
-
-        return $obTaxList;
+        return clone  $this->obTaxList;
     }
 
     /**
-     * Init currency data
+     * Get price value without tax
+     * @param float $fPrice
+     * @param float $fPricePercent
+     * @return float
      */
-    protected function init()
+    public function getPriceWithoutTax($fPrice, $fPricePercent)
     {
-        $this->obTaxList = TaxCollection::make()->active()->sort();
-
-        $this->bPriceIncludeTax = (bool) Settings::getValue('price_include_tax');
-    }
-
-    /**
-     * Calculate tax prices
-     * @param \Lovata\Shopaholic\Classes\Item\OfferItem $obOfferItem
-     */
-    protected function calculate($obOfferItem)
-    {
-        if (isset($this->arTaxPriceData[$obOfferItem->id])) {
-            return;
-        }
-
-        //Get available tax list
-        $obTaxList = $this->getAvailableTaxList($obOfferItem);
-
-        //Calculate tax percent
-        $fTax = 0;
-        foreach ($obTaxList as $obTaxItem) {
-            $fTax += $obTaxItem->percent;
-        }
-
+        $fPriceResult = $fPrice;
         if ($this->bPriceIncludeTax) {
-            $fPriceWithTax = $obOfferItem->price_value;
-            $fPriceWithoutTax = $this->calculatePriceWithoutTax($obOfferItem->price_value, $fTax);
-        } else {
-            $fPriceWithTax = $this->calculatePriceWithTax($obOfferItem->price_value, $fTax);
-            $fPriceWithoutTax = $obOfferItem->price_value;
+            $fPriceResult = $this->calculatePriceWithoutTax($fPrice, $fPricePercent);
         }
 
-        $fTaxPrice = PriceHelper::round($fPriceWithTax - $fPriceWithoutTax);
-
-        $this->arTaxPriceData[$obOfferItem->id] = [
-            'tax_price'         => $fTaxPrice,
-            'price_without_tax' => $fPriceWithoutTax,
-            'price_with_tax'    => $fPriceWithTax,
-            'tax_percent'       => $fTax,
-            'tax_list'          => $obTaxList,
-        ];
+        return $fPriceResult;
     }
 
     /**
-     * Get tax percent for Offer object
-     * @param \Lovata\Shopaholic\Classes\Item\OfferItem $obOfferItem
-     * @return \Lovata\Shopaholic\Classes\Collection\TaxCollection|\Lovata\Shopaholic\Classes\Item\TaxItem[]
+     * Get price value with tax
+     * @param float $fPrice
+     * @param float $fPricePercent
+     * @return float
      */
-    protected function getAvailableTaxList($obOfferItem)
+    public function getPriceWithTax($fPrice, $fPricePercent)
     {
-        $obResultTaxList = clone $this->obTaxList;
-        if ($obResultTaxList->isEmpty()) {
-            return $obResultTaxList;
+        $fPriceResult = $fPrice;
+        if (!$this->bPriceIncludeTax) {
+            $fPriceResult = $this->calculatePriceWithTax($fPrice, $fPricePercent);
         }
 
-        foreach ($obResultTaxList as $obTaxItem) {
-            $bSkipTax = !$obTaxItem->is_global
-                && !$obTaxItem->isAvailableForCategory($obOfferItem->product->category)
-                && !$obTaxItem->isAvailableForProduct($obOfferItem->product)
-                && !$obTaxItem->isAvailableForCountry($this->obActiveCountry)
-                && !$obTaxItem->isAvailableForState($this->obActiveState);
-
-            if ($bSkipTax) {
-                $obResultTaxList->exclude($obTaxItem->id);
-            }
-        }
-
-        return $obResultTaxList;
+        return $fPriceResult;
     }
 
     /**
@@ -231,7 +128,7 @@ class TaxHelper
      * @param float $fTax
      * @return float
      */
-    protected function calculatePriceWithTax($fPrice, $fTax)
+    public function calculatePriceWithTax($fPrice, $fTax)
     {
         $fPrice = ($fPrice * (100 + $fTax)) / 100;
         $fPrice = PriceHelper::round($fPrice);
@@ -245,11 +142,43 @@ class TaxHelper
      * @param float $fTax
      * @return float
      */
-    protected function calculatePriceWithoutTax($fPrice, $fTax)
+    public function calculatePriceWithoutTax($fPrice, $fTax)
     {
         $fPrice = ($fPrice * 100) / (100 + $fTax);
         $fPrice = PriceHelper::round($fPrice);
 
         return $fPrice;
+    }
+
+    /**
+     * Get tax percent
+     * @param \Lovata\Shopaholic\Classes\Collection\TaxCollection|\Lovata\Shopaholic\Classes\Item\TaxItem[] $obTaxList
+     * @return float
+     */
+    public function getTaxPercent($obTaxList)
+    {
+        if (empty($obTaxList) || $obTaxList->isEmpty()) {
+            return 0;
+        }
+
+        //Calculate tax percent
+        $fTaxPercent = 0;
+        foreach ($obTaxList as $obTaxItem) {
+            $fTaxPercent += $obTaxItem->percent;
+        }
+
+        $fTaxPercent = PriceHelper::round($fTaxPercent);
+
+        return $fTaxPercent;
+    }
+
+    /**
+     * Init currency data
+     */
+    protected function init()
+    {
+        $this->obTaxList = TaxCollection::make()->active()->sort();
+
+        $this->bPriceIncludeTax = (bool) Settings::getValue('price_include_tax');
     }
 }

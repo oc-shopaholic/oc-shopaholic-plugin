@@ -41,6 +41,9 @@ use Lovata\Toolbox\Traits\Helpers\TraitCached;
  * @method static \October\Rain\Database\Relations\BelongsToMany|\RainLab\Location\Models\Country country()
  * @property \October\Rain\Database\Collection|\RainLab\Location\Models\State[]   $state
  * @method static \October\Rain\Database\Relations\BelongsToMany|\RainLab\Location\Models\State state()
+ *
+ * Orders for Shopaholic
+ * @property bool                                                                 $applied_to_shipping_price
  */
 class Tax extends Model
 {

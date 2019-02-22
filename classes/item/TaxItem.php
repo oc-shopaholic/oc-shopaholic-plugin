@@ -18,6 +18,9 @@ use Lovata\Shopaholic\Models\Tax;
  * @property array  $product_id_list
  * @property array  $country_id_list
  * @property array  $state_id_list
+ *
+ * Orders for Shopaholic
+ * @property bool   $applied_to_shipping_price
  */
 class TaxItem extends ElementItem
 {
