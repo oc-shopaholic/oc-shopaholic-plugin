@@ -4,6 +4,7 @@ use BackendMenu;
 use Backend\Classes\Controller;
 use Backend\Classes\BackendController;
 use Lovata\Shopaholic\Models\Product;
+use Lovata\Shopaholic\Classes\Helper\CurrencyHelper;
 
 /**
  * Class Products
@@ -29,6 +30,8 @@ class Products extends Controller
      */
     public function __construct()
     {
+        CurrencyHelper::instance()->disableActiveCurrency();
+
         if (BackendController::$action == 'import') {
             Product::extend(function ($obModel) {
                 $obModel->rules['external_id'] = 'required';

@@ -2,18 +2,20 @@
 
 use Backend\Models\ImportModel;
 
+use October\Rain\Database\Traits\Validation;
+use October\Rain\Database\Traits\SoftDelete;
+use October\Rain\Database\Traits\Purgeable;
+
 use Kharanenka\Scope\ActiveField;
 use Kharanenka\Scope\CodeField;
 use Kharanenka\Scope\ExternalIDField;
 use Kharanenka\Scope\NameField;
 
-use Lovata\Shopaholic\Classes\Helper\CurrencyHelper;
 use Lovata\Toolbox\Traits\Helpers\TraitCached;
 use Lovata\Toolbox\Traits\Helpers\PriceHelperTrait;
 
-use October\Rain\Database\Traits\Validation;
-use October\Rain\Database\Traits\SoftDelete;
-use October\Rain\Database\Traits\Purgeable;
+use Lovata\Shopaholic\Classes\Item\OfferItem;
+use Lovata\Shopaholic\Classes\Helper\CurrencyHelper;
 use Lovata\Shopaholic\Classes\Import\ImportOfferModel;
 
 /**
@@ -24,33 +26,35 @@ use Lovata\Shopaholic\Classes\Import\ImportOfferModel;
  * @mixin \October\Rain\Database\Builder
  * @mixin \Eloquent
  *
- * @property                                                                                           $id
- * @property bool                                                                                      $active
- * @property string                                                                                    $name
- * @property string                                                                                    $code
- * @property string                                                                                    $external_id
- * @property string                                                                                    $preview_text
- * @property string                                                                                    $description
- * @property string                                                                                    $price
- * @property float                                                                                     $price_value
- * @property string                                                                                    $old_price
- * @property float                                                                                     $old_price_value
- * @property integer                                                                                   $quantity
- * @property int                                                                                       $product_id
- * @property \October\Rain\Argon\Argon                                                                 $created_at
- * @property \October\Rain\Argon\Argon                                                                 $updated_at
- * @property \October\Rain\Argon\Argon                                                                 $deleted_at
+ * @property                                                                                               $id
+ * @property bool                                                                                          $active
+ * @property string                                                                                        $name
+ * @property string                                                                                        $code
+ * @property string                                                                                        $external_id
+ * @property string                                                                                        $preview_text
+ * @property string                                                                                        $description
+ * @property string                                                                                        $price
+ * @property float                                                                                         $price_value
+ * @property string                                                                                        $old_price
+ * @property float                                                                                         $old_price_value
+ * @property integer                                                                                       $quantity
+ * @property int                                                                                           $product_id
+ * @property \October\Rain\Argon\Argon                                                                     $created_at
+ * @property \October\Rain\Argon\Argon                                                                     $updated_at
+ * @property \October\Rain\Argon\Argon                                                                     $deleted_at
+ *
+ * @property float                                                                                         $tax_percent
  *
  * Relations
- * @property \System\Models\File                                                                       $preview_image
- * @property \October\Rain\Database\Collection                                                         $images
+ * @property \System\Models\File                                                                           $preview_image
+ * @property \October\Rain\Database\Collection                                                             $images
  *
- * @property \Lovata\Shopaholic\Models\Price[]                                                         $price_link
+ * @property \Lovata\Shopaholic\Models\Price[]                                                             $price_link
  * @method \October\Rain\Database\Relations\MorphMany|Price price_link()
- * @property \Lovata\Shopaholic\Models\Price                                                           $main_price
+ * @property \Lovata\Shopaholic\Models\Price                                                               $main_price
  * @method \October\Rain\Database\Relations\MorphOne|Price main_price()
  *
- * @property \Lovata\Shopaholic\Models\Product                                                         $product
+ * @property \Lovata\Shopaholic\Models\Product                                                             $product
  * @method \October\Rain\Database\Relations\BelongsTo|Product product()
  *
  * @method static $this getByProduct(int $iProductID)
@@ -60,31 +64,31 @@ use Lovata\Shopaholic\Classes\Import\ImportOfferModel;
  *
  * Properties for Shopaholic
  * @see     \Lovata\PropertiesShopaholic\Classes\Event\OfferModelHandler::addPropertyMethods
- * @property array                                                                                     $property
+ * @property array                                                                                         $property
  *
- * @property \October\Rain\Database\Collection|\Lovata\PropertiesShopaholic\Models\PropertyValueLink[] $property_value
+ * @property \October\Rain\Database\Collection|\Lovata\PropertiesShopaholic\Models\PropertyValueLink[]     $property_value
  * @method static \October\Rain\Database\Relations\MorphMany|\Lovata\PropertiesShopaholic\Models\PropertyValueLink property_value()
  *
  * Discounts for Shopaholic
- * @property string                                                                                    $discount_price
- * @property float                                                                                     $discount_price_value
- * @property int                                                                                       $discount_id
- * @property float                                                                                     $discount_value
- * @property string                                                                                    $discount_type
+ * @property string                                                                                        $discount_price
+ * @property float                                                                                         $discount_price_value
+ * @property int                                                                                           $discount_id
+ * @property float                                                                                         $discount_value
+ * @property string                                                                                        $discount_type
  *
  * Discounts for Shopaholic
- * @property \Lovata\DiscountsShopaholic\Models\Discount                                               $active_discount
+ * @property \Lovata\DiscountsShopaholic\Models\Discount                                                   $active_discount
  * @method \October\Rain\Database\Relations\BelongsTo|\Lovata\DiscountsShopaholic\Models\Discount active_discount()
  *
- * @property \October\Rain\Database\Collection|\Lovata\DiscountsShopaholic\Models\Discount[]           $discount
+ * @property \October\Rain\Database\Collection|\Lovata\DiscountsShopaholic\Models\Discount[]               $discount
  * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\DiscountsShopaholic\Models\Discount discount()
  *
  * Coupons for Shopaholic
- * @property \October\Rain\Database\Collection|\Lovata\CouponsShopaholic\Models\CouponGroup[]          $coupon_group
+ * @property \October\Rain\Database\Collection|\Lovata\CouponsShopaholic\Models\CouponGroup[]              $coupon_group
  * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\CouponsShopaholic\Models\CouponGroup coupon_group()
  *
  * Campaign for Shopaholic
- * @property \October\Rain\Database\Collection|\Lovata\CampaignsShopaholic\Models\Campaign[]           $campaign
+ * @property \October\Rain\Database\Collection|\Lovata\CampaignsShopaholic\Models\Campaign[]               $campaign
  * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\CampaignsShopaholic\Models\Campaign campaign()
  */
 class Offer extends ImportModel
@@ -158,8 +162,6 @@ class Offer extends ImportModel
         'preview_image',
         'description',
         'images',
-        'price_value',
-        'old_price_value',
         'price_list',
         'quantity',
     ];
@@ -429,6 +431,17 @@ class Offer extends ImportModel
         }
 
         $this->arSavedPriceList = $arPriceList;
+    }
+
+    /**
+     * Get tax_percent attribute value
+     * @return float
+     */
+    protected function getTaxPercentAttribute()
+    {
+        $obOfferItem = OfferItem::make($this->id, $this);
+
+        return $obOfferItem->tax_percent;
     }
 
     /**

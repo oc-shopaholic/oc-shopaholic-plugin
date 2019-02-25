@@ -354,8 +354,13 @@ class OfferItem extends ElementItem
      */
     protected function getElementData()
     {
+        $obDefaultCurrency = CurrencyHelper::instance()->getDefault();
+        $sCurrencyCode = !empty($obDefaultCurrency) ? $obDefaultCurrency->code : null;
+
         $arResult = [
-            'trashed' => $this->obElement->trashed(),
+            'price_value'     => $this->obElement->setActiveCurrency($sCurrencyCode)->setActivePriceType(null)->price_value,
+            'old_price_value' => $this->obElement->setActiveCurrency($sCurrencyCode)->setActivePriceType(null)->old_price_value,
+            'trashed'         => $this->obElement->trashed(),
         ];
 
         return $arResult;

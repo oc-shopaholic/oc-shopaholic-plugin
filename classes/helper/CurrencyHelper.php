@@ -50,6 +50,20 @@ class CurrencyHelper
     }
 
     /**
+     * Set default currency as active
+     * Used in backend
+     */
+    public function disableActiveCurrency()
+    {
+        if (empty($this->obDefaultCurrency)) {
+            return;
+        }
+
+        $this->sActiveCurrencyCode = $this->obDefaultCurrency->code;
+        $this->obActiveCurrency = $this->obDefaultCurrency;
+    }
+
+    /**
      * Get active currency symbol
      * @return null|string
      */
@@ -144,7 +158,7 @@ class CurrencyHelper
             $obCurrencyTo = $this->obCurrencyList->where('code', $sCurrencyTo)->first();
         }
 
-        if (empty($obCurrencyTo) || empty($this->obDefaultCurrency)) {
+        if (empty($obCurrencyTo) || empty($this->obDefaultCurrency) || $obCurrencyTo->id == $this->obDefaultCurrency->id) {
             return $fPrice;
         }
 

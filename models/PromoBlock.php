@@ -8,6 +8,7 @@ use Kharanenka\Scope\ActiveField;
 use Kharanenka\Scope\CodeField;
 use Kharanenka\Scope\NameField;
 use Kharanenka\Scope\SlugField;
+use Kharanenka\Scope\HiddenField;
 
 use October\Rain\Database\Traits\Sluggable;
 use October\Rain\Database\Traits\Validation;
@@ -69,6 +70,7 @@ class PromoBlock extends Model
     use NameField;
     use CodeField;
     use SlugField;
+    use HiddenField;
     use TraitCached;
 
     const PROMO_BLOCK_TYPE = 'promo_block';
