@@ -28,25 +28,27 @@ use Lovata\Shopaholic\Classes\Helper\CurrencyHelper;
  * @property \October\Rain\Database\Collection|\System\Models\File[]                                                                     $images
  *
  * @property string                                                                                                                      $price
- * @property string                                                                                                                      $old_price
  * @property float                                                                                                                       $price_value
+ * @property string                                                                                                                      $tax_price
+ * @property float                                                                                                                       $tax_price_value
+ * @property string                                                                                                                      $price_without_tax
+ * @property float                                                                                                                       $price_without_tax_value
+ * @property string                                                                                                                      $price_with_tax
+ * @property float                                                                                                                       $price_with_tax_value
+ *
+ * @property string                                                                                                                      $old_price
  * @property float                                                                                                                       $old_price_value
+ * @property string                                                                                                                      $tax_old_price
+ * @property float                                                                                                                       $tax_old_price_value
+ * @property string                                                                                                                      $old_price_without_tax
+ * @property float                                                                                                                       $old_price_without_tax_value
+ * @property string                                                                                                                      $old_price_with_tax
+ * @property float                                                                                                                       $old_price_with_tax_value
+ *
  * @property array                                                                                                                       $price_list
  * @property string                                                                                                                      $currency
  * @property string                                                                                                                      $currency_code
  *
- * @property string                                                                                                                      $tax_price
- * @property string                                                                                                                      $tax_old_price
- * @property string                                                                                                                      $price_with_tax
- * @property string                                                                                                                      $old_price_with_tax
- * @property string                                                                                                                      $price_without_tax
- * @property string                                                                                                                      $old_price_without_tax
- * @property float                                                                                                                       $tax_price_value
- * @property float                                                                                                                       $tax_old_price_value
- * @property float                                                                                                                       $price_with_tax_value
- * @property float                                                                                                                       $old_price_with_tax_value
- * @property float                                                                                                                       $price_without_tax_value
- * @property float                                                                                                                       $old_price_without_tax_value
  * @property float                                                                                                                       $tax_percent
  * @property \Lovata\Shopaholic\Classes\Collection\TaxCollection|\Lovata\Shopaholic\Classes\Item\TaxItem[]                               $tax_list
  *
