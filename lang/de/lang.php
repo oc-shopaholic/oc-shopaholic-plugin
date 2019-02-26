@@ -59,8 +59,8 @@
     'category'    => [
         'name'         => 'category',
         'list_title'   => 'Category list',
-        'import_title' => 'Import categories',
-        'export_title' => 'Export categories',
+        'import_title' => 'Importiere Kategorien',
+        'export_title' => 'Exportiere Kategorien',
     ],
     'brand'       => [
         'name'         => 'brand',
