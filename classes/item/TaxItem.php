@@ -10,6 +10,7 @@ use Lovata\Shopaholic\Models\Tax;
  * @package Lovata\Shopaholic\Classes\Item
  * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  *
+ * @property int    $id
  * @property bool   $is_global
  * @property string $name
  * @property string $description

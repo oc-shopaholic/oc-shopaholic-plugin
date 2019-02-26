@@ -22,6 +22,7 @@ class CheckTableIntegrity extends Command
     protected $arMigrationList = [
         ['path' => 'plugins/lovata/shopaholic/updates/update_table_users_add_currency_field.php', 'class' => '\Lovata\Shopaholic\Updates\UpdateTableUsersAddCurrencyField'],
         ['path' => 'plugins/lovata/compareshopaholic/updates/update_table_users.php', 'class' => '\Lovata\CompareShopaholic\Updates\UpdateTableUsers'],
+        ['path' => 'plugins/lovata/ordersshopaholic/updates/table_update_taxes_add_applied_to_shipping_price.php', 'class' => '\Lovata\OrdersShopaholic\Updates\TableUpdateTaxesAddAppliedToShippingPrice'],
         ['path' => 'plugins/lovata/searchshopaholic/updates/update_table_tag.php', 'class' => '\Lovata\SearchShopaholic\Updates\UpdateTableTag'],
         ['path' => 'plugins/lovata/sphinxshopaholic/updates/update_table_tag.php', 'class' => '\Lovata\SphinxShopaholic\Updates\UpdateTableTag'],
         ['path' => 'plugins/lovata/viewedproductsshopaholic/updates/update_table_users.php', 'class' => '\Lovata\ViewedProductsShopaholic\Updates\UpdateTableUsers'],

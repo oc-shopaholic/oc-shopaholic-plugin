@@ -73,7 +73,7 @@
 1.20.0:
     - 'Added Slovak language. Thanks for contribution vosco88.'
 1.21.0:
-    - 'Added price types. Added multicurrency. Added taxes.'
+    - 'Added multicurrency. Added taxes. Added price types. Added shopaholic:check.table.integrity artisan command.'
     - create_table_taxes.php
     - create_table_tax_category_relation.php
     - create_table_tax_product_relation.php
