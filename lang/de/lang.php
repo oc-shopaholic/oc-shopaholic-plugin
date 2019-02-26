@@ -27,6 +27,7 @@
         'states'              => 'States',
         'main_price_type'     => 'Main price',
         'price_include_tax'   => 'Price includes taxes',
+        'discount_price'      => 'Discount price',
     ],
     'menu'        => [
         'main'                      => 'Katalog',
