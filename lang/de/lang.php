@@ -64,15 +64,15 @@
     ],
     'brand'       => [
         'name'         => 'brand',
-        'list_title'   => 'Brand list',
-        'import_title' => 'Import brands',
-        'export_title' => 'Export brands',
+        'list_title'   => 'Markenliste',
+        'import_title' => 'Importiere Marken',
+        'export_title' => 'Exportiere Marken',
     ],
     'product'     => [
         'name'         => 'product',
         'list_title'   => 'Product list',
-        'import_title' => 'Import products',
-        'export_title' => 'Export products',
+        'import_title' => 'Importiere Produkte',
+        'export_title' => 'Exportiere Produkte',
     ],
     'offer'       => [
         'name'         => 'offer',
@@ -116,11 +116,11 @@
 
         //Brand components
         'brand_page_name'              => 'Markenseite',
-        'brand_page_description'       => 'Get data for brand page',
-        'brand_data_name'              => 'Brand data',
-        'brand_data_description'       => 'Get brand data by ID',
-        'brand_list_name'              => 'Brand list',
-        'brand_list_description'       => 'Get brand list',
+        'brand_page_description'       => 'Daten für Markenseite abrufen',
+        'brand_data_name'              => 'Markendaten',
+        'brand_data_description'       => 'Markendaten nach ID abrufen',
+        'brand_list_name'              => 'Markenliste',
+        'brand_list_description'       => 'Markenübersicht abrufen',
 
         //Promo block components
         'promo_block_page_name'        => 'Promo block page',
