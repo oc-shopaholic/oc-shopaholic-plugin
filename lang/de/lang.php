@@ -134,7 +134,7 @@
         'category_page_name'           => 'Kategorieseite',
         'category_page_description'    => 'Get data for category page',
         'category_data_name'           => 'Kategoriedaten',
-        'category_data_description'    => 'Get category data by ID',
+        'category_data_description'    => 'Kategoriedaten nach ID abrufen',
         'category_list_name'           => 'Kategorienliste',
         'category_list_description'    => 'Get category tree',
 
@@ -148,7 +148,7 @@
 
         //Components settings
         'product_list_sorting'         => 'Standardsortierung',
-        'sorting_no'                   => 'Without sorting',
+        'sorting_no'                   => 'Ohne Sortierung',
         'sorting_price_desc'           => 'Teuer',
         'sorting_price_asc'            => 'Billig',
         'sorting_new'                  => 'Neu',
