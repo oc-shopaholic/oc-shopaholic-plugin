@@ -9,14 +9,14 @@
         'old_price'           => 'Alter Preis',
         'quantity'            => 'Menge',
         'brand'               => 'Marke',
-        'offer'               => 'Offers',
+        'offer'               => 'Produktangebote',
         'currency'            => 'Währung',
         'check_offer_active'  => 'When you receive a list of active products, check for active offers',
-        'additional_category' => 'Additional categories',
+        'additional_category' => 'Zusätzliche Kategorien',
         'promo_block_type'    => 'Promo block with product list',
         'promo_block'         => 'Promo block',
         'category_parent_id'  => 'Parent category ID',
-        'product_id'          => 'Product ID',
+        'product_id'          => 'Produkt ID',
         'rate'                => 'Rate',
         'tax_is_global'       => 'Tax will apply to all products',
         'tax_percent'         => 'Tax percent',
@@ -31,7 +31,7 @@
     ],
     'menu'        => [
         'main'                      => 'Katalog',
-        'categories'                => 'Categories',
+        'categories'                => 'Kategorien',
         'product'                   => 'Produkte',
         'brands'                    => 'Marken',
         'shop_catalog'              => 'Produktkatalog',
@@ -131,11 +131,11 @@
         'promo_block_list_description' => 'Get promo block list',
 
         //Category components
-        'category_page_name'           => 'Category page',
+        'category_page_name'           => 'Kategorieseite',
         'category_page_description'    => 'Get data for category page',
-        'category_data_name'           => 'Category data',
+        'category_data_name'           => 'Kategoriedaten',
         'category_data_description'    => 'Get category data by ID',
-        'category_list_name'           => 'Category list',
+        'category_list_name'           => 'Kategorienliste',
         'category_list_description'    => 'Get category tree',
 
         //Currency components
