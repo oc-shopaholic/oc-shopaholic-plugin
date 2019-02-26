@@ -5,9 +5,9 @@
     ],
     'field'       => [
         'vendor_code'         => 'Vendor code',
-        'price'               => 'Price',
+        'price'               => '価格',
         'old_price'           => 'Old price',
-        'quantity'            => 'Quantity',
+        'quantity'            => '数量',
         'brand'               => 'Brand',
         'offer'               => 'Offers',
         'currency'            => 'Currency',
