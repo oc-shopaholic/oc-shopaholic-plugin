@@ -57,19 +57,19 @@
         'taxes'       => 'Taxes',
     ],
     'category'    => [
-        'name'         => 'category',
+        'name'         => 'Kategorie',
         'list_title'   => 'Kategorienliste',
         'import_title' => 'Importiere Kategorien',
         'export_title' => 'Exportiere Kategorien',
     ],
     'brand'       => [
-        'name'         => 'brand',
+        'name'         => 'Marke',
         'list_title'   => 'Markenliste',
         'import_title' => 'Importiere Marken',
         'export_title' => 'Exportiere Marken',
     ],
     'product'     => [
-        'name'         => 'product',
+        'name'         => 'Produktes',
         'list_title'   => 'Produktliste',
         'import_title' => 'Importiere Produkte',
         'export_title' => 'Exportiere Produkte',
