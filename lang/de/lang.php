@@ -75,13 +75,13 @@
         'export_title' => 'Exportiere Produkte',
     ],
     'offer'       => [
-        'name'         => 'offer',
+        'name'         => 'Produktangebotes',
         'list_title'   => 'Produktangeboteliste',
         'import_title' => 'Importiere Produktangebote',
         'export_title' => 'Exportiere Produktangebote',
     ],
     'promo_block' => [
-        'name'       => 'promo block',
+        'name'       => 'Promoblockes',
         'list_title' => 'Promoblöckeliste',
     ],
     'price_type'  => [
