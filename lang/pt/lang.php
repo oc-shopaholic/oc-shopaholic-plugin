@@ -27,6 +27,7 @@
         'states'              => 'States',
         'main_price_type'     => 'Main price',
         'price_include_tax'   => 'Price includes taxes',
+        'discount_price'      => 'Discount price',
     ],
     'menu'        => [
         'main'                      => 'Catalog',
@@ -149,7 +150,7 @@
         'product_list_sorting'         => 'Default sorting',
         'sorting_no'                   => 'Without sorting',
         'sorting_price_desc'           => 'Expensive',
-        'sorting_price_asc'            => 'Cheap',
+        'sorting_price_asc'            => 'Baratos',
         'sorting_new'                  => 'New',
         'sorting_popularity_desc'      => 'Popular',
         'sorting_rating_desc'          => 'High rating',
