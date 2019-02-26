@@ -70,7 +70,7 @@
     ],
     'product'     => [
         'name'         => 'product',
-        'list_title'   => 'Product list',
+        'list_title'   => 'Produktliste',
         'import_title' => 'Importiere Produkte',
         'export_title' => 'Exportiere Produkte',
     ],
@@ -78,7 +78,7 @@
         'name'         => 'offer',
         'list_title'   => 'Produktangeboteliste',
         'import_title' => 'Importiere Produktangebote',
-        'export_title' => 'Export offers',
+        'export_title' => 'Exportiere Produktangebote',
     ],
     'promo_block' => [
         'name'       => 'promo block',
@@ -107,12 +107,12 @@
     'component'   => [
 
         //Product components
-        'product_page_name'            => 'Product page',
-        'product_page_description'     => 'Get data for product page',
+        'product_page_name'            => 'Produktseite',
+        'product_page_description'     => 'Daten für die Produktseite abrufen',
         'product_data_name'            => 'Produktdaten',
-        'product_data_description'     => 'Get product data by ID',
+        'product_data_description'     => 'Produktdaten nach ID abrufen',
         'product_list_name'            => 'Produktliste',
-        'product_list_description'     => 'Get product list',
+        'product_list_description'     => 'Produktliste abrufen',
 
         //Brand components
         'brand_page_name'              => 'Markenseite',
@@ -136,7 +136,7 @@
         'category_data_name'           => 'Kategoriedaten',
         'category_data_description'    => 'Kategoriedaten nach ID abrufen',
         'category_list_name'           => 'Kategorienliste',
-        'category_list_description'    => 'Get category tree',
+        'category_list_description'    => 'Kategoriebaum abrufen',
 
         //Currency components
         'currency_list_name'           => 'Currency list',
