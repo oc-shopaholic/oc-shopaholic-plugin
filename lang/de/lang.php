@@ -147,7 +147,7 @@
         'breadcrumbs_description'      => 'Get data for catalog breadcrumbs',
 
         //Components settings
-        'product_list_sorting'         => 'Default sorting',
+        'product_list_sorting'         => 'Standardsortierung',
         'sorting_no'                   => 'Without sorting',
         'sorting_price_desc'           => 'Teuer',
         'sorting_price_asc'            => 'Billig',
