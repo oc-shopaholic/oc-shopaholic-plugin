@@ -11,7 +11,7 @@
         'brand'               => 'Marke',
         'offer'               => 'Produktangebote',
         'currency'            => 'Währung',
-        'check_offer_active'  => 'When you receive a list of active products, check for active offers',
+        'check_offer_active'  => 'Wenn Sie eine Liste aktiver Produkte erhalten, prüfen Sie nach aktive Produktangeboten.',
         'additional_category' => 'Zusätzliche Kategorien',
         'promo_block_type'    => 'Promoblock mit Produktliste',
         'promo_block'         => 'Promoblock',
