@@ -161,10 +161,10 @@
         'sorting_date_end_desc'        => 'Date end (DESC)',
     ],
     'permission'  => [
-        'category'    => 'Manage categories',
+        'category'    => 'Kategorien verwalten',
         'brand'       => 'Manage brands',
-        'product'     => 'Manage products',
-        'settings'    => 'Manage settings',
+        'product'     => 'Produkte verwalten',
+        'settings'    => 'Einstellungen verwalten',
         'promo_block' => 'Manage promo blocks',
         'currency'    => 'Manage currencies',
         'tax'         => 'Manage taxes',
@@ -174,6 +174,6 @@
         'import_additional_category_info' => 'Set the list of additional product categories separated by commas.',
     ],
     'button'      => [
-        'import_offer_button' => 'Import offers from CSV',
+        'import_offer_button' => 'Importiere Angebote mit CSV',
     ],
 ];
