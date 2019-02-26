@@ -4,7 +4,7 @@
         'description' => '🛍️ Kostenlose E-Commerce-Plugin mit einer großen Reihe von Erweiterungen.',
     ],
     'field'       => [
-        'vendor_code'         => 'Vendor code',
+        'vendor_code'         => 'Herstellerkürzel',
         'price'               => 'Preis',
         'old_price'           => 'Alter Preis',
         'quantity'            => 'Menge',
@@ -39,7 +39,7 @@
         'all_shop_categories'       => 'Alle Produktkategorien',
         'promo_block'               => 'Promoblöcke',
         'promo'                     => 'Beförderungen',
-        'price_type'                => 'Price types',
+        'price_type'                => 'Preistypen',
         'price_type_description'    => 'Manage price types',
         'currency'                  => 'Currency',
         'currency_description'      => 'Manage currencies',
@@ -98,7 +98,7 @@
     ],
     'country'     => [
         'name'       => 'country',
-        'list_title' => 'Country list',
+        'list_title' => 'Länderliste',
     ],
     'state'       => [
         'name'       => 'state',
@@ -144,7 +144,7 @@
 
         //Common components
         'breadcrumbs_name'             => 'Breadcrumbs',
-        'breadcrumbs_description'      => 'Get data for catalog breadcrumbs',
+        'breadcrumbs_description'      => 'Daten für Brotkrümel abrufen',
 
         //Components settings
         'product_list_sorting'         => 'Standardsortierung',
