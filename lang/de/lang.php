@@ -132,7 +132,7 @@
 
         //Category components
         'category_page_name'           => 'Kategorieseite',
-        'category_page_description'    => 'Get data for category page',
+        'category_page_description'    => 'Daten für Kategorieseite abrufen',
         'category_data_name'           => 'Kategoriedaten',
         'category_data_description'    => 'Kategoriedaten nach ID abrufen',
         'category_list_name'           => 'Kategorienliste',
