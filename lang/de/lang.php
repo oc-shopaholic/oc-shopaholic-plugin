@@ -36,7 +36,7 @@
         'brands'                    => 'Marken',
         'shop_catalog'              => 'Produktkatalog',
         'shop_category'             => 'Produktkategorie',
-        'all_shop_categories'       => 'All categories of products',
+        'all_shop_categories'       => 'Alle Produktkategorien',
         'promo_block'               => 'Promo blocks',
         'promo'                     => 'Promotions',
         'price_type'                => 'Price types',
@@ -58,7 +58,7 @@
     ],
     'category'    => [
         'name'         => 'category',
-        'list_title'   => 'Category list',
+        'list_title'   => 'Kategorienliste',
         'import_title' => 'Importiere Kategorien',
         'export_title' => 'Exportiere Kategorien',
     ],
@@ -76,7 +76,7 @@
     ],
     'offer'       => [
         'name'         => 'offer',
-        'list_title'   => 'Offer list',
+        'list_title'   => 'Produktangeboteliste',
         'import_title' => 'Import offers',
         'export_title' => 'Export offers',
     ],
