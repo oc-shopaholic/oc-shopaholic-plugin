@@ -35,6 +35,8 @@ use Lovata\Shopaholic\Classes\Import\ImportOfferModel;
  * @property string                                                                                        $description
  * @property string                                                                                        $price
  * @property float                                                                                         $price_value
+ * @property string                                                                                        $discount_price
+ * @property float                                                                                         $discount_price_value
  * @property string                                                                                        $old_price
  * @property float                                                                                         $old_price_value
  * @property integer                                                                                       $quantity
@@ -47,9 +49,9 @@ use Lovata\Shopaholic\Classes\Import\ImportOfferModel;
  *
  * Relations
  * @property \System\Models\File                                                                           $preview_image
- * @property \October\Rain\Database\Collection                                                             $images
+ * @property \October\Rain\Database\Collection|\System\Models\File[]                                       $images
  *
- * @property \Lovata\Shopaholic\Models\Price[]                                                             $price_link
+ * @property \October\Rain\Database\Collection|\Lovata\Shopaholic\Models\Price[]                           $price_link
  * @method \October\Rain\Database\Relations\MorphMany|Price price_link()
  * @property \Lovata\Shopaholic\Models\Price                                                               $main_price
  * @method \October\Rain\Database\Relations\MorphOne|Price main_price()
@@ -70,8 +72,6 @@ use Lovata\Shopaholic\Classes\Import\ImportOfferModel;
  * @method static \October\Rain\Database\Relations\MorphMany|\Lovata\PropertiesShopaholic\Models\PropertyValueLink property_value()
  *
  * Discounts for Shopaholic
- * @property string                                                                                        $discount_price
- * @property float                                                                                         $discount_price_value
  * @property int                                                                                           $discount_id
  * @property float                                                                                         $discount_value
  * @property string                                                                                        $discount_type
@@ -172,12 +172,14 @@ class Offer extends ImportModel
         'price_value',
         'old_price',
         'old_price_value',
+        'discount_price',
+        'discount_price_value',
         'price_list',
     ];
     public $purgeable = [];
     public $casts = [];
 
-    public $arPriceField = ['price', 'old_price'];
+    public $arPriceField = ['price', 'old_price', 'discount_price'];
 
     public $visible = [];
     public $hidden = [];
@@ -350,7 +352,6 @@ class Offer extends ImportModel
 
         $fPrice = $obPriceModel->price_value;
         $fPrice = CurrencyHelper::instance()->convert($fPrice, $this->getActiveCurrency());
-        $this->setActiveCurrency(null);
 
         return $fPrice;
     }
@@ -371,6 +372,25 @@ class Offer extends ImportModel
         $fPrice = $obPriceModel->old_price_value;
         $fPrice = CurrencyHelper::instance()->convert($fPrice, $this->getActiveCurrency());
         $this->setActiveCurrency(null);
+
+        return $fPrice;
+    }
+
+    /**
+     * Get discount_price_value attribute
+     * @return float
+     */
+    protected function getDiscountPriceValueAttribute()
+    {
+        $obPriceModel = $this->getPriceObject($this->getActivePriceType());
+        $this->setActivePriceType(null);
+
+        if (empty($obPriceModel)) {
+            return 0;
+        }
+
+        $fPrice = $obPriceModel->discount_price_value;
+        $fPrice = CurrencyHelper::instance()->convert($fPrice, $this->getActiveCurrency());
 
         return $fPrice;
     }

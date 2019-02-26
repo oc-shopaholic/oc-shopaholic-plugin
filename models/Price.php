@@ -4,6 +4,7 @@ use Model;
 
 use October\Rain\Database\Traits\Validation;
 
+use Lovata\Toolbox\Classes\Helper\PriceHelper;
 use Lovata\Toolbox\Traits\Helpers\PriceHelperTrait;
 
 /**
@@ -14,16 +15,18 @@ use Lovata\Toolbox\Traits\Helpers\PriceHelperTrait;
  * @mixin \October\Rain\Database\Builder
  * @mixin \Eloquent
  *
- * @property                                    $id
- * @property int                                $item_id
- * @property string                             $item_type
- * @property string                             $price
- * @property float                              $price_value
- * @property string                             $old_price
- * @property float                              $old_price_value
- * @property int                                $price_type_id
- * @property \October\Rain\Argon\Argon          $created_at
- * @property \October\Rain\Argon\Argon          $updated_at
+ * @property                                     $id
+ * @property int                                 $item_id
+ * @property string                              $item_type
+ * @property string                              $price
+ * @property float                               $price_value
+ * @property string                              $discount_price
+ * @property float                               $discount_price_value
+ * @property string                              $old_price
+ * @property float                               $old_price_value
+ * @property int                                 $price_type_id
+ * @property \October\Rain\Argon\Argon           $created_at
+ * @property \October\Rain\Argon\Argon           $updated_at
  *
  * @property \Lovata\Shopaholic\Models\PriceType $price_type
  * @method \October\Rain\Database\Relations\BelongsTo|PriceType price_type()
@@ -63,12 +66,13 @@ class Price extends Model
     public $appends = [];
     public $purgeable = [];
 
-    public $arPriceField = ['price', 'old_price'];
+    public $arPriceField = ['price', 'old_price', 'discount_price'];
 
     public $fillable = [
         'item_id',
         'item_type',
         'price',
+        'discount_price',
         'old_price',
         'price_type_id',
     ];
@@ -124,5 +128,19 @@ class Price extends Model
         }
 
         return $obQuery;
+    }
+
+    /**
+     * Get discount_price_value attribute
+     * @return float
+     */
+    protected function getDiscountPriceValueAttribute()
+    {
+        $fPrice = 0;
+        if ($this->old_price_value > 0) {
+            $fPrice = PriceHelper::round($this->old_price_value - $this->price_value);
+        }
+
+        return $fPrice;
     }
 }

@@ -45,6 +45,15 @@ use Lovata\Shopaholic\Classes\Helper\CurrencyHelper;
  * @property string                                                                                                                      $old_price_with_tax
  * @property float                                                                                                                       $old_price_with_tax_value
  *
+ * @property string                                                                                                                      $discount_price
+ * @property float                                                                                                                       $discount_price_value
+ * @property string                                                                                                                      $tax_discount_price
+ * @property float                                                                                                                       $tax_discount_price_value
+ * @property string                                                                                                                      $discount_price_without_tax
+ * @property float                                                                                                                       $discount_price_without_tax_value
+ * @property string                                                                                                                      $discount_price_with_tax
+ * @property float                                                                                                                       $discount_price_with_tax_value
+ *
  * @property array                                                                                                                       $price_list
  * @property string                                                                                                                      $currency
  * @property string                                                                                                                      $currency_code
@@ -60,8 +69,6 @@ use Lovata\Shopaholic\Classes\Helper\CurrencyHelper;
  * @property \Lovata\PropertiesShopaholic\Classes\Collection\PropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[] $property
  *
  * Discounts for Shopaholic
- * @property string                                                                                                                      $discount_price
- * @property float                                                                                                                       $discount_price_value
  * @property int                                                                                                                         $discount_id
  * @property float                                                                                                                       $discount_value
  * @property string                                                                                                                      $discount_type
@@ -84,13 +91,17 @@ class OfferItem extends ElementItem
 
     public $arPriceField = [
         'price',
-        'old_price',
         'tax_price',
-        'tax_old_price',
-        'price_with_tax',
-        'old_price_with_tax',
         'price_without_tax',
+        'price_with_tax',
+        'old_price',
+        'tax_old_price',
         'old_price_without_tax',
+        'old_price_with_tax',
+        'discount_price',
+        'tax_discount_price',
+        'discount_price_without_tax',
+        'discount_price_with_tax',
     ];
 
     protected $iActivePriceType = null;
@@ -172,7 +183,6 @@ class OfferItem extends ElementItem
         }
 
         $fPrice = CurrencyHelper::instance()->convert($fPrice, $this->getActiveCurrency());
-        $this->setActiveCurrency(null);
 
         return $fPrice;
     }
@@ -190,7 +200,25 @@ class OfferItem extends ElementItem
         }
 
         $fPrice = CurrencyHelper::instance()->convert($fPrice, $this->getActiveCurrency());
-        $this->setActiveCurrency(null);
+
+        return $fPrice;
+    }
+
+    /**
+     * Get discount_price_value attribute
+     * @return float
+     */
+    protected function getDiscountPriceValueAttribute()
+    {
+        $fOldPrice = $this->old_price_value;
+        $fPrice = $this->price_value;
+
+        $fDiscountPrice = 0;
+        if ($fOldPrice > 0) {
+            $fDiscountPrice = PriceHelper::round($fOldPrice - $fPrice);
+        }
+
+        $fPrice = CurrencyHelper::instance()->convert($fDiscountPrice, $this->getActiveCurrency());
 
         return $fPrice;
     }
@@ -250,6 +278,17 @@ class OfferItem extends ElementItem
     }
 
     /**
+     * Get tax_discount_price_value attribute value
+     * @return float
+     */
+    protected function getTaxDiscountPriceValueAttribute()
+    {
+        $fPrice = PriceHelper::round($this->discount_price_with_tax_value - $this->discount_price_without_tax_value);
+
+        return $fPrice;
+    }
+
+    /**
      * Get price_with_tax_value attribute value
      * @return float
      */
@@ -272,6 +311,17 @@ class OfferItem extends ElementItem
     }
 
     /**
+     * Get discount_price_with_tax_value attribute value
+     * @return float
+     */
+    protected function getDiscountPriceWithTaxValueAttribute()
+    {
+        $fPrice = TaxHelper::instance()->getPriceWithTax($this->discount_price_value, $this->tax_percent);
+
+        return $fPrice;
+    }
+
+    /**
      * Get price_without_tax_value attribute value
      * @return float
      */
@@ -289,6 +339,17 @@ class OfferItem extends ElementItem
     protected function getOldPriceWithoutTaxValueAttribute()
     {
         $fPrice = TaxHelper::instance()->getPriceWithoutTax($this->old_price_value, $this->tax_percent);
+
+        return $fPrice;
+    }
+
+    /**
+     * Get discount_price_without_tax_value attribute value
+     * @return float
+     */
+    protected function getDiscountPriceWithoutTaxValueAttribute()
+    {
+        $fPrice = TaxHelper::instance()->getPriceWithoutTax($this->discount_price_value, $this->tax_percent);
 
         return $fPrice;
     }

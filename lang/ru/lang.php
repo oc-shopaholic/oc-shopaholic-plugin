@@ -18,6 +18,7 @@
         'category_parent_id'  => 'ID родительской категории',
         'product_id'          => 'ID товара',
         'configuration'       => 'Конфигурация каталога',
+        'discount_price'      => 'Значение скидки',
     ],
     'menu'        => [
         'main'                => 'Каталог',
