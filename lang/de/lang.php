@@ -14,7 +14,7 @@
         'check_offer_active'  => 'When you receive a list of active products, check for active offers',
         'additional_category' => 'Zusätzliche Kategorien',
         'promo_block_type'    => 'Promo block with product list',
-        'promo_block'         => 'Promo block',
+        'promo_block'         => 'Promoblock',
         'category_parent_id'  => 'Parent category ID',
         'product_id'          => 'Produkt ID',
         'rate'                => 'Rate',
@@ -37,7 +37,7 @@
         'shop_catalog'              => 'Produktkatalog',
         'shop_category'             => 'Produktkategorie',
         'all_shop_categories'       => 'Alle Produktkategorien',
-        'promo_block'               => 'Promo blocks',
+        'promo_block'               => 'Promoblöcke',
         'promo'                     => 'Promotions',
         'price_type'                => 'Price types',
         'price_type_description'    => 'Manage price types',
@@ -82,7 +82,7 @@
     ],
     'promo_block' => [
         'name'       => 'promo block',
-        'list_title' => 'Promo block list',
+        'list_title' => 'Promoblöckeliste',
     ],
     'price_type'  => [
         'name'       => 'price type',
@@ -123,12 +123,12 @@
         'brand_list_description'       => 'Markenübersicht abrufen',
 
         //Promo block components
-        'promo_block_page_name'        => 'Promo block page',
-        'promo_block_page_description' => 'Get data for promo block page',
-        'promo_block_data_name'        => 'Promo block data',
-        'promo_block_data_description' => 'Get promo block data by ID',
-        'promo_block_list_name'        => 'Promo block list',
-        'promo_block_list_description' => 'Get promo block list',
+        'promo_block_page_name'        => 'Promoblockseite',
+        'promo_block_page_description' => 'Daten für Promoblockseite abrufen',
+        'promo_block_data_name'        => 'Promoblockdaten',
+        'promo_block_data_description' => 'Promoblöckeliste nach ID abrufen',
+        'promo_block_list_name'        => 'Promoblöckeliste',
+        'promo_block_list_description' => 'Promoblockeliste abrufen',
 
         //Category components
         'category_page_name'           => 'Kategorieseite',
