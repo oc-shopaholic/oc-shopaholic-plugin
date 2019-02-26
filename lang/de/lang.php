@@ -77,7 +77,7 @@
     'offer'       => [
         'name'         => 'offer',
         'list_title'   => 'Produktangeboteliste',
-        'import_title' => 'Import offers',
+        'import_title' => 'Importiere Produktangebote',
         'export_title' => 'Export offers',
     ],
     'promo_block' => [
