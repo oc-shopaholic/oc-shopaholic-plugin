@@ -20,7 +20,7 @@
         'rate'                => 'Rate',
         'tax_is_global'       => 'Tax will apply to all products',
         'tax_percent'         => 'Tax percent',
-        'tax'                 => 'Налог',
+        'tax'                 => 'Tax',
         'without_tax'         => 'Without tax',
         'with_tax'            => 'With tax',
         'countries'           => 'Countries',
@@ -89,20 +89,20 @@
         'list_title' => 'Price type list',
     ],
     'currency'    => [
-        'name'       => 'currency',
-        'list_title' => 'Currency list',
+        'name'       => 'валюты',
+        'list_title' => 'Список валют',
     ],
     'tax'         => [
         'name'       => 'tax',
         'list_title' => 'Tax list',
     ],
     'country'     => [
-        'name'       => 'country',
+        'name'       => 'страны',
         'list_title' => 'Country list',
     ],
     'state'       => [
-        'name'       => 'state',
-        'list_title' => 'State list',
+        'name'       => 'региона',
+        'list_title' => 'Список регионов',
     ],
     'component'   => [
 
