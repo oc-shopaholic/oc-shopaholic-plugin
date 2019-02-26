@@ -20,7 +20,7 @@
         'rate'                => 'Rate',
         'tax_is_global'       => 'Tax will apply to all products',
         'tax_percent'         => 'Tax percent',
-        'tax'                 => 'Tax',
+        'tax'                 => 'Налог',
         'without_tax'         => 'Without tax',
         'with_tax'            => 'With tax',
         'countries'           => 'Countries',
