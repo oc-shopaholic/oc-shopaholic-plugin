@@ -29,6 +29,14 @@
         'price_include_tax'   => 'Price includes taxes',
         'discount_price'      => 'Discount price',
     ],
+    'settings'             => [
+        'formula_calculate_discount_from_price'      => 'Formula of calculating discounts on prices with taxes',
+        'formula_calculation_from_backend_price'     => 'Discount is deducted from backend price (default)',
+        'formula_calculation_from_price_without_tax' => 'Discount is deducted from price without taxes',
+        'formula_calculation_from_price_with_tax'    => 'Discount is deducted from price with taxes',
+
+        'order_create_email' => 'Email for sending mail when creating an order',
+    ],
     'menu'        => [
         'main'                      => 'Catalog',
         'categories'                => 'Categories',
@@ -150,7 +158,7 @@
         'product_list_sorting'         => 'Default sorting',
         'sorting_no'                   => 'Without sorting',
         'sorting_price_desc'           => 'Expensive',
-        'sorting_price_asc'            => 'Cheap',
+        'sorting_price_asc'            => 'Baratos',
         'sorting_new'                  => 'New',
         'sorting_popularity_desc'      => 'Popular',
         'sorting_rating_desc'          => 'High rating',
