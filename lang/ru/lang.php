@@ -29,6 +29,12 @@
         'price_include_tax'   => 'Цена включает в себя налоги',
         'discount_price'      => 'Значение скидки',
     ],
+    'settings'             => [
+        'formula_calculate_discount_from_price'      => 'Формула подсчета скидки для цен с налогами',
+        'formula_calculation_from_backend_price'     => 'Скидка вычитается из заданной цены (по-умолчанию)',
+        'formula_calculation_from_price_without_tax' => 'Скидка вычитается из цены без налога',
+        'formula_calculation_from_price_with_tax'    => 'Скидка вычитается из цены с налогом',
+    ],
     'menu'        => [
         'main'                      => 'Каталог',
         'categories'                => 'Категории',

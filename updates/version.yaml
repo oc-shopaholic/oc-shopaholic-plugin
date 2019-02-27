@@ -86,3 +86,5 @@
     - update_table_users_add_currency_field.php
     - seeder_transfer_offer_prices.php
     - update_table_offers_remove_price_field.php
+1.21.1:
+    - 'Fixed labels for tax settings.'
