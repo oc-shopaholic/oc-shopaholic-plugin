@@ -17,22 +17,44 @@
         'promo_block'         => 'Промо-блок',
         'category_parent_id'  => 'ID батьківської категорії',
         'product_id'          => 'ID товару',
+        'rate'                => 'Rate',
+        'tax_is_global'       => 'Tax will apply to all products',
+        'tax_percent'         => 'Tax percent',
+        'tax'                 => 'Tax',
+        'without_tax'         => 'Without tax',
+        'with_tax'            => 'With tax',
+        'countries'           => 'Countries',
+        'states'              => 'States',
+        'main_price_type'     => 'Main price',
+        'price_include_tax'   => 'Price includes taxes',
+        'discount_price'      => 'Discount price',
     ],
     'menu'        => [
-        'main'                => 'Каталог',
-        'categories'          => 'Категорії',
-        'product'             => 'Товари',
-        'brands'              => 'Бренди',
-        'shop_catalog'        => 'Каталог товарів',
-        'shop_category'       => 'Категорія товарів',
-        'all_shop_categories' => 'Всі категорії товарів',
-        'promo_block'         => 'Промо-блоки',
-        'promo'               => 'Промо-акції',
+        'main'                      => 'Каталог',
+        'categories'                => 'Категорії',
+        'product'                   => 'Товари',
+        'brands'                    => 'Бренди',
+        'shop_catalog'              => 'Каталог товарів',
+        'shop_category'             => 'Категорія товарів',
+        'all_shop_categories'       => 'Всі категорії товарів',
+        'promo_block'               => 'Промо-блоки',
+        'promo'                     => 'Промо-акції',
+        'price_type'                => 'Price types',
+        'price_type_description'    => 'Manage price types',
+        'currency'                  => 'Currency',
+        'currency_description'      => 'Manage currencies',
+        'tax'                       => 'Taxes',
+        'tax_description'           => 'Manage taxes',
+        'configuration'             => 'Catalog settings',
+        'main_settings'             => 'Basic settings',
+        'main_settings_description' => 'Basic settings of your catalog',
     ],
     'tab'         => [
         'offer'       => 'Торгові пропозиції',
         'price'       => 'Ціни',
         'permissions' => 'Shopaholic',
+        'settings'    => 'Catalog configuration',
+        'taxes'       => 'Taxes',
     ],
     'category'    => [
         'name'         => 'категорії',
@@ -61,6 +83,26 @@
     'promo_block' => [
         'name'       => 'промо-блоку',
         'list_title' => 'Список промо-блоків',
+    ],
+    'price_type'  => [
+        'name'       => 'price type',
+        'list_title' => 'Price type list',
+    ],
+    'currency'    => [
+        'name'       => 'currency',
+        'list_title' => 'Currency list',
+    ],
+    'tax'         => [
+        'name'       => 'tax',
+        'list_title' => 'Tax list',
+    ],
+    'country'     => [
+        'name'       => 'country',
+        'list_title' => 'Country list',
+    ],
+    'state'       => [
+        'name'       => 'state',
+        'list_title' => 'State list',
     ],
     'component'   => [
 
@@ -96,6 +138,10 @@
         'category_list_name'           => 'Список категорій',
         'category_list_description'    => 'Отримати дерево категорій',
 
+        //Currency components
+        'currency_list_name'           => 'Currency list',
+        'currency_list_description'    => '',
+
         //Common components
         'breadcrumbs_name'             => 'Хлібні крихти',
         'breadcrumbs_description'      => 'Отримати дані для формування хлібних крихт каталогу',
@@ -120,6 +166,9 @@
         'product'     => 'Управління товарами',
         'settings'    => 'Управління налаштуваннями',
         'promo_block' => 'Управління промо-блоками',
+        'currency'    => 'Manage currencies',
+        'tax'         => 'Manage taxes',
+        'price_type'  => 'Manage price types',
     ],
     'message'     => [
         'import_additional_category_info' => 'Вкажіть через кому список додаткових категорій товарів.',

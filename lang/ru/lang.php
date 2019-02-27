@@ -17,25 +17,44 @@
         'promo_block'         => 'Промо-блок',
         'category_parent_id'  => 'ID родительской категории',
         'product_id'          => 'ID товара',
-        'configuration'       => 'Конфигурация каталога',
+        'rate'                => 'Курс',
+        'tax_is_global'       => 'Налог будет применяться ко всем товарам',
+        'tax_percent'         => 'Процент налога',
+        'tax'                 => 'Налог',
+        'without_tax'         => 'Без налога',
+        'with_tax'            => 'С налогом',
+        'countries'           => 'Страны',
+        'states'              => 'Регионы',
+        'main_price_type'     => 'Основная цена',
+        'price_include_tax'   => 'Цена включает в себя налоги',
         'discount_price'      => 'Значение скидки',
     ],
     'menu'        => [
-        'main'                => 'Каталог',
-        'categories'          => 'Категории',
-        'product'             => 'Товары',
-        'brands'              => 'Бренды',
-        'shop_catalog'        => 'Каталог товаров',
-        'shop_category'       => 'Категория товаров',
-        'all_shop_categories' => 'Все категории товаров',
-        'promo_block'         => 'Промо-блоки',
-        'promo'               => 'Промо-акции',
-        'price_type'          => 'Типы цен',
+        'main'                      => 'Каталог',
+        'categories'                => 'Категории',
+        'product'                   => 'Товары',
+        'brands'                    => 'Бренды',
+        'shop_catalog'              => 'Каталог товаров',
+        'shop_category'             => 'Категория товаров',
+        'all_shop_categories'       => 'Все категории товаров',
+        'promo_block'               => 'Промо-блоки',
+        'promo'                     => 'Промо-акции',
+        'price_type'                => 'Типы цен',
+        'price_type_description'    => 'Управление типами цен',
+        'currency'                  => 'Валюта',
+        'currency_description'      => 'Управление валютами',
+        'tax'                       => 'Налоги',
+        'tax_description'           => 'Управление налогами',
+        'configuration'             => 'Настройки каталога',
+        'main_settings'             => 'Основные параметры',
+        'main_settings_description' => 'Основные параметры вашего каталога',
     ],
     'tab'         => [
         'offer'       => 'Торговые предложения',
         'price'       => 'Цены',
         'permissions' => 'Shopaholic',
+        'settings'    => 'Конфигурация каталога',
+        'taxes'       => 'Налоги',
     ],
     'category'    => [
         'name'         => 'категории',
@@ -65,9 +84,25 @@
         'name'       => 'промо-блока',
         'list_title' => 'Список промо-блоков',
     ],
-    'price_type' => [
+    'price_type'  => [
         'name'       => 'типа цен',
         'list_title' => 'Список типов цен',
+    ],
+    'currency'    => [
+        'name'       => 'валюты',
+        'list_title' => 'Список валют',
+    ],
+    'tax'         => [
+        'name'       => 'налога',
+        'list_title' => 'Список налогов',
+    ],
+    'country'     => [
+        'name'       => 'страны',
+        'list_title' => 'Список стран',
+    ],
+    'state'       => [
+        'name'       => 'региона',
+        'list_title' => 'Список регионов',
     ],
     'component'   => [
 
@@ -103,6 +138,10 @@
         'category_list_name'           => 'Список категорий',
         'category_list_description'    => 'Получить дерево категорий',
 
+        //Currency components
+        'currency_list_name'           => 'Список валют',
+        'currency_list_description'    => '',
+
         //Common components
         'breadcrumbs_name'             => 'Хлебные крошки',
         'breadcrumbs_description'      => 'Получить данные для формирования хлебных крошек каталога',
@@ -127,6 +166,8 @@
         'product'     => 'Управление товарами',
         'settings'    => 'Управление настройками',
         'promo_block' => 'Управление промо-блоками',
+        'currency'    => 'Управление валютами',
+        'tax'         => 'Управление налогами',
         'price_type'  => 'Управление типами цен',
     ],
     'message'     => [
