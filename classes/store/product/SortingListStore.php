@@ -26,15 +26,15 @@ class SortingListStore extends AbstractStoreWithParam
     {
         if ($this->sValue == ProductListStore::SORT_PRICE_ASC) {
             $arElementIDList = $this->getByPriceASC();
-        } else if ($this->sValue == ProductListStore::SORT_PRICE_DESC) {
+        } elseif ($this->sValue == ProductListStore::SORT_PRICE_DESC) {
             $arElementIDList = $this->getByPriceDESC();
-        } else if ($this->sValue == ProductListStore::SORT_NEW) {
+        } elseif ($this->sValue == ProductListStore::SORT_NEW) {
             $arElementIDList = $this->getNewProductList();
-        } else if ($this->sValue == ProductListStore::SORT_NO) {
+        } elseif ($this->sValue == ProductListStore::SORT_NO) {
             $arElementIDList = $this->getProductList();
-        } else if (preg_match('%^'.ProductListStore::SORT_PRICE_ASC.'\|.+%', $this->sValue)) {
+        } elseif (preg_match('%^'.ProductListStore::SORT_PRICE_ASC.'\|.+%', $this->sValue)) {
             $arElementIDList = $this->getByPriceTypeASC();
-        } else if (preg_match('%^'.ProductListStore::SORT_PRICE_DESC.'\|.+%', $this->sValue)) {
+        } elseif (preg_match('%^'.ProductListStore::SORT_PRICE_DESC.'\|.+%', $this->sValue)) {
             $arElementIDList = $this->getByPriceTypeDESC();
         } else {
             $arElementIDList = $this->getCustomSortingList();
