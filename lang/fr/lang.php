@@ -29,6 +29,14 @@
         'price_include_tax'   => 'Price includes taxes',
         'discount_price'      => 'Discount price',
     ],
+    'settings'             => [
+        'formula_calculate_discount_from_price'      => 'Formula of calculating discounts on prices with taxes',
+        'formula_calculation_from_backend_price'     => 'Discount is deducted from backend price (default)',
+        'formula_calculation_from_price_without_tax' => 'Discount is deducted from price without taxes',
+        'formula_calculation_from_price_with_tax'    => 'Discount is deducted from price with taxes',
+
+        'order_create_email' => 'Email for sending mail when creating an order',
+    ],
     'menu'        => [
         'main'                      => 'Catalogue',
         'categories'                => 'Catégories',
