@@ -11,7 +11,7 @@
         'brand'               => 'Бренд',
         'offer'               => 'Торгові пропозиції',
         'currency'            => 'Валюта',
-        'check_offer_active'  => 'Перевіряти наявність активних пропозицій при отриманні списку активних товарів',
+        'check_offer_active'  => 'When you receive a list of active products, check for active offers.',
         'additional_category' => 'Додаткові категорії',
         'promo_block_type'    => 'Промо-блок зі списком товарів',
         'promo_block'         => 'Промо-блок',
