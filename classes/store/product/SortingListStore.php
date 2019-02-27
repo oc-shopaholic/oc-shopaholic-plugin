@@ -79,6 +79,7 @@ class SortingListStore extends AbstractStoreWithParam
             ->select('lovata_shopaholic_offers.product_id')
             ->whereNull('lovata_shopaholic_prices.price_type_id')
             ->where('lovata_shopaholic_offers.active', true)
+            ->where('lovata_shopaholic_prices.item_type', Offer::class)
             ->orderBy('lovata_shopaholic_prices.price', 'asc')
             ->join('lovata_shopaholic_offers', 'lovata_shopaholic_offers.id', '=', 'lovata_shopaholic_prices.item_id')
             ->lists('product_id');
@@ -99,6 +100,7 @@ class SortingListStore extends AbstractStoreWithParam
             ->select('lovata_shopaholic_offers.product_id')
             ->whereNull('lovata_shopaholic_prices.price_type_id')
             ->where('lovata_shopaholic_offers.active', true)
+            ->where('lovata_shopaholic_prices.item_type', Offer::class)
             ->orderBy('lovata_shopaholic_prices.price', 'desc')
             ->join('lovata_shopaholic_offers', 'lovata_shopaholic_offers.id', '=', 'lovata_shopaholic_prices.item_id')
             ->lists('product_id');
@@ -124,6 +126,7 @@ class SortingListStore extends AbstractStoreWithParam
             ->select('lovata_shopaholic_offers.product_id')
             ->where('lovata_shopaholic_prices.price_type_id', $obPriceType->id)
             ->where('lovata_shopaholic_offers.active', true)
+            ->where('lovata_shopaholic_prices.item_type', Offer::class)
             ->orderBy('lovata_shopaholic_prices.price', 'asc')
             ->join('lovata_shopaholic_offers', 'lovata_shopaholic_offers.id', '=', 'lovata_shopaholic_prices.item_id')
             ->lists('product_id');
@@ -149,6 +152,7 @@ class SortingListStore extends AbstractStoreWithParam
             ->select('lovata_shopaholic_offers.product_id')
             ->where('lovata_shopaholic_prices.price_type_id', $obPriceType->id)
             ->where('lovata_shopaholic_offers.active', true)
+            ->where('lovata_shopaholic_prices.item_type', Offer::class)
             ->orderBy('lovata_shopaholic_prices.price', 'desc')
             ->join('lovata_shopaholic_offers', 'lovata_shopaholic_offers.id', '=', 'lovata_shopaholic_prices.item_id')
             ->lists('product_id');
