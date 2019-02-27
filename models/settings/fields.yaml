@@ -12,10 +12,10 @@ tabs:
             label: lovata.shopaholic::lang.field.price_include_tax
         formula_calculate_discount_from_price:
             tab: 'lovata.shopaholic::lang.tab.taxes'
-            label: 'lovata.ordersshopaholic::lang.settings.formula_calculate_discount_from_price'
+            label: 'lovata.shopaholic::lang.settings.formula_calculate_discount_from_price'
             span: left
             type: radio
             options:
-                discount_from_backend_price: 'lovata.ordersshopaholic::lang.settings.formula_calculation_from_backend_price'
-                discount_from_price_without_tax: 'lovata.ordersshopaholic::lang.settings.formula_calculation_from_price_without_tax'
-                discount_from_price_with_tax: 'lovata.ordersshopaholic::lang.settings.formula_calculation_from_price_with_tax'
+                discount_from_backend_price: 'lovata.shopaholic::lang.settings.formula_calculation_from_backend_price'
+                discount_from_price_without_tax: 'lovata.shopaholic::lang.settings.formula_calculation_from_price_without_tax'
+                discount_from_price_with_tax: 'lovata.shopaholic::lang.settings.formula_calculation_from_price_with_tax'
