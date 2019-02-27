@@ -11,7 +11,7 @@
         'brand'               => 'Брэнд',
         'offer'               => 'Таварныя прапановы',
         'currency'            => 'Валюта',
-        'check_offer_active'  => 'Правяраць наяўнасць актыўных гандлёвых прапаноў пры атрыманні спісу актыўных тавараў.',
+        'check_offer_active'  => 'When you receive a list of active products, check for active offers.',
         'additional_category' => 'Дадатковыя катэгорыі',
         'promo_block_type'    => 'Промо-блок со списком товаров',
         'promo_block'         => 'Прома-блок',
