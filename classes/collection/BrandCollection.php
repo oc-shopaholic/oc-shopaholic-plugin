@@ -10,9 +10,6 @@ use Lovata\Shopaholic\Classes\Store\BrandListStore;
  * @package Lovata\Shopaholic\Classes\Collection
  * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  *
- * @see     \Lovata\Shopaholic\Tests\Unit\Collection\BrandCollectionTest
- * @link    https://github.com/lovata/oc-shopaholic-plugin/wiki/BrandCollection
- *
  * Search for Shopaholic, Sphinx for Shopaholic
  * @method $this search(string $sSearch)
  */
@@ -21,7 +18,7 @@ class BrandCollection extends ElementCollection
     const ITEM_CLASS = BrandItem::class;
 
     /**
-     * Sort list
+     * Apply sorting
      * @return $this
      */
     public function sort()
@@ -33,8 +30,7 @@ class BrandCollection extends ElementCollection
     }
 
     /**
-     * Apply filter by active product list
-     * @see \Lovata\Shopaholic\Tests\Unit\Collection\BrandCollectionTest::testActiveList()
+     * Apply filter by active brand list
      * @return $this
      */
     public function active()
@@ -45,8 +41,7 @@ class BrandCollection extends ElementCollection
     }
 
     /**
-     * Filter product list by category ID
-     * @see \Lovata\Shopaholic\Tests\Unit\Collection\BrandCollectionTest::testCategoryFilter()
+     * Filter brand list by category ID
      * @param int $iCategoryID
      * @return $this
      */

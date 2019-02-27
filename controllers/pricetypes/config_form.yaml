@@ -1,0 +1,16 @@
+name: 'lovata.shopaholic::lang.price_type.name'
+modelClass: Lovata\Shopaholic\Models\PriceType
+form: $/lovata/shopaholic/models/pricetype/fields.yaml
+defaultRedirect: lovata/shopaholic/pricetypes
+create:
+    title: 'backend::lang.form.create_title'
+    redirect: 'lovata/shopaholic/pricetypes/update/:id'
+    redirectClose: lovata/shopaholic/pricetypes
+    flashSave: 'lovata.toolbox::lang.message.create_success'
+update:
+    title: 'backend::lang.form.update_title'
+    redirect: lovata/shopaholic/pricetypes
+    redirectClose: lovata/shopaholic/pricetypes
+    flashSave: 'lovata.toolbox::lang.message.update_success'
+    flashDelete: 'lovata.toolbox::lang.message.delete_success'
+preview: {  }

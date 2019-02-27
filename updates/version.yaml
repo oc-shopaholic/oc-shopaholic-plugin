@@ -70,3 +70,19 @@
     - 'Added translatable slug in Product, Brand, Category, PromoBlock models.'
 1.19.1:
     - 'Fixed permissions for promo block menu item. Thanks for contribution Andreas Kosmowicz.'
+1.20.0:
+    - 'Added Slovak language. Thanks for contribution vosco88.'
+1.21.0:
+    - 'Added multicurrency. Added taxes. Added price types. Added shopaholic:check.table.integrity artisan command.'
+    - create_table_taxes.php
+    - create_table_tax_category_relation.php
+    - create_table_tax_product_relation.php
+    - create_table_tax_country_relation.php
+    - create_table_tax_state_relation.php
+    - create_table_currency.php
+    - seeder_create_default_currency.php
+    - create_table_price_types.php
+    - create_table_prices.php
+    - update_table_users_add_currency_field.php
+    - seeder_transfer_offer_prices.php
+    - update_table_offers_remove_price_field.php

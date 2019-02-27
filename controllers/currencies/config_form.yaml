@@ -1,0 +1,16 @@
+name: 'lovata.shopaholic::lang.currency.name'
+modelClass: Lovata\Shopaholic\Models\Currency
+form: $/lovata/shopaholic/models/currency/fields.yaml
+defaultRedirect: lovata/shopaholic/currencies
+create:
+    title: 'backend::lang.form.create_title'
+    redirect: 'lovata/shopaholic/currencies/update/:id'
+    redirectClose: lovata/shopaholic/currencies
+    flashSave: 'lovata.toolbox::lang.message.create_success'
+update:
+    title: 'backend::lang.form.update_title'
+    redirect: lovata/shopaholic/currencies
+    redirectClose: lovata/shopaholic/currencies
+    flashSave: 'lovata.toolbox::lang.message.update_success'
+    flashDelete: 'lovata.toolbox::lang.message.delete_success'
+preview: {  }

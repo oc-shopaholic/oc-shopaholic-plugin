@@ -15,7 +15,7 @@ class PromoBlockCollection extends ElementCollection
     const ITEM_CLASS = PromoBlockItem::class;
 
     /**
-     * Sort list by
+     * Apply sorting
      * @param string $sSorting
      * @return $this
      */

@@ -14,7 +14,7 @@ tabs:
         quantity:
             label: 'lovata.shopaholic::lang.field.quantity'
             span: left
-            type: text
+            type: number
             default: 0
             tab: 'lovata.toolbox::lang.tab.settings'
         code:
@@ -27,15 +27,10 @@ tabs:
             span: left
             type: text
             tab: 'lovata.toolbox::lang.tab.settings'
-        price:
-            label: 'lovata.shopaholic::lang.field.price'
+        price_list:
             span: left
-            type: text
-            tab: 'lovata.shopaholic::lang.tab.price'
-        old_price:
-            label: 'lovata.shopaholic::lang.field.old_price'
-            span: right
-            type: text
+            type: partial
+            path: ~/plugins/lovata/shopaholic/views/offer_price_list.htm
             tab: 'lovata.shopaholic::lang.tab.price'
         preview_text:
             label: 'lovata.toolbox::lang.field.preview_text'

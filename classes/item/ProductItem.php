@@ -14,9 +14,6 @@ use Lovata\Shopaholic\Classes\Collection\OfferCollection;
  * @package Lovata\Shopaholic\Classes\Item
  * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  *
- * @see     \Lovata\Shopaholic\Tests\Unit\Item\ProductItemTest
- * @link    https://github.com/lovata/oc-shopaholic-plugin/wiki/ProductItem
- *
  * @property int                                                                                                                         $id
  * @property bool                                                                                                                        $active
  * @property bool                                                                                                                        $trashed

@@ -24,12 +24,12 @@ columns:
         label: 'lovata.shopaholic::lang.field.price'
         type: text
         searchable: false
-        sortable: true
+        sortable: false
     old_price:
         label: 'lovata.shopaholic::lang.field.old_price'
         type: text
         searchable: false
-        sortable: true
+        sortable: false
     id:
         label: 'lovata.toolbox::lang.field.id'
         type: text

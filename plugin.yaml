@@ -63,3 +63,12 @@ permissions:
     shopaholic-menu-promo-block:
         tab: 'lovata.shopaholic::lang.tab.permissions'
         label: 'lovata.shopaholic::lang.permission.promo_block'
+    shopaholic-menu-currency:
+        tab: 'lovata.shopaholic::lang.tab.permissions'
+        label: 'lovata.shopaholic::lang.permission.currency'
+    shopaholic-menu-tax:
+        tab: 'lovata.shopaholic::lang.tab.permissions'
+        label: 'lovata.shopaholic::lang.permission.tax'
+    shopaholic-menu-price-type:
+        tab: 'lovata.shopaholic::lang.tab.permissions'
+        label: 'lovata.shopaholic::lang.permission.price_type'

@@ -4,10 +4,10 @@ use Seeder;
 use Lovata\Toolbox\Models\Settings;
 
 /**
- * Class SeederDefaultStatus
- * @package Lovata\Toolbox\Updates
+ * Class SeederPriceFormat
+ * @package Lovata\Shopaholic\Updates
  */
-class SeederDefaultStatus extends Seeder
+class SeederPriceFormat extends Seeder
 {
     /**
      * Run seeder

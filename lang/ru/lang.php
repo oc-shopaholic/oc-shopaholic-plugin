@@ -27,7 +27,7 @@
         'states'              => 'Регионы',
         'main_price_type'     => 'Основная цена',
         'price_include_tax'   => 'Цена включает в себя налоги',
-        'discount_price'      => 'Цена со скидкой',
+        'discount_price'      => 'Значение скидки',
     ],
     'menu'        => [
         'main'                      => 'Каталог',

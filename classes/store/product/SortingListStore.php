@@ -1,6 +1,8 @@
 <?php namespace Lovata\Shopaholic\Classes\Store\Product;
 
+use DB;
 use Event;
+use Lovata\Shopaholic\Classes\Helper\PriceTypeHelper;
 use Lovata\Toolbox\Classes\Store\AbstractStoreWithParam;
 
 use Lovata\Shopaholic\Models\Offer;
@@ -22,22 +24,20 @@ class SortingListStore extends AbstractStoreWithParam
      */
     protected function getIDListFromDB() : array
     {
-        switch ($this->sValue) {
-            case ProductListStore::SORT_PRICE_ASC:
-                $arElementIDList = $this->getByPriceASC();
-                break;
-            case ProductListStore::SORT_PRICE_DESC:
-                $arElementIDList = $this->getByPriceDESC();
-                break;
-            case ProductListStore::SORT_NEW:
-                $arElementIDList = $this->getNewProductList();
-                break;
-            case ProductListStore::SORT_NO:
-                $arElementIDList = $this->getProductList();
-                break;
-            default:
-                $arElementIDList = $this->getCustomSortingList();
-                break;
+        if ($this->sValue == ProductListStore::SORT_PRICE_ASC) {
+            $arElementIDList = $this->getByPriceASC();
+        } else if ($this->sValue == ProductListStore::SORT_PRICE_DESC) {
+            $arElementIDList = $this->getByPriceDESC();
+        } else if ($this->sValue == ProductListStore::SORT_NEW) {
+            $arElementIDList = $this->getNewProductList();
+        } else if ($this->sValue == ProductListStore::SORT_NO) {
+            $arElementIDList = $this->getProductList();
+        } else if (preg_match('%^'.ProductListStore::SORT_PRICE_ASC.'\|.+%', $this->sValue)) {
+            $arElementIDList = $this->getByPriceTypeASC();
+        } else if (preg_match('%^'.ProductListStore::SORT_PRICE_DESC.'\|.+%', $this->sValue)) {
+            $arElementIDList = $this->getByPriceTypeDESC();
+        } else {
+            $arElementIDList = $this->getCustomSortingList();
         }
 
         return $arElementIDList;
@@ -75,7 +75,14 @@ class SortingListStore extends AbstractStoreWithParam
     {
         //Get product ID list (sort by offer price)
         //We can not use groupBy() in this place
-        $arElementIDList = (array) Offer::active()->orderBy('price', 'asc')->lists('product_id');
+        $arElementIDList = (array) DB::table('lovata_shopaholic_prices')
+            ->select('lovata_shopaholic_offers.product_id')
+            ->whereNull('lovata_shopaholic_prices.price_type_id')
+            ->where('lovata_shopaholic_offers.active', true)
+            ->where('lovata_shopaholic_prices.item_type', Offer::class)
+            ->orderBy('lovata_shopaholic_prices.price', 'asc')
+            ->join('lovata_shopaholic_offers', 'lovata_shopaholic_offers.id', '=', 'lovata_shopaholic_prices.item_id')
+            ->lists('product_id');
         $arElementIDList = array_unique($arElementIDList);
 
         return $arElementIDList;
@@ -89,7 +96,66 @@ class SortingListStore extends AbstractStoreWithParam
     {
         //Get product ID list (sort by offer price)
         //We can not use groupBy() in this place
-        $arElementIDList = (array) Offer::active()->orderBy('price', 'desc')->lists('product_id');
+        $arElementIDList = (array) DB::table('lovata_shopaholic_prices')
+            ->select('lovata_shopaholic_offers.product_id')
+            ->whereNull('lovata_shopaholic_prices.price_type_id')
+            ->where('lovata_shopaholic_offers.active', true)
+            ->where('lovata_shopaholic_prices.item_type', Offer::class)
+            ->orderBy('lovata_shopaholic_prices.price', 'desc')
+            ->join('lovata_shopaholic_offers', 'lovata_shopaholic_offers.id', '=', 'lovata_shopaholic_prices.item_id')
+            ->lists('product_id');
+        $arElementIDList = array_unique($arElementIDList);
+
+        return $arElementIDList;
+    }
+
+    /**
+     * Get sorting ID list by offer price with filter by price type (ASC)
+     * @return array
+     */
+    protected function getByPriceTypeASC() : array
+    {
+        $obPriceType = $this->getPriceTypeObject();
+        if (empty($obPriceType)) {
+            return $this->getByPriceASC();
+        }
+
+        //Get product ID list (sort by offer price)
+        //We can not use groupBy() in this place
+        $arElementIDList = (array) DB::table('lovata_shopaholic_prices')
+            ->select('lovata_shopaholic_offers.product_id')
+            ->where('lovata_shopaholic_prices.price_type_id', $obPriceType->id)
+            ->where('lovata_shopaholic_offers.active', true)
+            ->where('lovata_shopaholic_prices.item_type', Offer::class)
+            ->orderBy('lovata_shopaholic_prices.price', 'asc')
+            ->join('lovata_shopaholic_offers', 'lovata_shopaholic_offers.id', '=', 'lovata_shopaholic_prices.item_id')
+            ->lists('product_id');
+        $arElementIDList = array_unique($arElementIDList);
+
+        return $arElementIDList;
+    }
+
+    /**
+     * Get sorting ID list by offer price with filter by price type (DESC)
+     * @return array
+     */
+    protected function getByPriceTypeDESC() : array
+    {
+        $obPriceType = $this->getPriceTypeObject();
+        if (empty($obPriceType)) {
+            return $this->getByPriceDESC();
+        }
+
+        //Get product ID list (sort by offer price)
+        //We can not use groupBy() in this place
+        $arElementIDList = (array) DB::table('lovata_shopaholic_prices')
+            ->select('lovata_shopaholic_offers.product_id')
+            ->where('lovata_shopaholic_prices.price_type_id', $obPriceType->id)
+            ->where('lovata_shopaholic_offers.active', true)
+            ->where('lovata_shopaholic_prices.item_type', Offer::class)
+            ->orderBy('lovata_shopaholic_prices.price', 'desc')
+            ->join('lovata_shopaholic_offers', 'lovata_shopaholic_offers.id', '=', 'lovata_shopaholic_prices.item_id')
+            ->lists('product_id');
         $arElementIDList = array_unique($arElementIDList);
 
         return $arElementIDList;
@@ -115,5 +181,19 @@ class SortingListStore extends AbstractStoreWithParam
         $arElementIDList = (array) Product::lists('id');
 
         return $arElementIDList;
+    }
+
+    /**
+     * Get price type object
+     * @return \Lovata\Shopaholic\Models\PriceType
+     */
+    protected function getPriceTypeObject()
+    {
+        $arValuePartList = explode('|', $this->sValue);
+        $sPriceTypeCode = array_pop($arValuePartList);
+
+        $obPriceType = PriceTypeHelper::instance()->findByCode($sPriceTypeCode);
+
+        return $obPriceType;
     }
 }
