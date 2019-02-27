@@ -2,6 +2,10 @@
 
 use Backend\Models\ImportModel;
 
+use October\Rain\Database\Traits\Validation;
+use October\Rain\Database\Traits\SoftDelete;
+use October\Rain\Database\Traits\Purgeable;
+
 use Kharanenka\Scope\ActiveField;
 use Kharanenka\Scope\CodeField;
 use Kharanenka\Scope\ExternalIDField;
@@ -10,9 +14,8 @@ use Kharanenka\Scope\NameField;
 use Lovata\Toolbox\Traits\Helpers\TraitCached;
 use Lovata\Toolbox\Traits\Helpers\PriceHelperTrait;
 
-use October\Rain\Database\Traits\Validation;
-use October\Rain\Database\Traits\SoftDelete;
-use October\Rain\Database\Traits\Purgeable;
+use Lovata\Shopaholic\Classes\Item\OfferItem;
+use Lovata\Shopaholic\Classes\Helper\CurrencyHelper;
 use Lovata\Shopaholic\Classes\Import\ImportOfferModel;
 
 /**
@@ -23,62 +26,69 @@ use Lovata\Shopaholic\Classes\Import\ImportOfferModel;
  * @mixin \October\Rain\Database\Builder
  * @mixin \Eloquent
  *
- * @property                                   $id
- * @property bool                              $active
- * @property string                            $name
- * @property string                            $code
- * @property string                            $external_id
- * @property string                            $preview_text
- * @property string                            $description
- * @property string                            $price
- * @property float                             $price_value
- * @property string                            $old_price
- * @property float                             $old_price_value
- * @property integer                           $quantity
- * @property int                               $product_id
- * @property \October\Rain\Argon\Argon         $created_at
- * @property \October\Rain\Argon\Argon         $updated_at
- * @property \October\Rain\Argon\Argon         $deleted_at
+ * @property                                                                                               $id
+ * @property bool                                                                                          $active
+ * @property string                                                                                        $name
+ * @property string                                                                                        $code
+ * @property string                                                                                        $external_id
+ * @property string                                                                                        $preview_text
+ * @property string                                                                                        $description
+ * @property string                                                                                        $price
+ * @property float                                                                                         $price_value
+ * @property string                                                                                        $discount_price
+ * @property float                                                                                         $discount_price_value
+ * @property string                                                                                        $old_price
+ * @property float                                                                                         $old_price_value
+ * @property integer                                                                                       $quantity
+ * @property int                                                                                           $product_id
+ * @property \October\Rain\Argon\Argon                                                                     $created_at
+ * @property \October\Rain\Argon\Argon                                                                     $updated_at
+ * @property \October\Rain\Argon\Argon                                                                     $deleted_at
+ *
+ * @property float                                                                                         $tax_percent
  *
  * Relations
- * @property \System\Models\File               $preview_image
- * @property \October\Rain\Database\Collection $images
+ * @property \System\Models\File                                                                           $preview_image
+ * @property \October\Rain\Database\Collection|\System\Models\File[]                                       $images
  *
- * @property \Lovata\Shopaholic\Models\Product $product
+ * @property \October\Rain\Database\Collection|\Lovata\Shopaholic\Models\Price[]                           $price_link
+ * @method \October\Rain\Database\Relations\MorphMany|Price price_link()
+ * @property \Lovata\Shopaholic\Models\Price                                                               $main_price
+ * @method \October\Rain\Database\Relations\MorphOne|Price main_price()
+ *
+ * @property \Lovata\Shopaholic\Models\Product                                                             $product
  * @method \October\Rain\Database\Relations\BelongsTo|Product product()
  *
  * @method static $this getByProduct(int $iProductID)
  * @method static $this getByQuantity(int $iCount, string $sCondition = '=')
- * @method static $this getByPrice(int $iPrice, string $sCondition = '=')
- * @method static $this getByOldPrice(int $iPrice, string $sCondition = '=')
+ * @method static $this getByPrice(int $fPrice, string $sCondition = '=')
+ * @method static $this getByOldPrice(int $fPrice, string $sCondition = '=')
  *
  * Properties for Shopaholic
  * @see     \Lovata\PropertiesShopaholic\Classes\Event\OfferModelHandler::addPropertyMethods
- * @property array                             $property
+ * @property array                                                                                         $property
  *
- * @property \October\Rain\Database\Collection|\Lovata\PropertiesShopaholic\Models\PropertyValueLink[] $property_value
+ * @property \October\Rain\Database\Collection|\Lovata\PropertiesShopaholic\Models\PropertyValueLink[]     $property_value
  * @method static \October\Rain\Database\Relations\MorphMany|\Lovata\PropertiesShopaholic\Models\PropertyValueLink property_value()
  *
  * Discounts for Shopaholic
- * @property string $discount_price
- * @property float  $discount_price_value
- * @property int    $discount_id
- * @property float  $discount_value
- * @property string $discount_type
+ * @property int                                                                                           $discount_id
+ * @property float                                                                                         $discount_value
+ * @property string                                                                                        $discount_type
  *
  * Discounts for Shopaholic
- * @property \Lovata\DiscountsShopaholic\Models\Discount $active_discount
+ * @property \Lovata\DiscountsShopaholic\Models\Discount                                                   $active_discount
  * @method \October\Rain\Database\Relations\BelongsTo|\Lovata\DiscountsShopaholic\Models\Discount active_discount()
  *
- * @property \October\Rain\Database\Collection|\Lovata\DiscountsShopaholic\Models\Discount[] $discount
+ * @property \October\Rain\Database\Collection|\Lovata\DiscountsShopaholic\Models\Discount[]               $discount
  * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\DiscountsShopaholic\Models\Discount discount()
  *
  * Coupons for Shopaholic
- * @property \October\Rain\Database\Collection|\Lovata\CouponsShopaholic\Models\CouponGroup[] $coupon_group
+ * @property \October\Rain\Database\Collection|\Lovata\CouponsShopaholic\Models\CouponGroup[]              $coupon_group
  * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\CouponsShopaholic\Models\CouponGroup coupon_group()
  *
  * Campaign for Shopaholic
- * @property \October\Rain\Database\Collection|\Lovata\CampaignsShopaholic\Models\Campaign[] $campaign
+ * @property \October\Rain\Database\Collection|\Lovata\CampaignsShopaholic\Models\Campaign[]               $campaign
  * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\CampaignsShopaholic\Models\Campaign campaign()
  */
 class Offer extends ImportModel
@@ -113,7 +123,20 @@ class Offer extends ImportModel
     ];
     public $attachMany = ['images' => 'System\Models\File'];
     public $belongsTo = ['product' => [Product::class]];
-    public $morphMany = [];
+    public $morphMany = [
+        'price_link' => [
+            Price::class,
+            'name'       => 'item',
+            'conditions' => 'price_type_id is NOT NULL',
+        ],
+    ];
+    public $morphOne = [
+        'main_price' => [
+            Price::class,
+            'name'       => 'item',
+            'conditions' => 'price_type_id is NULL',
+        ],
+    ];
     public $belongsToMany = [];
 
     public $fillable = [
@@ -139,20 +162,82 @@ class Offer extends ImportModel
         'preview_image',
         'description',
         'images',
-        'price_value',
-        'old_price_value',
+        'price_list',
         'quantity',
     ];
 
     public $dates = ['created_at', 'updated_at', 'deleted_at'];
-    public $appends = [];
+    public $appends = [
+        'price',
+        'price_value',
+        'old_price',
+        'old_price_value',
+        'discount_price',
+        'discount_price_value',
+        'price_list',
+    ];
     public $purgeable = [];
     public $casts = [];
 
-    public $arPriceField = ['price', 'old_price'];
+    public $arPriceField = ['price', 'old_price', 'discount_price'];
 
     public $visible = [];
     public $hidden = [];
+
+    protected $fSavedPrice = null;
+    protected $fSavedOldPrice = null;
+    protected $arSavedPriceList = [];
+    protected $iActivePriceType = null;
+    protected $sActiveCurrency = null;
+
+    /**
+     * Set active price type
+     * @param int $iPriceTypeID
+     * @return Offer
+     */
+    public function setActivePriceType($iPriceTypeID)
+    {
+        $this->iActivePriceType = $iPriceTypeID;
+
+        return $this;
+    }
+
+    /**
+     * Set active currency code
+     * @param string $sActiveCurrencyCode
+     * @return Offer
+     */
+    public function setActiveCurrency($sActiveCurrencyCode)
+    {
+        $this->sActiveCurrency = $sActiveCurrencyCode;
+
+        return $this;
+    }
+
+    /**
+     * Get price object
+     * @param int $iPriceTypeID
+     * @return \Illuminate\Database\Eloquent\Model|Price|null
+     */
+    public function getPriceObject($iPriceTypeID = null)
+    {
+        if (empty($iPriceTypeID)) {
+            $obPriceModel = $this->main_price;
+        } else {
+            $obPriceModel = $this->price_link->where('price_type_id', $iPriceTypeID)->first();
+        }
+
+        return $obPriceModel;
+    }
+
+    /**
+     * After save model event
+     */
+    public function afterSave()
+    {
+        $this->savePriceValue(null, $this->fSavedPrice, $this->fSavedOldPrice);
+        $this->savePriceListValue();
+    }
 
     /**
      * Set quantity attribute value
@@ -232,5 +317,198 @@ class Offer extends ImportModel
         }
 
         $obImport->deactivateElements();
+    }
+
+    /**
+     * Get active price type
+     * @return int|null
+     */
+    public function getActivePriceType()
+    {
+        return $this->iActivePriceType;
+    }
+
+    /**
+     * Get active currency code
+     * @return int|null
+     */
+    public function getActiveCurrency()
+    {
+        return $this->sActiveCurrency;
+    }
+
+    /**
+     * Get price_value attribute
+     * @return float
+     */
+    protected function getPriceValueAttribute()
+    {
+        $obPriceModel = $this->getPriceObject($this->getActivePriceType());
+        $this->setActivePriceType(null);
+
+        if (empty($obPriceModel)) {
+            return 0;
+        }
+
+        $fPrice = $obPriceModel->price_value;
+        $fPrice = CurrencyHelper::instance()->convert($fPrice, $this->getActiveCurrency());
+
+        return $fPrice;
+    }
+
+    /**
+     * Get old_price_value attribute
+     * @return float
+     */
+    protected function getOldPriceValueAttribute()
+    {
+        $obPriceModel = $this->getPriceObject($this->getActivePriceType());
+        $this->setActivePriceType(null);
+
+        if (empty($obPriceModel)) {
+            return 0;
+        }
+
+        $fPrice = $obPriceModel->old_price_value;
+        $fPrice = CurrencyHelper::instance()->convert($fPrice, $this->getActiveCurrency());
+        $this->setActiveCurrency(null);
+
+        return $fPrice;
+    }
+
+    /**
+     * Get discount_price_value attribute
+     * @return float
+     */
+    protected function getDiscountPriceValueAttribute()
+    {
+        $obPriceModel = $this->getPriceObject($this->getActivePriceType());
+        $this->setActivePriceType(null);
+
+        if (empty($obPriceModel)) {
+            return 0;
+        }
+
+        $fPrice = $obPriceModel->discount_price_value;
+        $fPrice = CurrencyHelper::instance()->convert($fPrice, $this->getActiveCurrency());
+
+        return $fPrice;
+    }
+
+    /**
+     * Get price_list attribute
+     * @return array
+     */
+    protected function getPriceListAttribute()
+    {
+        $arResult = [];
+
+        foreach ($this->price_link as $obPrice) {
+            $arResult[$obPrice->price_type_id] = [
+                'price'     => $obPrice->price,
+                'old_price' => $obPrice->old_price,
+            ];
+        }
+
+        return $arResult;
+    }
+
+    /**
+     * Set price attribute
+     * Create or update Price model object
+     * @param string|float $sValue
+     */
+    protected function setPriceAttribute($sValue)
+    {
+        $this->fSavedPrice = $sValue;
+    }
+
+    /**
+     * Set old price attribute
+     * Create or update Price model object
+     * @param string|float $sValue
+     */
+    protected function setOldPriceAttribute($sValue)
+    {
+        $this->fSavedOldPrice = $sValue;
+    }
+
+    /**
+     * Set price list attribute
+     * Create or update Price model object
+     * @param string|float $arPriceList
+     */
+    protected function setPriceListAttribute($arPriceList)
+    {
+        if (empty($arPriceList) || !is_array($arPriceList)) {
+            return;
+        }
+
+        if (isset($arPriceList[0])) {
+            $this->fSavedPrice = array_get($arPriceList[0], 'price');
+            $this->fSavedOldPrice = array_get($arPriceList[0], 'old_price');
+            unset($arPriceList[0]);
+        }
+
+        $this->arSavedPriceList = $arPriceList;
+    }
+
+    /**
+     * Get tax_percent attribute value
+     * @return float
+     */
+    protected function getTaxPercentAttribute()
+    {
+        $obOfferItem = OfferItem::make($this->id, $this);
+
+        return $obOfferItem->tax_percent;
+    }
+
+    /**
+     * Create or update main price object
+     * @param int|null $iPriceTypeID
+     * @param float    $fPrice
+     * @param float    $fOldPrice
+     */
+    protected function savePriceValue($iPriceTypeID, $fPrice, $fOldPrice)
+    {
+        $obPriceModel = $this->getPriceObject($iPriceTypeID);
+        if (empty($obPriceModel)) {
+            $obPriceModel = Price::create([
+                'item_id'       => $this->id,
+                'item_type'     => static::class,
+                'price'         => $fPrice,
+                'old_price'     => $fOldPrice,
+                'price_type_id' => $iPriceTypeID,
+            ]);
+
+            if (empty($iPriceTypeID)) {
+                $this->main_price = $obPriceModel;
+            } else {
+                $this->price_link()->add($obPriceModel);
+            }
+        } else {
+            $obPriceModel->price = $fPrice;
+            $obPriceModel->old_price = $fOldPrice;
+            $obPriceModel->save();
+        }
+    }
+
+    /**
+     * Save additional price list
+     */
+    protected function savePriceListValue()
+    {
+        if (empty($this->arSavedPriceList)) {
+            return;
+        }
+
+        foreach ($this->arSavedPriceList as $iPriceTypeID => $arPriceData) {
+            if (empty($iPriceTypeID)) {
+                continue;
+            }
+
+            $this->savePriceValue($iPriceTypeID, array_get($arPriceData, 'price'), array_get($arPriceData, 'old_price'));
+        }
     }
 }

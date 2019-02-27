@@ -4,6 +4,7 @@ use Lovata\Toolbox\Models\Settings;
 use Lovata\Toolbox\Classes\Event\ModelHandler;
 
 use Lovata\Shopaholic\Models\Product;
+use Lovata\Shopaholic\Models\PriceType;
 use Lovata\Shopaholic\Classes\Item\ProductItem;
 use Lovata\Shopaholic\Classes\Item\CategoryItem;
 use Lovata\Shopaholic\Classes\Store\BrandListStore;
@@ -78,8 +79,7 @@ class ProductModelHandler extends ModelHandler
 
         ProductListStore::instance()->brand->clear($this->obElement->brand_id);
 
-        ProductListStore::instance()->sorting->clear(ProductListStore::SORT_PRICE_ASC);
-        ProductListStore::instance()->sorting->clear(ProductListStore::SORT_PRICE_DESC);
+        $this->clearProductSortingByPrice();
         ProductListStore::instance()->sorting->clear(ProductListStore::SORT_NEW);
         ProductListStore::instance()->sorting->clear(ProductListStore::SORT_NO);
 
@@ -111,8 +111,7 @@ class ProductModelHandler extends ModelHandler
 
         ProductListStore::instance()->brand->clear($this->obElement->brand_id);
 
-        ProductListStore::instance()->sorting->clear(ProductListStore::SORT_PRICE_ASC);
-        ProductListStore::instance()->sorting->clear(ProductListStore::SORT_PRICE_DESC);
+        $this->clearProductSortingByPrice();
         ProductListStore::instance()->sorting->clear(ProductListStore::SORT_NEW);
         ProductListStore::instance()->sorting->clear(ProductListStore::SORT_NO);
 
@@ -217,6 +216,26 @@ class ProductModelHandler extends ModelHandler
         $obCategoryItem = CategoryItem::make($iCategoryID);
         if ($obCategoryItem->isNotEmpty()) {
             $obCategoryItem->clearProductCount();
+        }
+    }
+
+    /**
+     * Clear offer sorting cache by price
+     */
+    protected function clearProductSortingByPrice()
+    {
+        ProductListStore::instance()->sorting->clear(ProductListStore::SORT_PRICE_ASC);
+        ProductListStore::instance()->sorting->clear(ProductListStore::SORT_PRICE_DESC);
+
+        //Get price types
+        $obPriceTypeList = PriceType::active()->get();
+        if ($obPriceTypeList->isEmpty()) {
+            return;
+        }
+
+        foreach ($obPriceTypeList as $obPriceType) {
+            ProductListStore::instance()->sorting->clear(ProductListStore::SORT_PRICE_ASC.'|'.$obPriceType->code);
+            ProductListStore::instance()->sorting->clear(ProductListStore::SORT_PRICE_DESC.'|'.$obPriceType->code);
         }
     }
 

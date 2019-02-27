@@ -1,0 +1,3 @@
+title: 'backend::lang.reorder.default_title'
+modelClass: Lovata\Shopaholic\Models\Currency
+nameFrom: name

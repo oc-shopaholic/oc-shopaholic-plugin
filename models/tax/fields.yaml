@@ -1,0 +1,75 @@
+fields:
+    active:
+        label: 'lovata.toolbox::lang.field.active'
+        span: left
+        default: 1
+        type: switch
+    is_global:
+        label: 'lovata.shopaholic::lang.field.tax_is_global'
+        span: right
+        default: 1
+        type: switch
+    name:
+        label: 'lovata.toolbox::lang.field.name'
+        span: left
+        required: 1
+        type: text
+    percent:
+        label: 'lovata.shopaholic::lang.field.tax_percent'
+        span: right
+        type: number
+tabs:
+    fields:
+        description:
+            label: 'lovata.toolbox::lang.field.description'
+            span: left
+            type: textarea
+            tab: 'lovata.toolbox::lang.tab.settings'
+        category:
+            span: full
+            context:
+            - update
+            - preview
+            type: partial
+            path: ~/plugins/lovata/shopaholic/controllers/taxes/_category.htm
+            tab: 'lovata.shopaholic::lang.menu.categories'
+            trigger:
+                action: hide
+                field: is_global
+                condition: checked
+        product:
+            span: full
+            context:
+            - update
+            - preview
+            type: partial
+            path: ~/plugins/lovata/shopaholic/controllers/taxes/_product.htm
+            tab: 'lovata.shopaholic::lang.menu.product'
+            trigger:
+                action: hide
+                field: is_global
+                condition: checked
+        country:
+            span: full
+            context:
+            - update
+            - preview
+            type: partial
+            path: ~/plugins/lovata/shopaholic/controllers/taxes/_country.htm
+            tab: 'lovata.shopaholic::lang.field.countries'
+            trigger:
+                action: hide
+                field: is_global
+                condition: checked
+        state:
+            span: full
+            context:
+            - update
+            - preview
+            type: partial
+            path: ~/plugins/lovata/shopaholic/controllers/taxes/_state.htm
+            tab: 'lovata.shopaholic::lang.field.states'
+            trigger:
+                action: hide
+                field: is_global
+                condition: checked

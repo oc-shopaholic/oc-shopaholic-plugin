@@ -1,7 +1,7 @@
 <?php return [
     'plugin'      => [
         'name'        => 'Shopaholic',
-        'description' => 'ECサイト向け製品カタログ',
+        'description' => '🛍️ Free eCommerce plugin with a large set of extensions.',
     ],
     'field'       => [
         'vendor_code'         => 'ベンダーコード',

@@ -1,52 +1,77 @@
 <?php namespace Lovata\Shopaholic\Classes\Item;
 
+use Lovata\Toolbox\Classes\Helper\PriceHelper;
 use Lovata\Toolbox\Classes\Item\ElementItem;
 use Lovata\Toolbox\Traits\Helpers\PriceHelperTrait;
 
 use Lovata\Shopaholic\Models\Offer;
+use Lovata\Shopaholic\Classes\Helper\TaxHelper;
 use Lovata\Shopaholic\Classes\Helper\CurrencyHelper;
 
 /**
  * Class OfferItem
  * @package Lovata\Shopaholic\Classes\Item
- * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  *
- * @see \Lovata\Shopaholic\Tests\Unit\Item\OfferItemTest
- * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/OfferItem
+ * @property int                                                                                                                         $id
+ * @property bool                                                                                                                        $active
+ * @property bool                                                                                                                        $trashed
+ * @property string                                                                                                                      $name
+ * @property string                                                                                                                      $code
+ * @property int                                                                                                                         $product_id
+ * @property ProductItem                                                                                                                 $product
  *
- * @property int         $id
- * @property bool        $active
- * @property bool        $trashed
- * @property string      $name
- * @property string      $code
- * @property int         $product_id
- * @property ProductItem $product
+ * @property string                                                                                                                      $preview_text
+ * @property \System\Models\File                                                                                                         $preview_image
  *
- * @property string      $preview_text
- * @property \System\Models\File $preview_image
+ * @property string                                                                                                                      $description
+ * @property \October\Rain\Database\Collection|\System\Models\File[]                                                                     $images
  *
- * @property string      $description
- * @property \October\Rain\Database\Collection|\System\Models\File[]  $images
+ * @property string                                                                                                                      $price
+ * @property float                                                                                                                       $price_value
+ * @property string                                                                                                                      $tax_price
+ * @property float                                                                                                                       $tax_price_value
+ * @property string                                                                                                                      $price_without_tax
+ * @property float                                                                                                                       $price_without_tax_value
+ * @property string                                                                                                                      $price_with_tax
+ * @property float                                                                                                                       $price_with_tax_value
  *
- * @property string      $price
- * @property string      $old_price
- * @property float       $price_value
- * @property float       $old_price_value
- * @property string      $currency
+ * @property string                                                                                                                      $old_price
+ * @property float                                                                                                                       $old_price_value
+ * @property string                                                                                                                      $tax_old_price
+ * @property float                                                                                                                       $tax_old_price_value
+ * @property string                                                                                                                      $old_price_without_tax
+ * @property float                                                                                                                       $old_price_without_tax_value
+ * @property string                                                                                                                      $old_price_with_tax
+ * @property float                                                                                                                       $old_price_with_tax_value
  *
- * @property int         $quantity
+ * @property string                                                                                                                      $discount_price
+ * @property float                                                                                                                       $discount_price_value
+ * @property string                                                                                                                      $tax_discount_price
+ * @property float                                                                                                                       $tax_discount_price_value
+ * @property string                                                                                                                      $discount_price_without_tax
+ * @property float                                                                                                                       $discount_price_without_tax_value
+ * @property string                                                                                                                      $discount_price_with_tax
+ * @property float                                                                                                                       $discount_price_with_tax_value
+ *
+ * @property array                                                                                                                       $price_list
+ * @property string                                                                                                                      $currency
+ * @property string                                                                                                                      $currency_code
+ *
+ * @property float                                                                                                                       $tax_percent
+ * @property \Lovata\Shopaholic\Classes\Collection\TaxCollection|\Lovata\Shopaholic\Classes\Item\TaxItem[]                               $tax_list
+ *
+ * @property int                                                                                                                         $quantity
  *
  * Properties for Shopaholic
- * @see \Lovata\PropertiesShopaholic\Classes\Event\OfferModelHandler::extendOfferItem
- * @property array       $property_value_array
+ * @see     \Lovata\PropertiesShopaholic\Classes\Event\OfferModelHandler::extendOfferItem
+ * @property array                                                                                                                       $property_value_array
  * @property \Lovata\PropertiesShopaholic\Classes\Collection\PropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[] $property
  *
  * Discounts for Shopaholic
- * @property string $discount_price
- * @property float  $discount_price_value
- * @property int    $discount_id
- * @property float  $discount_value
- * @property string $discount_type
+ * @property int                                                                                                                         $discount_id
+ * @property float                                                                                                                       $discount_value
+ * @property string                                                                                                                      $discount_type
  */
 class OfferItem extends ElementItem
 {
@@ -64,7 +89,23 @@ class OfferItem extends ElementItem
         ],
     ];
 
-    public $arPriceField = ['price', 'old_price'];
+    public $arPriceField = [
+        'price',
+        'tax_price',
+        'price_without_tax',
+        'price_with_tax',
+        'old_price',
+        'tax_old_price',
+        'old_price_without_tax',
+        'old_price_with_tax',
+        'discount_price',
+        'tax_discount_price',
+        'discount_price_without_tax',
+        'discount_price_with_tax',
+    ];
+
+    protected $iActivePriceType = null;
+    protected $sActiveCurrency = null;
 
     /**
      * Check element, active == true, trashed == false
@@ -76,11 +117,110 @@ class OfferItem extends ElementItem
     }
 
     /**
+     * Set active price type
+     * @param int $iPriceTypeID
+     * @return OfferItem
+     */
+    public function setActivePriceType($iPriceTypeID)
+    {
+        $this->iActivePriceType = $iPriceTypeID;
+
+        return $this;
+    }
+
+    /**
+     * Set active currency code
+     * @param string $sActiveCurrencyCode
+     * @return OfferItem
+     */
+    public function setActiveCurrency($sActiveCurrencyCode)
+    {
+        $this->sActiveCurrency = $sActiveCurrencyCode;
+
+        return $this;
+    }
+
+    /**
+     * Get active price type
+     * @return int|null
+     */
+    public function getActivePriceType()
+    {
+        return $this->iActivePriceType;
+    }
+
+    /**
+     * Get active currency code
+     * @return int|null
+     */
+    public function getActiveCurrency()
+    {
+        if (!empty($this->sActiveCurrency)) {
+            return $this->sActiveCurrency;
+        }
+
+        return CurrencyHelper::instance()->getActiveCurrencyCode();
+    }
+
+    /**
      * Set element object
      */
     protected function setElementObject()
     {
-        $this->obElement = Offer::withTrashed()->find($this->iElementID);
+        $this->obElement = Offer::withTrashed()->with('main_price', 'price_link')->find($this->iElementID);
+    }
+
+    /**
+     * Get price_value attribute
+     * @return float
+     */
+    protected function getPriceValueAttribute()
+    {
+        if (empty($this->iActivePriceType)) {
+            $fPrice = $this->getAttribute('price_value');
+        } else {
+            $fPrice = array_get($this->price_list, $this->iActivePriceType.'.price');
+        }
+
+        $fPrice = CurrencyHelper::instance()->convert($fPrice, $this->getActiveCurrency());
+
+        return $fPrice;
+    }
+
+    /**
+     * Get old_price_value attribute
+     * @return float
+     */
+    protected function getOldPriceValueAttribute()
+    {
+        if (empty($this->iActivePriceType)) {
+            $fPrice = $this->getAttribute('old_price_value');
+        } else {
+            $fPrice = array_get($this->price_list, $this->iActivePriceType.'.old_price');
+        }
+
+        $fPrice = CurrencyHelper::instance()->convert($fPrice, $this->getActiveCurrency());
+
+        return $fPrice;
+    }
+
+    /**
+     * Get discount_price_value attribute
+     * @return float
+     */
+    protected function getDiscountPriceValueAttribute()
+    {
+        $fOldPrice = $this->old_price_value;
+        $fPrice = $this->price_value;
+
+        $fDiscountPrice = 0;
+        if ($fOldPrice > 0) {
+            $fDiscountPrice = PriceHelper::round($fOldPrice - $fPrice);
+        }
+
+        $fPrice = CurrencyHelper::instance()->convert($fDiscountPrice, $this->getActiveCurrency());
+
+        return $fPrice;
     }
 
     /**
@@ -89,7 +229,185 @@ class OfferItem extends ElementItem
      */
     protected function getCurrencyAttribute()
     {
-        return CurrencyHelper::instance()->getActive();
+        if (empty($this->sActiveCurrency)) {
+            return CurrencyHelper::instance()->getActiveCurrencySymbol();
+        }
+
+        $sResult = CurrencyHelper::instance()->getCurrencySymbol($this->sActiveCurrency);
+        $this->sActiveCurrency = null;
+
+        return $sResult;
+    }
+
+    /**
+     * Get currency code value
+     * @return null|string
+     */
+    protected function getCurrencyCodeAttribute()
+    {
+        if (empty($this->sActiveCurrency)) {
+            return CurrencyHelper::instance()->getActiveCurrencyCode();
+        }
+
+        $sResult = CurrencyHelper::instance()->getCurrencyCode($this->sActiveCurrency);
+        $this->sActiveCurrency = null;
+
+        return $sResult;
+    }
+
+    /**
+     * Get tax_price_value attribute value
+     * @return float
+     */
+    protected function getTaxPriceValueAttribute()
+    {
+        $fPrice = PriceHelper::round($this->price_with_tax_value - $this->price_without_tax_value);
+
+        return $fPrice;
+    }
+
+    /**
+     * Get tax_old_price_value attribute value
+     * @return float
+     */
+    protected function getTaxOldPriceValueAttribute()
+    {
+        $fPrice = PriceHelper::round($this->old_price_with_tax_value - $this->old_price_without_tax_value);
+
+        return $fPrice;
+    }
+
+    /**
+     * Get tax_discount_price_value attribute value
+     * @return float
+     */
+    protected function getTaxDiscountPriceValueAttribute()
+    {
+        $fPrice = PriceHelper::round($this->discount_price_with_tax_value - $this->discount_price_without_tax_value);
+
+        return $fPrice;
+    }
+
+    /**
+     * Get price_with_tax_value attribute value
+     * @return float
+     */
+    protected function getPriceWithTaxValueAttribute()
+    {
+        $fPrice = TaxHelper::instance()->getPriceWithTax($this->price_value, $this->tax_percent);
+
+        return $fPrice;
+    }
+
+    /**
+     * Get old_price_with_tax_value attribute value
+     * @return float
+     */
+    protected function getOldPriceWithTaxValueAttribute()
+    {
+        $fPrice = TaxHelper::instance()->getPriceWithTax($this->old_price_value, $this->tax_percent);
+
+        return $fPrice;
+    }
+
+    /**
+     * Get discount_price_with_tax_value attribute value
+     * @return float
+     */
+    protected function getDiscountPriceWithTaxValueAttribute()
+    {
+        $fPrice = TaxHelper::instance()->getPriceWithTax($this->discount_price_value, $this->tax_percent);
+
+        return $fPrice;
+    }
+
+    /**
+     * Get price_without_tax_value attribute value
+     * @return float
+     */
+    protected function getPriceWithoutTaxValueAttribute()
+    {
+        $fPrice = TaxHelper::instance()->getPriceWithoutTax($this->price_value, $this->tax_percent);
+
+        return $fPrice;
+    }
+
+    /**
+     * Get old_price_without_tax_value attribute value
+     * @return float
+     */
+    protected function getOldPriceWithoutTaxValueAttribute()
+    {
+        $fPrice = TaxHelper::instance()->getPriceWithoutTax($this->old_price_value, $this->tax_percent);
+
+        return $fPrice;
+    }
+
+    /**
+     * Get discount_price_without_tax_value attribute value
+     * @return float
+     */
+    protected function getDiscountPriceWithoutTaxValueAttribute()
+    {
+        $fPrice = TaxHelper::instance()->getPriceWithoutTax($this->discount_price_value, $this->tax_percent);
+
+        return $fPrice;
+    }
+
+    /**
+     * Get tax_percent attribute value
+     * @return float
+     */
+    protected function getTaxPercentAttribute()
+    {
+        $fTaxPercent = $this->getAttribute('tax_percent');
+        if ($fTaxPercent === null) {
+            $fTaxPercent = TaxHelper::instance()->getTaxPercent($this->tax_list);
+            $this->setAttribute('tax_percent', $fTaxPercent);
+        }
+
+        return $fTaxPercent;
+    }
+
+    /**
+     * Get tax_list attribute value
+     * @return \Lovata\Shopaholic\Classes\Collection\TaxCollection|TaxItem[]
+     */
+    protected function getTaxListAttribute()
+    {
+        $obTaxList = $this->getAttribute('tax_list');
+        if ($obTaxList === null) {
+            $obTaxList = $this->getAppliedTaxList();
+            $this->setAttribute('tax_list', $obTaxList);
+        }
+
+        return $obTaxList;
+    }
+
+    /**
+     * Get applied tax list
+     * @return \Lovata\Shopaholic\Classes\Collection\TaxCollection|\Lovata\Shopaholic\Classes\Item\TaxItem[]
+     */
+    protected function getAppliedTaxList()
+    {
+        $obResultTaxList = TaxHelper::instance()->getTaxList();
+        if ($obResultTaxList->isEmpty()) {
+            return $obResultTaxList;
+        }
+
+        foreach ($obResultTaxList as $obTaxItem) {
+            $bSkipTax = !$obTaxItem->is_global
+                && !$obTaxItem->isAvailableForCategory($this->product->category)
+                && !$obTaxItem->isAvailableForProduct($this->product)
+                && !$obTaxItem->isAvailableForCountry(TaxHelper::instance()->getActiveCountry())
+                && !$obTaxItem->isAvailableForState(TaxHelper::instance()->getActiveState());
+
+            if ($bSkipTax) {
+                $obResultTaxList->exclude($obTaxItem->id);
+            }
+        }
+
+        return $obResultTaxList;
     }
 
     /**
@@ -99,8 +417,13 @@ class OfferItem extends ElementItem
      */
     protected function getElementData()
     {
+        $obDefaultCurrency = CurrencyHelper::instance()->getDefault();
+        $sCurrencyCode = !empty($obDefaultCurrency) ? $obDefaultCurrency->code : null;
+
         $arResult = [
-            'trashed'       => $this->obElement->trashed(),
+            'price_value'     => $this->obElement->setActiveCurrency($sCurrencyCode)->setActivePriceType(null)->price_value,
+            'old_price_value' => $this->obElement->setActiveCurrency($sCurrencyCode)->setActivePriceType(null)->old_price_value,
+            'trashed'         => $this->obElement->trashed(),
         ];
 
         return $arResult;

@@ -1,0 +1,11 @@
+# ===================================
+# Filter Scope Definitions
+# ===================================
+
+scopes:
+    active:
+        label: 'lovata.toolbox::lang.field.active'
+        type: switch
+        conditions:
+            - active <> true
+            - active = true

@@ -1,0 +1,16 @@
+name: 'lovata.shopaholic::lang.tax.name'
+modelClass: Lovata\Shopaholic\Models\Tax
+form: $/lovata/shopaholic/models/tax/fields.yaml
+defaultRedirect: lovata/shopaholic/taxes
+create:
+    title: 'backend::lang.form.create_title'
+    redirect: 'lovata/shopaholic/taxes/update/:id'
+    redirectClose: lovata/shopaholic/taxes
+    flashSave: 'lovata.toolbox::lang.message.create_success'
+update:
+    title: 'backend::lang.form.update_title'
+    redirect: lovata/shopaholic/taxes
+    redirectClose: lovata/shopaholic/taxes
+    flashSave: 'lovata.toolbox::lang.message.update_success'
+    flashDelete: 'lovata.toolbox::lang.message.delete_success'
+preview: {  }

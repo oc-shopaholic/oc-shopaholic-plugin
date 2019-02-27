@@ -1,5 +1,6 @@
 <?php namespace Lovata\Shopaholic\Classes\Event\Offer;
 
+use Lovata\Shopaholic\Models\PriceType;
 use Lovata\Toolbox\Classes\Event\ModelHandler;
 
 use Lovata\Shopaholic\Models\Offer;
@@ -39,7 +40,6 @@ class OfferModelHandler extends ModelHandler
         parent::afterSave();
 
         $this->checkProductIDField();
-        $this->checkPriceField();
 
         $this->checkActiveField();
     }
@@ -55,22 +55,15 @@ class OfferModelHandler extends ModelHandler
             $this->clearProductActiveList();
             $this->clearProductItemCache($this->obElement->product_id);
             OfferListStore::instance()->active->clear();
-        }
 
-        //Get product object
-        $obProduct = $this->obElement->product;
-        if (empty($obProduct) || !$this->obElement->active) {
-            return;
-        }
+            $this->clearOfferSortingByPrice();
 
-        //Clear sorting product list by offer price
-        ProductListStore::instance()->sorting->clear(ProductListStore::SORT_PRICE_ASC);
-        ProductListStore::instance()->sorting->clear(ProductListStore::SORT_PRICE_DESC);
+            //Clear sorting product list by offer price
+            $this->clearProductSortingByPrice();
+        }
 
         OfferListStore::instance()->sorting->clear(OfferListStore::SORT_NO);
         OfferListStore::instance()->sorting->clear(OfferListStore::SORT_NEW);
-        OfferListStore::instance()->sorting->clear(OfferListStore::SORT_PRICE_ASC);
-        OfferListStore::instance()->sorting->clear(OfferListStore::SORT_PRICE_DESC);
     }
 
     /**
@@ -84,22 +77,15 @@ class OfferModelHandler extends ModelHandler
             $this->clearProductActiveList();
             $this->clearProductItemCache($this->obElement->product_id);
             OfferListStore::instance()->active->clear();
-        }
 
-        //Get product object
-        $obProduct = $this->obElement->product;
-        if (empty($obProduct) || !$this->obElement->active) {
-            return;
-        }
+            $this->clearOfferSortingByPrice();
 
-        //Clear sorting product list by offer price
-        ProductListStore::instance()->sorting->clear(ProductListStore::SORT_PRICE_ASC);
-        ProductListStore::instance()->sorting->clear(ProductListStore::SORT_PRICE_DESC);
+            //Clear sorting product list by offer price
+            $this->clearProductSortingByPrice();
+        }
 
         OfferListStore::instance()->sorting->clear(OfferListStore::SORT_NO);
         OfferListStore::instance()->sorting->clear(OfferListStore::SORT_NEW);
-        OfferListStore::instance()->sorting->clear(OfferListStore::SORT_PRICE_ASC);
-        OfferListStore::instance()->sorting->clear(OfferListStore::SORT_PRICE_DESC);
     }
 
     /**
@@ -137,38 +123,6 @@ class OfferModelHandler extends ModelHandler
     }
 
     /**
-     * Clear cache, if price field changed
-     */
-    protected function checkPriceField()
-    {
-        if ($this->obElement->getOriginal('price') != $this->obElement->price_value) {
-            OfferListStore::instance()->sorting->clear(OfferListStore::SORT_PRICE_ASC);
-            OfferListStore::instance()->sorting->clear(OfferListStore::SORT_PRICE_DESC);
-        }
-
-        $bNeedUpdateFlag =
-            $this->obElement->getOriginal('active') != $this->obElement->active
-            || (
-                $this->obElement->active
-                && $this->obElement->getOriginal('active') == $this->obElement->active
-                && $this->obElement->getOriginal('price') != $this->obElement->price_value
-            );
-
-        if (!$bNeedUpdateFlag) {
-            return;
-        }
-
-        //Get product object
-        $obProduct = $this->obElement->product;
-        if (empty($obProduct)) {
-            return;
-        }
-
-        ProductListStore::instance()->sorting->clear(ProductListStore::SORT_PRICE_ASC);
-        ProductListStore::instance()->sorting->clear(ProductListStore::SORT_PRICE_DESC);
-    }
-
-    /**
      * Check offer "active" field, if it was changed, then clear cache
      */
     protected function checkActiveField()
@@ -180,6 +134,8 @@ class OfferModelHandler extends ModelHandler
 
         $this->clearProductActiveList();
         OfferListStore::instance()->active->clear();
+
+        $this->clearProductSortingByPrice();
 
         $obProduct = $this->obElement->product;
         if (empty($obProduct)) {
@@ -206,6 +162,46 @@ class OfferModelHandler extends ModelHandler
         }
 
         ProductListStore::instance()->active->clear();
+    }
+
+    /**
+     * Clear offer sorting cache by price
+     */
+    protected function clearOfferSortingByPrice()
+    {
+        OfferListStore::instance()->sorting->clear(OfferListStore::SORT_PRICE_ASC);
+        OfferListStore::instance()->sorting->clear(OfferListStore::SORT_PRICE_DESC);
+
+        //Get price types
+        $obPriceTypeList = PriceType::active()->get();
+        if ($obPriceTypeList->isEmpty()) {
+            return;
+        }
+
+        foreach ($obPriceTypeList as $obPriceType) {
+            OfferListStore::instance()->sorting->clear(OfferListStore::SORT_PRICE_ASC.'|'.$obPriceType->code);
+            OfferListStore::instance()->sorting->clear(OfferListStore::SORT_PRICE_DESC.'|'.$obPriceType->code);
+        }
+    }
+
+    /**
+     * Clear offer sorting cache by price
+     */
+    protected function clearProductSortingByPrice()
+    {
+        ProductListStore::instance()->sorting->clear(ProductListStore::SORT_PRICE_ASC);
+        ProductListStore::instance()->sorting->clear(ProductListStore::SORT_PRICE_DESC);
+
+        //Get price types
+        $obPriceTypeList = PriceType::active()->get();
+        if ($obPriceTypeList->isEmpty()) {
+            return;
+        }
+
+        foreach ($obPriceTypeList as $obPriceType) {
+            ProductListStore::instance()->sorting->clear(ProductListStore::SORT_PRICE_ASC.'|'.$obPriceType->code);
+            ProductListStore::instance()->sorting->clear(ProductListStore::SORT_PRICE_DESC.'|'.$obPriceType->code);
+        }
     }
 
     /**

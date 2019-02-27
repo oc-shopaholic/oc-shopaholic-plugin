@@ -1,0 +1,32 @@
+fields:
+    active:
+        label: 'lovata.toolbox::lang.field.active'
+        span: left
+        default: 1
+        type: switch
+    is_default:
+        label: 'lovata.toolbox::lang.field.is_default'
+        span: right
+        default: 0
+        type: switch
+    name:
+        label: 'lovata.toolbox::lang.field.name'
+        span: left
+        required: 1
+        type: text
+    code:
+        label: 'lovata.toolbox::lang.field.code'
+        span: right
+        type: text
+    symbol:
+        label: 'lovata.toolbox::lang.field.symbol'
+        span: left
+        type: text
+    rate:
+        label: 'lovata.shopaholic::lang.field.rate'
+        span: right
+        type: number
+    external_id:
+        label: 'lovata.toolbox::lang.field.external_id'
+        span: left
+        type: text
