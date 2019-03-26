@@ -11,6 +11,28 @@ E-Commerce plugin by [LOVATA](https://lovata.com) for October CMS.
 
 ![Shopaholic Banner](assets/images/shopaholic-banner.png)
 
+# Overview
+
+Shopaholic is a scalable and highly flexible e-commerce ecosystem for [October CMS](https://octobercms.com). The core plugin is provided free of charge and includes the following set of features:
+
+* Showcase products with basic descriptions, image galleries.
+* Create unique product offers with custom properties assigned to a product.
+* Group products by brands and categories.
+* Basic filtering by brand, category, and subcategory.
+* Sorting by new additions and price.
+
+In order to cater to the growing scalability demands of a project, the ecosystem provides [extra plugins](https://octobercms.com/plugins?search=shopaholic) to extend the basic functionality.
+
+One one hand, this approach allows keeping performance, security, and functionality of the code to a high standard. On the other hand, it provides a clean and smooth back-end UI/UX that isn't over-bloated with the features.
+
+The development of Shopaholic’s ecosystem is guided by the similar philosophies of October CMS and Unix like operating systems, where the main focus is to create simple microarchitecture solutions that communicate with each other through smart APIs.
+
+
+
+
+
+------------------------
+
 ## Features
 
 * Components
