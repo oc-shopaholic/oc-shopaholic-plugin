@@ -49,37 +49,6 @@ As an environment for a testing measurements was used simple Digital Ocean dropl
 
 If you would like to know how our plugins perform with large catalogs of products, you can visit our [Large Catalog Live Demo](http://big-demo.shopaholic.one) that has 21 000 products, 68 000 offers and 210 000 variations of property values.
 
-------------------------
-
-## Features
-
-* Components
-  * [Breadcrumbs](https://github.com/lovata/oc-shopaholic-plugin/wiki/Breadcrumbs)
-  * [BrandData](https://github.com/lovata/oc-shopaholic-plugin/wiki/BrandData)
-  * [BrandPage](https://github.com/lovata/oc-shopaholic-plugin/wiki/BrandPage)
-  * [BrandList](https://github.com/lovata/oc-shopaholic-plugin/wiki/BrandList)
-  * [CategoryData](https://github.com/lovata/oc-shopaholic-plugin/wiki/CategoryData)
-  * [CategoryPage](https://github.com/lovata/oc-shopaholic-plugin/wiki/CategoryPage)
-  * [CategoryList](https://github.com/lovata/oc-shopaholic-plugin/wiki/CategoryList)
-  * [ProductData](https://github.com/lovata/oc-shopaholic-plugin/wiki/ProductData)
-  * [ProductPage](https://github.com/lovata/oc-shopaholic-plugin/wiki/ProductPage)
-  * [ProductList](https://github.com/lovata/oc-shopaholic-plugin/wiki/ProductList)
-* Models
-  * [Brand](https://github.com/lovata/oc-shopaholic-plugin/wiki/BrandModel)
-  * [Category](https://github.com/lovata/oc-shopaholic-plugin/wiki/CategoryModel)
-  * [Offer](https://github.com/lovata/oc-shopaholic-plugin/wiki/OfferModel)
-  * [Product](https://github.com/lovata/oc-shopaholic-plugin/wiki/ProductModel)
-* Items
-  * [BrandItem](https://github.com/lovata/oc-shopaholic-plugin/wiki/BrandItem)
-  * [CategoryItem](https://github.com/lovata/oc-shopaholic-plugin/wiki/CategoryItem)
-  * [OfferItem](https://github.com/lovata/oc-shopaholic-plugin/wiki/OfferItem)
-  * [ProductItem](https://github.com/lovata/oc-shopaholic-plugin/wiki/ProductItem)
-* Collections
-  * [BrandCollection](https://github.com/lovata/oc-shopaholic-plugin/wiki/BrandCollection)
-  * [CategoryCollection](https://github.com/lovata/oc-shopaholic-plugin/wiki/CategoryCollection)
-  * [OfferCollection](https://github.com/lovata/oc-shopaholic-plugin/wiki/OfferCollection)
-  * [ProductCollection](https://github.com/lovata/oc-shopaholic-plugin/wiki/ProductCollection)
-
 ## Get involved
 
 If you're interested in the improvement of this project you can help in the following ways:
