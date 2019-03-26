@@ -71,6 +71,6 @@ If you're interested in the improvement of this project you can help in the foll
 
 ## License
 
-© 2017, [LOVATA Group, LLC](https://github.com/lovata) under [GNU GPL v3](https://opensource.org/licenses/GPL-3.0).
+© 2019, [LOVATA Group, LLC](https://github.com/lovata) under [GNU GPL v3](https://opensource.org/licenses/GPL-3.0).
 
 Developed by [Andrey Kharanenka](https://github.com/kharanenka).
