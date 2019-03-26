@@ -11,7 +11,7 @@ E-Commerce plugin by [LOVATA](https://lovata.com) for October CMS.
 
 ![Shopaholic Banner](assets/images/shopaholic-banner.png)
 
-# Overview
+## Overview
 
 Shopaholic is a scalable and highly flexible e-commerce ecosystem for [October CMS](https://octobercms.com). The core plugin is provided free of charge and includes the following set of features:
 
@@ -27,7 +27,7 @@ One one hand, this approach allows keeping performance, security, and functional
 
 The development of Shopaholic’s ecosystem is guided by the similar philosophies of October CMS and Unix like operating systems, where the main focus is to create simple microarchitecture solutions that communicate with each other through smart APIs.
 
-# Installation
+## Installation
 
 Using the Laravel’s CLI is the fastest way to get started. Just run the following commands in a project’s root directory:
 
@@ -40,12 +40,12 @@ As for _[Toolbox plugin](https://octobercms.com/plugin/lovata-toolbox)_ it's a s
 
 Once the plugin is installed take a look at the official documentation for the possible next steps.
 
-# Documentation
+## Documentation
 
 The complete documentation of official ecosystem plugin can be found [here](https://github.com/lovata/oc-shopaholic-plugin/wiki).
 
 
-# Performance
+## Performance
 
 As an environment for a testing measurements was used simple Digital Ocean droplet with this configuration:
 * Dual Core CPU
