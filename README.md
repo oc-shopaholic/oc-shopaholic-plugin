@@ -105,6 +105,10 @@ As an environment for a testing measurements was used simple Digital Ocean dropl
 
 If you would like to know how our plugins perform with large catalogs of products, you can visit our [Large Catalog Demo](http://big-demo.shopaholic.one) website that has 21 000 products, 68 000 offers and 210 000 variations of property values.
 
+## Quality standards
+
+We ensure the high quality of our plugins and provide you with full support. All of our plugins have extensive documentation. The quality of our plugins goes through rigorous testing, we have launched automated testing for all of our plugins. Our code conforms with the best writing and structuring practices.  All this guarantees the stable work of our plugins after they are updated with new functionality and ensures their smooth integration.
+
 ## Get involved
 
 If you're interested in the improvement of this project you can help in the following ways:
