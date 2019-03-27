@@ -85,8 +85,7 @@ Once the plugins are installed take a look at the official documentation for the
 
 ## Documentation
 
-The complete documentation of official ecosystem plugin can be found [here](https://github.com/lovata/oc-shopaholic-plugin/wiki).
-
+The complete official documentation of the ecosystem can be found [here](https://github.com/lovata/oc-shopaholic-plugin/wiki).
 
 ## Performance
 
@@ -117,6 +116,7 @@ If you're interested in the improvement of this project you can help in the foll
 * localization to your language using [Crowdin](https://crowdin.com/project/shopaholic-plugin-for-october) service.
 
 Let us know if you have any other questions, ideas or suggestions! Just drop a line at shopaholic@lovata.com.
+
 ## License
 
 © 2019, [LOVATA Group, LLC](https://github.com/lovata) under [GNU GPL v3](https://opensource.org/licenses/GPL-3.0).
