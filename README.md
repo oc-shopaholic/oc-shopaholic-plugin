@@ -47,18 +47,33 @@ Besides you can provide a better UX for the customer with the ability to:
 The development of Shopaholic’s ecosystem is guided by the similar philosophies of October CMS and Unix like operating systems, where the main focus is to create simple microarchitecture solutions that communicate with each other through smart APIs.
 
 One one hand, this approach allows keeping performance, security, and functionality of the code to a high standard. On the other hand, it provides a clean and smooth back-end UI/UX that isn't over-bloated with the features.
+
 ## Installation
+
+Regardless of the installation type you choose, you must install [Toolbox plugin](https://octobercms.com/plugin/lovata-toolbox), which is a required dependency for Shopaholic.
+
+### Artisan
 
 Using the Laravel’s CLI is the fastest way to get started. Just run the following commands in a project’s root directory:
 
 ```bash
-php artisan plugin:install lovata.shopaholic
 php artisan plugin:install lovata.toolbox
+php artisan plugin:install lovata.shopaholic
 ```
 
-As for _[Toolbox plugin](https://octobercms.com/plugin/lovata-toolbox)_ it's a set of helpers required for a Shopaholic.
+### Composer
 
-Once the plugin is installed take a look at the official documentation for the possible next steps.
+If you prefer Composer run following commands in a project’s root directory:
+
+```
+composer require lovata/oc-toolbox-plugin
+composer require lovata/oc-shopaholic-plugin
+php artisan october:up
+```
+
+> It's not recommended way because of possible collisions with the updating of the plugins.
+
+Once the plugins are installed take a look at the official documentation for the possible next steps.
 
 ## Documentation
 
