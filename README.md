@@ -22,6 +22,8 @@ Shopaholic is a scalable and highly flexible e-commerce ecosystem for [October C
 * Data import (product, offers, categories, brands) from a CSV file.
 * Basic products filtering (by category, brand etc.) and sorting (by price, new additions etc.)
 
+With the help of Shopaholic’s standard functions, combining them together it’s also possible to solve many other non-trivial tasks, such as displaying blocks of random products, displaying the cheapest and most expensive products, etc.
+
 In order to cater to the growing scalability demands of a project, the ecosystem provides [extra plugins](https://octobercms.com/plugin/lovata-shopaholic#extensions) to extend the basic functionality. With these plugins sellers can:
 
 * Manage multi-language content (via [RainLab.Translate](https://octobercms.com/plugin/rainlab-translate)).
@@ -37,12 +39,14 @@ In order to cater to the growing scalability demands of a project, the ecosystem
 * Manage customers (via [Lovata.Buddies](https://octobercms.com/plugin/lovata-buddies) or [RainLab.User](https://octobercms.com/plugin/rainlab-user)).
 
 Besides you can provide a better UX for the customer with the ability to:
-* Sind the popular products ( via [Lovata.PopularityShopaholic](https://octobercms.com/plugin/lovata-popularityshopaholic)).
+* See the popular products ( via [Lovata.PopularityShopaholic](https://octobercms.com/plugin/lovata-popularityshopaholic)).
 * Search for the products (via [Lovata.SearchShopaholic](https://octobercms.com/plugin/lovata-searchshopaholic) or [Lovata.SphinxShopaholic](https://octobercms.com/plugin/lovata-sphinxshopaholic)).
 * Compare the products (via [Lovata.CompareShopaholic](https://octobercms.com/plugin/lovata-compareshopaholic)).
 * Find the products they viewed before (via [Lovata.ViewedProductsShopaholic](https://octobercms.com/plugin/lovata-viewedproductsshopaholic)).
 * Leave and read the reviews for the products (via [Lovata.ReviewsShopaholic](https://octobercms.com/plugin/lovata-reviewsshopaholic)).
 * Postpone the products for the future purchases (via [Lovata.WishListShopaholic](https://octobercms.com/plugin/lovata-wishlistshopaholic)).
+
+> Please note, the architecture of the plugins allows [extending](https://octobercms.com/docs/plugin/extending) the existing methods, fields and other data without interfering with original source code!
 
 The development of Shopaholic’s ecosystem is guided by the similar philosophies of October CMS and Unix like operating systems, where the main focus is to create simple microarchitecture solutions that communicate with each other through smart APIs.
 
