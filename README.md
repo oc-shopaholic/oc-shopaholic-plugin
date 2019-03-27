@@ -116,6 +116,7 @@ If you're interested in the improvement of this project you can help in the foll
 * contribution to a project following these [instructions](https://github.com/lovata/oc-shopaholic-plugin/blob/master/CONTRIBUTING.md);
 * localization to your language using [Crowdin](https://crowdin.com/project/shopaholic-plugin-for-october) service.
 
+Let us know if you have any other questions, ideas or suggestions! Just drop a line at shopaholic@lovata.com.
 ## License
 
 © 2019, [LOVATA Group, LLC](https://github.com/lovata) under [GNU GPL v3](https://opensource.org/licenses/GPL-3.0).
