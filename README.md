@@ -95,7 +95,7 @@ As an environment for a testing measurements was used simple Digital Ocean dropl
 |                 210 |             100-150 ms |                   80-100 ms |
 |              21 000 |            900-1100 ms |                  500-600 ms |
 
-If you would like to know how our plugins perform with large catalogs of products, you can visit our [Large Catalog Live Demo](http://big-demo.shopaholic.one) that has 21 000 products, 68 000 offers and 210 000 variations of property values.
+If you would like to know how our plugins perform with large catalogs of products, you can visit our [Large Catalog Demo](http://big-demo.shopaholic.one) website that has 21 000 products, 68 000 offers and 210 000 variations of property values.
 
 ## Get involved
 
