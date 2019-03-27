@@ -48,6 +48,14 @@ The development of Shopaholic’s ecosystem is guided by the similar philosophie
 
 One one hand, this approach allows keeping performance, security, and functionality of the code to a high standard. On the other hand, it provides a clean and smooth back-end UI/UX that isn't over-bloated with the features.
 
+## Live demo
+
+Visit our [demo](http://demo.shopaholic.one/) website. Sign in to [backend](http://demo.shopaholic.one/backend) using the following credentials:
+* user: manager
+* password: manager
+
+You can run the demo site locally. To do so, you need to clone the [oc-shopaholic-demo-theme](https://github.com/lovata/oc-shopaholic-demo-theme) repository and follow the steps from the _Installation guide_ in the Readme file. As a result, you will receive a copy of the demo site with a full database. Having a ready-made demo site example, you can easily learn how to operate the plugins.
+
 ## Installation
 
 Regardless of the installation type you choose, you must install [Toolbox plugin](https://octobercms.com/plugin/lovata-toolbox), which is a required dependency for Shopaholic.
