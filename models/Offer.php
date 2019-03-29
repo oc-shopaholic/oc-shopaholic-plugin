@@ -488,8 +488,8 @@ class Offer extends ImportModel
                 $this->price_link()->add($obPriceModel);
             }
         } else {
-            $obPriceModel->price = $fPrice;
-            $obPriceModel->old_price = $fOldPrice;
+            $obPriceModel->price = $fPrice !== null ? $fPrice : $obPriceModel->price;
+            $obPriceModel->old_price = $fOldPrice !== null ? $fOldPrice : $obPriceModel->old_price;
             $obPriceModel->save();
         }
     }

@@ -56,6 +56,7 @@ use Lovata\Shopaholic\Classes\Import\ImportCategoryModel;
  * Properties for Shopaholic
  * @see     \Lovata\PropertiesShopaholic\Classes\Event\CategoryModelHandler::addModelRelationConfig
  *
+ * @property bool                                                                                $inherit_property_set
  * @property \October\Rain\Database\Collection|\Lovata\PropertiesShopaholic\Models\PropertySet[] $property_set
  * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\PropertiesShopaholic\Models\PropertySet property_set()
  *
