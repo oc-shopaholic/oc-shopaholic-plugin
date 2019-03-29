@@ -4,6 +4,7 @@ use Lovata\Shopaholic\Classes\Item\OfferItem;
 use Lovata\Shopaholic\Classes\Item\ProductItem;
 use Lovata\Shopaholic\Models\Offer;
 use Lovata\Shopaholic\Models\Product;
+use Lovata\Toolbox\Classes\Helper\PriceHelper;
 use Lovata\Toolbox\Models\Settings;
 use Lovata\Toolbox\Tests\CommonTest;
 
@@ -124,6 +125,7 @@ class OfferItemTest extends CommonTest
     protected function createTestData()
     {
         Settings::set('decimals', 2);
+        PriceHelper::forgetInstance();
 
         //Create product data
         $arCreateData = $this->arProductData;
