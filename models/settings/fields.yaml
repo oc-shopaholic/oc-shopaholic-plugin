@@ -1,5 +1,13 @@
 tabs:
     fields:
+        product_slug:
+            tab: lovata.shopaholic::lang.tab.settings_product
+            label: lovata.shopaholic::lang.settings.product_slug 
+            type: radio
+            default: name
+            options:
+                name: lovata.shopaholic::lang.settings.product_slug_types.name
+                id: lovata.shopaholic::lang.settings.product_slug_types.id
         check_offer_active:
             tab: lovata.toolbox::lang.tab.settings
             span: left
