@@ -36,6 +36,11 @@
         'formula_calculation_from_price_with_tax'    => 'Discount is deducted from price with taxes',
 
         'order_create_email' => 'Email for sending mail when creating an order',
+        'product_slug' => 'Default field for URL generation',
+        'product_slug_types' => [
+            'name'      => 'Product name',
+            'id'     => 'Product ID',
+        ]
     ],
     'menu'        => [
         'main'                      => 'Catalog',
@@ -63,6 +68,7 @@
         'permissions' => 'Shopaholic',
         'settings'    => 'Catalog configuration',
         'taxes'       => 'Taxes',
+        'settings_product' => 'Product settings'
     ],
     'category'    => [
         'name'         => 'category',
