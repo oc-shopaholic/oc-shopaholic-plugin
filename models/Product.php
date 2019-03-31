@@ -215,7 +215,8 @@ class Product extends ImportModel
     public function beforeValidate()
     {
         if (empty($this->slug)) {
-            $this->slugAttributes();
+            $product_slug = Settings::get('product_slug');
+            $this->setSluggedValue('slug', $product_slug);
         }
     }
 
