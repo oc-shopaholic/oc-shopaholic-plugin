@@ -34,6 +34,11 @@
         'formula_calculation_from_backend_price'     => 'Скидка вычитается из заданной цены (по-умолчанию)',
         'formula_calculation_from_price_without_tax' => 'Скидка вычитается из цены без налога',
         'formula_calculation_from_price_with_tax'    => 'Скидка вычитается из цены с налогом',
+        'product_slug' => 'Поле для генерации URL (по умолчанию)',
+        'product_slug_types' => [
+            'name'      => 'Название товара',
+            'id'     => 'ID товара',
+        ]
     ],
     'menu'        => [
         'main'                      => 'Каталог',
@@ -61,6 +66,7 @@
         'permissions' => 'Shopaholic',
         'settings'    => 'Конфигурация каталога',
         'taxes'       => 'Налоги',
+        'settings_product' => 'Настройки товаров'
     ],
     'category'    => [
         'name'         => 'категории',
