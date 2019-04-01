@@ -17,42 +17,43 @@ use Lovata\Shopaholic\Classes\Collection\CategoryCollection;
  * @package Lovata\Shopaholic\Classes\Item
  * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  *
- * @property                                                                                                                               $id
- * @property string                                                                                                                        $name
- * @property string                                                                                                                        $slug
- * @property string                                                                                                                        $code
- * @property int                                                                                                                           $nest_depth
- * @property int                                                                                                                           $parent_id
- * @property int                                                                                                                           $product_count
+ * @property                                                                                                                                   $id
+ * @property string                                                                                                                            $name
+ * @property string                                                                                                                            $slug
+ * @property string                                                                                                                            $code
+ * @property int                                                                                                                               $nest_depth
+ * @property int                                                                                                                               $parent_id
+ * @property int                                                                                                                               $product_count
  *
- * @property string                                                                                                                        $preview_text
- * @property \System\Models\File                                                                                                           $preview_image
+ * @property string                                                                                                                            $preview_text
+ * @property \System\Models\File                                                                                                               $preview_image
  *
- * @property string                                                                                                                        $description
- * @property \October\Rain\Database\Collection|\System\Models\File[]                                                                       $images
+ * @property string                                                                                                                            $description
+ * @property \October\Rain\Database\Collection|\System\Models\File[]                                                                           $images
  *
- * @property \October\Rain\Argon\Argon                                                                                                     $updated_at
+ * @property \October\Rain\Argon\Argon                                                                                                         $updated_at
  *
- * @property CategoryItem                                                                                                                  $parent
+ * @property CategoryItem                                                                                                                      $parent
  *
- * @property array                                                                                                                         $children_id_list
- * @property CategoryCollection|CategoryItem[]                                                                                             $children
+ * @property array                                                                                                                             $children_id_list
+ * @property CategoryCollection|CategoryItem[]                                                                                                 $children
  *
  * Properties for Shopaholic
  * @see     \Lovata\PropertiesShopaholic\Classes\Event\CategoryModelHandler::extendCategoryItem
  *
+ * @property bool                                                                                                                              $inherit_property_set
  * @property array                                                                                                                             $property_set_id
  * @property \Lovata\PropertiesShopaholic\Classes\Collection\PropertySetCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertySetItem[] $property_set
  *
- * @property array                                                                                                                         $product_property_list
- * @property \Lovata\PropertiesShopaholic\Classes\Collection\PropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[]   $product_property
+ * @property array                                                                                                                             $product_property_list
+ * @property \Lovata\PropertiesShopaholic\Classes\Collection\PropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[]       $product_property
  *
- * @property array                                                                                                                         $offer_property_list
- * @property \Lovata\PropertiesShopaholic\Classes\Collection\PropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[]   $offer_property
+ * @property array                                                                                                                             $offer_property_list
+ * @property \Lovata\PropertiesShopaholic\Classes\Collection\PropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[]       $offer_property
  *
  * Filter for Shopaholic
- * @property \Lovata\FilterShopaholic\Classes\Collection\FilterPropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[] $product_filter_property
- * @property \Lovata\FilterShopaholic\Classes\Collection\FilterPropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[] $offer_filter_property
+ * @property \Lovata\FilterShopaholic\Classes\Collection\FilterPropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[]     $product_filter_property
+ * @property \Lovata\FilterShopaholic\Classes\Collection\FilterPropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[]     $offer_filter_property
  */
 class CategoryItem extends ElementItem
 {
