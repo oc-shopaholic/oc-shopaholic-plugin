@@ -13,7 +13,7 @@ scopes:
         label: 'lovata.toolbox::lang.field.category'
         modelClass: Lovata\Shopaholic\Models\Category
         nameFrom: name
-        conditions: category_id in (:filtered)
+        scope: getByCategories
     brand:
         label: 'lovata.shopaholic::lang.field.brand'
         modelClass: Lovata\Shopaholic\Models\Brand
