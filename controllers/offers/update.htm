@@ -2,7 +2,7 @@
     <ul>
         <li><a href="<?= Backend::url('lovata/shopaholic/products') ?>"><?= e(trans('lovata.shopaholic::lang.product.list_title')) ?></a></li>
         <?php
-            if(!empty($obProduct)) {
+            if(!empty($formModel->product)) {
                 $obProduct = $formModel->product;
         ?>
         <li><a href="<?= Backend::url('lovata/shopaholic/products/update/'.$obProduct->id) ?>"><?= $obProduct->name ?></a></li>
