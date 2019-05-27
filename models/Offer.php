@@ -16,7 +16,7 @@ use Lovata\Toolbox\Traits\Helpers\PriceHelperTrait;
 
 use Lovata\Shopaholic\Classes\Item\OfferItem;
 use Lovata\Shopaholic\Classes\Helper\CurrencyHelper;
-use Lovata\Shopaholic\Classes\Import\ImportOfferModel;
+use Lovata\Shopaholic\Classes\Import\ImportOfferModelFromCSV;
 
 /**
  * Class Offer
@@ -302,7 +302,7 @@ class Offer extends ImportModel
             return;
         }
 
-        $obImport = new ImportOfferModel();
+        $obImport = new ImportOfferModelFromCSV();
         $obImport->setDeactivateFlag();
 
         foreach ($arElementList as $iKey => $arImportData) {

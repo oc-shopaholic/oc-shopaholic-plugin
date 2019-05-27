@@ -15,7 +15,7 @@ use October\Rain\Database\Traits\Validation;
 use October\Rain\Database\Traits\Purgeable;
 
 use Lovata\Toolbox\Traits\Helpers\TraitCached;
-use Lovata\Shopaholic\Classes\Import\ImportProductModel;
+use Lovata\Shopaholic\Classes\Import\ImportProductModelFromCSV;
 
 /**
  * Class Product
@@ -231,7 +231,7 @@ class Product extends ImportModel
             return;
         }
 
-        $obImport = new ImportProductModel();
+        $obImport = new ImportProductModelFromCSV();
         $obImport->setDeactivateFlag();
 
         foreach ($arElementList as $iKey => $arImportData) {

@@ -1,0 +1,222 @@
+tabs:
+    fields:
+        file_list:
+            label: lovata.toolbox::lang.field.import_file_list
+            tab: lovata.toolbox::lang.tab.settings
+            type: repeater
+            span: left
+            form:
+                fields:
+                    path:
+                        label: lovata.toolbox::lang.field.import_file_path
+                        placeholder: temp/import/import.xml
+                        type: text
+                        span: full
+        image_folder:
+            label: lovata.toolbox::lang.field.import_image_folder
+            placeholder: temp/import
+            tab: lovata.toolbox::lang.tab.settings
+            type: text
+            span: right
+        product_import_enable:
+            label: lovata.toolbox::lang.field.import_enable
+            comment: lovata.toolbox::lang.field.import_enable_comment
+            tab: lovata.shopaholic::lang.menu.product
+            type: checkbox
+            span: full
+        product_file_path:
+            label: lovata.toolbox::lang.field.import_from_file
+            tab: lovata.shopaholic::lang.menu.product
+            type: dropdown
+            emptyOption: lovata.toolbox::lang.field.empty
+            options: getFileList
+            dependsOn: file_list
+            span: full
+        product_path_to_list:
+            label: lovata.toolbox::lang.field.import_path_to_list
+            placeholder: lovata.toolbox::lang.field.import_path_to_list_example
+            tab: lovata.shopaholic::lang.menu.product
+            type: text
+            span: full
+        product:
+            label: lovata.toolbox::lang.field.import_field_list
+            tab: lovata.shopaholic::lang.menu.product
+            span: full
+            type: repeater
+            form:
+                fields:
+                    field:
+                        label: lovata.toolbox::lang.field.field
+                        placeholder: lovata.toolbox::lang.field.import_path_to_field_example
+                        type: dropdown
+                        options: getProductFields
+                        span: full
+                    path_to_field:
+                        label: lovata.toolbox::lang.field.import_path_to_field
+                        placeholder: lovata.toolbox::lang.field.import_path_to_field_example
+                        type: text
+                        span: full
+        offer_import_enable:
+            label: lovata.toolbox::lang.field.import_enable
+            comment: lovata.toolbox::lang.field.import_enable_comment
+            tab: lovata.shopaholic::lang.field.offer
+            type: checkbox
+            span: full
+        offer_file_path:
+            label: lovata.toolbox::lang.field.import_from_file
+            tab: lovata.shopaholic::lang.field.offer
+            type: dropdown
+            emptyOption: lovata.toolbox::lang.field.empty
+            options: getFileList
+            dependsOn: file_list
+            span: full
+        offer_path_to_list:
+            label: lovata.toolbox::lang.field.import_path_to_list
+            placeholder: lovata.toolbox::lang.field.import_path_to_list_example
+            tab: lovata.shopaholic::lang.field.offer
+            type: text
+            span: full
+        offer:
+            label: lovata.toolbox::lang.field.import_field_list
+            tab: lovata.shopaholic::lang.field.offer
+            span: full
+            type: repeater
+            form:
+                fields:
+                    field:
+                        label: lovata.toolbox::lang.field.field
+                        placeholder: lovata.toolbox::lang.field.import_path_to_field_example
+                        type: dropdown
+                        options: getOfferFields
+                        span: full
+                    path_to_field:
+                        label: lovata.toolbox::lang.field.import_path_to_field
+                        placeholder: lovata.toolbox::lang.field.import_path_to_field_example
+                        type: text
+                        span: full
+        price_import_enable:
+            label: lovata.toolbox::lang.field.import_enable
+            comment: lovata.toolbox::lang.field.import_enable_comment
+            tab: lovata.shopaholic::lang.tab.price
+            type: checkbox
+            span: full
+        price_file_path:
+            label: lovata.toolbox::lang.field.import_from_file
+            tab: lovata.shopaholic::lang.tab.price
+            type: dropdown
+            emptyOption: lovata.toolbox::lang.field.empty
+            options: getFileList
+            dependsOn: file_list
+            span: full
+        price_path_to_list:
+            label: lovata.toolbox::lang.field.import_path_to_list
+            placeholder: lovata.toolbox::lang.field.import_path_to_list_example
+            tab: lovata.shopaholic::lang.tab.price
+            type: text
+            span: full
+        price:
+            label: lovata.toolbox::lang.field.import_field_list
+            tab: lovata.shopaholic::lang.tab.price
+            span: full
+            type: repeater
+            form:
+                fields:
+                    field:
+                        label: lovata.toolbox::lang.field.field
+                        placeholder: lovata.toolbox::lang.field.import_path_to_field_example
+                        type: dropdown
+                        options: getPriceFields
+                        span: full
+                    path_to_field:
+                        label: lovata.toolbox::lang.field.import_path_to_field
+                        placeholder: lovata.toolbox::lang.field.import_path_to_field_example
+                        type: text
+                        span: full
+        brand_import_enable:
+            label: lovata.toolbox::lang.field.import_enable
+            comment: lovata.toolbox::lang.field.import_enable_comment
+            tab: lovata.shopaholic::lang.menu.brands
+            type: checkbox
+            span: full
+        brand_file_path:
+            label: lovata.toolbox::lang.field.import_from_file
+            tab: lovata.shopaholic::lang.menu.brands
+            type: dropdown
+            emptyOption: lovata.toolbox::lang.field.empty
+            options: getFileList
+            dependsOn: file_list
+            span: full
+        brand_path_to_list:
+            label: lovata.toolbox::lang.field.import_path_to_list
+            placeholder: lovata.toolbox::lang.field.import_path_to_list_example
+            tab: lovata.shopaholic::lang.menu.brands
+            type: text
+            span: full
+        brand_deactivate:
+            label: lovata.toolbox::lang.field.import_deactivate
+            comment: lovata.toolbox::lang.field.import_deactivate_description
+            tab: lovata.shopaholic::lang.menu.brands
+            type: checkbox
+            span: full
+        brand:
+            label: lovata.toolbox::lang.field.import_field_list
+            tab: lovata.shopaholic::lang.menu.brands
+            span: full
+            type: repeater
+            form:
+                fields:
+                    field:
+                        label: lovata.toolbox::lang.field.field
+                        placeholder: lovata.toolbox::lang.field.import_path_to_field_example
+                        type: dropdown
+                        options: getBrandFields
+                        span: full
+                    path_to_field:
+                        label: lovata.toolbox::lang.field.import_path_to_field
+                        placeholder: lovata.toolbox::lang.field.import_path_to_field_example
+                        type: text
+                        span: full
+        category_import_enable:
+            label: lovata.toolbox::lang.field.import_enable
+            comment: lovata.toolbox::lang.field.import_enable_comment
+            tab: lovata.shopaholic::lang.menu.categories
+            type: checkbox
+            span: full
+        category_file_path:
+            label: lovata.toolbox::lang.field.import_from_file
+            tab: lovata.shopaholic::lang.menu.categories
+            type: dropdown
+            emptyOption: lovata.toolbox::lang.field.empty
+            options: getFileList
+            dependsOn: file_list
+            span: full
+        category_path_to_list:
+            label: lovata.toolbox::lang.field.import_path_to_list
+            placeholder: lovata.toolbox::lang.field.import_path_to_list_example
+            tab: lovata.shopaholic::lang.menu.categories
+            type: text
+            span: full
+        category_deactivate:
+            label: lovata.toolbox::lang.field.import_deactivate
+            comment: lovata.toolbox::lang.field.import_deactivate_description
+            tab: lovata.shopaholic::lang.menu.categories
+            type: checkbox
+            span: full
+        category:
+            label: lovata.toolbox::lang.field.import_field_list
+            tab: lovata.shopaholic::lang.menu.categories
+            span: full
+            type: repeater
+            form:
+                fields:
+                    field:
+                        label: lovata.toolbox::lang.field.field
+                        placeholder: lovata.toolbox::lang.field.import_path_to_field_example
+                        type: dropdown
+                        options: getCategoryFields
+                        span: full
+                    path_to_field:
+                        label: lovata.toolbox::lang.field.import_path_to_field
+                        placeholder: lovata.toolbox::lang.field.import_path_to_field_example
+                        type: text
+                        span: full

@@ -13,7 +13,7 @@ use October\Rain\Database\Traits\Validation;
 use October\Rain\Database\Traits\NestedTree;
 
 use Lovata\Toolbox\Traits\Helpers\TraitCached;
-use Lovata\Shopaholic\Classes\Import\ImportCategoryModel;
+use Lovata\Shopaholic\Classes\Import\ImportCategoryModelFromCSV;
 
 /**
  * Class Category
@@ -186,7 +186,7 @@ class Category extends ImportModel
             return;
         }
 
-        $obImport = new ImportCategoryModel();
+        $obImport = new ImportCategoryModelFromCSV();
         $obImport->setDeactivateFlag();
 
         foreach ($arElementList as $iKey => $arImportData) {

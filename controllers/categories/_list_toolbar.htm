@@ -23,4 +23,13 @@
     <a href="<?= Backend::url('lovata/shopaholic/categories/import') ?>" class="btn btn-primary oc-icon-download">
         <?= e(trans('lovata.toolbox::lang.button.import_from_csv')) ?>
     </a>
+    <?php if (\Lovata\Shopaholic\Models\XmlImportSettings::getValue('category_import_enable')) { ?>
+    <button
+            class="btn btn-primary oc-icon-download"
+            data-request="onImportFromXML"
+            data-request-confirm="<?= e(trans('lovata.toolbox::lang.message.import_from_xml_confirm')) ?>"
+            data-stripe-load-indicator>
+        <?= e(trans('lovata.toolbox::lang.button.import_from_xml')) ?>
+    </button>
+    <?php } ?>
 </div>

@@ -23,4 +23,31 @@
     <a href="<?= Backend::url('lovata/shopaholic/offers/import') ?>" class="btn btn-primary oc-icon-download">
         <?= e(trans('lovata.shopaholic::lang.button.import_offer_button')) ?>
     </a>
+    <?php if (\Lovata\Shopaholic\Models\XmlImportSettings::getValue('product_import_enable')) { ?>
+    <button
+            class="btn btn-primary oc-icon-download"
+            data-request="onImportFromXML"
+            data-request-confirm="<?= e(trans('lovata.toolbox::lang.message.import_from_xml_confirm')) ?>"
+            data-stripe-load-indicator>
+        <?= e(trans('lovata.toolbox::lang.button.import_from_xml')) ?>
+    </button>
+    <?php } ?>
+    <?php if (\Lovata\Shopaholic\Models\XmlImportSettings::getValue('offer_import_enable')) { ?>
+    <button
+            class="btn btn-primary oc-icon-download"
+            data-request="onImportOffersFromXML"
+            data-request-confirm="<?= e(trans('lovata.toolbox::lang.message.import_from_xml_confirm')) ?>"
+            data-stripe-load-indicator>
+        <?= e(trans('lovata.shopaholic::lang.button.import_offer_from_xml')) ?>
+    </button>
+    <?php } ?>
+    <?php if (\Lovata\Shopaholic\Models\XmlImportSettings::getValue('price_import_enable')) { ?>
+    <button
+            class="btn btn-primary oc-icon-download"
+            data-request="onImportPricesFromXML"
+            data-request-confirm="<?= e(trans('lovata.toolbox::lang.message.import_from_xml_confirm')) ?>"
+            data-stripe-load-indicator>
+        <?= e(trans('lovata.shopaholic::lang.button.import_price_from_xml')) ?>
+    </button>
+    <?php } ?>
 </div>

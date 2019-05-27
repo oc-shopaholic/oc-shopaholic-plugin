@@ -6,6 +6,7 @@ use System\Classes\PluginBase;
 
 //Console command
 use Lovata\Shopaholic\Classes\Console\CheckTableIntegrity;
+use Lovata\Shopaholic\Classes\Console\ImportFromXML;
 
 //Event list
 use Lovata\Shopaholic\Classes\Event\ExtendMenuHandler;
@@ -46,6 +47,7 @@ class Plugin extends PluginBase
     public function register()
     {
         $this->registerConsoleCommand('shopaholic:check.table.integrity', CheckTableIntegrity::class);
+        $this->registerConsoleCommand('shopaholic:import_from_xml', ImportFromXML::class);
     }
 
     /**
@@ -119,6 +121,17 @@ class Plugin extends PluginBase
                 'order'       => 2000,
                 'permissions' => [
                     'shopaholic-menu-price-type',
+                ],
+            ],
+            'shopaholic-menu-import-xml-file'   => [
+                'label'       => 'lovata.shopaholic::lang.menu.import_xml_file',
+                'description' => 'lovata.shopaholic::lang.menu.import_xml_file_description',
+                'category'    => 'lovata.shopaholic::lang.tab.settings',
+                'icon'        => 'oc-icon-download',
+                'class'       => 'Lovata\Shopaholic\Models\XmlImportSettings',
+                'order'       => 8000,
+                'permissions' => [
+                    'shopaholic-menu-import-xml-file',
                 ],
             ],
         ];
