@@ -1,6 +1,5 @@
 <?php namespace Lovata\Shopaholic\Classes\Console;
 
-use Lang;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 

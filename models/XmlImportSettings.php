@@ -29,7 +29,7 @@ class XmlImportSettings extends CommonSettings
      */
     public function getFileList()
     {
-        $arFileList = $this->get('file_list');
+        $arFileList = (array) $this->get('file_list');
         $arFileList = array_pluck($arFileList, 'path');
 
         return $arFileList;

@@ -54,7 +54,7 @@ class ImportCategoryModelFromXML extends AbstractImportModelFromXML
             'preview_image' => Lang::get('lovata.toolbox::lang.field.preview_image'),
             'images'        => Lang::get('lovata.toolbox::lang.field.images'),
             'parent_id'     => Lang::get('lovata.shopaholic::lang.field.category_parent_id'),
-            'children'      => Lang::get('lovata.shopaholic::lang.field.children_category_'),
+            'children'      => Lang::get('lovata.shopaholic::lang.field.children_category'),
         ];
 
         $arFieldList = self::extendImportFields($arFieldList);

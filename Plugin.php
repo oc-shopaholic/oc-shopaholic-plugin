@@ -7,6 +7,7 @@ use System\Classes\PluginBase;
 //Console command
 use Lovata\Shopaholic\Classes\Console\CheckTableIntegrity;
 use Lovata\Shopaholic\Classes\Console\ImportFromXML;
+use Lovata\Shopaholic\Classes\Console\PreconfigureImportSettingsFromXML;
 
 //Event list
 use Lovata\Shopaholic\Classes\Event\ExtendMenuHandler;
@@ -48,6 +49,7 @@ class Plugin extends PluginBase
     {
         $this->registerConsoleCommand('shopaholic:check.table.integrity', CheckTableIntegrity::class);
         $this->registerConsoleCommand('shopaholic:import_from_xml', ImportFromXML::class);
+        $this->registerConsoleCommand('shopaholic:preconfigure_import_from_xml', PreconfigureImportSettingsFromXML::class);
     }
 
     /**
