@@ -1,0 +1,80 @@
+<?php
+    $bOfferImportDisable    = \Lovata\Shopaholic\Models\Settings::getValue('offer_import_disable');
+    $bProductImportDisable  = \Lovata\Shopaholic\Models\Settings::getValue('product_import_disable');
+    $bBrandImportDisable    = \Lovata\Shopaholic\Models\Settings::getValue('brand_import_disable');
+    $bCategoryImportDisable = \Lovata\Shopaholic\Models\Settings::getValue('category_import_disable');
+    $bPriceImportDisable    = \Lovata\Shopaholic\Models\Settings::getValue('price_import_disable');
+?>
+
+<div id="cachesizes" class="report-widget">
+    <h3><?= e(trans('lovata.shopaholic::lang.widget.import_from_xml_files')) ?></h3>
+    <?php if (!$bOfferImportDisable || !$bProductImportDisable || !$bBrandImportDisable || !$bCategoryImportDisable || !$bPriceImportDisable) { ?>
+        <?php if (!$bOfferImportDisable) { ?>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary oc-icon-download"
+                        data-request="<?= $this->getEventHandler('onImportOffersFromXML') ?>"
+                        data-request-confirm="<?= e(trans('lovata.toolbox::lang.message.import_from_xml_confirm')) ?>"
+                        data-stripe-load-indicator
+                >
+                    <?= e(trans('lovata.shopaholic::lang.button.import_offer_from_xml')) ?>
+                </button>
+            </div>
+        <?php } ?>
+
+        <?php if (!$bPriceImportDisable) { ?>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary oc-icon-download"
+                        data-request="<?= $this->getEventHandler('onImportPricesFromXML') ?>"
+                        data-request-confirm="<?= e(trans('lovata.toolbox::lang.message.import_from_xml_confirm')) ?>"
+                        data-stripe-load-indicator
+                >
+                    <?= e(trans('lovata.shopaholic::lang.button.import_price_from_xml')) ?>
+                </button>
+            </div>
+        <?php } ?>
+
+        <?php if (!$bProductImportDisable) { ?>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary oc-icon-download"
+                        data-request="<?= $this->getEventHandler('onImportProductsFromXML') ?>"
+                        data-request-confirm="<?= e(trans('lovata.toolbox::lang.message.import_from_xml_confirm')) ?>"
+                        data-stripe-load-indicator
+                >
+                    <?= e(trans('lovata.shopaholic::lang.button.import_product_from_xml')) ?>
+                </button>
+            </div>
+        <?php } ?>
+
+        <?php if (!$bCategoryImportDisable) { ?>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary oc-icon-download"
+                        data-request="<?= $this->getEventHandler('onImportCategoriesFromXML') ?>"
+                        data-request-confirm="<?= e(trans('lovata.toolbox::lang.message.import_from_xml_confirm')) ?>"
+                        data-stripe-load-indicator
+                >
+                    <?= e(trans('lovata.shopaholic::lang.button.import_category_from_xml')) ?>
+                </button>
+            </div>
+        <?php } ?>
+
+        <?php if (!$bBrandImportDisable) { ?>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary oc-icon-download"
+                        data-request="<?= $this->getEventHandler('onImportBrandsFromXML') ?>"
+                        data-request-confirm="<?= e(trans('lovata.toolbox::lang.message.import_from_xml_confirm')) ?>"
+                        data-stripe-load-indicator
+                >
+                    <?= e(trans('lovata.shopaholic::lang.button.import_brand_from_xml')) ?>
+                </button>
+            </div>
+        <?php } ?>
+    <?php } else { ?>
+        <div class="callout callout-warning">
+            <div class="content">
+                <a href="<?= Backend::url('system/settings/update/lovata/shopaholic/shopaholic-menu-main-settings') ?>" class="btn btn-link">
+                    <?= e(trans('lovata.shopaholic::lang.message.import_from_xml_files_is_disabled')) ?>
+                </a>
+            </div>
+        </div>
+    <?php } ?>
+</div>

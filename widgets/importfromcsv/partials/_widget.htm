@@ -1,0 +1,29 @@
+<div id="cachesizes" class="report-widget">
+    <h3>
+        <?= e(trans('lovata.shopaholic::lang.widget.import_from_csv_files')) ?>
+    </h3>
+
+    <div class="form-group">
+        <a href="<?= Backend::url('lovata/shopaholic/offers/import') ?>" class="btn btn-primary oc-icon-download">
+            <?= e(trans('lovata.shopaholic::lang.button.import_offer_from_csv')) ?>
+        </a>
+    </div>
+
+    <div class="form-group">
+        <a href="<?= Backend::url('lovata/shopaholic/products/import') ?>" class="btn btn-primary oc-icon-download">
+            <?= e(trans('lovata.shopaholic::lang.button.import_product_from_csv')) ?>
+        </a>
+    </div>
+
+    <div class="form-group">
+        <a href="<?= Backend::url('lovata/shopaholic/categories/import') ?>" class="btn btn-primary oc-icon-download">
+            <?= e(trans('lovata.shopaholic::lang.button.import_category_from_csv')) ?>
+        </a>
+    </div>
+
+    <div class="form-group">
+        <a href="<?= Backend::url('lovata/shopaholic/brands/import') ?>" class="btn btn-primary oc-icon-download">
+            <?= e(trans('lovata.shopaholic::lang.button.import_brand_from_csv')) ?>
+        </a>
+    </div>
+</div>

@@ -23,7 +23,7 @@
     <a href="<?= Backend::url('lovata/shopaholic/brands/import') ?>" class="btn btn-primary oc-icon-download">
         <?= e(trans('lovata.toolbox::lang.button.import_from_csv')) ?>
     </a>
-    <?php if (\Lovata\Shopaholic\Models\XmlImportSettings::getValue('brand_import_enable')) { ?>
+    <?php if (!\Lovata\Shopaholic\Models\Settings::getValue('brand_import_disable')) { ?>
     <button
             class="btn btn-primary oc-icon-download"
             data-request="onImportFromXML"

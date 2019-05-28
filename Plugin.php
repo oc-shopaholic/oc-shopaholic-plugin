@@ -174,4 +174,19 @@ class Plugin extends PluginBase
         Event::subscribe(TaxRelationHandler::class);
         Event::subscribe(ExtendTaxFieldsHandler::class);
     }
+
+    /**
+     * @return array
+     */
+    public function registerReportWidgets()
+    {
+        return [
+            'Lovata\Shopaholic\Widgets\ImportFromXML' => [
+                'label' => 'lovata.shopaholic::lang.widget.import_from_xml_files',
+            ],
+            'Lovata\Shopaholic\Widgets\ImportFromCSV' => [
+                'label' => 'lovata.shopaholic::lang.widget.import_from_csv_files',
+            ]
+        ];
+    }
 }
