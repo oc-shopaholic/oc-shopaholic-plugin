@@ -147,6 +147,7 @@ class Offer extends ImportModel
         'external_id',
         'price',
         'old_price',
+        'price_list',
         'quantity',
         'preview_text',
         'description',

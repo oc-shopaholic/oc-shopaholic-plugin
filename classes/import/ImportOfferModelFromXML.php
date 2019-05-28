@@ -5,6 +5,7 @@ use Lovata\Toolbox\Classes\Helper\AbstractImportModelFromXML;
 
 use Lovata\Shopaholic\Models\Offer;
 use Lovata\Shopaholic\Models\Product;
+use Lovata\Shopaholic\Models\PriceType;
 use Lovata\Shopaholic\Models\XmlImportSettings;
 
 /**
@@ -16,6 +17,8 @@ class ImportOfferModelFromXML extends AbstractImportModelFromXML
 {
     const EXTEND_FIELD_LIST = 'shopaholic.offer.extend_xml_import_fields';
     const EXTEND_IMPORT_DATA = 'shopaholic.offer.extend_xml_import_data';
+
+    const MODEL_CLASS = Offer::class;
 
     /** @var Offer */
     protected $obModel;
@@ -31,16 +34,17 @@ class ImportOfferModelFromXML extends AbstractImportModelFromXML
         $this->arExistIDList = array_filter($this->arExistIDList);
 
         $this->prepareImportSettings();
-        $this->openMainFile();
+
+        parent::__construct();
     }
 
     /**
      * Get import fields
      * @return array
      */
-    public static function getFields() : array
+    public function getFields() : array
     {
-        $arFieldList = [
+        $this->arFieldList = [
             'external_id'   => Lang::get('lovata.toolbox::lang.field.external_id'),
             'product_id'    => Lang::get('lovata.shopaholic::lang.field.product_id'),
             'active'        => Lang::get('lovata.toolbox::lang.field.active'),
@@ -55,18 +59,17 @@ class ImportOfferModelFromXML extends AbstractImportModelFromXML
             'images'        => Lang::get('lovata.toolbox::lang.field.images'),
         ];
 
-        $arFieldList = self::extendImportFields($arFieldList);
+        //Get price types
+        $arPriceTypeList = (array) PriceType::lists('name', 'id');
+        if (!empty($arPriceTypeList)) {
+            foreach ($arPriceTypeList as $iPriceTypeID => $sName) {
+                $sKey = 'price_list.'.$iPriceTypeID;
+                $this->arFieldList[$sKey.'.price'] = Lang::get('lovata.shopaholic::lang.field.price')." ($sName)";
+                $this->arFieldList[$sKey.'.old_price'] = Lang::get('lovata.shopaholic::lang.field.old_price')." ($sName)";
+            }
+        }
 
-        return $arFieldList;
-    }
-
-    /**
-     * Get model class
-     * @return string
-     */
-    protected function getModelClass() : string
-    {
-        return Offer::class;
+        return parent::getFields();
     }
 
     /**
@@ -91,6 +94,8 @@ class ImportOfferModelFromXML extends AbstractImportModelFromXML
     {
         $this->importPreviewImage();
         $this->importImageList();
+
+        parent::processModelObject();
     }
 
     /**

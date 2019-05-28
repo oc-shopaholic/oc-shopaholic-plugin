@@ -13,6 +13,8 @@ use Lovata\Shopaholic\Models\Product;
  */
 class ImportProductModelFromCSV extends AbstractImportModelFromCSV
 {
+    const MODEL_CLASS = Product::class;
+
     /** @var Product */
     protected $obModel;
 
@@ -26,15 +28,6 @@ class ImportProductModelFromCSV extends AbstractImportModelFromCSV
     {
         $this->arExistIDList = (array) Product::whereNotNull('external_id')->lists('external_id', 'id');
         $this->arExistIDList = array_filter($this->arExistIDList);
-    }
-
-    /**
-     * Get model class
-     * @return string
-     */
-    protected function getModelClass() : string
-    {
-        return Product::class;
     }
 
     /**

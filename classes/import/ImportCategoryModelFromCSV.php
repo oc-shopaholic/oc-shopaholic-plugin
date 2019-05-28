@@ -11,6 +11,8 @@ use Lovata\Shopaholic\Models\Category;
  */
 class ImportCategoryModelFromCSV extends AbstractImportModelFromCSV
 {
+    const MODEL_CLASS = Category::class;
+
     /** @var Category */
     protected $obParentCategory;
 
@@ -24,15 +26,6 @@ class ImportCategoryModelFromCSV extends AbstractImportModelFromCSV
     {
         $this->arExistIDList = (array) Category::whereNotNull('external_id')->lists('external_id', 'id');
         $this->arExistIDList = array_filter($this->arExistIDList);
-    }
-
-    /**
-     * Get model class
-     * @return string
-     */
-    protected function getModelClass() : string
-    {
-        return Category::class;
     }
 
     /**

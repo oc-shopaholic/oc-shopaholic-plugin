@@ -16,6 +16,8 @@ class ImportBrandModelFromXML extends AbstractImportModelFromXML
     const EXTEND_FIELD_LIST = 'shopaholic.brand.extend_xml_import_fields';
     const EXTEND_IMPORT_DATA = 'shopaholic.brand.extend_xml_import_data';
 
+    const MODEL_CLASS = Brand::class;
+
     /** @var Brand */
     protected $obModel;
 
@@ -28,16 +30,17 @@ class ImportBrandModelFromXML extends AbstractImportModelFromXML
         $this->arExistIDList = array_filter($this->arExistIDList);
 
         $this->prepareImportSettings();
-        $this->openMainFile();
+
+        parent::__construct();
     }
 
     /**
      * Get import fields
      * @return array
      */
-    public static function getFields() : array
+    public function getFields() : array
     {
-        $arFieldList = [
+        $this->arFieldList = [
             'external_id'         => Lang::get('lovata.toolbox::lang.field.external_id'),
             'active'              => Lang::get('lovata.toolbox::lang.field.active'),
             'name'                => Lang::get('lovata.toolbox::lang.field.name'),
@@ -48,18 +51,7 @@ class ImportBrandModelFromXML extends AbstractImportModelFromXML
             'images'              => Lang::get('lovata.toolbox::lang.field.images'),
         ];
 
-        $arFieldList = self::extendImportFields($arFieldList);
-
-        return $arFieldList;
-    }
-
-    /**
-     * Get model class
-     * @return string
-     */
-    protected function getModelClass() : string
-    {
-        return Brand::class;
+        return parent::getFields();
     }
 
     /**
@@ -82,6 +74,8 @@ class ImportBrandModelFromXML extends AbstractImportModelFromXML
     {
         $this->importPreviewImage();
         $this->importImageList();
+
+        parent::processModelObject();
     }
 
     /**

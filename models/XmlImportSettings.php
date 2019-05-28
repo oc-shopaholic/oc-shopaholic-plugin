@@ -41,7 +41,8 @@ class XmlImportSettings extends CommonSettings
      */
     public function getProductFields()
     {
-        $arFileList = ImportProductModelFromXML::getFields();
+        $obParser = new ImportProductModelFromXML();
+        $arFileList = $obParser->getFields();
 
         return $arFileList;
     }
@@ -52,7 +53,8 @@ class XmlImportSettings extends CommonSettings
      */
     public function getOfferFields()
     {
-        $arFileList = ImportOfferModelFromXML::getFields();
+        $obParser = new ImportOfferModelFromXML();
+        $arFileList = $obParser->getFields();
 
         return $arFileList;
     }
@@ -63,7 +65,8 @@ class XmlImportSettings extends CommonSettings
      */
     public function getPriceFields()
     {
-        $arFileList = ImportOfferPriceFromXML::getFields();
+        $obParser = new ImportOfferPriceFromXML();
+        $arFileList = $obParser->getFields();
 
         return $arFileList;
     }
@@ -74,7 +77,8 @@ class XmlImportSettings extends CommonSettings
      */
     public function getBrandFields()
     {
-        $arFileList = ImportBrandModelFromXML::getFields();
+        $obParser = new ImportBrandModelFromXML();
+        $arFileList = $obParser->getFields();
 
         return $arFileList;
     }
@@ -85,7 +89,8 @@ class XmlImportSettings extends CommonSettings
      */
     public function getCategoryFields()
     {
-        $arFileList = ImportCategoryModelFromXML::getFields();
+        $obParser = new ImportCategoryModelFromXML();
+        $arFileList = $obParser->getFields();
 
         return $arFileList;
     }

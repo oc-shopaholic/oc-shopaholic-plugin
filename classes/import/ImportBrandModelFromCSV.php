@@ -11,6 +11,8 @@ use Lovata\Shopaholic\Models\Brand;
  */
 class ImportBrandModelFromCSV extends AbstractImportModelFromCSV
 {
+    const MODEL_CLASS = Brand::class;
+
     /** @var Brand */
     protected $obModel;
 
@@ -21,15 +23,6 @@ class ImportBrandModelFromCSV extends AbstractImportModelFromCSV
     {
         $this->arExistIDList = (array) Brand::whereNotNull('external_id')->lists('external_id', 'id');
         $this->arExistIDList = array_filter($this->arExistIDList);
-    }
-
-    /**
-     * Get model class
-     * @return string
-     */
-    protected function getModelClass() : string
-    {
-        return Brand::class;
     }
 
     /**
