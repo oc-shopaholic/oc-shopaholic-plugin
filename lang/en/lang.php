@@ -194,6 +194,7 @@
     'message'     => [
         'import_additional_category_info'   => 'Set the list of additional product categories separated by commas.',
         'import_from_xml_files_is_disabled' => 'Import from XML files is disabled.',
+        'import_from_xml_info'              => '<p>You can use <strong>XPath</strong> syntax to set path to elements.</p>',
     ],
     'button'      => [
         'import_offer_button'   => 'Import offers from CSV',
@@ -201,7 +202,7 @@
         'import_price_from_xml' => 'Import prices from XML',
     ],
     'widget'      => [
-        'import_from_xml_files'         => 'Import from XML',
-        'import_from_csv_files'         => 'Import from CSV',
+        'import_from_xml_files' => 'Import from XML',
+        'import_from_csv_files' => 'Import from CSV',
     ],
 ];

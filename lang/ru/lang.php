@@ -194,6 +194,7 @@
     'message'     => [
         'import_additional_category_info'   => 'Укажите через запятую список дополнительных категорий товаров.',
         'import_from_xml_files_is_disabled' => 'Импорт из XML файлов отключен.',
+        'import_from_xml_info'              => '<p>Вы можите использовать синтаксис <strong>XPath</strong> для задания пути к элементам.</p>',
     ],
     'button'      => [
         'import_offer_button'   => 'Импортировать предложения из CSV',

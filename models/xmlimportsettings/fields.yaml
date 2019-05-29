@@ -1,3 +1,9 @@
+fields:
+    offer_info:
+        path: $/lovata/shopaholic/views/import_from_xml_info.htm
+        tab: lovata.shopaholic::lang.field.offer
+        type: partial
+        span: full
 tabs:
     fields:
         file_list:
