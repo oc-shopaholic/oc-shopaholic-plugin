@@ -13,7 +13,7 @@ use October\Rain\Database\Traits\Validation;
 use October\Rain\Database\Traits\Sortable;
 
 use Lovata\Toolbox\Traits\Helpers\TraitCached;
-use Lovata\Shopaholic\Classes\Import\ImportBrandModel;
+use Lovata\Shopaholic\Classes\Import\ImportBrandModelFromCSV;
 
 /**
  * Class Brand
@@ -150,7 +150,7 @@ class Brand extends ImportModel
             return;
         }
 
-        $obImport = new ImportBrandModel();
+        $obImport = new ImportBrandModelFromCSV();
         $obImport->setDeactivateFlag();
 
         foreach ($arElementList as $iKey => $arImportData) {

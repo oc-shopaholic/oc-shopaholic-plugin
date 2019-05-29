@@ -90,3 +90,5 @@
     - 'Fixed labels for tax settings.'
 1.21.2:
     - 'Fix error with saving offer without prices.'
+1.22.0:
+    - 'Added customizable import from xml file. Thanks to Rolands Zeltins. His donation made this feature available for everyone.'

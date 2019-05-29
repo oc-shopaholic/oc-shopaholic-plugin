@@ -8,6 +8,7 @@ php:
   - 7.0
   - 7.1
   - 7.2
+  - 7.3
   - nightly
 
 services:
@@ -74,4 +75,4 @@ jobs:
         skip_cleanup: true
         on:
           tags: true
-          repo: lovata/oc-shopaholic-plugin
+          repo: oc-shopaholic/oc-shopaholic-plugin

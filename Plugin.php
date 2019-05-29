@@ -6,6 +6,8 @@ use System\Classes\PluginBase;
 
 //Console command
 use Lovata\Shopaholic\Classes\Console\CheckTableIntegrity;
+use Lovata\Shopaholic\Classes\Console\ImportFromXML;
+use Lovata\Shopaholic\Classes\Console\PreconfigureImportSettingsFromXML;
 
 //Event list
 use Lovata\Shopaholic\Classes\Event\ExtendMenuHandler;
@@ -46,6 +48,8 @@ class Plugin extends PluginBase
     public function register()
     {
         $this->registerConsoleCommand('shopaholic:check.table.integrity', CheckTableIntegrity::class);
+        $this->registerConsoleCommand('shopaholic:import_from_xml', ImportFromXML::class);
+        $this->registerConsoleCommand('shopaholic:preconfigure_import_from_xml', PreconfigureImportSettingsFromXML::class);
     }
 
     /**
@@ -121,6 +125,17 @@ class Plugin extends PluginBase
                     'shopaholic-menu-price-type',
                 ],
             ],
+            'shopaholic-menu-import-xml-file'   => [
+                'label'       => 'lovata.shopaholic::lang.menu.import_xml_file',
+                'description' => 'lovata.shopaholic::lang.menu.import_xml_file_description',
+                'category'    => 'lovata.shopaholic::lang.tab.settings',
+                'icon'        => 'oc-icon-download',
+                'class'       => 'Lovata\Shopaholic\Models\XmlImportSettings',
+                'order'       => 8000,
+                'permissions' => [
+                    'shopaholic-menu-import-xml-file',
+                ],
+            ],
         ];
     }
 
@@ -158,5 +173,20 @@ class Plugin extends PluginBase
         Event::subscribe(TaxModelHandler::class);
         Event::subscribe(TaxRelationHandler::class);
         Event::subscribe(ExtendTaxFieldsHandler::class);
+    }
+
+    /**
+     * @return array
+     */
+    public function registerReportWidgets()
+    {
+        return [
+            'Lovata\Shopaholic\Widgets\ImportFromXML' => [
+                'label' => 'lovata.shopaholic::lang.widget.import_from_xml_files',
+            ],
+            'Lovata\Shopaholic\Widgets\ImportFromCSV' => [
+                'label' => 'lovata.shopaholic::lang.widget.import_from_csv_files',
+            ]
+        ];
     }
 }

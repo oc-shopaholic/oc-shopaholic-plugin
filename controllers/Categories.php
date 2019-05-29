@@ -1,10 +1,14 @@
 <?php namespace Lovata\Shopaholic\Controllers;
 
+use Lang;
+use Flash;
 use Event;
 use BackendMenu;
 use Backend\Classes\Controller;
 use Backend\Classes\BackendController;
+
 use Lovata\Shopaholic\Models\Category;
+use Lovata\Shopaholic\Classes\Import\ImportCategoryModelFromXML;
 
 /**
  * Class Categories
@@ -53,5 +57,25 @@ class Categories extends Controller
         Event::fire('shopaholic.category.update.sorting');
 
         return $obResult;
+    }
+
+    /**
+     * Start import from XML
+     */
+    public function onImportFromXML()
+    {
+        $obImport = new ImportCategoryModelFromXML();
+        $obImport->import();
+
+        $arReportData = [
+            'created' => $obImport->getCreatedCount(),
+            'updated' => $obImport->getUpdatedCount(),
+            'skipped' => $obImport->getSkippedCount(),
+            'processed' => $obImport->getProcessedCount(),
+        ];
+
+        Flash::info(Lang::get('lovata.toolbox::lang.message.import_from_xml_report', $arReportData));
+
+        return $this->listRefresh();
     }
 }

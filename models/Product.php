@@ -15,7 +15,7 @@ use October\Rain\Database\Traits\Validation;
 use October\Rain\Database\Traits\Purgeable;
 
 use Lovata\Toolbox\Traits\Helpers\TraitCached;
-use Lovata\Shopaholic\Classes\Import\ImportProductModel;
+use Lovata\Shopaholic\Classes\Import\ImportProductModelFromCSV;
 
 /**
  * Class Product
@@ -210,6 +210,25 @@ class Product extends ImportModel
     }
 
     /**
+     * Get element by categories
+     * @param Product $obQuery
+     * @param string  $sData
+     * @return $this
+     */
+    public function scopeGetByCategories($obQuery, $sData)
+    {
+        if (!empty($sData)) {
+            foreach ($sData as $category) {
+                $obQuery->orWhere('category_id', $category)->orWhereHas('additional_category', function($obQuery) use ($category) {
+                    $obQuery->where('category_id', $category);
+                });
+            }
+        }
+
+        return $obQuery;
+    }
+
+    /**
      * Before validate event handler
      */
     public function beforeValidate()
@@ -231,7 +250,7 @@ class Product extends ImportModel
             return;
         }
 
-        $obImport = new ImportProductModel();
+        $obImport = new ImportProductModelFromCSV();
         $obImport->setDeactivateFlag();
 
         foreach ($arElementList as $iKey => $arImportData) {

@@ -1,18 +1,20 @@
 <?php namespace Lovata\Shopaholic\Classes\Import;
 
-use Lovata\Toolbox\Classes\Helper\AbstractImportModel;
+use Lovata\Toolbox\Classes\Helper\AbstractImportModelFromCSV;
 
 use Lovata\Shopaholic\Models\Brand;
 use Lovata\Shopaholic\Models\Category;
 use Lovata\Shopaholic\Models\Product;
 
 /**
- * Class ImportProductModel
+ * Class ImportProductModelFromCSV
  * @package Lovata\Shopaholic\Classes\Import
  * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
-class ImportProductModel extends AbstractImportModel
+class ImportProductModelFromCSV extends AbstractImportModelFromCSV
 {
+    const MODEL_CLASS = Product::class;
+
     /** @var Product */
     protected $obModel;
 
@@ -20,21 +22,12 @@ class ImportProductModel extends AbstractImportModel
     protected $arAdditionalCategoryList = null;
 
     /**
-     * ImportProductModel constructor.
+     * ImportProductModelFromCSV constructor.
      */
     public function __construct()
     {
-        $this->arExistIDList = Product::whereNotNull('external_id')->lists('external_id', 'id');
+        $this->arExistIDList = (array) Product::whereNotNull('external_id')->lists('external_id', 'id');
         $this->arExistIDList = array_filter($this->arExistIDList);
-    }
-
-    /**
-     * Get model class
-     * @return string
-     */
-    protected function getModelClass() : string
-    {
-        return Product::class;
     }
 
     /**

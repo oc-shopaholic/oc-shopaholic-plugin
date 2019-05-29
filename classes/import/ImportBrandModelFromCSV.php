@@ -1,35 +1,28 @@
 <?php namespace Lovata\Shopaholic\Classes\Import;
 
-use Lovata\Toolbox\Classes\Helper\AbstractImportModel;
+use Lovata\Toolbox\Classes\Helper\AbstractImportModelFromCSV;
 
 use Lovata\Shopaholic\Models\Brand;
 
 /**
- * Class ImportBrandModel
+ * Class ImportBrandModelFromCSV
  * @package Lovata\Shopaholic\Classes\Import
  * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
-class ImportBrandModel extends AbstractImportModel
+class ImportBrandModelFromCSV extends AbstractImportModelFromCSV
 {
+    const MODEL_CLASS = Brand::class;
+
     /** @var Brand */
     protected $obModel;
 
     /**
-     * ImportBrandModel constructor.
+     * ImportBrandModelFromCSV constructor.
      */
     public function __construct()
     {
-        $this->arExistIDList = Brand::whereNotNull('external_id')->lists('external_id', 'id');
+        $this->arExistIDList = (array) Brand::whereNotNull('external_id')->lists('external_id', 'id');
         $this->arExistIDList = array_filter($this->arExistIDList);
-    }
-
-    /**
-     * Get model class
-     * @return string
-     */
-    protected function getModelClass() : string
-    {
-        return Brand::class;
     }
 
     /**

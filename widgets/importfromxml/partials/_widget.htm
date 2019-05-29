@@ -1,0 +1,62 @@
+<?php
+$bHideOfferImport = \Lovata\Shopaholic\Models\Settings::getValue('hide_offer_import_from_xml');
+$bHideProductImport = \Lovata\Shopaholic\Models\Settings::getValue('hide_product_import_from_xml');
+$bHideBrandImport = \Lovata\Shopaholic\Models\Settings::getValue('hide_brand_import_from_xml');
+$bHideCategoryImport = \Lovata\Shopaholic\Models\Settings::getValue('hide_category_import_from_xml');
+$bHidePriceImport = \Lovata\Shopaholic\Models\Settings::getValue('hide_price_import_from_xml');
+$bHidePropertyImport = \Lovata\Shopaholic\Models\Settings::getValue('hide_property_import_from_xml') || !\System\Classes\PluginManager::instance()->hasPlugin('Lovata.PropertiesShopaholic');
+?>
+
+<div id="cachesizes" class="report-widget">
+    <form class="form-elements" role="form">
+    <h3><?= e(trans('lovata.shopaholic::lang.widget.import_from_xml_files')) ?></h3>
+    <div class="form-group checkboxlist-field">
+        <?php if (!$bHideProductImport) { ?>
+        <div class="checkbox custom-checkbox">
+            <input checked="checked" id="import-products" name="import-products" value="1" type="checkbox">
+            <label class="choice" for="import-products"><?= e(trans('lovata.shopaholic::lang.menu.product')) ?></label>
+        </div>
+        <?php } ?>
+        <?php if (!$bHideOfferImport) { ?>
+        <div class="checkbox custom-checkbox">
+            <input checked="checked" id="import-offers" name="import-offers" value="1" type="checkbox">
+            <label class="choice" for="import-offers"><?= e(trans('lovata.shopaholic::lang.tab.offer')) ?></label>
+        </div>
+        <?php } ?>
+        <?php if (!$bHidePriceImport) { ?>
+        <div class="checkbox custom-checkbox">
+            <input id="import-prices" name="import-prices" value="1" type="checkbox">
+            <label class="choice" for="import-prices"><?= e(trans('lovata.shopaholic::lang.tab.price')) ?></label>
+        </div>
+        <?php } ?>
+        <?php if (!$bHideCategoryImport) { ?>
+        <div class="checkbox custom-checkbox">
+            <input checked="checked" id="import-categories" name="import-categories" value="1" type="checkbox">
+            <label class="choice" for="import-categories"><?= e(trans('lovata.shopaholic::lang.menu.categories')) ?></label>
+        </div>
+        <?php } ?>
+        <?php if (!$bHideBrandImport) { ?>
+        <div class="checkbox custom-checkbox">
+            <input checked="checked" id="import-brands" name="import-brands" value="1" type="checkbox">
+            <label class="choice" for="import-brands"><?= e(trans('lovata.shopaholic::lang.menu.brands')) ?></label>
+        </div>
+        <?php } ?>
+        <?php if (!$bHidePropertyImport) { ?>
+        <div class="checkbox custom-checkbox">
+            <input checked="checked" id="import-brands" name="import-brands" value="1" type="checkbox">
+            <label class="choice" for="import-brands"><?= e(trans('lovata.propertiesshopaholic::lang.menu.property')) ?></label>
+        </div>
+        <?php } ?>
+
+        <div class="form-group">
+            <button type="button" class="btn btn-primary oc-icon-download"
+                    data-request="<?= $this->getEventHandler('onImportFromXML') ?>"
+                    data-request-confirm="<?= e(trans('lovata.toolbox::lang.message.import_from_xml_confirm')) ?>"
+                    data-stripe-load-indicator
+            >
+                <?= e(trans('lovata.toolbox::lang.button.import_from_xml')) ?>
+            </button>
+        </div>
+    </div>
+    </form>
+</div>

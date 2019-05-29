@@ -1,38 +1,31 @@
 <?php namespace Lovata\Shopaholic\Classes\Import;
 
-use Lovata\Toolbox\Classes\Helper\AbstractImportModel;
+use Lovata\Toolbox\Classes\Helper\AbstractImportModelFromCSV;
 
 use Lovata\Shopaholic\Models\Offer;
 use Lovata\Shopaholic\Models\Product;
 
 /**
- * Class ImportOfferModel
+ * Class ImportOfferModelFromCSV
  * @package Lovata\Shopaholic\Classes\Import
  * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
-class ImportOfferModel extends AbstractImportModel
+class ImportOfferModelFromCSV extends AbstractImportModelFromCSV
 {
+    const MODEL_CLASS = Offer::class;
+
     /** @var Offer */
     protected $obModel;
 
     protected $bWithTrashed = true;
 
     /**
-     * ImportOfferModel constructor.
+     * ImportOfferModelFromCSV constructor.
      */
     public function __construct()
     {
-        $this->arExistIDList = Offer::whereNotNull('external_id')->lists('external_id', 'id');
+        $this->arExistIDList = (array) Offer::whereNotNull('external_id')->lists('external_id', 'id');
         $this->arExistIDList = array_filter($this->arExistIDList);
-    }
-
-    /**
-     * Get model class
-     * @return string
-     */
-    protected function getModelClass() : string
-    {
-        return Offer::class;
     }
 
     /**
