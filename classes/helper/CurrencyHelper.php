@@ -168,6 +168,28 @@ class CurrencyHelper
     }
 
     /**
+     * @param float  $fPrice
+     * @param string $sCurrencyTo
+     * @return float
+     */
+    public function convertTo($fPrice, $sCurrencyTo)
+    {
+        if (empty($sCurrencyTo)) {
+            return 0;
+        }
+
+        $obCurrencyTo = $this->obCurrencyList->where('code', $sCurrencyTo)->first();
+
+        if (empty($this->obDefaultCurrency) || $obCurrencyTo->id == $this->obDefaultCurrency->id) {
+            return $fPrice;
+        }
+
+        $fResultPrice = PriceHelper::round(($obCurrencyTo->rate * $fPrice) / $this->obDefaultCurrency->rate);
+
+        return $fResultPrice;
+    }
+
+    /**
      * Init currency data
      */
     protected function init()
