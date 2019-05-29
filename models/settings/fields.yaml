@@ -19,3 +19,33 @@ tabs:
                 discount_from_backend_price: 'lovata.shopaholic::lang.settings.formula_calculation_from_backend_price'
                 discount_from_price_without_tax: 'lovata.shopaholic::lang.settings.formula_calculation_from_price_without_tax'
                 discount_from_price_with_tax: 'lovata.shopaholic::lang.settings.formula_calculation_from_price_with_tax'
+        product_import_disable:
+            label: lovata.toolbox::lang.field.import_product_disable
+            comment: lovata.toolbox::lang.field.import_disable_comment
+            tab: lovata.shopaholic::lang.tab.import_from_xml
+            type: checkbox
+            span: full
+        offer_import_disable:
+            label: lovata.toolbox::lang.field.import_offer_disable
+            comment: lovata.toolbox::lang.field.import_disable_comment
+            tab: lovata.shopaholic::lang.tab.import_from_xml
+            type: checkbox
+            span: full
+        price_import_disable:
+            label: lovata.toolbox::lang.field.import_price_disable
+            comment: lovata.toolbox::lang.field.import_disable_comment
+            tab: lovata.shopaholic::lang.tab.import_from_xml
+            type: checkbox
+            span: full
+        brand_import_disable:
+            label: lovata.toolbox::lang.field.import_brand_disable
+            comment: lovata.toolbox::lang.field.import_disable_comment
+            tab: lovata.shopaholic::lang.tab.import_from_xml
+            type: checkbox
+            span: full
+        category_import_disable:
+            label: lovata.toolbox::lang.field.import_category_disable
+            comment: lovata.toolbox::lang.field.import_disable_comment
+            tab: lovata.shopaholic::lang.tab.import_from_xml
+            type: checkbox
+            span: full

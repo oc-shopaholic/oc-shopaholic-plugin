@@ -18,12 +18,6 @@ tabs:
             tab: lovata.toolbox::lang.tab.settings
             type: text
             span: right
-        product_import_enable:
-            label: lovata.toolbox::lang.field.import_enable
-            comment: lovata.toolbox::lang.field.import_enable_comment
-            tab: lovata.shopaholic::lang.menu.product
-            type: checkbox
-            span: full
         product_file_path:
             label: lovata.toolbox::lang.field.import_from_file
             tab: lovata.shopaholic::lang.menu.product
@@ -56,12 +50,6 @@ tabs:
                         placeholder: lovata.toolbox::lang.field.import_path_to_field_example
                         type: text
                         span: full
-        offer_import_enable:
-            label: lovata.toolbox::lang.field.import_enable
-            comment: lovata.toolbox::lang.field.import_enable_comment
-            tab: lovata.shopaholic::lang.field.offer
-            type: checkbox
-            span: full
         offer_file_path:
             label: lovata.toolbox::lang.field.import_from_file
             tab: lovata.shopaholic::lang.field.offer
@@ -94,12 +82,6 @@ tabs:
                         placeholder: lovata.toolbox::lang.field.import_path_to_field_example
                         type: text
                         span: full
-        price_import_enable:
-            label: lovata.toolbox::lang.field.import_enable
-            comment: lovata.toolbox::lang.field.import_enable_comment
-            tab: lovata.shopaholic::lang.tab.price
-            type: checkbox
-            span: full
         price_file_path:
             label: lovata.toolbox::lang.field.import_from_file
             tab: lovata.shopaholic::lang.tab.price
@@ -132,12 +114,6 @@ tabs:
                         placeholder: lovata.toolbox::lang.field.import_path_to_field_example
                         type: text
                         span: full
-        brand_import_enable:
-            label: lovata.toolbox::lang.field.import_enable
-            comment: lovata.toolbox::lang.field.import_enable_comment
-            tab: lovata.shopaholic::lang.menu.brands
-            type: checkbox
-            span: full
         brand_file_path:
             label: lovata.toolbox::lang.field.import_from_file
             tab: lovata.shopaholic::lang.menu.brands
@@ -176,12 +152,6 @@ tabs:
                         placeholder: lovata.toolbox::lang.field.import_path_to_field_example
                         type: text
                         span: full
-        category_import_enable:
-            label: lovata.toolbox::lang.field.import_enable
-            comment: lovata.toolbox::lang.field.import_enable_comment
-            tab: lovata.shopaholic::lang.menu.categories
-            type: checkbox
-            span: full
         category_file_path:
             label: lovata.toolbox::lang.field.import_from_file
             tab: lovata.shopaholic::lang.menu.categories
