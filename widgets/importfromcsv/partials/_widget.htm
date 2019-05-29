@@ -3,6 +3,7 @@ $bHideOfferImportButton = \Lovata\Shopaholic\Models\Settings::getValue('hide_off
 $bHideProductImportButton = \Lovata\Shopaholic\Models\Settings::getValue('hide_product_import_from_csv');
 $bHideBrandImportButton = \Lovata\Shopaholic\Models\Settings::getValue('hide_brand_import_from_csv');
 $bHideCategoryImportButton = \Lovata\Shopaholic\Models\Settings::getValue('hide_category_import_from_csv');
+$bHidePropertyImportButton = \Lovata\Shopaholic\Models\Settings::getValue('hide_property_import_from_csv') || !\System\Classes\PluginManager::instance()->hasPlugin('Lovata.PropertiesShopaholic');
 ?>
 
 <div id="cachesizes" class="report-widget">
@@ -41,6 +42,13 @@ $bHideCategoryImportButton = \Lovata\Shopaholic\Models\Settings::getValue('hide_
             <li>
                 <a href="<?= Backend::url('lovata/shopaholic/brands/import') ?>" tabindex="-1" class="oc-icon-download">
                     <?= e(trans('lovata.shopaholic::lang.menu.brands')) ?>
+                </a>
+            </li>
+            <?php } ?>
+            <?php if (!$bHidePropertyImportButton) { ?>
+            <li>
+                <a href="<?= Backend::url('lovata/propertiesshopaholic/properties/import') ?>" tabindex="-1" class="oc-icon-download">
+                    <?= e(trans('lovata.propertiesshopaholic::lang.menu.property')) ?>
                 </a>
             </li>
             <?php } ?>

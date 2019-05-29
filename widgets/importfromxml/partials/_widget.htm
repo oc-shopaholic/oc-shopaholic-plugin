@@ -4,6 +4,7 @@ $bHideProductImport = \Lovata\Shopaholic\Models\Settings::getValue('hide_product
 $bHideBrandImport = \Lovata\Shopaholic\Models\Settings::getValue('hide_brand_import_from_xml');
 $bHideCategoryImport = \Lovata\Shopaholic\Models\Settings::getValue('hide_category_import_from_xml');
 $bHidePriceImport = \Lovata\Shopaholic\Models\Settings::getValue('hide_price_import_from_xml');
+$bHidePropertyImport = \Lovata\Shopaholic\Models\Settings::getValue('hide_property_import_from_xml') || !\System\Classes\PluginManager::instance()->hasPlugin('Lovata.PropertiesShopaholic');
 ?>
 
 <div id="cachesizes" class="report-widget">
@@ -38,6 +39,12 @@ $bHidePriceImport = \Lovata\Shopaholic\Models\Settings::getValue('hide_price_imp
         <div class="checkbox custom-checkbox">
             <input checked="checked" id="import-brands" name="import-brands" value="1" type="checkbox">
             <label class="choice" for="import-brands"><?= e(trans('lovata.shopaholic::lang.menu.brands')) ?></label>
+        </div>
+        <?php } ?>
+        <?php if (!$bHidePropertyImport) { ?>
+        <div class="checkbox custom-checkbox">
+            <input checked="checked" id="import-brands" name="import-brands" value="1" type="checkbox">
+            <label class="choice" for="import-brands"><?= e(trans('lovata.propertiesshopaholic::lang.menu.property')) ?></label>
         </div>
         <?php } ?>
 
