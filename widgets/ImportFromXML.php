@@ -2,6 +2,7 @@
 
 use Lang;
 use Flash;
+use Input;
 use Backend\Classes\ReportWidgetBase;
 
 use Lovata\Shopaholic\Classes\Import\ImportOfferModelFromXML;
@@ -17,6 +18,20 @@ use Lovata\Shopaholic\Classes\Import\ImportCategoryModelFromXML;
  */
 class ImportFromXML extends ReportWidgetBase
 {
+    protected $iCreatedCount = 0;
+    protected $iUpdatedCount = 0;
+    protected $iSkippedCount = 0;
+    protected $iProcessedCount = 0;
+
+    protected $arClassList = [
+        'import-brands'     => ImportBrandModelFromXML::class,
+        'import-categories' => ImportCategoryModelFromXML::class,
+        'import-properties' => 'Lovata\PropertiesShopaholic\Classes\Import\ImportPropertyModelFromXML',
+        'import-products'   => ImportProductModelFromXML::class,
+        'import-offers'     => ImportOfferModelFromXML::class,
+        'import-prices'     => ImportOfferPriceFromXML::class,
+    ];
+
     /**
      * Render method
      * @return mixed|string
@@ -30,88 +45,29 @@ class ImportFromXML extends ReportWidgetBase
     /**
      * Start import from XML
      */
-    public function onImportProductsFromXML()
+    public function onImportFromXML()
     {
-        $obImport = new ImportProductModelFromXML();
-        $obImport->import();
+        foreach ($this->arClassList as $sKey => $sImportClass) {
+            $bEnableImport = (bool) Input::get($sKey);
+            if (!class_exists($sImportClass) || !$bEnableImport) {
+                continue;
+            }
+
+            /** @var \Lovata\Toolbox\Classes\Helper\AbstractImportModelFromXML $obImport */
+            $obImport = new $sImportClass();
+            $obImport->import();
+
+            $this->iCreatedCount += $obImport->getCreatedCount();
+            $this->iUpdatedCount += $obImport->getUpdatedCount();
+            $this->iSkippedCount += $obImport->getSkippedCount();
+            $this->iProcessedCount += $obImport->getProcessedCount();
+        }
 
         $arReportData = [
-            'created'   => $obImport->getCreatedCount(),
-            'updated'   => $obImport->getUpdatedCount(),
-            'skipped'   => $obImport->getSkippedCount(),
-            'processed' => $obImport->getProcessedCount(),
-        ];
-
-        Flash::info(Lang::get('lovata.toolbox::lang.message.import_from_xml_report', $arReportData));
-    }
-
-    /**
-     * Start import from XML
-     */
-    public function onImportOffersFromXML()
-    {
-        $obImport = new ImportOfferModelFromXML();
-        $obImport->import();
-
-        $arReportData = [
-            'created'   => $obImport->getCreatedCount(),
-            'updated'   => $obImport->getUpdatedCount(),
-            'skipped'   => $obImport->getSkippedCount(),
-            'processed' => $obImport->getProcessedCount(),
-        ];
-
-        Flash::info(Lang::get('lovata.toolbox::lang.message.import_from_xml_report', $arReportData));
-    }
-
-    /**
-     * Start import from XML
-     */
-    public function onImportPricesFromXML()
-    {
-        $obImport = new ImportOfferPriceFromXML();
-        $obImport->import();
-
-        $arReportData = [
-            'created'   => $obImport->getCreatedCount(),
-            'updated'   => $obImport->getUpdatedCount(),
-            'skipped'   => $obImport->getSkippedCount(),
-            'processed' => $obImport->getProcessedCount(),
-        ];
-
-        Flash::info(Lang::get('lovata.toolbox::lang.message.import_from_xml_report', $arReportData));
-    }
-
-    /**
-     * Start import from XML
-     */
-    public function onImportBrandsFromXML()
-    {
-        $obImport = new ImportBrandModelFromXML();
-        $obImport->import();
-
-        $arReportData = [
-            'created'   => $obImport->getCreatedCount(),
-            'updated'   => $obImport->getUpdatedCount(),
-            'skipped'   => $obImport->getSkippedCount(),
-            'processed' => $obImport->getProcessedCount(),
-        ];
-
-        Flash::info(Lang::get('lovata.toolbox::lang.message.import_from_xml_report', $arReportData));
-    }
-
-    /**
-     * Start import from XML
-     */
-    public function onImportCategoriesFromXML()
-    {
-        $obImport = new ImportCategoryModelFromXML();
-        $obImport->import();
-
-        $arReportData = [
-            'created'   => $obImport->getCreatedCount(),
-            'updated'   => $obImport->getUpdatedCount(),
-            'skipped'   => $obImport->getSkippedCount(),
-            'processed' => $obImport->getProcessedCount(),
+            'created'   => $this->iCreatedCount,
+            'updated'   => $this->iUpdatedCount,
+            'skipped'   => $this->iSkippedCount,
+            'processed' => $this->iProcessedCount,
         ];
 
         Flash::info(Lang::get('lovata.toolbox::lang.message.import_from_xml_report', $arReportData));

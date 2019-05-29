@@ -1,7 +1,5 @@
 <?php namespace Lovata\Shopaholic\Widgets;
 
-use Lang;
-use Flash;
 use Backend\Classes\ReportWidgetBase;
 
 /**

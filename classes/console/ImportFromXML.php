@@ -6,6 +6,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Lovata\Shopaholic\Classes\Import\ImportBrandModelFromXML;
 use Lovata\Shopaholic\Classes\Import\ImportCategoryModelFromXML;
 use Lovata\Shopaholic\Classes\Import\ImportOfferModelFromXML;
+use Lovata\Shopaholic\Classes\Import\ImportOfferPriceFromXML;
 use Lovata\Shopaholic\Classes\Import\ImportProductModelFromXML;
 
 /**
@@ -31,6 +32,7 @@ class ImportFromXML extends Command
         'property' => 'Lovata\PropertiesShopaholic\Classes\Import\ImportPropertyModelFromXML',
         'product'  => ImportProductModelFromXML::class,
         'offer'    => ImportOfferModelFromXML::class,
+        'price'    => ImportOfferPriceFromXML::class,
     ];
 
     /**
