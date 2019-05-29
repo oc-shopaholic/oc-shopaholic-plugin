@@ -94,3 +94,5 @@
     - 'Added customizable import from xml file. Thanks to Rolands Zeltins. His donation made this feature available for everyone.'
 1.22.1:
     - 'Fixed command shopaholic:import_from_xml.'
+1.22.2:
+    - 'Added "deactivate" fields to config of XmlImportSettings model.'

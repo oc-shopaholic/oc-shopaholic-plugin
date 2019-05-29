@@ -38,6 +38,12 @@ tabs:
             tab: lovata.shopaholic::lang.menu.product
             type: text
             span: full
+        product_deactivate:
+            label: lovata.toolbox::lang.field.import_deactivate
+            comment: lovata.toolbox::lang.field.import_deactivate_description
+            tab: lovata.shopaholic::lang.menu.product
+            type: checkbox
+            span: full
         product:
             label: lovata.toolbox::lang.field.import_field_list
             tab: lovata.shopaholic::lang.menu.product
@@ -70,6 +76,12 @@ tabs:
             tab: lovata.shopaholic::lang.field.offer
             type: text
             span: full
+        offer_deactivate:
+            label: lovata.toolbox::lang.field.import_deactivate
+            comment: lovata.toolbox::lang.field.import_deactivate_description
+            tab: lovata.shopaholic::lang.field.offer
+            type: checkbox
+            span: full
         offer:
             label: lovata.toolbox::lang.field.import_field_list
             tab: lovata.shopaholic::lang.field.offer
@@ -101,6 +113,12 @@ tabs:
             placeholder: lovata.toolbox::lang.field.import_path_to_list_example
             tab: lovata.shopaholic::lang.tab.price
             type: text
+            span: full
+        price_deactivate:
+            label: lovata.toolbox::lang.field.import_deactivate
+            comment: lovata.toolbox::lang.field.import_deactivate_description
+            tab: lovata.shopaholic::lang.tab.price
+            type: checkbox
             span: full
         price:
             label: lovata.toolbox::lang.field.import_field_list
