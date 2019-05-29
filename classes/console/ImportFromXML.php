@@ -62,6 +62,7 @@ class ImportFromXML extends Command
 
             /** @var \Lovata\Toolbox\Classes\Helper\AbstractImportModelFromXML $obImport */
             $obImport = new $sImportClass();
+            $obImport->openMainFile();
             if (empty($obImport->getTotalCount())) {
                 continue;
             }
