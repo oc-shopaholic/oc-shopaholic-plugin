@@ -28,6 +28,8 @@ class ImportCategoryModelFromXML extends AbstractImportModelFromXML
     /** @var Category */
     protected $obModel;
 
+    protected $bHasChildrenField = false;
+
     /**
      * ImportCategoryModelFromCSV constructor.
      */
@@ -84,7 +86,7 @@ class ImportCategoryModelFromXML extends AbstractImportModelFromXML
      */
     protected function processModelObject()
     {
-        if ($this->obParentCategory === false) {
+        if ($this->obParentCategory === false || ($this->bHasChildrenField && empty($this->obParentCategory))) {
             $this->obModel->parent_id = null;
             $this->obModel->save();
         } elseif (!empty($this->obParentCategory)) {
@@ -104,7 +106,7 @@ class ImportCategoryModelFromXML extends AbstractImportModelFromXML
      */
     protected function initParentCategory()
     {
-        if (!array_key_exists('parent_id', $this->arImportData)) {
+        if (!array_key_exists('parent_id', $this->arImportData) && !$this->bHasChildrenField) {
             return;
         }
 
@@ -159,13 +161,20 @@ class ImportCategoryModelFromXML extends AbstractImportModelFromXML
         $this->sImageFolderPath = trim($this->sImageFolderPath, '/');
 
         $this->bDeactivate = (bool) XmlImportSettings::getValue('category_deactivate');
-        $this->arImportSettings = XmlImportSettings::getValue('category');
+        $this->arImportSettings = (array) XmlImportSettings::getValue('category');
         $this->sElementListPath = XmlImportSettings::getValue('category_path_to_list');
 
         $iFileNumber = XmlImportSettings::getValue('category_file_path');
         if ($iFileNumber !== null) {
             $this->sMainFilePath = array_get($this->arXMLFileList, $iFileNumber.'.path');
             $this->sMainFilePath = trim($this->sMainFilePath, '/');
+        }
+
+        foreach ($this->arImportSettings as $arFieldData) {
+            if (array_get($arFieldData, 'field') == 'children') {
+                $this->bHasChildrenField = true;
+                break;
+            }
         }
     }
 }

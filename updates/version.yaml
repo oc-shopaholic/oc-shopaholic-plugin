@@ -96,3 +96,5 @@
     - 'Fixed command shopaholic:import_from_xml.'
 1.22.2:
     - 'Added "deactivate" fields to config of XmlImportSettings model.'
+1.22.3:
+    - 'Fixed attaching of children categories to parent category in script of import from XML.'
