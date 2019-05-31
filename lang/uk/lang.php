@@ -16,7 +16,7 @@
         'promo_block_type'    => 'Промо-блок зі списком товарів',
         'promo_block'         => 'Промо-блок',
         'category_parent_id'  => 'ID батьківської категорії',
-        'children_category'  => 'Children categories',
+        'children_category'   => 'Children categories',
         'product_id'          => 'ID товару',
         'rate'                => 'Rate',
         'tax_is_global'       => 'Tax will apply to all products',
@@ -29,6 +29,16 @@
         'main_price_type'     => 'Main price',
         'price_include_tax'   => 'Price includes taxes',
         'discount_price'      => 'Discount price',
+
+        'hide_brand_import_from_csv'    => 'Hide "Import from CSV" button for brands',
+        'hide_brand_import_from_xml'    => 'Hide "Import from XML" button for brands',
+        'hide_category_import_from_csv' => 'Hide "Import from CSV" button for categories',
+        'hide_category_import_from_xml' => 'Hide "Import from XML" button for categories',
+        'hide_product_import_from_csv'  => 'Hide "Import from CSV" button for products',
+        'hide_product_import_from_xml'  => 'Hide "Import from XML" button for products',
+        'hide_offer_import_from_csv'    => 'Hide "Import from CSV" button for offers',
+        'hide_offer_import_from_xml'    => 'Hide "Import from XML" button for offers',
+        'hide_price_import_from_xml'    => 'Hide "Import from XML" button for prices',
     ],
     'settings'    => [
         'formula_calculate_discount_from_price'      => 'Formula of calculating discounts on prices with taxes',
@@ -59,11 +69,12 @@
         'import_xml_file_description' => 'Settings of import from XML file',
     ],
     'tab'         => [
-        'offer'       => 'Торгові пропозиції',
-        'price'       => 'Ціни',
-        'permissions' => 'Shopaholic',
-        'settings'    => 'Catalog configuration',
-        'taxes'       => 'Taxes',
+        'offer'          => 'Торгові пропозиції',
+        'price'          => 'Ціни',
+        'permissions'    => 'Shopaholic',
+        'settings'       => 'Catalog configuration',
+        'taxes'          => 'Taxes',
+        'import_setting' => 'Import',
     ],
     'category'    => [
         'name'         => 'категорії',
@@ -181,11 +192,17 @@
         'import_xml_file' => 'Manage settings of import from XML file',
     ],
     'message'     => [
-        'import_additional_category_info' => 'Вкажіть через кому список додаткових категорій товарів.',
+        'import_additional_category_info'   => 'Вкажіть через кому список додаткових категорій товарів.',
+        'import_from_xml_files_is_disabled' => 'Import from XML files is disabled.',
+        'import_from_xml_info'              => '<p>You can use <strong>XPath</strong> syntax to set path to elements.</p>',
     ],
     'button'      => [
         'import_offer_button'   => 'Імпортувати пропозиції з CSV',
         'import_offer_from_xml' => 'Import offers from XML',
         'import_price_from_xml' => 'Import prices from XML',
+    ],
+    'widget'      => [
+        'import_from_xml_files' => 'Import from XML',
+        'import_from_csv_files' => 'Import from CSV',
     ],
 ];
