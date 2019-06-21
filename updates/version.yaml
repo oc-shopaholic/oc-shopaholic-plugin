@@ -98,3 +98,5 @@
     - 'Added "deactivate" fields to config of XmlImportSettings model.'
 1.22.3:
     - 'Fixed attaching of children categories to parent category in script of import from XML.'
+1.22.4:
+    - 'Removed deleted offers from sorting by price.'

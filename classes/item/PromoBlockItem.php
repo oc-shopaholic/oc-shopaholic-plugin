@@ -35,17 +35,6 @@ class PromoBlockItem extends ElementItem
     protected $obElement = null;
 
     /**
-     * Get product collection attribute
-     * @return ProductCollection
-     */
-    protected function getProductAttribute() : ProductCollection
-    {
-        $obProductList = ProductCollection::make()->promo($this->id);
-
-        return $obProductList;
-    }
-
-    /**
      * Returns URL of a promo block page.
      *
      * @param string $sPageCode
@@ -80,5 +69,16 @@ class PromoBlockItem extends ElementItem
         }
 
         return $arPageParamList;
+    }
+
+    /**
+     * Get product collection attribute
+     * @return ProductCollection
+     */
+    protected function getProductAttribute() : ProductCollection
+    {
+        $obProductList = ProductCollection::make()->promo($this->id);
+
+        return $obProductList;
     }
 }
