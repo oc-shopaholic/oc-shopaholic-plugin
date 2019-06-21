@@ -1,5 +1,6 @@
 <?php namespace Lovata\Shopaholic\Classes\Store\Offer;
 
+use DB;
 use Event;
 use Lovata\Toolbox\Classes\Store\AbstractStoreWithParam;
 
@@ -23,21 +24,21 @@ class SortingListStore extends AbstractStoreWithParam
      */
     protected function getIDListFromDB() : array
     {
-            if ($this->sValue == OfferListStore::SORT_PRICE_ASC) {
-                $arElementIDList = $this->getByPriceASC();
-            } elseif ($this->sValue == OfferListStore::SORT_PRICE_DESC) {
-                $arElementIDList = $this->getByPriceDESC();
-            } elseif ($this->sValue == OfferListStore::SORT_NEW) {
-                $arElementIDList = $this->getNewOfferList();
-            } elseif ($this->sValue == OfferListStore::SORT_NO) {
-                $arElementIDList = $this->getOfferList();
-            } elseif (preg_match('%^'.OfferListStore::SORT_PRICE_ASC.'\|.+%', $this->sValue)) {
-                $arElementIDList = $this->getByPriceTypeASC();
-            } elseif (preg_match('%^'.OfferListStore::SORT_PRICE_DESC.'\|.+%', $this->sValue)) {
-                $arElementIDList = $this->getByPriceTypeDESC();
-            } else {
-                $arElementIDList = $this->getCustomSortingList();
-            }
+        if ($this->sValue == OfferListStore::SORT_PRICE_ASC) {
+            $arElementIDList = $this->getByPriceASC();
+        } elseif ($this->sValue == OfferListStore::SORT_PRICE_DESC) {
+            $arElementIDList = $this->getByPriceDESC();
+        } elseif ($this->sValue == OfferListStore::SORT_NEW) {
+            $arElementIDList = $this->getNewOfferList();
+        } elseif ($this->sValue == OfferListStore::SORT_NO) {
+            $arElementIDList = $this->getOfferList();
+        } elseif (preg_match('%^'.OfferListStore::SORT_PRICE_ASC.'\|.+%', $this->sValue)) {
+            $arElementIDList = $this->getByPriceTypeASC();
+        } elseif (preg_match('%^'.OfferListStore::SORT_PRICE_DESC.'\|.+%', $this->sValue)) {
+            $arElementIDList = $this->getByPriceTypeDESC();
+        } else {
+            $arElementIDList = $this->getCustomSortingList();
+        }
 
         return $arElementIDList;
     }
@@ -72,10 +73,15 @@ class SortingListStore extends AbstractStoreWithParam
      */
     protected function getByPriceASC() : array
     {
-        $arElementIDList = (array) Price::getByItemType(Offer::class)
-            ->whereNull('price_type_id')
-            ->orderBy('price', 'asc')
-            ->lists('item_id');
+        $arElementIDList = (array) DB::table('lovata_shopaholic_prices')
+            ->select('lovata_shopaholic_offers.id')
+            ->whereNull('lovata_shopaholic_prices.price_type_id')
+            ->where('lovata_shopaholic_offers.active', true)
+            ->whereNull('lovata_shopaholic_offers.deleted_at')
+            ->where('lovata_shopaholic_prices.item_type', Offer::class)
+            ->orderBy('lovata_shopaholic_prices.price', 'asc')
+            ->join('lovata_shopaholic_offers', 'lovata_shopaholic_offers.id', '=', 'lovata_shopaholic_prices.item_id')
+            ->lists('id');
 
         return $arElementIDList;
     }
@@ -86,10 +92,15 @@ class SortingListStore extends AbstractStoreWithParam
      */
     protected function getByPriceDESC() : array
     {
-        $arElementIDList = (array) Price::getByItemType(Offer::class)
-            ->whereNull('price_type_id')
-            ->orderBy('price', 'desc')
-            ->lists('item_id');
+        $arElementIDList = (array) DB::table('lovata_shopaholic_prices')
+            ->select('lovata_shopaholic_offers.id')
+            ->whereNull('lovata_shopaholic_prices.price_type_id')
+            ->where('lovata_shopaholic_offers.active', true)
+            ->whereNull('lovata_shopaholic_offers.deleted_at')
+            ->where('lovata_shopaholic_prices.item_type', Offer::class)
+            ->orderBy('lovata_shopaholic_prices.price', 'desc')
+            ->join('lovata_shopaholic_offers', 'lovata_shopaholic_offers.id', '=', 'lovata_shopaholic_prices.item_id')
+            ->lists('id');
 
         return $arElementIDList;
     }
