@@ -73,6 +73,18 @@ class ImportOfferModelFromXML extends AbstractImportModelFromXML
     }
 
     /**
+     * Start import
+     * @param $obProgressBar
+     * @throws
+     */
+    public function import($obProgressBar = null)
+    {
+        parent::import($obProgressBar);
+
+        $this->deactivateElements();
+    }
+
+    /**
      * Prepare array of import data
      */
     protected function prepareImportData()
