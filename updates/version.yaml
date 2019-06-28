@@ -100,3 +100,5 @@
     - 'Fixed attaching of children categories to parent category in script of import from XML.'
 1.22.4:
     - 'Removed deleted offers from sorting by price.'
+1.22.5:
+    - 'Fixed bug with deactivating items in import from XML files.'
