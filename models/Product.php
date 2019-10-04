@@ -25,81 +25,98 @@ use Lovata\Shopaholic\Classes\Import\ImportProductModelFromCSV;
  * @mixin \October\Rain\Database\Builder
  * @mixin \Eloquent
  *
- * @property                                                                             $id
- * @property bool                                                                        $active
- * @property string                                                                      $name
- * @property string                                                                      $slug
- * @property string                                                                      $code
- * @property int                                                                         $category_id
- * @property int                                                                         $brand_id
- * @property string                                                                      $external_id
- * @property string                                                                      $preview_text
- * @property string                                                                      $description
- * @property \October\Rain\Argon\Argon                                                   $created_at
- * @property \October\Rain\Argon\Argon                                                   $updated_at
- * @property \October\Rain\Argon\Argon                                                   $deleted_at
+ * @property                                                                                           $id
+ * @property bool                                                                                      $active
+ * @property string                                                                                    $name
+ * @property string                                                                                    $slug
+ * @property string                                                                                    $code
+ * @property int                                                                                       $category_id
+ * @property int                                                                                       $brand_id
+ * @property string                                                                                    $external_id
+ * @property string                                                                                    $preview_text
+ * @property string                                                                                    $description
+ * @property \October\Rain\Argon\Argon                                                                 $created_at
+ * @property \October\Rain\Argon\Argon                                                                 $updated_at
+ * @property \October\Rain\Argon\Argon                                                                 $deleted_at
  *
  * Relations
- * @property \System\Models\File                                                         $preview_image
- * @property \October\Rain\Database\Collection|\System\Models\File[]                     $images
+ * @property \System\Models\File                                                                       $preview_image
+ * @property \October\Rain\Database\Collection|\System\Models\File[]                                   $images
  *
- * @property Category                                                                    $category
+ * @property Category                                                                                  $category
  * @method static \October\Rain\Database\Relations\BelongsTo|Category category()
  *
- * @property \October\Rain\Database\Collection|Category[]                                $additional_category
+ * @property \October\Rain\Database\Collection|Category[]                                              $additional_category
  * @method static \October\Rain\Database\Relations\BelongsToMany|Category additional_category()
  *
- * @property Brand                                                                       $brand
+ * @property Brand                                                                                     $brand
  * @method static \October\Rain\Database\Relations\BelongsTo|Brand brand()
  *
- * @property \October\Rain\Database\Collection|Offer[]                                   $offer
+ * @property \October\Rain\Database\Collection|Offer[]                                                 $offer
  * @method \October\Rain\Database\Relations\HasMany|Offer offer()
  *
  * @method static $this getByBrand(int $iBrandID)
  *
  * Properties for Shopaholic
  * @see     \Lovata\PropertiesShopaholic\Classes\Event\ProductModelHandler::addPropertyMethods
- * @property array                                                                       $property
+ * @property array                                                                                     $property
  *
  * @property \October\Rain\Database\Collection|\Lovata\PropertiesShopaholic\Models\PropertyValueLink[] $property_value
  * @method static \October\Rain\Database\Relations\MorphMany|\Lovata\PropertiesShopaholic\Models\PropertyValueLink property_value()
  *
  * Popularity for Shopaholic
- * @property int                                                                         $popularity
+ * @property int                                                                                       $popularity
  *
  * Reviews for Shopaholic
- * @property float                                                                       $rating
- * @property array                                                                       $rating_data
- * @property \October\Rain\Database\Collection|\Lovata\ReviewsShopaholic\Models\Review[] $review
+ * @property float                                                                                     $rating
+ * @property array                                                                                     $rating_data
+ * @property \October\Rain\Database\Collection|\Lovata\ReviewsShopaholic\Models\Review[]               $review
  * @method static \October\Rain\Database\Relations\HasMany|\Lovata\ReviewsShopaholic\Models\Review review()
  *
  * Related products for Shopaholic
- * @property \October\Rain\Database\Collection|Product[]                                 $related
+ * @property \October\Rain\Database\Collection|Product[]                                               $related
  * @method static \October\Rain\Database\Relations\BelongsToMany|$this related()
  *
  * Accessories for Shopaholic
- * @property \October\Rain\Database\Collection|Product[]                                 $accessory
+ * @property \October\Rain\Database\Collection|Product[]                                               $accessory
  * @method static \October\Rain\Database\Relations\BelongsToMany|$this accessory()
  *
  * Search for Shopaholic, Sphinx for Shopaholic
- * @property string                                                                      $search_synonym
- * @property string                                                                      $search_content
+ * @property string                                                                                    $search_synonym
+ * @property string                                                                                    $search_content
  *
  * Discounts for Shopaholic
- * @property \October\Rain\Database\Collection|\Lovata\DiscountsShopaholic\Models\Discount[] $discount
+ * @property \October\Rain\Database\Collection|\Lovata\DiscountsShopaholic\Models\Discount[]           $discount
  * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\DiscountsShopaholic\Models\Discount discount()
  *
  * Coupons for Shopaholic
- * @property \October\Rain\Database\Collection|\Lovata\CouponsShopaholic\Models\CouponGroup[] $coupon_group
+ * @property \October\Rain\Database\Collection|\Lovata\CouponsShopaholic\Models\CouponGroup[]          $coupon_group
  * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\CouponsShopaholic\Models\CouponGroup coupon_group()
  *
  * Campaign for Shopaholic
- * @property \October\Rain\Database\Collection|\Lovata\CampaignsShopaholic\Models\Campaign[] $campaign
+ * @property \October\Rain\Database\Collection|\Lovata\CampaignsShopaholic\Models\Campaign[]           $campaign
  * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\CampaignsShopaholic\Models\Campaign campaign()
  *
  * Labels for Shopaholic
- * @property \October\Rain\Database\Collection|\Lovata\LabelsShopaholic\Models\Label[] $label
+ * @property \October\Rain\Database\Collection|\Lovata\LabelsShopaholic\Models\Label[]                 $label
  * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\LabelsShopaholic\Models\Label label()
+ *
+ * YandexMarket for Shopaholic
+ * @property \System\Models\File                                                                       $preview_image_yandex
+ * @property \October\Rain\Database\Collection|\System\Models\File[]                                   $images_yandex
+ *
+ * Facebook for Shopaholic
+ * @property \System\Models\File                                                                       $preview_image_facebook
+ * @property \October\Rain\Database\Collection|\System\Models\File[]                                   $images_facebook
+ *
+ * VKontakte for Shopaholic
+ * @property bool                                                                                      $active_vk
+ * @property int                                                                                       $external_vk_id
+ * @property \System\Models\File                                                                       $preview_image_vkontakte
+ * @property \October\Rain\Database\Collection|\System\Models\File[]                                   $images_vkontakte
+ * @method static $this activeVK()
+ * @method static $this notActiveVK()
+ * @method static $this isNotEmptyExternalVkId()
  */
 class Product extends ImportModel
 {
@@ -148,9 +165,9 @@ class Product extends ImportModel
     public $belongsToMany = [
         'additional_category' => [
             Category::class,
-            'table'      => 'lovata_shopaholic_additional_categories',
+            'table' => 'lovata_shopaholic_additional_categories',
         ],
-        'promo_block' => [
+        'promo_block'         => [
             PromoBlock::class,
             'table'    => 'lovata_shopaholic_promo_block_relation',
             'otherKey' => 'promo_id',
@@ -219,7 +236,7 @@ class Product extends ImportModel
     {
         if (!empty($sData)) {
             foreach ($sData as $category) {
-                $obQuery->orWhere('category_id', $category)->orWhereHas('additional_category', function($obQuery) use ($category) {
+                $obQuery->orWhere('category_id', $category)->orWhereHas('additional_category', function ($obQuery) use ($category) {
                     $obQuery->where('category_id', $category);
                 });
             }

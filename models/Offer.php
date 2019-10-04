@@ -90,6 +90,18 @@ use Lovata\Shopaholic\Classes\Import\ImportOfferModelFromCSV;
  * Campaign for Shopaholic
  * @property \October\Rain\Database\Collection|\Lovata\CampaignsShopaholic\Models\Campaign[]               $campaign
  * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\CampaignsShopaholic\Models\Campaign campaign()
+ *
+ * YandexMarket for Shopaholic
+ * @property \System\Models\File                                                                           $preview_image_yandex
+ * @property \October\Rain\Database\Collection|\System\Models\File[]                                       $images_yandex
+ *
+ * Facebook for Shopaholic
+ * @property \System\Models\File                                                                           $preview_image_facebook
+ * @property \October\Rain\Database\Collection|\System\Models\File[]                                       $images_facebook
+ *
+ * VKontakte for Shopaholic
+ * @property \System\Models\File                                                                           $preview_image_vkontakte
+ * @property \October\Rain\Database\Collection|\System\Models\File[]                                       $images_vkontakte
  */
 class Offer extends ImportModel
 {
@@ -242,7 +254,7 @@ class Offer extends ImportModel
 
     /**
      * Set quantity attribute value
-     * @param  int $iQuantity
+     * @param int $iQuantity
      */
     public function setQuantityAttribute($iQuantity)
     {

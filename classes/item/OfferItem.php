@@ -7,6 +7,7 @@ use Lovata\Toolbox\Traits\Helpers\PriceHelperTrait;
 use Lovata\Shopaholic\Models\Offer;
 use Lovata\Shopaholic\Classes\Helper\TaxHelper;
 use Lovata\Shopaholic\Classes\Helper\CurrencyHelper;
+use Lovata\Shopaholic\Classes\Helper\PriceTypeHelper;
 
 /**
  * Class OfferItem
@@ -72,6 +73,18 @@ use Lovata\Shopaholic\Classes\Helper\CurrencyHelper;
  * @property int                                                                                                                         $discount_id
  * @property float                                                                                                                       $discount_value
  * @property string                                                                                                                      $discount_type
+ *
+ * YandexMarket for Shopaholic
+ * @property \System\Models\File                                                                                                         $preview_image_yandex
+ * @property \October\Rain\Database\Collection|\System\Models\File[]                                                                     $images_yandex
+ *
+ * Facebook for Shopaholic
+ * @property \System\Models\File                                                                                                         $preview_image_facebook
+ * @property \October\Rain\Database\Collection|\System\Models\File[]                                                                     $images_facebook
+ *
+ * VKontakte for Shopaholic
+ * @property \System\Models\File                                                                                                         $preview_image_vkontakte
+ * @property \October\Rain\Database\Collection|\System\Models\File[]                                                                     $images_vkontakte
  */
 class OfferItem extends ElementItem
 {
@@ -146,6 +159,10 @@ class OfferItem extends ElementItem
      */
     public function getActivePriceType()
     {
+        if (empty($this->iActivePriceType)) {
+            $this->iActivePriceType = PriceTypeHelper::instance()->getActivePriceTypeID();
+        }
+
         return $this->iActivePriceType;
     }
 
@@ -176,10 +193,11 @@ class OfferItem extends ElementItem
      */
     protected function getPriceValueAttribute()
     {
-        if (empty($this->iActivePriceType)) {
+        $iActivePriceType = $this->getActivePriceType();
+        if (empty($iActivePriceType)) {
             $fPrice = $this->getAttribute('price_value');
         } else {
-            $fPrice = array_get($this->price_list, $this->iActivePriceType.'.price');
+            $fPrice = array_get($this->price_list, $iActivePriceType.'.price');
         }
 
         $fPrice = CurrencyHelper::instance()->convert($fPrice, $this->getActiveCurrency());
@@ -193,10 +211,11 @@ class OfferItem extends ElementItem
      */
     protected function getOldPriceValueAttribute()
     {
-        if (empty($this->iActivePriceType)) {
+        $iActivePriceType = $this->getActivePriceType();
+        if (empty($iActivePriceType)) {
             $fPrice = $this->getAttribute('old_price_value');
         } else {
-            $fPrice = array_get($this->price_list, $this->iActivePriceType.'.old_price');
+            $fPrice = array_get($this->price_list, $iActivePriceType.'.old_price');
         }
 
         $fPrice = CurrencyHelper::instance()->convert($fPrice, $this->getActiveCurrency());

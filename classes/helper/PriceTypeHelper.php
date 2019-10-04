@@ -23,7 +23,7 @@ class PriceTypeHelper
     protected $sActivePriceTypeCode;
 
     /**
-     * Get value of active currency
+     * Get value of active price type
      * @param string $sPriceTypeCode
      * @return PriceType
      */
@@ -35,7 +35,7 @@ class PriceTypeHelper
     }
 
     /**
-     * Get value of active currency
+     * Get value of active price type
      * @return PriceType
      */
     public function getActive()
@@ -44,7 +44,7 @@ class PriceTypeHelper
     }
 
     /**
-     * Get active currency code
+     * Get active price type code
      * @return null|string
      */
     public function getActivePriceTypeCode()
@@ -55,6 +55,20 @@ class PriceTypeHelper
         }
 
         return $obPriceType->code;
+    }
+
+    /**
+     * Get active price type code
+     * @return null|string
+     */
+    public function getActivePriceTypeID()
+    {
+        $obPriceType = $this->getActive();
+        if (empty($obPriceType)) {
+            return null;
+        }
+
+        return $obPriceType->id;
     }
 
     /**
@@ -69,7 +83,7 @@ class PriceTypeHelper
     }
 
     /**
-     * Init currency data
+     * Init price type data
      */
     protected function init()
     {
@@ -79,7 +93,7 @@ class PriceTypeHelper
     }
 
     /**
-     * Get active currency code and find active currency object by code
+     * Get active price type code and find active price type object by code
      */
     protected function initActivePriceType()
     {

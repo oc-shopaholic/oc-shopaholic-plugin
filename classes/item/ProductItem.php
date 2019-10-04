@@ -67,6 +67,20 @@ use Lovata\Shopaholic\Classes\Collection\OfferCollection;
  *
  * Wish list for Shopaholic
  * @method bool inWishList()
+ *
+ * YandexMarket for Shopaholic
+ * @property \System\Models\File                                                                                                         $preview_image_yandex
+ * @property \October\Rain\Database\Collection|\System\Models\File[]                                                                     $images_yandex
+ *
+ * Facebook for Shopaholic
+ * @property \System\Models\File                                                                                                         $preview_image_facebook
+ * @property \October\Rain\Database\Collection|\System\Models\File[]                                                                     $images_facebook
+ *
+ * VKontakte for Shopaholic
+ * @property bool                                                                                                                        $active_vk
+ * @property int                                                                                                                         $external_vk_id
+ * @property \System\Models\File                                                                                                         $preview_image_vkontakte
+ * @property \October\Rain\Database\Collection|\System\Models\File[]                                                                     $images_vkontakte
  */
 class ProductItem extends ElementItem
 {
