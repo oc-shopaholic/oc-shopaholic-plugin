@@ -45,5 +45,7 @@ class ImportBrandModelFromCSV extends AbstractImportModelFromCSV
     {
         $this->importPreviewImage();
         $this->importImageList();
+
+        parent::processModelObject();
     }
 }

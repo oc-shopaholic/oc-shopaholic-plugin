@@ -91,6 +91,11 @@ use Lovata\Shopaholic\Classes\Import\ImportOfferModelFromCSV;
  * @property \October\Rain\Database\Collection|\Lovata\CampaignsShopaholic\Models\Campaign[]               $campaign
  * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\CampaignsShopaholic\Models\Campaign campaign()
  *
+ * Digital product for Shopaholic
+ * @property int                                                                                           $digital_product_period_id
+ * @property \Lovata\DigitalProductsShopaholic\Models\DigitalProductPeriod                                 $digital_product_period
+ * @method static \October\Rain\Database\Relations\BelongsTo|\Lovata\DigitalProductsShopaholic\Models\DigitalProductPeriod digital_product_period()
+ *
  * YandexMarket for Shopaholic
  * @property \System\Models\File                                                                           $preview_image_yandex
  * @property \October\Rain\Database\Collection|\System\Models\File[]                                       $images_yandex

@@ -74,6 +74,10 @@ use Lovata\Shopaholic\Classes\Helper\PriceTypeHelper;
  * @property float                                                                                                                       $discount_value
  * @property string                                                                                                                      $discount_type
  *
+ * Digital products for Shopaholic
+ * @property int                                                                                                                         $digital_product_period_id
+ * @property \Lovata\DigitalProductsShopaholic\Classes\Item\DigitalProductPeriodItem                                                     $digital_product_period
+ *
  * YandexMarket for Shopaholic
  * @property \System\Models\File                                                                                                         $preview_image_yandex
  * @property \October\Rain\Database\Collection|\System\Models\File[]                                                                     $images_yandex

@@ -101,6 +101,9 @@ use Lovata\Shopaholic\Classes\Import\ImportProductModelFromCSV;
  * @property \October\Rain\Database\Collection|\Lovata\LabelsShopaholic\Models\Label[]                 $label
  * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\LabelsShopaholic\Models\Label label()
  *
+ * Digital products for Shopaholic
+ * @property bool                                                                                      $is_digital_product
+ *
  * YandexMarket for Shopaholic
  * @property \System\Models\File                                                                       $preview_image_yandex
  * @property \October\Rain\Database\Collection|\System\Models\File[]                                   $images_yandex

@@ -37,8 +37,12 @@ class CheckTableIntegrity extends Command
     {
         foreach ($this->arMigrationList as $arMigrationData) {
             $sClassName = $arMigrationData['class'];
-            $sFilePath = $arMigrationData['path'];
-            include_once base_path($sFilePath);
+            $sFilePath = base_path($arMigrationData['path']);
+            if (!file_exists($sFilePath)) {
+                continue;
+            }
+
+            include_once $sFilePath;
 
             if (!class_exists($sClassName)) {
                 continue;

@@ -56,6 +56,8 @@ class ImportCategoryModelFromCSV extends AbstractImportModelFromCSV
 
         $this->importPreviewImage();
         $this->importImageList();
+
+        parent::processModelObject();
     }
 
     /**

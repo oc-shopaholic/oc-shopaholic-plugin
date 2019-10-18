@@ -50,6 +50,8 @@ class ImportOfferModelFromCSV extends AbstractImportModelFromCSV
     {
         $this->importPreviewImage();
         $this->importImageList();
+
+        parent::processModelObject();
     }
 
     /**
