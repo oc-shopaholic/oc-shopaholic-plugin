@@ -76,6 +76,9 @@ use Lovata\Shopaholic\Classes\Import\ImportCategoryModelFromCSV;
  * Campaign for Shopaholic
  * @property \October\Rain\Database\Collection|\Lovata\CampaignsShopaholic\Models\Campaign[]     $campaign
  * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\CampaignsShopaholic\Models\Campaign campaign()
+ *
+ * VKontakte for Shopaholic
+ * @property int                                                                                 $category_vk_id
  */
 class Category extends ImportModel
 {

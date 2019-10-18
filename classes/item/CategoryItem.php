@@ -54,6 +54,9 @@ use Lovata\Shopaholic\Classes\Collection\CategoryCollection;
  * Filter for Shopaholic
  * @property \Lovata\FilterShopaholic\Classes\Collection\FilterPropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[]     $product_filter_property
  * @property \Lovata\FilterShopaholic\Classes\Collection\FilterPropertyCollection|\Lovata\PropertiesShopaholic\Classes\Item\PropertyItem[]     $offer_filter_property
+ *
+ * VKontakte for Shopaholic
+ * @property int                                                                                                                               $category_vk_id
  */
 class CategoryItem extends ElementItem
 {

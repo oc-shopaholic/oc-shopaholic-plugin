@@ -15,6 +15,9 @@ use Lovata\Shopaholic\Classes\Store\OfferListStore;
  * @method $this filterByDiscount()
  * @method $this filterByQuantity()
  * @method $this filterByProperty(array $arFilterList, \Lovata\FilterShopaholic\Classes\Collection\FilterPropertyCollection $obPropertyList)
+ *
+ * Digital products for Shopaholic
+ * @method $this sortByPeriod()
  */
 class OfferCollection extends ElementCollection
 {

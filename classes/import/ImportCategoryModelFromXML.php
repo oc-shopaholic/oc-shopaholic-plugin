@@ -108,9 +108,9 @@ class ImportCategoryModelFromXML extends AbstractImportModelFromXML
         $this->importPreviewImage();
         $this->importImageList();
 
-        $this->importChildrenCategoryList();
-
         parent::processModelObject();
+
+        $this->importChildrenCategoryList();
     }
 
     /**
