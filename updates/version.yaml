@@ -102,3 +102,5 @@
     - 'Removed deleted offers from sorting by price.'
 1.22.5:
     - 'Fixed bug with deactivating items in import from XML files.'
+1.23.0:
+    - 'Added annotations for integration with Digital product for Shopaholic plugin.'
