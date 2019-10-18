@@ -103,4 +103,4 @@
 1.22.5:
     - 'Fixed bug with deactivating items in import from XML files.'
 1.23.0:
-    - 'Added annotations for integration with Digital product for Shopaholic plugin.'
+    - 'Added ability to show catalog with active price type. Added annotations for integration with Digital product for Shopaholic plugin.'

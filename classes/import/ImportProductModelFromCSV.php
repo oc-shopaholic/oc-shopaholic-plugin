@@ -55,8 +55,6 @@ class ImportProductModelFromCSV extends AbstractImportModelFromCSV
         $this->importImageList();
 
         $this->syncAdditionalCategoryList();
-
-        parent::processModelObject();
     }
 
     /**
