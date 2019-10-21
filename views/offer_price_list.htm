@@ -6,8 +6,8 @@
     </tr>
     <tr>
         <td><?= trans('lovata.shopaholic::lang.field.main_price_type'); ?></td>
-        <td><input class="form-control" type="number" name="Offer[price_list][0][price]" value="<?= $formModel->setActiveCurrency(null)->setActivePriceType(null)->price_value ?>"></td>
-        <td><input class="form-control" type="number" name="Offer[price_list][0][old_price]" value="<?= $formModel->setActiveCurrency(null)->setActivePriceType(null)->old_price_value ?>"></td>
+        <td><input class="form-control" type="number" name="Offer[price_list][0][price]" value="<?= $formModel->setActiveCurrency(null)->setActivePriceType(null)->price_value ?>" step="any"></td>
+        <td><input class="form-control" type="number" name="Offer[price_list][0][old_price]" value="<?= $formModel->setActiveCurrency(null)->setActivePriceType(null)->old_price_value ?>" step="any"></td>
     </tr>
     <?php
         $obPriceTypeList = \Lovata\Shopaholic\Models\PriceType::active()->get();
@@ -16,8 +16,8 @@
     ?>
     <tr>
         <td><?= $obPriceType->name ?></td>
-        <td><input class="form-control" type="number" name="Offer[price_list][<?= $obPriceType->id ?>][price]" value="<?= $formModel->setActivePriceType($obPriceType->id)->price_value ?>"></td>
-        <td><input class="form-control" type="number" name="Offer[price_list][<?= $obPriceType->id ?>][old_price]" value="<?= $formModel->setActivePriceType($obPriceType->id)->old_price_value ?>"></td>
+        <td><input class="form-control" type="number" name="Offer[price_list][<?= $obPriceType->id ?>][price]" value="<?= $formModel->setActivePriceType($obPriceType->id)->price_value ?>" step="any"></td>
+        <td><input class="form-control" type="number" name="Offer[price_list][<?= $obPriceType->id ?>][old_price]" value="<?= $formModel->setActivePriceType($obPriceType->id)->old_price_value ?>" step="any"></td>
     </tr>
             <?php } ?>
         <?php } ?>
