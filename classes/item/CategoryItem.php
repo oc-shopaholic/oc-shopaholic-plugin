@@ -127,7 +127,6 @@ class CategoryItem extends ElementItem
 
         //Get slug list
         $arSlugList = $this->getSlugList();
-        $arSlugList = array_reverse($arSlugList);
 
         //Prepare page property list
         $arPagePropertyList = [];
