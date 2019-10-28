@@ -70,7 +70,6 @@ class CategoryPage extends ElementPage
             $obElement = $this->getElementByWildcard($sElementSlug);
         }
 
-
         if (!empty($obElement)) {
             Event::fire('shopaholic.category.open', [$obElement]);
         }
@@ -114,12 +113,12 @@ class CategoryPage extends ElementPage
 
         $obElement = $this->getElementBySlug($sElementSlug);
 
-        $obCheckingElement = $obElement;
+        $obNestingElement = $obElement;
 
         foreach ($arSlugList as $sSlug) {
-            $obCheckingElement = $this->getNestingElement($sSlug, $obCheckingElement);
+            $obNestingElement = $this->getNestingElement($sSlug, $obNestingElement);
 
-            if (empty($obCheckingElement)) {
+            if (empty($obNestingElement)) {
                 return null;
             }
         }
@@ -130,14 +129,14 @@ class CategoryPage extends ElementPage
     /**
      * Get nesting element
      * @param string $sElementSlug
-     * @param Category $obCheckingElement
+     * @param Category $obNestingElement
      * @return Category
      */
-    protected function getNestingElement($sElementSlug, $obCheckingElement)
+    protected function getNestingElement($sElementSlug, $obNestingElement)
     {
         $obElement = $this->getElementBySlug($sElementSlug);
 
-        if (empty($obElement) || empty($obCheckingElement) || $obElement->id != $obCheckingElement->parent_id) {
+        if (empty($obElement) || empty($obNestingElement) || $obElement->id != $obNestingElement->parent_id) {
             return null;
         }
 
