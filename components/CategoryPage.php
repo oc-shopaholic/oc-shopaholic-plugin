@@ -105,9 +105,11 @@ class CategoryPage extends ElementPage
     {
         $arSlugList = explode('/', $sElementSlug);
 
-        if (empty($arSlugList) || !krsort($arSlugList)) {
+        if (empty($arSlugList)) {
             return null;
         }
+
+        $arSlugList = array_reverse($arSlugList);
 
         $sElementSlug = array_shift($arSlugList);
 
@@ -123,6 +125,10 @@ class CategoryPage extends ElementPage
             }
         }
 
+        if (!empty($obNestingElement->parent)) {
+            return null;
+        }
+
         return $obElement;
     }
 
@@ -134,9 +140,9 @@ class CategoryPage extends ElementPage
      */
     protected function getNestingElement($sElementSlug, $obNestingElement)
     {
-        $obElement = $this->getElementBySlug($sElementSlug);
+        $obElement = $obNestingElement->parent;
 
-        if (empty($obElement) || empty($obNestingElement) || $obElement->id != $obNestingElement->parent_id) {
+        if (empty($obElement) || empty($obNestingElement) || $obElement->slug != $sElementSlug) {
             return null;
         }
 
