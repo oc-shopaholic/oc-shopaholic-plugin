@@ -35,6 +35,25 @@ class CategoryPage extends ElementPage
     }
 
     /**
+     * @return array
+     */
+    public function defineProperties()
+    {
+        $arPropertyList         = parent::defineProperties();
+        $arCategoryPropertyList = [
+            'is_wildcard' => [
+                'title'   => 'lovata.shopaholic::lang.component.is_wildcard',
+                'type'    => 'checkbox',
+                'default' => 0,
+            ],
+        ];
+
+        $arPropertyList = array_merge($arPropertyList, $arCategoryPropertyList);
+
+        return $arPropertyList;
+    }
+
+    /**
      * Get element object
      * @param string $sElementSlug
      * @return Category
@@ -45,6 +64,27 @@ class CategoryPage extends ElementPage
             return null;
         }
 
+        if (!$this->property('is_wildcard')) {
+            $obElement = $this->getElementBySlug($sElementSlug);
+        } else {
+            $obElement = $this->getElementByWildcard($sElementSlug);
+        }
+
+
+        if (!empty($obElement)) {
+            Event::fire('shopaholic.category.open', [$obElement]);
+        }
+
+        return $obElement;
+    }
+
+    /**
+     * Get category by default
+     * @param string $sElementSlug
+     * @return Category|null
+     */
+    protected function getElementBySlug($sElementSlug)
+    {
         if ($this->isSlugTranslatable()) {
             $obElement = Category::active()->transWhere('slug', $sElementSlug)->first();
             if (!$this->checkTransSlug($obElement, $sElementSlug)) {
@@ -53,8 +93,52 @@ class CategoryPage extends ElementPage
         } else {
             $obElement = Category::active()->getBySlug($sElementSlug)->first();
         }
-        if (!empty($obElement)) {
-            Event::fire('shopaholic.category.open', [$obElement]);
+
+        return $obElement;
+    }
+
+    /**
+     * Get category by wildcard
+     * @param string $sElementSlug
+     * @return Category|null
+     */
+    protected function getElementByWildcard($sElementSlug)
+    {
+        $arSlugList = explode('/', $sElementSlug);
+
+        if (empty($arSlugList) || !krsort($arSlugList)) {
+            return null;
+        }
+
+        $sElementSlug = array_shift($arSlugList);
+
+        $obElement = $this->getElementBySlug($sElementSlug);
+
+        $obCheckingElement = $obElement;
+
+        foreach ($arSlugList as $sSlug) {
+            $obCheckingElement = $this->getNestingElement($sSlug, $obCheckingElement);
+
+            if (empty($obCheckingElement)) {
+                return null;
+            }
+        }
+
+        return $obElement;
+    }
+
+    /**
+     * Get nesting element
+     * @param string $sElementSlug
+     * @param Category $obCheckingElement
+     * @return Category
+     */
+    protected function getNestingElement($sElementSlug, $obCheckingElement)
+    {
+        $obElement = $this->getElementBySlug($sElementSlug);
+
+        if (empty($obElement) || empty($obCheckingElement) || $obElement->id != $obCheckingElement->parent_id) {
+            return null;
         }
 
         return $obElement;
