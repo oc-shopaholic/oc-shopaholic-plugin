@@ -115,6 +115,10 @@ class CategoryPage extends ElementPage
 
         $obElement = $this->getElementBySlug($sElementSlug);
 
+        if (empty($arSlugList) && !empty($obElement) && empty($obElement->parent)) {
+            return $obElement;
+        }
+
         $obNestingElement = $obElement;
 
         foreach ($arSlugList as $sSlug) {

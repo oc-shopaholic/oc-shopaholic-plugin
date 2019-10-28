@@ -132,6 +132,12 @@ class CategoryItem extends ElementItem
         $arSlugList = $this->getSlugList();
         $arSlugList = array_reverse($arSlugList);
 
+        $bWildcard = PageHelper::instance()->isWildcard($sPageCode, 'CategoryPage');
+
+        if ($bWildcard) {
+            return [array_shift($arParamList) => implode('/', $arSlugList)];
+        }
+
         //Prepare page property list
         $arPagePropertyList = [];
         foreach ($arParamList as $sParamName) {
