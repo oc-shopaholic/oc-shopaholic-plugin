@@ -91,6 +91,7 @@ class ProductList extends SortingElementList
 
     /**
      * Method for ajax request with empty response
+     * @deprecated
      * @return bool
      */
     public function onAjaxRequest()

@@ -53,6 +53,8 @@ use Lovata\Shopaholic\Classes\Import\ImportCategoryModelFromCSV;
  * @property \October\Rain\Database\Collection|Product[]                                         $product_link
  * @method static \October\Rain\Database\Relations\BelongsToMany|Product product_link()
  *
+ * @method static $this getByParentID(int $iParentID)
+ *
  * Properties for Shopaholic
  * @see     \Lovata\PropertiesShopaholic\Classes\Event\CategoryModelHandler::addModelRelationConfig
  *
@@ -63,7 +65,9 @@ use Lovata\Shopaholic\Classes\Import\ImportCategoryModelFromCSV;
  * @property \October\Rain\Database\Collection|\Lovata\PropertiesShopaholic\Models\Property[]    $product_property
  * @property \October\Rain\Database\Collection|\Lovata\PropertiesShopaholic\Models\Property[]    $offer_property
  *
- * @method static $this getByParentID(int $iParentID)
+ * Search for Shopaholic, Sphinx for Shopaholic
+ * @property string                                                                              $search_synonym
+ * @property string                                                                              $search_content
  *
  * Discounts for Shopaholic
  * @property \October\Rain\Database\Collection|\Lovata\DiscountsShopaholic\Models\Discount[]     $discount

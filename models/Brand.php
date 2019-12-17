@@ -23,30 +23,31 @@ use Lovata\Shopaholic\Classes\Import\ImportBrandModelFromCSV;
  * @mixin \October\Rain\Database\Builder
  * @mixin \Eloquent
  *
- * @property                                                                                 $id
- * @property bool                                                                            $active
- * @property string                                                                          $name
- * @property string                                                                          $slug
- * @property string                                                                          $code
- * @property string                                                                          $external_id
- * @property string                                                                          $preview_text
- * @property string                                                                          $description
- * @property \October\Rain\Argon\Argon                                                       $created_at
- * @property \October\Rain\Argon\Argon                                                       $updated_at
+ * @property                                                                                  $id
+ * @property bool                                                                             $active
+ * @property string                                                                           $name
+ * @property string                                                                           $slug
+ * @property string                                                                           $code
+ * @property string                                                                           $external_id
+ * @property string                                                                           $preview_text
+ * @property string                                                                           $description
+ * @property int                                                                              $sort_order
+ * @property \October\Rain\Argon\Argon                                                        $created_at
+ * @property \October\Rain\Argon\Argon                                                        $updated_at
  *
  * Relations
- * @property \System\Models\File                                                             $preview_image
- * @property \October\Rain\Database\Collection|\System\Models\File[]                         $images
+ * @property \System\Models\File                                                              $preview_image
+ * @property \October\Rain\Database\Collection|\System\Models\File[]                          $images
  *
- * @property \October\Rain\Database\Collection|Product[]                                     $product
+ * @property \October\Rain\Database\Collection|Product[]                                      $product
  * @method \October\Rain\Database\Relations\HasMany|Product product()
  *
  * Search for Shopaholic, Sphinx for Shopaholic
- * @property string                                                                          $search_synonym
- * @property string                                                                          $search_content
+ * @property string                                                                           $search_synonym
+ * @property string                                                                           $search_content
  *
  * Discounts for Shopaholic
- * @property \October\Rain\Database\Collection|\Lovata\DiscountsShopaholic\Models\Discount[] $discount
+ * @property \October\Rain\Database\Collection|\Lovata\DiscountsShopaholic\Models\Discount[]  $discount
  * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\DiscountsShopaholic\Models\Discount discount()
  *
  * Coupons for Shopaholic
@@ -54,7 +55,7 @@ use Lovata\Shopaholic\Classes\Import\ImportBrandModelFromCSV;
  * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\CouponsShopaholic\Models\CouponGroup coupon_group()
  *
  * Campaign for Shopaholic
- * @property \October\Rain\Database\Collection|\Lovata\CampaignsShopaholic\Models\Campaign[] $campaign
+ * @property \October\Rain\Database\Collection|\Lovata\CampaignsShopaholic\Models\Campaign[]  $campaign
  * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\CampaignsShopaholic\Models\Campaign campaign()
  */
 class Brand extends ImportModel

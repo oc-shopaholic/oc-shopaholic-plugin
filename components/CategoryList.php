@@ -35,6 +35,7 @@ class CategoryList extends ComponentBase
 
     /**
      * Method for ajax request with empty response
+     * @deprecated
      * @return bool
      */
     public function onAjaxRequest()
