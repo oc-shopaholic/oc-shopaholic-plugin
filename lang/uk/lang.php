@@ -179,6 +179,7 @@
         'sorting_date_begin_desc'      => 'Дата початку (DESC)',
         'sorting_date_end_asc'         => 'Дата завершення (ASC)',
         'sorting_date_end_desc'        => 'Дата завершення (DESC)',
+        'is_wildcard'                  => 'Wildcard',
     ],
     'permission'  => [
         'category'        => 'Управління категоріями',
