@@ -170,7 +170,7 @@
         'product_list_sorting'         => 'Default sorting',
         'sorting_no'                   => 'Without sorting',
         'sorting_price_desc'           => 'Expensive',
-        'sorting_price_asc'            => 'Cheap',
+        'sorting_price_asc'            => 'Baratos',
         'sorting_new'                  => 'New',
         'sorting_popularity_desc'      => 'Popular',
         'sorting_rating_desc'          => 'High rating',
@@ -179,6 +179,7 @@
         'sorting_date_begin_desc'      => 'Date begin (DESC)',
         'sorting_date_end_asc'         => 'Date end (ASC)',
         'sorting_date_end_desc'        => 'Date end (DESC)',
+        'is_wildcard'                  => 'Wildcard',
     ],
     'permission'  => [
         'category'        => 'Manage categories',
