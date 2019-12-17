@@ -179,6 +179,7 @@
         'sorting_date_begin_desc'      => 'Datumsanfang (DESC)',
         'sorting_date_end_asc'         => 'Datumsende (ASC)',
         'sorting_date_end_desc'        => 'Datumsende (DESC)',
+        'is_wildcard'                  => 'Wildcard',
     ],
     'permission'  => [
         'category'        => 'Kategorien verwalten',
