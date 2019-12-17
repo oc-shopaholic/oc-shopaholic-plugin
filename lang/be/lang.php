@@ -179,6 +179,7 @@
         'sorting_date_begin_desc'      => 'Дата пачатку (DESC)',
         'sorting_date_end_asc'         => 'Дата заканчэння (ASC)',
         'sorting_date_end_desc'        => 'Дата заканчэння (DESC)',
+        'is_wildcard'                  => 'Wildcard',
     ],
     'permission'  => [
         'category'        => 'Кіраванне катэгорыямі',
