@@ -179,7 +179,6 @@
         'sorting_date_begin_desc'      => 'Date begin (DESC)',
         'sorting_date_end_asc'         => 'Date end (ASC)',
         'sorting_date_end_desc'        => 'Date end (DESC)',
-        'is_wildcard'                  => 'Wildcard',
     ],
     'permission'  => [
         'category'        => 'Manage categories',
