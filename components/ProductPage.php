@@ -11,8 +11,6 @@ use Lovata\Shopaholic\Classes\Item\ProductItem;
  * @package Lovata\Shopaholic\Components
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  *
- * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/ProductPage
- *
  * Compare for Shopaholic
  * @method array onAddToCompare()
  * @method array onRemoveFromCompare()
@@ -58,7 +56,6 @@ class ProductPage extends ElementPage
         if (empty($sElementSlug)) {
             return null;
         }
-
 
         if ($this->isSlugTranslatable()) {
             $obElement = Product::active()->transWhere('slug', $sElementSlug)->first();

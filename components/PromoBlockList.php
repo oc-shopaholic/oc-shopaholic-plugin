@@ -10,8 +10,6 @@ use Lovata\Shopaholic\Classes\Collection\PromoBlockCollection;
  * Class PromoBlockList
  * @package Lovata\Shopaholic\Components
  * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
- *
- * @link    https://github.com/lovata/oc-shopaholic-plugin/wiki/PromoBlockList
  */
 class PromoBlockList extends SortingElementList
 {

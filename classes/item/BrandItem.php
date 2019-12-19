@@ -10,18 +10,18 @@ use Lovata\Shopaholic\Models\Brand;
 /**
  * Class BrandItem
  * @package Lovata\Shopaholic\Classes\Item
- * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
+ * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  *
- * @property int    $id
- * @property string $name
- * @property string $slug
- * @property string $code
+ * @property int                                                     $id
+ * @property string                                                  $name
+ * @property string                                                  $slug
+ * @property string                                                  $code
  *
- * @property string $preview_text
- * @property \System\Models\File $preview_image
+ * @property string                                                  $preview_text
+ * @property \System\Models\File                                     $preview_image
  *
- * @property string $description
- * @property \October\Rain\Database\Collection|\System\Models\File[]  $images
+ * @property string                                                  $description
+ * @property \October\Rain\Database\Collection|\System\Models\File[] $images
  */
 class BrandItem extends ElementItem
 {
@@ -34,13 +34,14 @@ class BrandItem extends ElementItem
      * Returns URL of a brand page.
      *
      * @param string $sPageCode
+     * @param array  $arRemoveParamList
      *
      * @return string
      */
-    public function getPageUrl($sPageCode = 'brand')
+    public function getPageUrl($sPageCode = 'brand', $arRemoveParamList = [])
     {
         //Get URL params
-        $arParamList = $this->getPageParamList($sPageCode);
+        $arParamList = $this->getPageParamList($sPageCode, $arRemoveParamList);
 
         //Generate page URL
         $sURL = CmsPage::url($sPageCode, $arParamList);
@@ -51,19 +52,25 @@ class BrandItem extends ElementItem
     /**
      * Get URL param list by page code
      * @param string $sPageCode
+     * @param array  $arRemoveParamList
      * @return array
      */
-    public function getPageParamList($sPageCode) : array
+    public function getPageParamList($sPageCode, $arRemoveParamList = []) : array
     {
-        $arPageParamList = [];
+        $arResult = [];
+        if (!empty($arRemoveParamList)) {
+            foreach ($arRemoveParamList as $sParamName) {
+                $arResult[$sParamName] = null;
+            }
+        }
 
         //Get URL params for page
         $arParamList = PageHelper::instance()->getUrlParamList($sPageCode, 'BrandPage');
         if (!empty($arParamList)) {
             $sPageParam = array_shift($arParamList);
-            $arPageParamList[$sPageParam] = $this->slug;
+            $arResult[$sPageParam] = $this->slug;
         }
 
-        return $arPageParamList;
+        return $arResult;
     }
 }

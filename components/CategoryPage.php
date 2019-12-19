@@ -10,12 +10,11 @@ use Lovata\Shopaholic\Classes\Item\CategoryItem;
  * Class CategoryPage
  * @package Lovata\Shopaholic\Components
  * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
- *
- * @link    https://github.com/lovata/oc-shopaholic-plugin/wiki/CategoryPage
  */
 class CategoryPage extends ElementPage
 {
     protected $bNeedSmartURLCheck = true;
+    protected $bHasWildCard = true;
 
     /** @var \Lovata\Shopaholic\Models\Category */
     protected $obElement;
@@ -35,25 +34,6 @@ class CategoryPage extends ElementPage
     }
 
     /**
-     * @return array
-     */
-    public function defineProperties()
-    {
-        $arPropertyList         = parent::defineProperties();
-        $arCategoryPropertyList = [
-            'is_wildcard' => [
-                'title'   => 'lovata.shopaholic::lang.component.is_wildcard',
-                'type'    => 'checkbox',
-                'default' => 0,
-            ],
-        ];
-
-        $arPropertyList = array_merge($arPropertyList, $arCategoryPropertyList);
-
-        return $arPropertyList;
-    }
-
-    /**
      * Get element object
      * @param string $sElementSlug
      * @return Category
@@ -64,7 +44,7 @@ class CategoryPage extends ElementPage
             return null;
         }
 
-        if (!$this->property('is_wildcard')) {
+        if (!$this->property('has_wildcard')) {
             $obElement = $this->getElementBySlug($sElementSlug);
         } else {
             $obElement = $this->getElementByWildcard($sElementSlug);
@@ -104,18 +84,19 @@ class CategoryPage extends ElementPage
     protected function getElementByWildcard($sElementSlug)
     {
         $arSlugList = explode('/', $sElementSlug);
-
         if (empty($arSlugList)) {
             return null;
         }
 
         $arSlugList = array_reverse($arSlugList);
-
         $sElementSlug = array_shift($arSlugList);
 
         $obElement = $this->getElementBySlug($sElementSlug);
+        if (empty($obElement)) {
+            return null;
+        }
 
-        if (empty($arSlugList) && !empty($obElement) && empty($obElement->parent)) {
+        if (empty($arSlugList) && empty($obElement->parent)) {
             return $obElement;
         }
 
@@ -123,7 +104,6 @@ class CategoryPage extends ElementPage
 
         foreach ($arSlugList as $sSlug) {
             $obNestingElement = $this->getNestingElement($sSlug, $obNestingElement);
-
             if (empty($obNestingElement)) {
                 return null;
             }
@@ -138,15 +118,19 @@ class CategoryPage extends ElementPage
 
     /**
      * Get nesting element
-     * @param string $sElementSlug
+     * @param string   $sElementSlug
      * @param Category $obNestingElement
      * @return Category
      */
     protected function getNestingElement($sElementSlug, $obNestingElement)
     {
+        if (empty($obNestingElement) || empty($sElementSlug)) {
+            return null;
+        }
+
         $obElement = $obNestingElement->parent;
 
-        if (empty($obElement) || empty($obNestingElement) || $obElement->slug != $sElementSlug) {
+        if (empty($obElement) || $obElement->slug != $sElementSlug) {
             return null;
         }
 

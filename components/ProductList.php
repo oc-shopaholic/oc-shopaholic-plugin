@@ -12,8 +12,6 @@ use Lovata\Shopaholic\Classes\Store\ProductListStore;
  * @package Lovata\Shopaholic\Components
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  *
- * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/ProductList
- *
  * Compare for Shopaholic
  * @method array onAddToCompare()
  * @method array onRemoveFromCompare()

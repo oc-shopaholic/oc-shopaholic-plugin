@@ -179,7 +179,6 @@
         'sorting_date_begin_desc'      => 'Дата начала (DESC)',
         'sorting_date_end_asc'         => 'Дата окончания (ASC)',
         'sorting_date_end_desc'        => 'Дата окончания (DESC)',
-        'is_wildcard'                  => 'Wildcard',
     ],
     'permission'  => [
         'category'        => 'Управление категориями',
