@@ -106,3 +106,5 @@
     - 'Added ability to show catalog with active price type. Added annotations for integration with Digital product for Shopaholic plugin.'
 1.23.1:
     - 'Added step attribute to offer price field in backend view'
+1.24.0:
+    - 'Added support of wildcard params to CategoryPage component. Requires Toolbox plugin version 1.26.0 and later'

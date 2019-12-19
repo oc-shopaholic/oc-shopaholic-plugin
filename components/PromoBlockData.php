@@ -8,8 +8,6 @@ use Lovata\Shopaholic\Classes\Item\PromoBlockItem;
  * Class PromoBlockData
  * @package Lovata\Shopaholic\Components
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
- *
- * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/PromoBlockData
  */
 class PromoBlockData extends ElementData
 {

@@ -121,13 +121,14 @@ class ProductItem extends ElementItem
      * Returns URL of a category page.
      *
      * @param string $sPageCode
+     * @param array  $arRemoveParamList
      *
      * @return string
      */
-    public function getPageUrl($sPageCode = 'product')
+    public function getPageUrl($sPageCode = 'product', $arRemoveParamList = [])
     {
         //Get URL params
-        $arParamList = $this->getPageParamList($sPageCode);
+        $arParamList = $this->getPageParamList($sPageCode, $arRemoveParamList);
 
         //Generate page URL
         $sURL = CmsPage::url($sPageCode, $arParamList);
@@ -138,11 +139,18 @@ class ProductItem extends ElementItem
     /**
      * Get URL param list by page code
      * @param string $sPageCode
+     * @param array  $arRemoveParamList
      * @return array
      */
-    public function getPageParamList($sPageCode) : array
+    public function getPageParamList($sPageCode, $arRemoveParamList = []) : array
     {
+        $arResult = [];
         $arPageParamList = [];
+        if (!empty($arRemoveParamList)) {
+            foreach ($arRemoveParamList as $sParamName) {
+                $arResult[$sParamName] = null;
+            }
+        }
 
         //Get URL params for categories
         $aCategoryParamList = $this->category->getPageParamList($sPageCode);
@@ -155,9 +163,9 @@ class ProductItem extends ElementItem
             $arPageParamList[$sPageParam] = $this->slug;
         }
 
-        $arPageParamList = array_merge($aCategoryParamList, $aBrandParamList, $arPageParamList);
+        $arResult = array_merge($arResult, $aCategoryParamList, $aBrandParamList, $arPageParamList);
 
-        return $arPageParamList;
+        return $arResult;
     }
 
     /**

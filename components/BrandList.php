@@ -7,8 +7,6 @@ use Lovata\Shopaholic\Classes\Collection\BrandCollection;
  * Class BrandList
  * @package Lovata\Shopaholic\Components
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
- *
- * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/BrandList
  */
 class BrandList extends ComponentBase
 {
@@ -36,6 +34,7 @@ class BrandList extends ComponentBase
 
     /**
      * Method for ajax request with empty response
+     * @deprecated
      * @return bool
      */
     public function onAjaxRequest()

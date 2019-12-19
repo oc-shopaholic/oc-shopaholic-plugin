@@ -10,12 +10,11 @@ use Lovata\Shopaholic\Classes\Item\CategoryItem;
  * Class CategoryPage
  * @package Lovata\Shopaholic\Components
  * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
- *
- * @link    https://github.com/lovata/oc-shopaholic-plugin/wiki/CategoryPage
  */
 class CategoryPage extends ElementPage
 {
     protected $bNeedSmartURLCheck = true;
+    protected $bHasWildCard = true;
 
     /** @var \Lovata\Shopaholic\Models\Category */
     protected $obElement;
@@ -45,6 +44,26 @@ class CategoryPage extends ElementPage
             return null;
         }
 
+        if (!$this->property('has_wildcard')) {
+            $obElement = $this->getElementBySlug($sElementSlug);
+        } else {
+            $obElement = $this->getElementByWildcard($sElementSlug);
+        }
+
+        if (!empty($obElement)) {
+            Event::fire('shopaholic.category.open', [$obElement]);
+        }
+
+        return $obElement;
+    }
+
+    /**
+     * Get category by default
+     * @param string $sElementSlug
+     * @return Category|null
+     */
+    protected function getElementBySlug($sElementSlug)
+    {
         if ($this->isSlugTranslatable()) {
             $obElement = Category::active()->transWhere('slug', $sElementSlug)->first();
             if (!$this->checkTransSlug($obElement, $sElementSlug)) {
@@ -53,8 +72,66 @@ class CategoryPage extends ElementPage
         } else {
             $obElement = Category::active()->getBySlug($sElementSlug)->first();
         }
-        if (!empty($obElement)) {
-            Event::fire('shopaholic.category.open', [$obElement]);
+
+        return $obElement;
+    }
+
+    /**
+     * Get category by wildcard
+     * @param string $sElementSlug
+     * @return Category|null
+     */
+    protected function getElementByWildcard($sElementSlug)
+    {
+        $arSlugList = explode('/', $sElementSlug);
+        if (empty($arSlugList)) {
+            return null;
+        }
+
+        $arSlugList = array_reverse($arSlugList);
+        $sElementSlug = array_shift($arSlugList);
+
+        $obElement = $this->getElementBySlug($sElementSlug);
+        if (empty($obElement)) {
+            return null;
+        }
+
+        if (empty($arSlugList) && empty($obElement->parent)) {
+            return $obElement;
+        }
+
+        $obNestingElement = $obElement;
+
+        foreach ($arSlugList as $sSlug) {
+            $obNestingElement = $this->getNestingElement($sSlug, $obNestingElement);
+            if (empty($obNestingElement)) {
+                return null;
+            }
+        }
+
+        if (!empty($obNestingElement->parent)) {
+            return null;
+        }
+
+        return $obElement;
+    }
+
+    /**
+     * Get nesting element
+     * @param string   $sElementSlug
+     * @param Category $obNestingElement
+     * @return Category
+     */
+    protected function getNestingElement($sElementSlug, $obNestingElement)
+    {
+        if (empty($obNestingElement) || empty($sElementSlug)) {
+            return null;
+        }
+
+        $obElement = $obNestingElement->parent;
+
+        if (empty($obElement) || $obElement->slug != $sElementSlug) {
+            return null;
         }
 
         return $obElement;

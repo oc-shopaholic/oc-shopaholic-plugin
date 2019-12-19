@@ -11,8 +11,6 @@ use Lovata\Shopaholic\Classes\Item\ProductItem;
  * @package Lovata\Shopaholic\Components
  * @author Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  * @deprecated
- *
- * @link https://github.com/lovata/oc-shopaholic-plugin/wiki/Breadcrumbs
  */
 class Breadcrumbs extends ComponentBase
 {

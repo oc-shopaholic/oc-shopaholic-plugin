@@ -99,13 +99,14 @@ class CategoryItem extends ElementItem
      * Returns URL of a category page.
      *
      * @param string $sPageCode
+     * @param array  $arRemoveParamList
      *
      * @return string
      */
-    public function getPageUrl($sPageCode)
+    public function getPageUrl($sPageCode, $arRemoveParamList = [])
     {
         //Get URL params
-        $arParamList = $this->getPageParamList($sPageCode);
+        $arParamList = $this->getPageParamList($sPageCode, $arRemoveParamList);
 
         //Generate page URL
         $sURL = CmsPage::url($sPageCode, $arParamList);
@@ -116,29 +117,49 @@ class CategoryItem extends ElementItem
     /**
      * Get URL param list by page code
      * @param string $sPageCode
+     * @param array  $arRemoveParamList
      * @return array
      */
-    public function getPageParamList($sPageCode) : array
+    public function getPageParamList($sPageCode, $arRemoveParamList = []) : array
     {
+        $arResult = [];
+        if (!empty($arRemoveParamList)) {
+            foreach ($arRemoveParamList as $sParamName) {
+                $arResult[$sParamName] = null;
+            }
+        }
+
+        //Get all slug params
+        $arParamList = PageHelper::instance()->getUrlParamList($sPageCode, null);
+        if (!empty($arParamList)) {
+            foreach ($arParamList as $sParamName) {
+                $arResult[$sParamName] = null;
+            }
+        }
+
         //Get URL params for page
         $arParamList = PageHelper::instance()->getUrlParamList($sPageCode, 'CategoryPage');
         if (empty($arParamList)) {
             return [];
         }
 
-        $arParamList = array_reverse($arParamList);
-
         //Get slug list
         $arSlugList = $this->getSlugList();
-        $arSlugList = array_reverse($arSlugList);
 
-        //Prepare page property list
-        $arPagePropertyList = [];
-        foreach ($arParamList as $sParamName) {
-            $arPagePropertyList[$sParamName] = array_shift($arSlugList);
+        $arWildcardParamList = PageHelper::instance()->getUrlParamList($sPageCode, 'CategoryPage', 'slug', true);
+        if (!empty($arWildcardParamList)) {
+            $arSlugList = array_reverse($arSlugList);
+            $arResult[array_shift($arWildcardParamList)] = implode('/', $arSlugList);
+
+            return $arResult;
         }
 
-        return $arPagePropertyList;
+        //Prepare page property list
+        foreach ($arParamList as $sParamName) {
+            $arResult[$sParamName] = array_shift($arSlugList);
+        }
+
+        return $arResult;
     }
 
     /**
