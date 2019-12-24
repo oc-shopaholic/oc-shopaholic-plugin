@@ -108,3 +108,5 @@
     - 'Added step attribute to offer price field in backend view'
 1.24.0:
     - 'Added support of wildcard params to CategoryPage component. Requires Toolbox plugin version 1.26.0 and later'
+1.24.1:
+    - 'Fixed support of wildcard params in CategoryPage component. Requires Toolbox plugin version 1.26.1 and later'
