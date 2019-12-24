@@ -152,11 +152,20 @@ class CategoryItem extends ElementItem
             $arResult[array_shift($arWildcardParamList)] = implode('/', $arSlugList);
 
             return $arResult;
+        } elseif (count($arParamList) == 1) {
+            $sParamName = array_shift($arParamList);
+            $arResult[$sParamName] = array_shift($arSlugList);
+
+            return $arResult;
         }
 
         //Prepare page property list
+        $arSlugList = array_reverse($arSlugList);
+        $arParamList = array_reverse($arParamList);
         foreach ($arParamList as $sParamName) {
-            $arResult[$sParamName] = array_shift($arSlugList);
+            if (!empty($arSlugList)) {
+                $arResult[$sParamName] = array_shift($arSlugList);
+            }
         }
 
         return $arResult;
