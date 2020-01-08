@@ -103,7 +103,7 @@
 1.22.5:
     - 'Fixed bug with deactivating items in import from XML files.'
 1.23.0:
-    - 'Added ability to show catalog with active price type. Added annotations for integration with Digital product for Shopaholic plugin.'
+    - 'Added ability to show catalog with active price type. Added annotations for integration with Subscriptions for Shopaholic plugin.'
 1.23.1:
     - 'Added step attribute to offer price field in backend view'
 1.24.0:
