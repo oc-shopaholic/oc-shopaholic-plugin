@@ -110,3 +110,5 @@
     - 'Added support of wildcard params to CategoryPage component. Requires Toolbox plugin version 1.26.0 and later'
 1.24.1:
     - 'Fixed support of wildcard params in CategoryPage component. Requires Toolbox plugin version 1.26.1 and later'
+1.24.2:
+    - 'Added annotations for Subscriptions for Shopaholic plugin.'
