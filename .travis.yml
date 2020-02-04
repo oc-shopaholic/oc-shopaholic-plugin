@@ -63,9 +63,10 @@ jobs:
           fi
       deploy:
         provider: releases
-        token:
+        api_key:
           secure: cmTypFHvhnSbM8TbeqYR/SEilpjXFPtlYpvliY0qxgM1os+IGVHFCKSM7Bi9Wb8clqzwIG5dssc8qOomfg7QZ1i5TVHaAdgzGJNTyf20ogQbj1QJkzyMCV9synY0ATHXvwVHWMiGZ6N83HU47SStbi4Jt7GMVzCuPOeH6O0gNQwBs2NVPYxQwSYY1SsYQIUummTFVx8fD5NtD+kFCsvc72xjnqFF7rydzRPgRDYHmSZCmSo6eYdeS/uRSlDxMlxr8PNkOImE7OGDBJLtvJwhlrJXQ14NfAc8tUlwCVgcgitCjz8v33xLDRdPSwXjkx2Ci1jnie77HmvrRt8bRcXH0diwTkH0sNS5C+jrKro8X2wpS3d4YNt1D35qG4oIOJA99N26UZO666ao/AcsqJhJCRA4K0t7sNDY/9v+X7qDAb4tqbfUYV+GB8nA3VHhjyubh6VxJuzsuoiYRbsBA6gcYwe+NKZLdb6M4/zrj+OwXBlSINjyvyIOKsX1CU1EhXMuAPwuLyJhoXHt12Xc/O9DCrxxbd3qNS6TVFtAH1ud4W1WF25QhtqTjK3+LeY8pQqxshQfdbfnwWEV7/6FEuEUmcrjrUbT3AysvAKqYCRI41sdDHERiU9vHBMTRtJ23CZtg+nznVozzeRyNCuzDF+6kDqyehRfEOnJDinPGUbuwKs=
         file: "$NEW_NAME.zip"
+        skip_cleanup: true
         on:
           tags: true
           repo: oc-shopaholic/oc-shopaholic-plugin
