@@ -33,7 +33,6 @@ class CreateTableBrands extends Migration
             $obTable->timestamps();
 
             $obTable->index('name');
-            $obTable->index('slug');
             $obTable->index('code');
             $obTable->index('external_id');
         });

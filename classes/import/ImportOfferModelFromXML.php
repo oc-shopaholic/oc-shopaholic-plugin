@@ -120,6 +120,12 @@ class ImportOfferModelFromXML extends AbstractImportModelFromXML
             return;
         }
 
+        if (empty($sProductID)) {
+            $this->arImportData['product_id'] = null;
+
+            return;
+        }
+
         //Find product by external ID
         $obProduct = Product::withTrashed()->getByExternalID($sProductID)->first();
         if (empty($obProduct)) {

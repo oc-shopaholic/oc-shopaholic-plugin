@@ -112,3 +112,5 @@
     - 'Fixed support of wildcard params in CategoryPage component. Requires Toolbox plugin version 1.26.1 and later'
 1.24.2:
     - 'Added annotations for Subscriptions for Shopaholic plugin.'
+1.24.3:
+    - 'Added validation of import fields that contains relation IDs.'
