@@ -35,7 +35,6 @@ class CreateTableCurrency extends Migration
             $obTable->softDeletes();
             $obTable->timestamps();
 
-            $obTable->index('code');
             $obTable->index('external_id');
         });
     }

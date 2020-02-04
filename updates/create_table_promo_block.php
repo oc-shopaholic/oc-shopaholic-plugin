@@ -38,7 +38,6 @@ class CreateTablePromoBlock extends Migration
             $obTable->timestamps();
 
             $obTable->index('name');
-            $obTable->index('slug');
             $obTable->index('code');
         });
     }

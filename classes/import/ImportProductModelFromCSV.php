@@ -67,6 +67,12 @@ class ImportProductModelFromCSV extends AbstractImportModelFromCSV
             return;
         }
 
+        if (empty($sBrandID)) {
+            $this->arImportData['brand_id'] = null;
+
+            return;
+        }
+
         //Find brand by external ID
         $obBrand = Brand::getByExternalID($sBrandID)->first();
         if (empty($obBrand)) {
@@ -83,6 +89,12 @@ class ImportProductModelFromCSV extends AbstractImportModelFromCSV
     {
         $sCategoryID = array_get($this->arImportData, 'category_id');
         if ($sCategoryID === null) {
+            return;
+        }
+
+        if (empty($sCategoryID)) {
+            $this->arImportData['category_id'] = null;
+
             return;
         }
 
