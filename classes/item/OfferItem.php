@@ -424,6 +424,7 @@ class OfferItem extends ElementItem
 
     /**
      * Get measure of one unit
+     * @return \Lovata\Shopaholic\Classes\Item\MeasureItem
      */
     protected function getMeasureOfUnitAttribute()
     {
@@ -439,6 +440,7 @@ class OfferItem extends ElementItem
 
     /**
      * Get dimensions unit measure
+     * @return \Lovata\Shopaholic\Classes\Item\MeasureItem
      */
     protected function getDimensionsMeasureAttribute()
     {
@@ -449,6 +451,7 @@ class OfferItem extends ElementItem
 
     /**
      * Get weight unit measure
+     * @return \Lovata\Shopaholic\Classes\Item\MeasureItem
      */
     protected function getWeightMeasureAttribute()
     {
