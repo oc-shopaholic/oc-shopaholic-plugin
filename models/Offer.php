@@ -40,6 +40,12 @@ use Lovata\Shopaholic\Classes\Import\ImportOfferModelFromCSV;
  * @property string                                                                                        $old_price
  * @property float                                                                                         $old_price_value
  * @property integer                                                                                       $quantity
+ * @property double                                                                                        $weight
+ * @property double                                                                                        $height
+ * @property double                                                                                        $length
+ * @property double                                                                                        $width
+ * @property double                                                                                        $quantity_in_unit
+ * @property int                                                                                           $measure_of_unit_id
  * @property int                                                                                           $product_id
  * @property \October\Rain\Argon\Argon                                                                     $created_at
  * @property \October\Rain\Argon\Argon                                                                     $updated_at
@@ -58,6 +64,9 @@ use Lovata\Shopaholic\Classes\Import\ImportOfferModelFromCSV;
  *
  * @property \Lovata\Shopaholic\Models\Product                                                             $product
  * @method \October\Rain\Database\Relations\BelongsTo|Product product()
+ *
+ * @property Measure                                                                                       $measure_of_unit
+ * @method static \October\Rain\Database\Relations\BelongsTo|Measure measure_of_unit()
  *
  * @method static $this getByProduct(int $iProductID)
  * @method static $this getByQuantity(int $iCount, string $sCondition = '=')
@@ -139,7 +148,10 @@ class Offer extends ImportModel
         'import_file'   => [\System\Models\File::class, 'public' => false],
     ];
     public $attachMany = ['images' => 'System\Models\File'];
-    public $belongsTo = ['product' => [Product::class]];
+    public $belongsTo = [
+        'product'          => [Product::class],
+        'measure_of_unit' => [Measure::class, 'key' => 'measure_of_unit_id', 'order' => 'name asc'],
+    ];
     public $morphMany = [
         'price_link' => [
             Price::class,
@@ -168,6 +180,12 @@ class Offer extends ImportModel
         'quantity',
         'preview_text',
         'description',
+        'weight',
+        'height',
+        'length',
+        'width',
+        'measure_of_unit_id',
+        'quantity_in_unit',
     ];
 
     public $cached = [
@@ -182,6 +200,12 @@ class Offer extends ImportModel
         'images',
         'price_list',
         'quantity',
+        'weight',
+        'height',
+        'length',
+        'width',
+        'measure_of_unit_id',
+        'quantity_in_unit',
     ];
 
     public $dates = ['created_at', 'updated_at', 'deleted_at'];

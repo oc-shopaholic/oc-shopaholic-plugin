@@ -121,6 +121,8 @@ class Category extends ImportModel
         'import_file'   => [\System\Models\File::class, 'public' => false],
     ];
     public $attachMany = ['images' => 'System\Models\File'];
+
+    public $belongsTo = [];
     public $belongsToMany = [
         'product_link' => [
             Product::class,

@@ -3,6 +3,7 @@
 use Lang;
 use Lovata\Toolbox\Classes\Helper\AbstractImportModelFromXML;
 
+use Lovata\Shopaholic\Models\Measure;
 use Lovata\Shopaholic\Models\Offer;
 use Lovata\Shopaholic\Models\Product;
 use Lovata\Shopaholic\Models\PriceType;
@@ -45,18 +46,24 @@ class ImportOfferModelFromXML extends AbstractImportModelFromXML
     public function getFields() : array
     {
         $this->arFieldList = [
-            'external_id'   => Lang::get('lovata.toolbox::lang.field.external_id'),
-            'product_id'    => Lang::get('lovata.shopaholic::lang.field.product_id'),
-            'active'        => Lang::get('lovata.toolbox::lang.field.active'),
-            'name'          => Lang::get('lovata.toolbox::lang.field.name'),
-            'code'          => Lang::get('lovata.toolbox::lang.field.code'),
-            'price'         => Lang::get('lovata.shopaholic::lang.field.price'),
-            'old_price'     => Lang::get('lovata.shopaholic::lang.field.old_price'),
-            'quantity'      => Lang::get('lovata.shopaholic::lang.field.quantity'),
-            'preview_text'  => Lang::get('lovata.toolbox::lang.field.preview_text'),
-            'description'   => Lang::get('lovata.toolbox::lang.field.description'),
-            'preview_image' => Lang::get('lovata.toolbox::lang.field.preview_image'),
-            'images'        => Lang::get('lovata.toolbox::lang.field.images'),
+            'external_id'      => Lang::get('lovata.toolbox::lang.field.external_id'),
+            'product_id'       => Lang::get('lovata.shopaholic::lang.field.product_id'),
+            'active'           => Lang::get('lovata.toolbox::lang.field.active'),
+            'name'             => Lang::get('lovata.toolbox::lang.field.name'),
+            'code'             => Lang::get('lovata.toolbox::lang.field.code'),
+            'price'            => Lang::get('lovata.shopaholic::lang.field.price'),
+            'old_price'        => Lang::get('lovata.shopaholic::lang.field.old_price'),
+            'quantity'         => Lang::get('lovata.shopaholic::lang.field.quantity'),
+            'weight'           => Lang::get('lovata.toolbox::lang.field.weight'),
+            'height'           => Lang::get('lovata.toolbox::lang.field.height'),
+            'length'           => Lang::get('lovata.toolbox::lang.field.length'),
+            'width'            => Lang::get('lovata.toolbox::lang.field.width'),
+            'quantity_in_unit' => Lang::get('lovata.shopaholic::lang.field.quantity_in_unit'),
+            'measure_of_unit'  => Lang::get('lovata.shopaholic::lang.field.measure_of_unit'),
+            'preview_text'     => Lang::get('lovata.toolbox::lang.field.preview_text'),
+            'description'      => Lang::get('lovata.toolbox::lang.field.description'),
+            'preview_image'    => Lang::get('lovata.toolbox::lang.field.preview_image'),
+            'images'           => Lang::get('lovata.toolbox::lang.field.images'),
         ];
 
         //Get price types
@@ -92,6 +99,7 @@ class ImportOfferModelFromXML extends AbstractImportModelFromXML
         $this->setActiveField();
         $this->setProductField();
         $this->setQuantityField();
+        $this->setMeasureField();
 
         $this->initPreviewImage();
         $this->initImageList();
@@ -151,6 +159,32 @@ class ImportOfferModelFromXML extends AbstractImportModelFromXML
         }
 
         $this->arImportData['quantity'] = $iQuantity;
+    }
+
+    /**
+     * Set measure filed value
+     */
+    protected function setMeasureField()
+    {
+        $sMeasure = array_get($this->arImportData, 'measure_of_unit');
+        array_forget($this->arImportData, 'measure_of_unit');
+        if ($sMeasure === null) {
+            return;
+        }
+
+        if (empty($sMeasure)) {
+            $this->arImportData['measure_of_unit_id'] = null;
+            return;
+        }
+
+        $obMeasure = Measure::getByName($sMeasure)->first();
+        if (empty($obMeasure)) {
+            $obMeasure = Measure::create([
+                'name' => $sMeasure,
+            ]);
+        }
+
+        $this->arImportData['measure_of_unit_id'] = $obMeasure->id;
     }
 
     /**

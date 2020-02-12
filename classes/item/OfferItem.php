@@ -4,7 +4,9 @@ use Lovata\Toolbox\Classes\Helper\PriceHelper;
 use Lovata\Toolbox\Classes\Item\ElementItem;
 use Lovata\Toolbox\Traits\Helpers\PriceHelperTrait;
 
+use Lovata\Shopaholic\Classes\Helper\MeasureHelper;
 use Lovata\Shopaholic\Models\Offer;
+use Lovata\Shopaholic\Models\Settings;
 use Lovata\Shopaholic\Classes\Helper\TaxHelper;
 use Lovata\Shopaholic\Classes\Helper\CurrencyHelper;
 use Lovata\Shopaholic\Classes\Helper\PriceTypeHelper;
@@ -21,6 +23,15 @@ use Lovata\Shopaholic\Classes\Helper\PriceTypeHelper;
  * @property string                                                                                                                      $code
  * @property int                                                                                                                         $product_id
  * @property ProductItem                                                                                                                 $product
+ * @property double                                                                                                                      $weight
+ * @property double                                                                                                                      $height
+ * @property double                                                                                                                      $length
+ * @property double                                                                                                                      $width
+ * @property double                                                                                                                      $quantity_in_unit
+ * @property int                                                                                                                         $measure_of_unit_id
+ * @property MeasureItem                                                                                                                 $measure_of_unit
+ * @property MeasureItem                                                                                                                 $dimensions_measure
+ * @property MeasureItem                                                                                                                 $weight_measure
  *
  * @property string                                                                                                                      $preview_text
  * @property \System\Models\File                                                                                                         $preview_image
@@ -100,9 +111,13 @@ class OfferItem extends ElementItem
     protected $obElement = null;
 
     public $arRelationList = [
-        'product' => [
+        'product'         => [
             'class' => ProductItem::class,
             'field' => 'product_id',
+        ],
+        'measure_of_unit' => [
+            'class' => MeasureItem::class,
+            'field' => 'measure_of_unit_id',
         ],
     ];
 
@@ -405,6 +420,41 @@ class OfferItem extends ElementItem
         }
 
         return $obTaxList;
+    }
+
+    /**
+     * Get measure of one unit
+     */
+    protected function getMeasureOfUnitAttribute()
+    {
+        $iMeasureID = $this->measure_of_unit_id;
+        if (empty($iMeasureID)) {
+            $iMeasureID = Settings::getValue('measure_of_unit');
+        }
+
+        $obMeasureItem = MeasureItem::make($iMeasureID);
+
+        return $obMeasureItem;
+    }
+
+    /**
+     * Get dimensions unit measure
+     */
+    protected function getDimensionsMeasureAttribute()
+    {
+        $obMeasureItem = MeasureHelper::instance()->getDimensionsMeasureItem();
+
+        return $obMeasureItem;
+    }
+
+    /**
+     * Get weight unit measure
+     */
+    protected function getWeightMeasureAttribute()
+    {
+        $obMeasureItem = MeasureHelper::instance()->getWeightMeasureItem();
+
+        return $obMeasureItem;
     }
 
     /**

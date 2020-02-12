@@ -17,8 +17,11 @@ use Lovata\Shopaholic\Classes\Event\Brand\BrandModelHandler;
 use Lovata\Shopaholic\Classes\Event\Category\CategoryModelHandler;
 //Currency events
 use Lovata\Shopaholic\Classes\Event\Currency\CurrencyModelHandler;
+//Measure events
+use Lovata\Shopaholic\Classes\Event\Measure\MeasureModelHandler;
 //Offer events
 use Lovata\Shopaholic\Classes\Event\Offer\OfferModelHandler;
+use Lovata\Shopaholic\Classes\Event\Offer\ExtendOfferFieldsHandler;
 //Price events
 use Lovata\Shopaholic\Classes\Event\Price\PriceModelHandler;
 //Product events
@@ -136,6 +139,15 @@ class Plugin extends PluginBase
                     'shopaholic-menu-import-xml-file',
                 ],
             ],
+            'shopaholic-menu-measure'      => [
+                'label'       => 'lovata.shopaholic::lang.menu.measure',
+                'description' => 'lovata.shopaholic::lang.menu.measure_description',
+                'category'    => 'lovata.shopaholic::lang.tab.settings',
+                'url'         => Backend::url('lovata/shopaholic/measures'),
+                'icon'        => 'icon-balance-scale',
+                'permissions' => ['shopaholic-menu-measure'],
+                'order'       => 1650,
+            ],
         ];
     }
 
@@ -159,8 +171,11 @@ class Plugin extends PluginBase
         Event::subscribe(CategoryModelHandler::class);
         //Currency events
         Event::subscribe(CurrencyModelHandler::class);
+        //Measure events
+        Event::subscribe(MeasureModelHandler::class);
         //Offer events
         Event::subscribe(OfferModelHandler::class);
+        Event::subscribe(ExtendOfferFieldsHandler::class);
         //Price events
         Event::subscribe(PriceModelHandler::class);
         //Product events
