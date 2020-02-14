@@ -72,6 +72,9 @@ permissions:
     shopaholic-menu-price-type:
         tab: 'lovata.shopaholic::lang.tab.permissions'
         label: 'lovata.shopaholic::lang.permission.price_type'
+    shopaholic-menu-measure:
+        tab: 'lovata.shopaholic::lang.tab.permissions'
+        label: 'lovata.shopaholic::lang.permission.measure'
     shopaholic-menu-import-xml-file:
         tab: 'lovata.shopaholic::lang.tab.permissions'
         label: 'lovata.shopaholic::lang.permission.import_xml_file'

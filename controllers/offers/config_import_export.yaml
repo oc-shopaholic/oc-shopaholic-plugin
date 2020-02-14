@@ -20,6 +20,18 @@ import:
         label: 'lovata.shopaholic::lang.field.old_price'
       quantity:
         label: 'lovata.shopaholic::lang.field.quantity'
+      weight:
+        label: 'lovata.toolbox::lang.field.weight'
+      height:
+        label: 'lovata.toolbox::lang.field.height'
+      length:
+        label: 'lovata.toolbox::lang.field.length'
+      width:
+        label: 'lovata.toolbox::lang.field.width'
+      quantity_in_unit:
+        label: 'lovata.shopaholic::lang.field.quantity_in_unit'
+      measure_of_unit:
+        label: 'lovata.shopaholic::lang.field.measure_of_unit'
       preview_text:
         label: 'lovata.toolbox::lang.field.preview_text'
       description:

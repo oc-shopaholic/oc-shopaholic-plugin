@@ -1,0 +1,15 @@
+name: 'lovata.shopaholic::lang.measure.name'
+modelClass: Lovata\Shopaholic\Models\Measure
+form: $/lovata/shopaholic/models/measure/fields.yaml
+defaultRedirect: lovata/shopaholic/measures
+create:
+    title: 'backend::lang.form.create_title'
+    redirect: 'lovata/shopaholic/measures/update/:id'
+    redirectClose: lovata/shopaholic/measures
+    flashSave: 'lovata.toolbox::lang.message.create_success'
+update:
+    title: 'backend::lang.form.update_title'
+    redirect: lovata/shopaholic/measures
+    redirectClose: lovata/shopaholic/measures
+    flashSave: 'lovata.toolbox::lang.message.update_success'
+    flashDelete: 'lovata.toolbox::lang.message.delete_success'

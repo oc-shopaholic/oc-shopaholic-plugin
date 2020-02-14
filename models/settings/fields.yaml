@@ -11,14 +11,32 @@ tabs:
             type: checkbox
             label: lovata.shopaholic::lang.field.price_include_tax
         formula_calculate_discount_from_price:
-            tab: 'lovata.shopaholic::lang.tab.taxes'
-            label: 'lovata.shopaholic::lang.settings.formula_calculate_discount_from_price'
+            tab: lovata.shopaholic::lang.tab.taxes
+            label: lovata.shopaholic::lang.settings.formula_calculate_discount_from_price
             span: left
             type: radio
             options:
-                discount_from_backend_price: 'lovata.shopaholic::lang.settings.formula_calculation_from_backend_price'
-                discount_from_price_without_tax: 'lovata.shopaholic::lang.settings.formula_calculation_from_price_without_tax'
-                discount_from_price_with_tax: 'lovata.shopaholic::lang.settings.formula_calculation_from_price_with_tax'
+                discount_from_backend_price: lovata.shopaholic::lang.settings.formula_calculation_from_backend_price
+                discount_from_price_without_tax: lovata.shopaholic::lang.settings.formula_calculation_from_price_without_tax
+                discount_from_price_with_tax: lovata.shopaholic::lang.settings.formula_calculation_from_price_with_tax
+        dimensions_measure:
+            label: lovata.shopaholic::lang.field.dimensions_measure
+            tab: lovata.shopaholic::lang.tab.dimensions
+            type: dropdown
+            emptyOption: lovata.toolbox::lang.field.empty
+            span: left
+        weight_measure:
+            label: lovata.shopaholic::lang.field.weight_measure
+            tab: lovata.shopaholic::lang.tab.dimensions
+            type: dropdown
+            emptyOption: lovata.toolbox::lang.field.empty
+            span: left
+        measure_of_unit:
+            label: lovata.shopaholic::lang.field.measure_of_unit
+            tab: lovata.shopaholic::lang.tab.dimensions
+            type: dropdown
+            emptyOption: lovata.toolbox::lang.field.empty
+            span: left
         hide_brand_import_from_csv:
             label: lovata.shopaholic::lang.field.hide_brand_import_from_csv
             tab: lovata.shopaholic::lang.tab.import_setting

@@ -29,6 +29,10 @@
         'main_price_type'     => 'Основная цена',
         'price_include_tax'   => 'Цена включает в себя налоги',
         'discount_price'      => 'Значение скидки',
+        'measure'             => 'Ед. измерения',
+        'measure_of_unit'     => 'Ед. измерения одной штуки',
+        'quantity_in_unit'    => 'Количество в одной штуке',
+        'weight_measure'      => 'Ед. измерения веса',
 
         'hide_brand_import_from_csv'    => 'Скрыть кнопку "Импорт из CSV" для брендов',
         'hide_brand_import_from_xml'    => 'Скрыть кнопку "Импорт из XML" для брендов',
@@ -67,6 +71,10 @@
         'main_settings_description'   => 'Основные параметры вашего каталога',
         'import_xml_file'             => 'Импорт из XML',
         'import_xml_file_description' => 'Настройки импорта из XML файла',
+        'measure'                     => 'Единицы измерения',
+        'measure_description'         => 'Управление единицами измерения',
+        'measure_of_unit'             => 'Ед. измерения одной штуки',
+        'quantity_in_unit'            => 'Количество в одной штуке',
     ],
     'tab'         => [
         'offer'           => 'Торговые предложения',
@@ -75,6 +83,7 @@
         'settings'        => 'Конфигурация каталога',
         'taxes'           => 'Налоги',
         'import_from_xml' => 'Импорт из XML',
+        'dimensions'      => 'Габариты и вес',
     ],
     'category'    => [
         'name'         => 'категории',
@@ -123,6 +132,10 @@
     'state'       => [
         'name'       => 'региона',
         'list_title' => 'Список регионов',
+    ],
+    'measure'        => [
+        'name'       => 'ед. измерения',
+        'list_title' => 'Список ед. измерения',
     ],
     'component'   => [
 
@@ -190,6 +203,7 @@
         'tax'             => 'Управление налогами',
         'price_type'      => 'Управление типами цен',
         'import_xml_file' => 'Управление настройками импорта из XML файла',
+        'measure'         => 'Управление ед. измерения',
     ],
     'message'     => [
         'import_additional_category_info'   => 'Укажите через запятую список дополнительных категорий товаров.',

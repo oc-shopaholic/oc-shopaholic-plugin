@@ -1,0 +1,13 @@
+title: 'lovata.shopaholic::lang.measure.list_title'
+modelClass: Lovata\Shopaholic\Models\Measure
+list: $/lovata/shopaholic/models/measure/columns.yaml
+recordUrl: 'lovata/shopaholic/measures/update/:id'
+noRecordsMessage: 'backend::lang.list.no_records'
+recordsPerPage: 10
+showSetup: true
+showCheckboxes: 1
+showSorting: 1
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: 'backend::lang.list.search_prompt'

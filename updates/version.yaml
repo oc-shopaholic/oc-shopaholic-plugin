@@ -114,3 +114,7 @@
     - 'Added annotations for Subscriptions for Shopaholic plugin.'
 1.24.3:
     - 'Added validation of import fields that contains relation IDs.'
+1.25.0:
+    - 'Moved "Measure" model from "Properties for Shopaholic" plugin. Added weight, height, length, width, measure_of_unit, quantity_in_unit fields to Offer model. Added new global settings: size unit measure, weight unit measure, piece unit measure.'
+    - create_table_measure.php
+    - update_table_offers_add_dimensions_field.php

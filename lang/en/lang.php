@@ -29,6 +29,11 @@
         'main_price_type'     => 'Main price',
         'price_include_tax'   => 'Price includes taxes',
         'discount_price'      => 'Discount price',
+        'measure'             => 'Unit measure',
+        'measure_of_unit'     => 'Unit measure of one unit',
+        'quantity_in_unit'    => 'Quantity in one unit',
+        'dimensions_measure'  => 'Unit measure of dimensions',
+        'weight_measure'      => 'Unit measure of weight',
 
         'hide_brand_import_from_csv'    => 'Hide "Import from CSV" button for brands',
         'hide_brand_import_from_xml'    => 'Hide "Import from XML" button for brands',
@@ -67,6 +72,8 @@
         'main_settings_description'   => 'Basic settings of your catalog',
         'import_xml_file'             => 'Import from XML',
         'import_xml_file_description' => 'Settings of import from XML file',
+        'measure'                     => 'Unit measure',
+        'measure_description'         => 'Manage unit measure',
     ],
     'tab'         => [
         'offer'          => 'Trade offers',
@@ -75,6 +82,7 @@
         'settings'       => 'Catalog configuration',
         'taxes'          => 'Taxes',
         'import_setting' => 'Import',
+        'dimensions'     => 'Dimensions and weight',
     ],
     'category'    => [
         'name'         => 'category',
@@ -123,6 +131,10 @@
     'state'       => [
         'name'       => 'state',
         'list_title' => 'State list',
+    ],
+    'measure'        => [
+        'name'       => 'Unit measure',
+        'list_title' => 'Unit measure list',
     ],
     'component'   => [
 
@@ -190,6 +202,7 @@
         'tax'             => 'Manage taxes',
         'price_type'      => 'Manage price types',
         'import_xml_file' => 'Manage settings of import from XML file',
+        'measure'         => 'Manage unit measure list',
     ],
     'message'     => [
         'import_additional_category_info'   => 'Set the list of additional product categories separated by commas.',
