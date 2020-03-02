@@ -24,6 +24,13 @@ class ExtendOfferFieldsHandler extends AbstractBackendFieldHandler
     protected function extendFields($obWidget)
     {
         $arAdditionFields = [
+            'measure'  => [
+                'label'       => 'lovata.shopaholic::lang.field.measure',
+                'type'        => 'relation',
+                'span'        => 'left',
+                'emptyOption' => 'lovata.toolbox::lang.field.empty',
+                'tab'         => 'lovata.shopaholic::lang.tab.dimensions',
+            ],
             'weight'           => [
                 'label' => $this->getWeightFieldLabel(),
                 'type'  => 'number',

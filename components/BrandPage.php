@@ -15,10 +15,10 @@ class BrandPage extends ElementPage
 {
     protected $bNeedSmartURLCheck = true;
 
-    /** @var \Lovata\Shopaholic\Models\Brand */
+    /** @var Brand */
     protected $obElement;
 
-    /** @var \Lovata\Shopaholic\Classes\Item\BrandItem */
+    /** @var BrandItem */
     protected $obElementItem;
 
     /**

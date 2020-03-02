@@ -4,3 +4,7 @@ fields:
         span: left
         required: 1
         type: text
+    code:
+        label: 'lovata.toolbox::lang.field.code'
+        span: right
+        type: text
