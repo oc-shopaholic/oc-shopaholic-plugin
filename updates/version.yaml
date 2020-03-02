@@ -118,3 +118,6 @@
     - 'Moved "Measure" model from "Properties for Shopaholic" plugin. Added weight, height, length, width, measure_of_unit, quantity_in_unit fields to Offer model. Added new global settings: size unit measure, weight unit measure, piece unit measure.'
     - create_table_measure.php
     - update_table_offers_add_dimensions_field.php
+1.26.0:
+    - 'Added relation to Offer model with Measure model.'
+    - update_table_offers_add_measure_field.php

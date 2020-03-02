@@ -28,6 +28,8 @@ use Lovata\Shopaholic\Classes\Helper\PriceTypeHelper;
  * @property double                                                                                                                      $length
  * @property double                                                                                                                      $width
  * @property double                                                                                                                      $quantity_in_unit
+ * @property int                                                                                                                         $measure_id
+ * @property MeasureItem                                                                                                                 $measure
  * @property int                                                                                                                         $measure_of_unit_id
  * @property MeasureItem                                                                                                                 $measure_of_unit
  * @property MeasureItem                                                                                                                 $dimensions_measure
@@ -114,6 +116,10 @@ class OfferItem extends ElementItem
         'product'         => [
             'class' => ProductItem::class,
             'field' => 'product_id',
+        ],
+        'measure' => [
+            'class' => MeasureItem::class,
+            'field' => 'measure_id',
         ],
         'measure_of_unit' => [
             'class' => MeasureItem::class,

@@ -45,6 +45,7 @@ use Lovata\Shopaholic\Classes\Import\ImportOfferModelFromCSV;
  * @property double                                                                                        $length
  * @property double                                                                                        $width
  * @property double                                                                                        $quantity_in_unit
+ * @property int                                                                                           $measure_id
  * @property int                                                                                           $measure_of_unit_id
  * @property int                                                                                           $product_id
  * @property \October\Rain\Argon\Argon                                                                     $created_at
@@ -67,6 +68,8 @@ use Lovata\Shopaholic\Classes\Import\ImportOfferModelFromCSV;
  *
  * @property Measure                                                                                       $measure_of_unit
  * @method static \October\Rain\Database\Relations\BelongsTo|Measure measure_of_unit()
+ * @property Measure                                                                                       $measure
+ * @method static \October\Rain\Database\Relations\BelongsTo|Measure measure()
  *
  * @method static $this getByProduct(int $iProductID)
  * @method static $this getByQuantity(int $iCount, string $sCondition = '=')
@@ -151,6 +154,7 @@ class Offer extends ImportModel
     public $belongsTo = [
         'product'          => [Product::class],
         'measure_of_unit' => [Measure::class, 'key' => 'measure_of_unit_id', 'order' => 'name asc'],
+        'measure' => [Measure::class, 'order' => 'name asc'],
     ];
     public $morphMany = [
         'price_link' => [
@@ -185,6 +189,7 @@ class Offer extends ImportModel
         'length',
         'width',
         'measure_of_unit_id',
+        'measure_id',
         'quantity_in_unit',
     ];
 
@@ -205,6 +210,7 @@ class Offer extends ImportModel
         'length',
         'width',
         'measure_of_unit_id',
+        'measure_id',
         'quantity_in_unit',
     ];
 
@@ -447,8 +453,8 @@ class Offer extends ImportModel
 
         foreach ($this->price_link as $obPrice) {
             $arResult[$obPrice->price_type_id] = [
-                'price'     => $obPrice->price,
-                'old_price' => $obPrice->old_price,
+                'price'     => $obPrice->price_value,
+                'old_price' => $obPrice->old_price_value,
             ];
         }
 
