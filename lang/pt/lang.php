@@ -16,6 +16,7 @@
         'promo_block_type'    => 'Promo block with product list',
         'promo_block'         => 'Promo block',
         'category_parent_id'  => 'Parent category ID',
+        'category_parent'     => 'Parent category',
         'product_id'          => 'Product ID',
         'rate'                => 'Rate',
         'tax_is_global'       => 'Tax will apply to all products',
