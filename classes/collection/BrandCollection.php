@@ -4,6 +4,7 @@ use Lovata\Toolbox\Classes\Collection\ElementCollection;
 
 use Lovata\Shopaholic\Classes\Item\BrandItem;
 use Lovata\Shopaholic\Classes\Store\BrandListStore;
+use Lovata\Shopaholic\Classes\Item\CategoryItem;
 
 /**
  * Class BrandCollection
@@ -47,7 +48,16 @@ class BrandCollection extends ElementCollection
      */
     public function category($iCategoryID)
     {
-        $arResultIDList = BrandListStore::instance()->category->get($iCategoryID);
+        $obCategoryItem = CategoryItem::make($iCategoryID);
+        $arResultIDList = [];
+
+        if ($obCategoryItem->children->isNotEmpty()) {
+            foreach ($obCategoryItem->children as $obChildCategoryItem) {
+                $arResultIDList = array_merge($arResultIDList, BrandListStore::instance()->category->get($obChildCategoryItem->id));
+            }
+        } else {
+                $arResultIDList = BrandListStore::instance()->category->get($iCategoryID);
+        }
 
         return $this->intersect($arResultIDList);
     }
