@@ -121,10 +121,6 @@ class OfferItem extends ElementItem
             'class' => MeasureItem::class,
             'field' => 'measure_id',
         ],
-        'measure_of_unit' => [
-            'class' => MeasureItem::class,
-            'field' => 'measure_of_unit_id',
-        ],
     ];
 
     public $arPriceField = [
