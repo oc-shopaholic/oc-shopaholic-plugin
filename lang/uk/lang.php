@@ -16,6 +16,7 @@
         'promo_block_type'    => 'Промо-блок зі списком товарів',
         'promo_block'         => 'Промо-блок',
         'category_parent_id'  => 'ID батьківської категорії',
+        'category_parent'     => 'Батьківська категорія',
         'product_id'          => 'ID товару',
         'rate'                => 'Rate',
         'tax_is_global'       => 'Tax will apply to all products',

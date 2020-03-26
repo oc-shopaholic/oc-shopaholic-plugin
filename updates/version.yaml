@@ -121,3 +121,5 @@
 1.26.0:
     - 'Added relation to Offer model with Measure model.'
     - update_table_offers_add_measure_field.php
+1.27.0:
+    - 'Added parent category field to backend in Category model. Thanks for contribution Dinwid.'

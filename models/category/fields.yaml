@@ -19,6 +19,13 @@ fields:
         type: text
 tabs:
     fields:
+        parent:
+            label: 'lovata.shopaholic::lang.field.category_parent'
+            span: left
+            type: relation
+            nameFrom: name
+            emptyOption: 'lovata.toolbox::lang.field.empty'
+            tab: 'lovata.toolbox::lang.tab.settings'
         code:
             label: 'lovata.toolbox::lang.field.code'
             span: left
