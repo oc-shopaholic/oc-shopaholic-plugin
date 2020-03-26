@@ -16,6 +16,7 @@
         'promo_block_type'    => 'Промо-блок со списком товаров',
         'promo_block'         => 'Промо-блок',
         'category_parent_id'  => 'ID родительской категории',
+        'category_parent'     => 'Родительская категория',
         'children_category'   => 'Дочерние категории',
         'product_id'          => 'ID товара',
         'rate'                => 'Курс',

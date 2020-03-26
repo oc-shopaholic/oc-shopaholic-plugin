@@ -13,6 +13,9 @@
         'currency'            => 'Devise',
         'check_offer_active'  => 'Lorsque vous recevez une liste de produits actifs, recherchez des offres actives',
         'additional_category' => 'Catégories supplémentaires',
+        'category_parent_id'  => 'Catégorie parentale ID',
+        'category_parent'     => 'Catégorie parentale',
+        'children_category'   => 'Catégories enfants',
     ],
     'menu'       => [
         'main'                => 'Catalogue',
