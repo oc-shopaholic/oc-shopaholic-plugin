@@ -49,16 +49,34 @@ class BrandCollection extends ElementCollection
     public function category($iCategoryID)
     {
         $obCategoryItem = CategoryItem::make($iCategoryID);
-        $arResultIDList = [];
+        $arResultIDList = BrandListStore::instance()->category->get($iCategoryID);
 
         if ($obCategoryItem->children->isNotEmpty()) {
             foreach ($obCategoryItem->children as $obChildCategoryItem) {
                 $arResultIDList = array_merge($arResultIDList, BrandListStore::instance()->category->get($obChildCategoryItem->id));
+                $arResultIDList = array_merge($arResultIDList, (array) $this->getBrandIDList($obChildCategoryItem->id));
             }
-        } else {
-                $arResultIDList = BrandListStore::instance()->category->get($iCategoryID);
         }
-
         return $this->intersect($arResultIDList);
     }
+
+    /**
+     * Get brand ID list for children categories
+     * @param int $iCategoryID
+     * @return array
+     */
+    protected function getBrandIDList($iCategoryID)
+    {
+        $obCategoryItem = CategoryItem::make($iCategoryID);
+        $arResultIDList = [];
+        
+        if ($obCategoryItem->children->isNotEmpty()) {
+            foreach ($obCategoryItem->children as $obChildCategoryItem) {
+                $arResultIDList = array_merge($arResultIDList, BrandListStore::instance()->category->get($obChildCategoryItem->id));
+                $arResultIDList = array_merge($arResultIDList, (array) $this->getBrandIDList($obChildCategoryItem->id));
+            }
+        }
+        return $arResultIDList;
+    }
+
 }
