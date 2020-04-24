@@ -39,17 +39,18 @@ class PromoBlockItem extends ElementItem
     /**
      * Returns URL of a promo block page.
      *
-     * @param string $sPageCode
+     * @param string|null $sPageCode
      *
      * @return string
      */
-    public function getPageUrl($sPageCode = 'promo-block')
+    public function getPageUrl($sPageCode = null)
     {
-        $sDefaultPageCode = Settings::getValue('promo_block_page_id');
-        $sDefaultPageCode = empty($sDefaultPageCode) ? $sPageCode : $sDefaultPageCode;
+        if (empty($sPageCode)) {
+            $sPageCode = Settings::getValue('promo_block_page_id', 'promo-block');
+        }
 
         //Get URL params
-        $arParamList = $this->getPageParamList($sDefaultPageCode);
+        $arParamList = $this->getPageParamList($sPageCode);
 
         //Generate page URL
         $sURL = CmsPage::url($sPageCode, $arParamList);

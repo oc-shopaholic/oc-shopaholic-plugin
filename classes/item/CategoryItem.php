@@ -99,18 +99,19 @@ class CategoryItem extends ElementItem
     /**
      * Returns URL of a category page.
      *
-     * @param string $sPageCode
+     * @param string|null $sPageCode
      * @param array  $arRemoveParamList
      *
      * @return string
      */
-    public function getPageUrl($sPageCode, $arRemoveParamList = [])
+    public function getPageUrl($sPageCode = null, $arRemoveParamList = [])
     {
-        $sDefaultPageCode = Settings::getValue('category_page_id');
-        $sDefaultPageCode = empty($sDefaultPageCode) ? $sPageCode : $sDefaultPageCode;
+        if (empty($sPageCode)) {
+            $sPageCode = Settings::getValue('category_page_id', 'catalog');
+        }
 
         //Get URL params
-        $arParamList = $this->getPageParamList($sDefaultPageCode, $arRemoveParamList);
+        $arParamList = $this->getPageParamList($sPageCode, $arRemoveParamList);
 
         //Generate page URL
         $sURL = CmsPage::url($sPageCode, $arParamList);
