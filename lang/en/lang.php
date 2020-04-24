@@ -45,6 +45,11 @@
         'hide_offer_import_from_csv'    => 'Hide "Import from CSV" button for offers',
         'hide_offer_import_from_xml'    => 'Hide "Import from XML" button for offers',
         'hide_price_import_from_xml'    => 'Hide "Import from XML" button for prices',
+
+        'set_page_for_product'     => 'Set page for product',
+        'set_page_for_category'    => 'Set page for category',
+        'set_page_for_brand'       => 'Set page for brand',
+        'set_page_for_promo_block' => 'Set page for promo block',
     ],
     'settings'    => [
         'formula_calculate_discount_from_price'      => 'Formula of calculating discounts on prices with taxes',
@@ -84,6 +89,7 @@
         'taxes'          => 'Taxes',
         'import_setting' => 'Import',
         'dimensions'     => 'Dimensions and weight',
+        'page_settings'  => 'Page settings'
     ],
     'category'    => [
         'name'         => 'category',

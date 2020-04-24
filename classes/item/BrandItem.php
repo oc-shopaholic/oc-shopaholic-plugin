@@ -2,10 +2,10 @@
 
 use Cms\Classes\Page as CmsPage;
 
-use Lovata\Toolbox\Models\Settings;
 use Lovata\Toolbox\Classes\Item\ElementItem;
 use Lovata\Toolbox\Classes\Helper\PageHelper;
 
+use Lovata\Shopaholic\Models\Settings;
 use Lovata\Shopaholic\Models\Brand;
 
 /**
