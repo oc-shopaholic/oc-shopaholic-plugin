@@ -2,6 +2,7 @@
 
 use Cms\Classes\Page as CmsPage;
 
+use Lovata\Toolbox\Models\Settings;
 use Lovata\Toolbox\Classes\Item\ElementItem;
 use Lovata\Toolbox\Classes\Helper\PageHelper;
 
@@ -40,8 +41,11 @@ class BrandItem extends ElementItem
      */
     public function getPageUrl($sPageCode = 'brand', $arRemoveParamList = [])
     {
+        $sDefaultPageCode = Settings::getValue('brand_page_id');
+        $sDefaultPageCode = empty($sDefaultPageCode) ? $sPageCode : $sDefaultPageCode;
+
         //Get URL params
-        $arParamList = $this->getPageParamList($sPageCode, $arRemoveParamList);
+        $arParamList = $this->getPageParamList($sDefaultPageCode, $arRemoveParamList);
 
         //Generate page URL
         $sURL = CmsPage::url($sPageCode, $arParamList);

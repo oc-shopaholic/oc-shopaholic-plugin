@@ -1,6 +1,8 @@
 <?php namespace Lovata\Shopaholic\Classes\Item;
 
 use Cms\Classes\Page as CmsPage;
+
+use Lovata\Toolbox\Models\Settings;
 use Lovata\Toolbox\Classes\Item\ElementItem;
 use Lovata\Toolbox\Classes\Helper\PageHelper;
 
@@ -43,8 +45,11 @@ class PromoBlockItem extends ElementItem
      */
     public function getPageUrl($sPageCode = 'promo-block')
     {
+        $sDefaultPageCode = Settings::getValue('promo_block_page_id');
+        $sDefaultPageCode = empty($sDefaultPageCode) ? $sPageCode : $sDefaultPageCode;
+
         //Get URL params
-        $arParamList = $this->getPageParamList($sPageCode);
+        $arParamList = $this->getPageParamList($sDefaultPageCode);
 
         //Generate page URL
         $sURL = CmsPage::url($sPageCode, $arParamList);
