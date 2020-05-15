@@ -38,6 +38,7 @@ class ImportOfferModelFromCSV extends AbstractImportModelFromCSV
         $this->setProductField();
         $this->setQuantityField();
         $this->setMeasureField();
+        $this->setMeasureOfUnitField();
 
         $this->initPreviewImage();
         $this->initImageList();
@@ -100,7 +101,7 @@ class ImportOfferModelFromCSV extends AbstractImportModelFromCSV
     /**
      * Set measure filed value
      */
-    protected function setMeasureField()
+    protected function setMeasureOfUnitField()
     {
         $sMeasure = array_get($this->arImportData, 'measure_of_unit');
         array_forget($this->arImportData, 'measure_of_unit');
@@ -121,5 +122,31 @@ class ImportOfferModelFromCSV extends AbstractImportModelFromCSV
         }
 
         $this->arImportData['measure_of_unit_id'] = $obMeasure->id;
+    }
+
+    /**
+     * Set measure filed value
+     */
+    protected function setMeasureField()
+    {
+        $sMeasure = array_get($this->arImportData, 'measure_id');
+        array_forget($this->arImportData, 'measure_id');
+        if ($sMeasure === null) {
+            return;
+        }
+
+        if (empty($sMeasure)) {
+            $this->arImportData['measure_id'] = null;
+            return;
+        }
+
+        $obMeasure = Measure::getByName($sMeasure)->first();
+        if (empty($obMeasure)) {
+            $obMeasure = Measure::create([
+                'name' => $sMeasure,
+            ]);
+        }
+
+        $this->arImportData['measure_id'] = $obMeasure->id;
     }
 }

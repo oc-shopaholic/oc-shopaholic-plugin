@@ -123,3 +123,5 @@
     - update_table_offers_add_measure_field.php
 1.27.0:
     - 'Added parent category field to backend in Category model. Thanks for contribution Dinwid.'
+1.27.1:
+    - 'Fixed logic of getting prices in Offer model.'
