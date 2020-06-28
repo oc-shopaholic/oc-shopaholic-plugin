@@ -16,6 +16,7 @@
         'promo_block_type'    => '製品リストを含む販促ブロック',
         'promo_block'         => '販促ブロック',
         'category_parent_id'  => '親カテゴリID',
+        'category_parent'     => '親カテゴリ',
         'product_id'          => '製品ID',
     ],
     'menu'        => [

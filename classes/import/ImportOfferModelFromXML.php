@@ -58,6 +58,7 @@ class ImportOfferModelFromXML extends AbstractImportModelFromXML
             'height'           => Lang::get('lovata.toolbox::lang.field.height'),
             'length'           => Lang::get('lovata.toolbox::lang.field.length'),
             'width'            => Lang::get('lovata.toolbox::lang.field.width'),
+            'measure_id'       => Lang::get('lovata.shopaholic::lang.field.measure'),
             'quantity_in_unit' => Lang::get('lovata.shopaholic::lang.field.quantity_in_unit'),
             'measure_of_unit'  => Lang::get('lovata.shopaholic::lang.field.measure_of_unit'),
             'preview_text'     => Lang::get('lovata.toolbox::lang.field.preview_text'),

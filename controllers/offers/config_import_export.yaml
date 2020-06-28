@@ -28,6 +28,8 @@ import:
         label: 'lovata.toolbox::lang.field.length'
       width:
         label: 'lovata.toolbox::lang.field.width'
+      measure_id:
+        label: 'lovata.shopaholic::lang.field.measure'
       quantity_in_unit:
         label: 'lovata.shopaholic::lang.field.quantity_in_unit'
       measure_of_unit:
