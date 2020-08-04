@@ -121,6 +121,9 @@ use Lovata\Shopaholic\Classes\Import\ImportProductModelFromCSV;
  * @method static $this activeVK()
  * @method static $this notActiveVK()
  * @method static $this isNotEmptyExternalVkId()
+ *
+ * Downloadable file for Shopaholic
+ * @property bool                                                                                      $is_file_access
  */
 class Product extends ImportModel
 {
@@ -136,7 +139,7 @@ class Product extends ImportModel
     use ExternalIDField;
     use TraitCached;
     use Nullable;
-    
+
 
     public $table = 'lovata_shopaholic_products';
 
