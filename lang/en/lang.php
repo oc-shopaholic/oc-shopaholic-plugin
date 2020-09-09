@@ -38,12 +38,16 @@
 
         'hide_brand_import_from_csv'    => 'Hide "Import from CSV" button for brands',
         'hide_brand_import_from_xml'    => 'Hide "Import from XML" button for brands',
+        'hide_brand_export_in_csv'      => 'Hide "Export in CSV" button for brands',
         'hide_category_import_from_csv' => 'Hide "Import from CSV" button for categories',
         'hide_category_import_from_xml' => 'Hide "Import from XML" button for categories',
+        'hide_category_export_in_csv'   => 'Hide "Export in CSV" button for categories',
         'hide_product_import_from_csv'  => 'Hide "Import from CSV" button for products',
         'hide_product_import_from_xml'  => 'Hide "Import from XML" button for products',
+        'hide_product_export_in_csv'    => 'Hide "Export in CSV" button for products',
         'hide_offer_import_from_csv'    => 'Hide "Import from CSV" button for offers',
         'hide_offer_import_from_xml'    => 'Hide "Import from XML" button for offers',
+        'hide_offer_export_in_csv'      => 'Hide "Export in CSV" button for offers',
         'hide_price_import_from_xml'    => 'Hide "Import from XML" button for prices',
     ],
     'settings'    => [
@@ -83,6 +87,7 @@
         'settings'       => 'Catalog configuration',
         'taxes'          => 'Taxes',
         'import_setting' => 'Import',
+        'export_setting' => 'Export',
         'dimensions'     => 'Dimensions and weight',
     ],
     'category'    => [
@@ -133,7 +138,7 @@
         'name'       => 'state',
         'list_title' => 'State list',
     ],
-    'measure'        => [
+    'measure'     => [
         'name'       => 'Unit measure',
         'list_title' => 'Unit measure list',
     ],
@@ -212,11 +217,13 @@
     ],
     'button'      => [
         'import_offer_button'   => 'Import offers from CSV',
+        'export_offer_button'   => 'Export offers in CSV',
         'import_offer_from_xml' => 'Import offers from XML',
         'import_price_from_xml' => 'Import prices from XML',
     ],
     'widget'      => [
         'import_from_xml_files' => 'Import from XML',
         'import_from_csv_files' => 'Import from CSV',
+        'export_in_csv_files'   => 'Export in CSV',
     ],
 ];
