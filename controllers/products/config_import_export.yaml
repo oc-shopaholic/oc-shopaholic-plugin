@@ -31,7 +31,7 @@ import:
       deactivate:
         label: 'lovata.toolbox::lang.field.import_deactivate'
         comment: 'lovata.toolbox::lang.field.import_deactivate_description'
-        type: checkboxz
+        type: checkbox
 export:
   title: 'lovata.shopaholic::lang.product.export_title'
   modelClass: Lovata\Shopaholic\Models\ProductExport
