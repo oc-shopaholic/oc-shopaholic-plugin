@@ -24,17 +24,6 @@ class ProductExport extends AbstractExportModelInCSV
     public $table = 'lovata_shopaholic_products';
 
     /**
-     * Init.
-     * @param array|null $arColumns
-     */
-    protected function init($arColumns)
-    {
-        parent::init($arColumns);
-
-        $this->initPropertyColumnListForProductOrOffer();
-    }
-
-    /**
      * Get property list.
      * @return array
      */
@@ -86,26 +75,6 @@ class ProductExport extends AbstractExportModelInCSV
             $sAdditionalCategoryIdList = implode(',', $arAdditionalCategoryIdList);
 
             $arResult[self::RELATION_ADDITIONAL_CATEGORY] = $sAdditionalCategoryIdList;
-        }
-
-        return $arResult;
-    }
-
-    /**
-     * Prepare model properties data.
-     * @param Product $obProduct
-     * @return array
-     */
-    protected function prepareModelPropertiesData($obProduct) : array
-    {
-        $arResult = [];
-
-        if (empty($this->arPropertyColumnList) || empty($obProduct->property)) {
-            return $arResult;
-        }
-
-        foreach ($this->arPropertyColumnList as $sKey => $sField) {
-            $arResult[$sKey] = array_get($obProduct->property, $sField);
         }
 
         return $arResult;

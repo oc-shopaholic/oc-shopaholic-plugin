@@ -28,17 +28,6 @@ class OfferExport extends AbstractExportModelInCSV
     public $table = 'lovata_shopaholic_offers';
 
     /**
-     * Init.
-     * @param array|null $arColumns
-     */
-    protected function init($arColumns)
-    {
-        parent::init($arColumns);
-
-        $this->initPropertyColumnListForProductOrOffer();
-    }
-
-    /**
      * Get property list.
      * @return array
      */
@@ -87,26 +76,6 @@ class OfferExport extends AbstractExportModelInCSV
         if (!empty($obOffer->measure_of_unit)
             && in_array(self::RELATION_MEASURE_OF_UNIT, $this->arRelationColumnList)) {
             $arResult[self::RELATION_MEASURE_OF_UNIT] = $obOffer->measure_of_unit->name;
-        }
-
-        return $arResult;
-    }
-
-    /**
-     * Prepare model properties data.
-     * @param Offer $obOffer
-     * @return array
-     */
-    protected function prepareModelPropertiesData($obOffer) : array
-    {
-        $arResult = [];
-
-        if (empty($this->arPropertyColumnList) || empty($obOffer->property)) {
-            return $arResult;
-        }
-
-        foreach ($this->arPropertyColumnList as $sKey => $sField) {
-            $arResult[$sKey] = array_get($obOffer->property, $sField);
         }
 
         return $arResult;
