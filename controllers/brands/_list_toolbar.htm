@@ -36,7 +36,7 @@
     <?php } ?>
 
     <?php if (!\Lovata\Shopaholic\Models\Settings::getValue('hide_brand_export_in_csv')) { ?>
-    <a href="<?= Backend::url('lovata/shopaholic/brands/export') ?>" class="btn btn-primary oc-icon-download">
+    <a href="<?= Backend::url('lovata/shopaholic/brands/export') ?>" class="btn btn-primary oc-icon-upload">
         <?= e(trans('lovata.toolbox::lang.button.export_in_csv')) ?>
     </a>
     <?php } ?>

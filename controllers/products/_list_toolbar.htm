@@ -55,12 +55,12 @@
     </button>
     <?php } ?>
     <?php if (!\Lovata\Shopaholic\Models\Settings::getValue('hide_product_export_in_csv')) { ?>
-    <a href="<?= Backend::url('lovata/shopaholic/products/export') ?>" class="btn btn-primary oc-icon-download">
+    <a href="<?= Backend::url('lovata/shopaholic/products/export') ?>" class="btn btn-primary oc-icon-upload">
         <?= e(trans('lovata.toolbox::lang.button.export_in_csv')) ?>
     </a>
     <?php } ?>
     <?php if (!\Lovata\Shopaholic\Models\Settings::getValue('hide_offer_export_in_csv')) { ?>
-    <a href="<?= Backend::url('lovata/shopaholic/offers/export') ?>" class="btn btn-primary oc-icon-download">
+    <a href="<?= Backend::url('lovata/shopaholic/offers/export') ?>" class="btn btn-primary oc-icon-upload">
         <?= e(trans('lovata.shopaholic::lang.button.export_offer_button')) ?>
     </a>
     <?php } ?>

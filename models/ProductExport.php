@@ -1,5 +1,8 @@
 <?php namespace Lovata\Shopaholic\Models;
 
+use System\Classes\PluginManager;
+
+use Lovata\PropertiesShopaholic\Classes\Event\Product\ExtendProductControllerHandler;
 use Lovata\Toolbox\Classes\Helper\AbstractExportModelInCSV;
 
 /**
@@ -19,6 +22,38 @@ class ProductExport extends AbstractExportModelInCSV
 
     /** @var string */
     public $table = 'lovata_shopaholic_products';
+
+    /**
+     * Init.
+     * @param array|null $arColumns
+     */
+    protected function init($arColumns)
+    {
+        parent::init($arColumns);
+
+        $this->initPropertyColumnListForProductOrOffer();
+    }
+
+    /**
+     * Get property list.
+     * @return array
+     */
+    protected function getPropertyList() : array
+    {
+        if (!PluginManager::instance()->hasPlugin('Lovata.PropertiesShopaholic')) {
+            return [];
+        }
+
+        $arPropertyList = ExtendProductControllerHandler::getPropertyListConfig();
+
+        if (empty($arPropertyList)) {
+            return [];
+        }
+
+        $arPropertyList = array_keys($arPropertyList);
+
+        return $arPropertyList;
+    }
 
     /**
      * Get list.
@@ -51,6 +86,26 @@ class ProductExport extends AbstractExportModelInCSV
             $sAdditionalCategoryIdList = implode(',', $arAdditionalCategoryIdList);
 
             $arResult[self::RELATION_ADDITIONAL_CATEGORY] = $sAdditionalCategoryIdList;
+        }
+
+        return $arResult;
+    }
+
+    /**
+     * Prepare model properties data.
+     * @param Product $obProduct
+     * @return array
+     */
+    protected function prepareModelPropertiesData($obProduct) : array
+    {
+        $arResult = [];
+
+        if (empty($this->arPropertyColumnList) || empty($obProduct->property)) {
+            return $arResult;
+        }
+
+        foreach ($this->arPropertyColumnList as $sKey => $sField) {
+            $arResult[$sKey] = array_get($obProduct->property, $sField);
         }
 
         return $arResult;
