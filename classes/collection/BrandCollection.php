@@ -43,20 +43,24 @@ class BrandCollection extends ElementCollection
 
     /**
      * Filter brand list by category ID
-     * @param int $iCategoryID
+     * @param int|array $arCategoryIDList
+     * @param bool $bWithChildren
      * @return $this
      */
-    public function category($iCategoryID)
+    public function category($arCategoryIDList, $bWithChildren = false)
     {
-        $obCategoryItem = CategoryItem::make($iCategoryID);
-        $arResultIDList = BrandListStore::instance()->category->get($iCategoryID);
+        if (!is_array($arCategoryIDList)) {
+            $arCategoryIDList = [$arCategoryIDList];
+        }
 
-        if ($obCategoryItem->children->isNotEmpty()) {
-            foreach ($obCategoryItem->children as $obChildCategoryItem) {
-                $arResultIDList = array_merge($arResultIDList, BrandListStore::instance()->category->get($obChildCategoryItem->id));
-                $arResultIDList = array_merge($arResultIDList, (array) $this->getBrandIDList($obChildCategoryItem->id));
+        $arResultIDList = [];
+        foreach ($arCategoryIDList as $iCategoryID) {
+            $arResultIDList = array_merge($arResultIDList, (array) BrandListStore::instance()->category->get($iCategoryID));
+            if ($bWithChildren) {
+                $arResultIDList = array_merge($arResultIDList, (array) $this->getIDListChildrenCategory($iCategoryID));
             }
         }
+
         return $this->intersect($arResultIDList);
     }
 
@@ -65,18 +69,20 @@ class BrandCollection extends ElementCollection
      * @param int $iCategoryID
      * @return array
      */
-    protected function getBrandIDList($iCategoryID)
+    protected function getIDListChildrenCategory($iCategoryID) : array
     {
+        //Get category item
         $obCategoryItem = CategoryItem::make($iCategoryID);
-        $arResultIDList = [];
-        
-        if ($obCategoryItem->children->isNotEmpty()) {
-            foreach ($obCategoryItem->children as $obChildCategoryItem) {
-                $arResultIDList = array_merge($arResultIDList, BrandListStore::instance()->category->get($obChildCategoryItem->id));
-                $arResultIDList = array_merge($arResultIDList, (array) $this->getBrandIDList($obChildCategoryItem->id));
-            }
+        if ($obCategoryItem->isEmpty() || $obCategoryItem->children->isEmpty()) {
+            return [];
         }
+
+        $arResultIDList = [];
+        foreach ($obCategoryItem->children as $obChildCategoryItem) {
+            $arResultIDList = array_merge($arResultIDList, (array) BrandListStore::instance()->category->get($obChildCategoryItem->id));
+            $arResultIDList = array_merge($arResultIDList, $this->getIDListChildrenCategory($obChildCategoryItem->id));
+        }
+
         return $arResultIDList;
     }
-
 }
