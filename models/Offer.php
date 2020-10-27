@@ -19,7 +19,6 @@ use Lovata\Shopaholic\Classes\Item\OfferItem;
 use Lovata\Shopaholic\Classes\Helper\CurrencyHelper;
 use Lovata\Shopaholic\Classes\Import\ImportOfferModelFromCSV;
 
-
 /**
  * Class Offer
  * @package Lovata\Shopaholic\Models
