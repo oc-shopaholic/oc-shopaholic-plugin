@@ -54,6 +54,7 @@ tabs:
         preview_image:
             label: 'lovata.toolbox::lang.field.preview_image'
             mode: image
+            fileTypes: jpg,jpeg,bmp,png,webp,gif,svg
             useCaption: true
             thumbOptions:
                 mode: crop
@@ -61,9 +62,21 @@ tabs:
             span: left
             type: fileupload
             tab: 'lovata.toolbox::lang.tab.images'
+        icon:
+            label: 'lovata.toolbox::lang.field.icon'
+            mode: image
+            fileTypes: jpg,jpeg,bmp,png,webp,gif,svg
+            useCaption: true
+            thumbOptions:
+                mode: crop
+                extension: auto
+            span: right
+            type: fileupload
+            tab: 'lovata.toolbox::lang.tab.images'
         images:
             label: 'lovata.toolbox::lang.field.images'
             mode: image
+            fileTypes: jpg,jpeg,bmp,png,webp,gif,svg
             useCaption: true
             thumbOptions:
                 mode: crop
