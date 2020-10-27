@@ -4,6 +4,7 @@ use Lovata\Toolbox\Classes\Collection\ElementCollection;
 
 use Lovata\Shopaholic\Classes\Item\BrandItem;
 use Lovata\Shopaholic\Classes\Store\BrandListStore;
+use Lovata\Shopaholic\Classes\Item\CategoryItem;
 
 /**
  * Class BrandCollection
@@ -42,13 +43,46 @@ class BrandCollection extends ElementCollection
 
     /**
      * Filter brand list by category ID
-     * @param int $iCategoryID
+     * @param int|array $arCategoryIDList
+     * @param bool $bWithChildren
      * @return $this
      */
-    public function category($iCategoryID)
+    public function category($arCategoryIDList, $bWithChildren = false)
     {
-        $arResultIDList = BrandListStore::instance()->category->get($iCategoryID);
+        if (!is_array($arCategoryIDList)) {
+            $arCategoryIDList = [$arCategoryIDList];
+        }
+
+        $arResultIDList = [];
+        foreach ($arCategoryIDList as $iCategoryID) {
+            $arResultIDList = array_merge($arResultIDList, (array) BrandListStore::instance()->category->get($iCategoryID));
+            if ($bWithChildren) {
+                $arResultIDList = array_merge($arResultIDList, (array) $this->getIDListChildrenCategory($iCategoryID));
+            }
+        }
 
         return $this->intersect($arResultIDList);
+    }
+
+    /**
+     * Get brand ID list for children categories
+     * @param int $iCategoryID
+     * @return array
+     */
+    protected function getIDListChildrenCategory($iCategoryID) : array
+    {
+        //Get category item
+        $obCategoryItem = CategoryItem::make($iCategoryID);
+        if ($obCategoryItem->isEmpty() || $obCategoryItem->children->isEmpty()) {
+            return [];
+        }
+
+        $arResultIDList = [];
+        foreach ($obCategoryItem->children as $obChildCategoryItem) {
+            $arResultIDList = array_merge($arResultIDList, (array) BrandListStore::instance()->category->get($obChildCategoryItem->id));
+            $arResultIDList = array_merge($arResultIDList, $this->getIDListChildrenCategory($obChildCategoryItem->id));
+        }
+
+        return $arResultIDList;
     }
 }

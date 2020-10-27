@@ -5,6 +5,7 @@ use Cms\Classes\Page as CmsPage;
 use Lovata\Toolbox\Classes\Item\ElementItem;
 use Lovata\Toolbox\Classes\Helper\PageHelper;
 
+use Lovata\Shopaholic\Models\Settings;
 use Lovata\Shopaholic\Models\Brand;
 
 /**
@@ -33,13 +34,17 @@ class BrandItem extends ElementItem
     /**
      * Returns URL of a brand page.
      *
-     * @param string $sPageCode
+     * @param string|null $sPageCode
      * @param array  $arRemoveParamList
      *
      * @return string
      */
-    public function getPageUrl($sPageCode = 'brand', $arRemoveParamList = [])
+    public function getPageUrl($sPageCode = null, $arRemoveParamList = [])
     {
+        if (empty($sPageCode)) {
+            $sPageCode = Settings::getValue('default_brand_page_id', 'brand');
+        }
+
         //Get URL params
         $arParamList = $this->getPageParamList($sPageCode, $arRemoveParamList);
 

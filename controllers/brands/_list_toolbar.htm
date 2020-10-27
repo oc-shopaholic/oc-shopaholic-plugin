@@ -34,4 +34,5 @@
         <?= e(trans('lovata.toolbox::lang.button.import_from_xml')) ?>
     </button>
     <?php } ?>
+    <?= $this->fireViewEvent('lovata.backend.extend_list_toolbar', [$this]) ?>
 </div>

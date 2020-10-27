@@ -8,6 +8,7 @@ use Lovata\Toolbox\Classes\Item\ItemStorage;
 use Lovata\Toolbox\Classes\Item\ElementItem;
 use Lovata\Toolbox\Classes\Helper\PageHelper;
 
+use Lovata\Shopaholic\Models\Settings;
 use Lovata\Shopaholic\Models\Category;
 use Lovata\Shopaholic\Classes\Collection\ProductCollection;
 use Lovata\Shopaholic\Classes\Collection\CategoryCollection;
@@ -98,13 +99,17 @@ class CategoryItem extends ElementItem
     /**
      * Returns URL of a category page.
      *
-     * @param string $sPageCode
+     * @param string|null $sPageCode
      * @param array  $arRemoveParamList
      *
      * @return string
      */
-    public function getPageUrl($sPageCode, $arRemoveParamList = [])
+    public function getPageUrl($sPageCode = null, $arRemoveParamList = [])
     {
+        if (empty($sPageCode)) {
+            $sPageCode = Settings::getValue('default_category_page_id', 'catalog');
+        }
+
         //Get URL params
         $arParamList = $this->getPageParamList($sPageCode, $arRemoveParamList);
 

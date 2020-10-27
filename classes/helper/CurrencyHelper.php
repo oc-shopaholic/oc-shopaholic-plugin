@@ -17,7 +17,7 @@ class CurrencyHelper
 {
     use Singleton;
 
-    const FIELD_NAME = 'active_currency';
+    const FIELD_NAME = 'active_currency_code';
 
     /** @var Currency */
     protected $obActiveCurrency;
