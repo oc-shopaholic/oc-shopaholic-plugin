@@ -17,4 +17,5 @@
         data-stripe-load-indicator>
         <?= e(trans('backend::lang.list.delete_selected')) ?>
     </button>
-    </div>
+    <?= $this->fireViewEvent('lovata.backend.extend_list_toolbar', [$this]) ?>
+</div>

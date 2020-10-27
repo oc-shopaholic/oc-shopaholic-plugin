@@ -54,5 +54,5 @@
         <?= e(trans('lovata.shopaholic::lang.button.import_price_from_xml')) ?>
     </button>
     <?php } ?>
-    <?= $this->fireViewEvent('lovata.view.extendProductsToolbar') ?>
+    <?= $this->fireViewEvent('lovata.backend.extend_list_toolbar', [$this]) ?>
 </div>
