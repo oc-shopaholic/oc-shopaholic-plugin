@@ -45,6 +45,7 @@ use Lovata\Shopaholic\Classes\Import\ImportCategoryModelFromCSV;
  *
  * Relations
  * @property \System\Models\File                                                                 $preview_image
+ * @property \System\Models\File                                                                 $icon
  * @property \October\Rain\Database\Collection|\System\Models\File[]                             $images
  *
  * @property \October\Rain\Database\Collection|Product[]                                         $product
@@ -118,6 +119,7 @@ class Category extends ImportModel
 
     public $attachOne = [
         'preview_image' => 'System\Models\File',
+        'icon'          => 'System\Models\File',
         'import_file'   => [\System\Models\File::class, 'public' => false],
     ];
     public $attachMany = ['images' => 'System\Models\File'];
@@ -152,6 +154,7 @@ class Category extends ImportModel
         'description',
         'parent_id',
         'preview_image',
+        'icon',
         'images',
         'updated_at',
     ];

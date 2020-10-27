@@ -24,33 +24,34 @@ use Lovata\Toolbox\Traits\Helpers\TraitCached;
  * @mixin \October\Rain\Database\Builder
  * @mixin \Eloquent
  *
- * @property                                                                                 $id
- * @property bool                                                                            $active
- * @property string                                                                          $name
- * @property string                                                                          $slug
- * @property string                                                                          $code
- * @property string                                                                          $type
- * @property string                                                                          $preview_text
- * @property string                                                                          $description
- * @property int                                                                             $sort_order
- * @property \October\Rain\Argon\Argon                                                       $date_begin
- * @property \October\Rain\Argon\Argon                                                       $date_end
- * @property \October\Rain\Argon\Argon                                                       $created_at
- * @property \October\Rain\Argon\Argon                                                       $updated_at
+ * @property                                                                                  $id
+ * @property bool                                                                             $active
+ * @property string                                                                           $name
+ * @property string                                                                           $slug
+ * @property string                                                                           $code
+ * @property string                                                                           $type
+ * @property string                                                                           $preview_text
+ * @property string                                                                           $description
+ * @property int                                                                              $sort_order
+ * @property \October\Rain\Argon\Argon                                                        $date_begin
+ * @property \October\Rain\Argon\Argon                                                        $date_end
+ * @property \October\Rain\Argon\Argon                                                        $created_at
+ * @property \October\Rain\Argon\Argon                                                        $updated_at
  *
  * Relations
- * @property \System\Models\File                                                             $preview_image
- * @property \October\Rain\Database\Collection|\System\Models\File[]                         $images
+ * @property \System\Models\File                                                              $preview_image
+ * @property \System\Models\File                                                              $icon
+ * @property \October\Rain\Database\Collection|\System\Models\File[]                          $images
  *
- * @property \October\Rain\Database\Collection|\Lovata\Shopaholic\Models\Product[]           $product
+ * @property \October\Rain\Database\Collection|\Lovata\Shopaholic\Models\Product[]            $product
  * @method static \October\Rain\Database\Relations\BelongsToMany|Product product()
  *
  * Discounts for Shopaholic
- * @property \October\Rain\Database\Collection|\Lovata\DiscountsShopaholic\Models\Discount[] $discount
+ * @property \October\Rain\Database\Collection|\Lovata\DiscountsShopaholic\Models\Discount[]  $discount
  * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\DiscountsShopaholic\Models\Discount discount()
  *
  * Campaign for Shopaholic
- * @property \October\Rain\Database\Collection|\Lovata\CampaignsShopaholic\Models\Campaign[] $campaign
+ * @property \October\Rain\Database\Collection|\Lovata\CampaignsShopaholic\Models\Campaign[]  $campaign
  * @method static \October\Rain\Database\Relations\BelongsToMany|\Lovata\CampaignsShopaholic\Models\Campaign campaign()
  *
  * Coupons for Shopaholic
@@ -102,7 +103,10 @@ class PromoBlock extends Model
 
     public $slugs = ['slug' => 'name'];
 
-    public $attachOne = ['preview_image' => 'System\Models\File'];
+    public $attachOne = [
+        'preview_image' => 'System\Models\File',
+        'icon'          => 'System\Models\File',
+    ];
     public $attachMany = ['images' => 'System\Models\File'];
     public $belongsTo = [];
     public $hasMany = [];
@@ -141,6 +145,7 @@ class PromoBlock extends Model
         'code',
         'preview_text',
         'preview_image',
+        'icon',
         'description',
         'images',
         'date_begin',
@@ -154,7 +159,7 @@ class PromoBlock extends Model
      * Fire event and get promo content type list
      * @return array
      */
-    public static function getTypeList() : array
+    public static function getTypeList(): array
     {
         $arResult = [
             self::PROMO_BLOCK_TYPE => Lang::get('lovata.shopaholic::lang.field.promo_block_type'),
@@ -180,7 +185,7 @@ class PromoBlock extends Model
      * Get type list for backend fields
      * @return array
      */
-    public function getTypeOptions() : array
+    public function getTypeOptions(): array
     {
         return self::getTypeList();
     }
