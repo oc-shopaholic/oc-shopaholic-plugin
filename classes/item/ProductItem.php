@@ -5,6 +5,7 @@ use Cms\Classes\Page as CmsPage;
 use Lovata\Toolbox\Classes\Item\ElementItem;
 use Lovata\Toolbox\Classes\Helper\PageHelper;
 
+use Lovata\Shopaholic\Models\Settings;
 use Lovata\Shopaholic\Models\Product;
 use Lovata\Shopaholic\Classes\Collection\CategoryCollection;
 use Lovata\Shopaholic\Classes\Collection\OfferCollection;
@@ -120,13 +121,17 @@ class ProductItem extends ElementItem
     /**
      * Returns URL of a category page.
      *
-     * @param string $sPageCode
+     * @param string|null $sPageCode
      * @param array  $arRemoveParamList
      *
      * @return string
      */
-    public function getPageUrl($sPageCode = 'product', $arRemoveParamList = [])
+    public function getPageUrl($sPageCode = null, $arRemoveParamList = [])
     {
+        if (empty($sPageCode)) {
+            $sPageCode = Settings::getValue('default_product_page_id', 'product');
+        }
+
         //Get URL params
         $arParamList = $this->getPageParamList($sPageCode, $arRemoveParamList);
 

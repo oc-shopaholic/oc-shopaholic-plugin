@@ -126,4 +126,4 @@
 1.27.1:
     - 'Fixed logic of getting prices in Offer model.'
 1.28.0:
-    - 'Added "with children" param in BrandCollection->category method.'
+    - 'Added "with children" param in BrandCollection->category method. Added settings for "default pages".'

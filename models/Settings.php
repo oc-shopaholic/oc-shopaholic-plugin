@@ -1,5 +1,6 @@
 <?php namespace Lovata\Shopaholic\Models;
 
+use Lovata\Toolbox\Classes\Helper\PageHelper;
 use Lovata\Toolbox\Models\CommonSettings;
 
 /**
@@ -48,5 +49,14 @@ class Settings extends CommonSettings
         $arResult = (array) Measure::orderBy('name', 'asc')->lists('name', 'id');
 
         return $arResult;
+    }
+
+    /**
+     * Get page id list.
+     * @return array|\Cms\Classes\Page[]
+     */
+    public function getPageIdListOptions()
+    {
+        return PageHelper::instance()->getPageNameList();
     }
 }
