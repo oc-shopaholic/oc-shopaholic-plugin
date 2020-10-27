@@ -129,7 +129,7 @@ class ProductItem extends ElementItem
     public function getPageUrl($sPageCode = null, $arRemoveParamList = [])
     {
         if (empty($sPageCode)) {
-            $sPageCode = Settings::getValue('product_page_id', 'product');
+            $sPageCode = Settings::getValue('default_product_page_id', 'product');
         }
 
         //Get URL params

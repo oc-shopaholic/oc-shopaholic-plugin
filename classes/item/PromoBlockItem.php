@@ -46,7 +46,7 @@ class PromoBlockItem extends ElementItem
     public function getPageUrl($sPageCode = null)
     {
         if (empty($sPageCode)) {
-            $sPageCode = Settings::getValue('promo_block_page_id', 'promo-block');
+            $sPageCode = Settings::getValue('default_promo_block_page_id', 'promo-block');
         }
 
         //Get URL params

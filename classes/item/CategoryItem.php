@@ -107,7 +107,7 @@ class CategoryItem extends ElementItem
     public function getPageUrl($sPageCode = null, $arRemoveParamList = [])
     {
         if (empty($sPageCode)) {
-            $sPageCode = Settings::getValue('category_page_id', 'catalog');
+            $sPageCode = Settings::getValue('default_category_page_id', 'catalog');
         }
 
         //Get URL params

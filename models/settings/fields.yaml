@@ -82,29 +82,29 @@ tabs:
             tab: lovata.shopaholic::lang.tab.import_setting
             type: checkbox
             span: right
-        product_page_id:
-            label: lovata.shopaholic::lang.field.set_page_for_product
+        default_product_page_id:
+            label: lovata.shopaholic::lang.field.default_product_page
             tab: lovata.shopaholic::lang.tab.page_settings
             type: dropdown
             span: left
             emptyOption: lovata.toolbox::lang.field.empty
             options: getPageIdListOptions
-        category_page_id:
-            label: lovata.shopaholic::lang.field.set_page_for_category
+        default_category_page_id:
+            label: lovata.shopaholic::lang.field.default_category_page
             tab: lovata.shopaholic::lang.tab.page_settings
             type: dropdown
             span: left
             emptyOption: lovata.toolbox::lang.field.empty
             options: getPageIdListOptions
-        brand_page_id:
-            label: lovata.shopaholic::lang.field.set_page_for_brand
+        default_brand_page_id:
+            label: lovata.shopaholic::lang.field.default_brand_page
             tab: lovata.shopaholic::lang.tab.page_settings
             type: dropdown
             span: left
             emptyOption: lovata.toolbox::lang.field.empty
             options: getPageIdListOptions
-        promo_block_page_id:
-            label: lovata.shopaholic::lang.field.set_page_for_promo_block
+        default_promo_block_page_id:
+            label: lovata.shopaholic::lang.field.default_promo_block_page
             tab: lovata.shopaholic::lang.tab.page_settings
             type: dropdown
             span: left

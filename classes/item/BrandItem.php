@@ -42,7 +42,7 @@ class BrandItem extends ElementItem
     public function getPageUrl($sPageCode = null, $arRemoveParamList = [])
     {
         if (empty($sPageCode)) {
-            $sPageCode = Settings::getValue('brand_page_id', 'brand');
+            $sPageCode = Settings::getValue('default_brand_page_id', 'brand');
         }
 
         //Get URL params

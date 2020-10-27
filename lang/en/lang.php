@@ -46,10 +46,10 @@
         'hide_offer_import_from_xml'    => 'Hide "Import from XML" button for offers',
         'hide_price_import_from_xml'    => 'Hide "Import from XML" button for prices',
 
-        'set_page_for_product'     => 'Set page for product',
-        'set_page_for_category'    => 'Set page for category',
-        'set_page_for_brand'       => 'Set page for brand',
-        'set_page_for_promo_block' => 'Set page for promo block',
+        'default_product_page'     => 'Choose the default product page',
+        'default_category_page'    => 'Choose the default category page',
+        'default_brand_page'       => 'Choose the default brand page',
+        'default_promo_block_page' => 'Choose the default promo block page',
     ],
     'settings'    => [
         'formula_calculate_discount_from_price'      => 'Formula of calculating discounts on prices with taxes',
