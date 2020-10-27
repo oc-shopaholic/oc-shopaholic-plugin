@@ -82,6 +82,9 @@ use Lovata\Shopaholic\Classes\Collection\OfferCollection;
  * @property int                                                                                                                         $external_vk_id
  * @property \System\Models\File                                                                                                         $preview_image_vkontakte
  * @property \October\Rain\Database\Collection|\System\Models\File[]                                                                     $images_vkontakte
+ *
+ * Downloadable file for Shopaholic
+ * @property bool                                                                                                                        $is_file_access
  */
 class ProductItem extends ElementItem
 {
