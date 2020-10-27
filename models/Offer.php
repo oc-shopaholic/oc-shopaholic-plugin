@@ -11,6 +11,7 @@ use Kharanenka\Scope\CodeField;
 use Kharanenka\Scope\ExternalIDField;
 use Kharanenka\Scope\NameField;
 
+use Lovata\Toolbox\Classes\Helper\PriceHelper;
 use Lovata\Toolbox\Traits\Helpers\TraitCached;
 use Lovata\Toolbox\Traits\Helpers\PriceHelperTrait;
 
@@ -285,20 +286,12 @@ class Offer extends ImportModel
     {
         $this->savePriceValue(null, $this->fSavedPrice, $this->fSavedOldPrice);
         $this->savePriceListValue();
-    }
 
-    /**
-     * Set quantity attribute value
-     * @param int $iQuantity
-     */
-    public function setQuantityAttribute($iQuantity)
-    {
-        $iQuantity = (int) $iQuantity;
-        if (empty($iQuantity) || $iQuantity < 0) {
-            $iQuantity = 0;
-        }
-
-        $this->attributes['quantity'] = $iQuantity;
+        //Clear relations with old prices and saved values
+        $this->reloadRelations('main_price');
+        $this->reloadRelations('price_link');
+        $this->fSavedPrice = null;
+        $this->fSavedOldPrice = null;
     }
 
     /**
@@ -391,14 +384,19 @@ class Offer extends ImportModel
      */
     protected function getPriceValueAttribute()
     {
-        $obPriceModel = $this->getPriceObject($this->getActivePriceType());
-        $this->setActivePriceType(null);
+        if ($this->fSavedPrice !== null) {
+            $fPrice = $this->fSavedPrice;
+        } else {
+            $obPriceModel = $this->getPriceObject($this->getActivePriceType());
+            $this->setActivePriceType(null);
 
-        if (empty($obPriceModel)) {
-            return 0;
+            if (empty($obPriceModel)) {
+                return 0;
+            }
+
+            $fPrice = $obPriceModel->price_value;
         }
 
-        $fPrice = $obPriceModel->price_value;
         $fPrice = CurrencyHelper::instance()->convert($fPrice, $this->getActiveCurrency());
 
         return $fPrice;
@@ -410,14 +408,19 @@ class Offer extends ImportModel
      */
     protected function getOldPriceValueAttribute()
     {
-        $obPriceModel = $this->getPriceObject($this->getActivePriceType());
-        $this->setActivePriceType(null);
+        if ($this->fSavedOldPrice !== null) {
+            $fPrice = $this->fSavedOldPrice;
+        } else {
+            $obPriceModel = $this->getPriceObject($this->getActivePriceType());
+            $this->setActivePriceType(null);
 
-        if (empty($obPriceModel)) {
-            return 0;
+            if (empty($obPriceModel)) {
+                return 0;
+            }
+
+            $fPrice = $obPriceModel->old_price_value;
         }
 
-        $fPrice = $obPriceModel->old_price_value;
         $fPrice = CurrencyHelper::instance()->convert($fPrice, $this->getActiveCurrency());
         $this->setActiveCurrency(null);
 
@@ -468,7 +471,7 @@ class Offer extends ImportModel
      */
     protected function setPriceAttribute($sValue)
     {
-        $this->fSavedPrice = $sValue;
+        $this->fSavedPrice = PriceHelper::toFloat($sValue);
     }
 
     /**
@@ -478,7 +481,7 @@ class Offer extends ImportModel
      */
     protected function setOldPriceAttribute($sValue)
     {
-        $this->fSavedOldPrice = $sValue;
+        $this->fSavedOldPrice = PriceHelper::toFloat($sValue);
     }
 
     /**
@@ -493,8 +496,8 @@ class Offer extends ImportModel
         }
 
         if (isset($arPriceList[0])) {
-            $this->fSavedPrice = array_get($arPriceList[0], 'price');
-            $this->fSavedOldPrice = array_get($arPriceList[0], 'old_price');
+            $this->fSavedPrice = PriceHelper::toFloat(array_get($arPriceList[0], 'price'));
+            $this->fSavedOldPrice = PriceHelper::toFloat(array_get($arPriceList[0], 'old_price'));
             unset($arPriceList[0]);
         }
 
@@ -510,6 +513,34 @@ class Offer extends ImportModel
         $obOfferItem = OfferItem::make($this->id, $this);
 
         return $obOfferItem->tax_percent;
+    }
+
+    /**
+     * Set quantity attribute value
+     * @param int $iQuantity
+     */
+    protected function setQuantityAttribute($iQuantity)
+    {
+        $iQuantity = (int) $iQuantity;
+        if (empty($iQuantity) || $iQuantity < 0) {
+            $iQuantity = 0;
+        }
+
+        $this->attributes['quantity'] = $iQuantity;
+    }
+
+    /**
+     * Set quantity_in_unit attribute value
+     * @param int $iQuantity
+     */
+    protected function setQuantityInUnitAttribute($sQuantity)
+    {
+        $fQuantity = (float) PriceHelper::toFloat($sQuantity);
+        if (empty($fQuantity) || $fQuantity < 0) {
+            $fQuantity = 0;
+        }
+
+        $this->attributes['quantity_in_unit'] = $fQuantity;
     }
 
     /**

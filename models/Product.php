@@ -13,6 +13,7 @@ use October\Rain\Database\Traits\Sluggable;
 use October\Rain\Database\Traits\SoftDelete;
 use October\Rain\Database\Traits\Validation;
 use October\Rain\Database\Traits\Purgeable;
+use October\Rain\Database\Traits\Nullable;
 
 use Lovata\Toolbox\Traits\Helpers\TraitCached;
 use Lovata\Shopaholic\Classes\Import\ImportProductModelFromCSV;
@@ -134,6 +135,8 @@ class Product extends ImportModel
     use CodeField;
     use ExternalIDField;
     use TraitCached;
+    use Nullable;
+    
 
     public $table = 'lovata_shopaholic_products';
 
@@ -181,6 +184,7 @@ class Product extends ImportModel
 
     public $appends = [];
     public $purgeable = [];
+    public $nullable = [];
     public $fillable = [
         'active',
         'name',
