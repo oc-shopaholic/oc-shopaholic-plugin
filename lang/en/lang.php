@@ -15,9 +15,6 @@
         'additional_category' => 'Additional categories',
         'promo_block_type'    => 'Promo block with product list',
         'promo_block'         => 'Promo block',
-        'category_parent_id'  => 'Parent category ID',
-        'category_parent'     => 'Parent category',
-        'children_category'   => 'Children categories',
         'product_id'          => 'Product ID',
         'rate'                => 'Rate',
         'tax_is_global'       => 'Tax will apply to all products',
@@ -49,6 +46,11 @@
         'hide_offer_import_from_xml'    => 'Hide "Import from XML" button for offers',
         'hide_offer_export_in_csv'      => 'Hide "Export in CSV" button for offers',
         'hide_price_import_from_xml'    => 'Hide "Import from XML" button for prices',
+
+        'default_product_page'     => 'Choose the default product page',
+        'default_category_page'    => 'Choose the default category page',
+        'default_brand_page'       => 'Choose the default brand page',
+        'default_promo_block_page' => 'Choose the default promo block page',
     ],
     'settings'    => [
         'formula_calculate_discount_from_price'      => 'Formula of calculating discounts on prices with taxes',
@@ -89,6 +91,7 @@
         'import_setting' => 'Import',
         'export_setting' => 'Export',
         'dimensions'     => 'Dimensions and weight',
+        'page_settings'  => 'Page settings'
     ],
     'category'    => [
         'name'         => 'category',

@@ -15,8 +15,6 @@
         'additional_category' => 'Дадатковыя катэгорыі',
         'promo_block_type'    => 'Промо-блок со списком товаров',
         'promo_block'         => 'Прома-блок',
-        'category_parent_id'  => 'ID бацькоўскай катэгорыі',
-        'category_parent'     => 'Бацькоўская катэгорыя',
         'product_id'          => 'ID тавару',
         'rate'                => 'Rate',
         'tax_is_global'       => 'Tax will apply to all products',

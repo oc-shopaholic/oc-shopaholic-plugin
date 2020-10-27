@@ -125,3 +125,5 @@
     - 'Added parent category field to backend in Category model. Thanks for contribution Dinwid.'
 1.27.1:
     - 'Fixed logic of getting prices in Offer model.'
+1.28.0:
+    - 'Added "with children" param in BrandCollection->category method. Added settings for "default pages". Added "lovata.backend.extend_list_toolbar" event to controllers.'

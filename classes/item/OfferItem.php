@@ -102,6 +102,9 @@ use Lovata\Shopaholic\Classes\Helper\PriceTypeHelper;
  * VKontakte for Shopaholic
  * @property \System\Models\File                                                                                                         $preview_image_vkontakte
  * @property \October\Rain\Database\Collection|\System\Models\File[]                                                                     $images_vkontakte
+ *
+ * Downloadable file for Shopaholic
+ * @property \October\Rain\Database\Collection|\System\Models\File[]                                                                     $downloadable_file
  */
 class OfferItem extends ElementItem
 {

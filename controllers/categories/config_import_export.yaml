@@ -17,7 +17,7 @@ import:
       description:
         label: 'lovata.toolbox::lang.field.description'
       parent_id:
-        label: 'lovata.shopaholic::lang.field.category_parent_id'
+        label: 'lovata.toolbox::lang.field.category_parent_id'
       preview_image:
         label: 'lovata.toolbox::lang.field.preview_image'
       images:

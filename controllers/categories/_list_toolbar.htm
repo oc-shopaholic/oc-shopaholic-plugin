@@ -34,9 +34,12 @@
         <?= e(trans('lovata.toolbox::lang.button.import_from_xml')) ?>
     </button>
     <?php } ?>
+
     <?php if (!\Lovata\Shopaholic\Models\Settings::getValue('hide_category_export_in_csv')) { ?>
-    <a href="<?= Backend::url('lovata/shopaholic/categories/export') ?>" class="btn btn-primary oc-icon-upload">
-        <?= e(trans('lovata.toolbox::lang.button.export_in_csv')) ?>
-    </a>
+        <a href="<?= Backend::url('lovata/shopaholic/categories/export') ?>" class="btn btn-primary oc-icon-upload">
+            <?= e(trans('lovata.toolbox::lang.button.export_in_csv')) ?>
+        </a>
     <?php } ?>
+
+    <?= $this->fireViewEvent('lovata.backend.extend_list_toolbar', [$this]) ?>
 </div>
