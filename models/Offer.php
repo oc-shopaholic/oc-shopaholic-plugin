@@ -19,6 +19,7 @@ use Lovata\Shopaholic\Classes\Item\OfferItem;
 use Lovata\Shopaholic\Classes\Helper\CurrencyHelper;
 use Lovata\Shopaholic\Classes\Import\ImportOfferModelFromCSV;
 
+
 /**
  * Class Offer
  * @package Lovata\Shopaholic\Models
@@ -524,8 +525,10 @@ class Offer extends ImportModel
      */
     protected function setQuantityAttribute($iQuantity)
     {
+        $bAllowNegativeOfferQuantity = (bool) Settings::getValue('allow_negative_offer_quantity');
+
         $iQuantity = (int) $iQuantity;
-        if (empty($iQuantity) || $iQuantity < 0) {
+        if (empty($iQuantity) || ($iQuantity < 0 && !$bAllowNegativeOfferQuantity)) {
             $iQuantity = 0;
         }
 
