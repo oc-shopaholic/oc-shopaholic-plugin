@@ -15,8 +15,6 @@
         'additional_category' => 'Zusätzliche Kategorien',
         'promo_block_type'    => 'Promoblock mit Produktliste',
         'promo_block'         => 'Promoblock',
-        'category_parent_id'  => 'Parent category ID',
-        'category_parent'     => 'Parent category',
         'product_id'          => 'Produkt ID',
         'rate'                => 'Rate',
         'tax_is_global'       => 'Tax will apply to all products',
