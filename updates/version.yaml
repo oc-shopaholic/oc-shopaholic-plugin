@@ -126,4 +126,5 @@
 1.27.1:
     - 'Fixed logic of getting prices in Offer model.'
 1.28.0:
-    - 'Added "with children" param in BrandCollection->category method. Added settings for "default pages". Added "lovata.backend.extend_list_toolbar" event to controllers. Added "icon field to Brand, Category and PromoBlock models."'
+    - 'Added "with children" param in BrandCollection->category method. Added settings for "default pages". Added "lovata.backend.extend_list_toolbar" event to controllers. Added "icon" field to Brand, Category and PromoBlock models. Added settings "Allow negative offer quantity".'
+    - update_table_offers_change_quantity_field.php

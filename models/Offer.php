@@ -524,8 +524,10 @@ class Offer extends ImportModel
      */
     protected function setQuantityAttribute($iQuantity)
     {
+        $bAllowNegativeOfferQuantity = (bool) Settings::getValue('allow_negative_offer_quantity');
+
         $iQuantity = (int) $iQuantity;
-        if (empty($iQuantity) || $iQuantity < 0) {
+        if (empty($iQuantity) || ($iQuantity < 0 && !$bAllowNegativeOfferQuantity)) {
             $iQuantity = 0;
         }
 
