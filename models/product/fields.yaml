@@ -66,6 +66,7 @@ tabs:
         preview_image:
                 label: 'lovata.toolbox::lang.field.preview_image'
                 mode: image
+                fileTypes: jpg,jpeg,bmp,png,webp,gif,svg
                 useCaption: true
                 thumbOptions:
                     mode: crop
@@ -76,6 +77,7 @@ tabs:
         images:
             label: 'lovata.toolbox::lang.field.images'
             mode: image
+            fileTypes: jpg,jpeg,bmp,png,webp,gif,svg
             useCaption: true
             thumbOptions:
                 mode: crop

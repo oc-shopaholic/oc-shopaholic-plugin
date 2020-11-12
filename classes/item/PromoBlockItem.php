@@ -24,6 +24,7 @@ use Lovata\Shopaholic\Classes\Collection\ProductCollection;
  *
  * @property string                                                          $preview_text
  * @property \System\Models\File                                             $preview_image
+ * @property \System\Models\File                                             $icon
  *
  * @property string                                                          $description
  * @property \October\Rain\Database\Collection|\System\Models\File[]         $images
