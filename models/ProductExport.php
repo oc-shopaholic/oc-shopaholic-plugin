@@ -1,8 +1,5 @@
 <?php namespace Lovata\Shopaholic\Models;
 
-use System\Classes\PluginManager;
-
-use Lovata\PropertiesShopaholic\Classes\Event\Product\ExtendProductControllerHandler;
 use Lovata\Toolbox\Classes\Helper\AbstractExportModelInCSV;
 
 /**
@@ -22,27 +19,6 @@ class ProductExport extends AbstractExportModelInCSV
 
     /** @var string */
     public $table = 'lovata_shopaholic_products';
-
-    /**
-     * Get property list.
-     * @return array
-     */
-    protected function getPropertyList() : array
-    {
-        if (!PluginManager::instance()->hasPlugin('Lovata.PropertiesShopaholic')) {
-            return [];
-        }
-
-        $arPropertyList = ExtendProductControllerHandler::getPropertyListConfig();
-
-        if (empty($arPropertyList)) {
-            return [];
-        }
-
-        $arPropertyList = array_keys($arPropertyList);
-
-        return $arPropertyList;
-    }
 
     /**
      * Get list.
