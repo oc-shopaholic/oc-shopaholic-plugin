@@ -1,6 +1,5 @@
 <?php namespace Lovata\Shopaholic\Models;
 
-use Event;
 use Lovata\Toolbox\Classes\Helper\AbstractExportModelInCSV;
 
 /**
