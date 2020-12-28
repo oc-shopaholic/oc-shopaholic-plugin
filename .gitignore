@@ -1,6 +1,7 @@
 /node_modules
 Homestead.yaml
 /_ide_helper.php
+build.sh
 
 #site
 pdf/
