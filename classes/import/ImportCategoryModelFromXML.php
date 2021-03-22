@@ -179,6 +179,8 @@ class ImportCategoryModelFromXML extends AbstractImportModelFromXML
         $iFileNumber = XmlImportSettings::getValue('category_file_path');
         if ($iFileNumber !== null) {
             $this->sMainFilePath = array_get($this->arXMLFileList, $iFileNumber.'.path');
+            $this->sPrefix = array_get($this->arXMLFileList, $iFileNumber.'.path_prefix');
+            $this->sNamespace = array_get($this->arXMLFileList, $iFileNumber.'.file_namespace');
             $this->sMainFilePath = trim($this->sMainFilePath, '/');
         }
 
