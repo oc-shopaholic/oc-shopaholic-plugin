@@ -5,6 +5,7 @@
     "license": "GPL-3.0-only",
     "require": {
         "php": ">=7.0",
-        "lovata/oc-toolbox-plugin": "~1.16"
+        "lovata/oc-toolbox-plugin": "~1.16",
+        "composer/installers": "~1.0"
     }
 }
