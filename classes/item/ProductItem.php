@@ -90,6 +90,17 @@ class ProductItem extends ElementItem
 {
     const MODEL_CLASS = Product::class;
 
+    public static $arQueryWith = [
+        'preview_image',
+        'images',
+        'additional_category',
+        'offer',
+        'offer.preview_image',
+        'offer.images',
+        'offer.main_price',
+        'offer.price_link'
+    ];
+
     /** @var Product */
     protected $obElement = null;
 
@@ -177,25 +188,20 @@ class ProductItem extends ElementItem
     }
 
     /**
-     * Set element object
-     */
-    protected function setElementObject()
-    {
-        $this->obElement = Product::withTrashed()->find($this->iElementID);
-    }
-
-    /**
      * Set element data from model object
-     *
      * @return array
      */
     protected function getElementData()
     {
         $arResult = [
-            'offer_id_list'          => $this->obElement->offer()->active()->lists('id'),
-            'additional_category_id' => $this->obElement->additional_category()->lists('id'),
+            'offer_id_list'          => $this->obElement->offer->where('active', true)->pluck('id')->all(),
+            'additional_category_id' => $this->obElement->additional_category->pluck('id')->all(),
             'trashed'                => $this->obElement->trashed(),
         ];
+
+        foreach ($this->obElement->offer as $obOffer) {
+            OfferItem::make($obOffer->id, $obOffer);
+        }
 
         return $arResult;
     }

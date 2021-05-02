@@ -29,6 +29,8 @@ class BrandItem extends ElementItem
 {
     const MODEL_CLASS = Brand::class;
 
+    public static $arQueryWith = ['preview_image', 'icon', 'images'];
+
     /** @var Brand */
     protected $obElement = null;
 

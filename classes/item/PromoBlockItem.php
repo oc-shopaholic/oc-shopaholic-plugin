@@ -34,6 +34,8 @@ class PromoBlockItem extends ElementItem
 {
     const MODEL_CLASS = PromoBlock::class;
 
+    public static $arQueryWith = ['preview_image', 'icon', 'images'];
+
     /** @var PromoBlock */
     protected $obElement = null;
 

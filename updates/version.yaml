@@ -130,3 +130,5 @@
     - update_table_offers_change_quantity_field.php
 1.29.0:
     - 'Added composer.json to plugin'
+1.30.0:
+    - 'Reduced count of database queries, if cache is empty. Requires Toolbox plugin version 1.32.0 and later.'

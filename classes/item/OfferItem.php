@@ -112,6 +112,8 @@ class OfferItem extends ElementItem
 
     const MODEL_CLASS = Offer::class;
 
+    public static $arQueryWith = ['preview_image', 'images', 'main_price', 'price_link'];
+
     /** @var Offer */
     protected $obElement = null;
 
@@ -201,14 +203,6 @@ class OfferItem extends ElementItem
         }
 
         return CurrencyHelper::instance()->getActiveCurrencyCode();
-    }
-
-    /**
-     * Set element object
-     */
-    protected function setElementObject()
-    {
-        $this->obElement = Offer::withTrashed()->with('main_price', 'price_link')->find($this->iElementID);
     }
 
     /**
