@@ -74,7 +74,7 @@ class PriceModelHandler
 
         if ($obItem instanceof Offer) {
 
-            $sSorting = !empty($this->obElement->price_type) ? '|'.$this->obElement->price_type : '';
+            $sSorting = !empty($this->obElement->price_type) ? '|'.$this->obElement->price_type->code : '';
 
             OfferListStore::instance()->sorting->clear(OfferListStore::SORT_PRICE_ASC.$sSorting);
             OfferListStore::instance()->sorting->clear(OfferListStore::SORT_PRICE_DESC.$sSorting);
