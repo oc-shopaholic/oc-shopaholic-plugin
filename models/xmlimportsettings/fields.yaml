@@ -18,6 +18,18 @@ tabs:
                         placeholder: temp/import/import.xml
                         type: text
                         span: full
+                    path_prefix:
+                        label: lovata.toolbox::lang.field.import_path_prefix
+                        tab: lovata.toolbox::lang.tab.settings
+                        placeholder: m
+                        type: text
+                        span: auto
+                    file_namespace:
+                        label: lovata.toolbox::lang.field.import_file_namespace
+                        tab: lovata.toolbox::lang.tab.settings
+                        placeholder: urn:1C.ru:commerceml_210
+                        type: text
+                        span: auto
         image_folder:
             label: lovata.toolbox::lang.field.import_image_folder
             placeholder: temp/import

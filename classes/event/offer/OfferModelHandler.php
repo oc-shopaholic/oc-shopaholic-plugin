@@ -28,6 +28,8 @@ class OfferModelHandler extends ModelHandler
      */
     protected function afterCreate()
     {
+        parent::afterCreate();
+
         OfferListStore::instance()->sorting->clear(OfferListStore::SORT_NO);
         OfferListStore::instance()->sorting->clear(OfferListStore::SORT_NEW);
     }
