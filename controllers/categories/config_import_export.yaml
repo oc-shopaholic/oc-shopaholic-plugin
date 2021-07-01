@@ -48,4 +48,4 @@ export:
       description:
         label: 'lovata.toolbox::lang.field.description'
       parent_id:
-        label: 'lovata.shopaholic::lang.field.category_parent_id'
+        label: 'lovata.toolbox::lang.field.category_parent_id'
