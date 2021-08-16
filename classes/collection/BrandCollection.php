@@ -58,6 +58,7 @@ class BrandCollection extends ElementCollection
             $arResultIDList = array_merge($arResultIDList, (array) BrandListStore::instance()->category->get($iCategoryID));
             if ($bWithChildren) {
                 $arResultIDList = array_merge($arResultIDList, (array) $this->getIDListChildrenCategory($iCategoryID));
+                $arResultIDList = array_unique($arResultIDList);
             }
         }
 
