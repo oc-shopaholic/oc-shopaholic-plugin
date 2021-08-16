@@ -34,18 +34,7 @@ class CategoryModelHandler extends ModelHandler
         });
 
         $obEvent->listen('shopaholic.category.update.sorting', function () {
-            CategoryListStore::instance()->top_level->clear();
-
-            //Get category ID list
-            $arCategoryIDList = Category::lists('id');
-            if (empty($arCategoryIDList)) {
-                return;
-            }
-
-            //Clear cache for all categories
-            foreach ($arCategoryIDList as $iCategoryID) {
-                CategoryItem::clearCache($iCategoryID);
-            }
+            $this->clearCategorySortingByTree();
         });
     }
 
@@ -55,7 +44,14 @@ class CategoryModelHandler extends ModelHandler
     protected function afterSave()
     {
         parent::afterSave();
-        CategoryListStore::instance()->top_level->clear();
+
+        if ($this->isFieldChanged('parent_id')
+            || $this->isFieldChanged('active')
+            || $this->isFieldChanged('nest_depth')
+            || $this->isFieldChanged('nest_left')
+        ) {
+            $this->clearCategorySortingByTree();
+        }
 
         $this->checkFieldChanges('active', CategoryListStore::instance()->active);
     }
@@ -94,5 +90,24 @@ class CategoryModelHandler extends ModelHandler
     protected function getItemClass()
     {
         return CategoryItem::class;
+    }
+
+    /**
+     * Clear category sorting by tree
+     */
+    protected function clearCategorySortingByTree()
+    {
+        CategoryListStore::instance()->top_level->clear();
+
+        //Get category ID list
+        $arCategoryIDList = Category::lists('id');
+        if (empty($arCategoryIDList)) {
+            return;
+        }
+
+        //Clear cache for all categories
+        foreach ($arCategoryIDList as $iCategoryID) {
+            CategoryItem::clearCache($iCategoryID);
+        }
     }
 }
