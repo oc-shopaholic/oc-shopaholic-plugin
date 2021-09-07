@@ -21,6 +21,7 @@ class TopLevelListStore extends AbstractStoreWithoutParam
     {
         $arElementIDList = (array) Category::active()
             ->whereNull('parent_id')
+            ->orWhere('parent_id', 0)
             ->orderBy('nest_left', 'asc')
             ->lists('id');
 
