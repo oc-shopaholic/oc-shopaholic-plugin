@@ -20,8 +20,10 @@ class TopLevelListStore extends AbstractStoreWithoutParam
     protected function getIDListFromDB() : array
     {
         $arElementIDList = (array) Category::active()
-            ->whereNull('parent_id')
-            ->orWhere('parent_id', 0)
+            ->where(function($obQuery) {
+                /** @var Category $obQuery */
+                $obQuery->whereNull('parent_id')->orWhere('parent_id', 0);
+            })
             ->orderBy('nest_left', 'asc')
             ->lists('id');
 
