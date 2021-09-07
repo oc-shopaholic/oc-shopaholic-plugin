@@ -136,3 +136,5 @@
     - 'Added "lazy" param to tabs config of Products controller'
 1.30.2:
     - 'Fixed bug with category tree in v2'
+1.30.3:
+    - 'Fixed bug with category tree in v2. Fixed bug in BrandCollection class. Added lovata/toolbox-plugin package in composer.json file.'
