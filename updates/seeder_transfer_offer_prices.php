@@ -15,19 +15,13 @@ class SeederTransferOfferPrices extends Seeder
      */
     public function run()
     {
-        $obPriceList = DB::table('lovata_shopaholic_offers')->get();
-
-        //Get offer list
-        $obOfferList = Offer::withTrashed()->get();
-        if ($obOfferList->isEmpty()) {
-            return;
-        }
-
-        foreach ($obOfferList as $obOffer) {
-            $obOfferModel = $obPriceList->where('id', $obOffer->id)->first();
-            $obOffer->price = $obOfferModel->price;
-            $obOffer->old_price = $obOfferModel->old_price;
-            $obOffer->save();
-        }
+        Offer::withTrashed()->chunk(100, function ($obOfferList) {
+            foreach ($obOfferList as $obOffer) {
+                $obOfferModel       = DB::table('lovata_shopaholic_offers')->where('id', $obOffer->id)->first();
+                $obOffer->price     = data_get($obOfferModel, 'price', 0);
+                $obOffer->old_price = data_get($obOfferModel, 'old_price', 0);
+                $obOffer->save();
+            }
+        });
     }
 }
