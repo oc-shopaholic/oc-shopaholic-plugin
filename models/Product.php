@@ -59,7 +59,7 @@ use Lovata\Shopaholic\Classes\Import\ImportProductModelFromCSV;
  * @method static $this getByBrand(int $iBrandID)
  *
  * Properties for Shopaholic
- * @see     \Lovata\PropertiesShopaholic\Classes\Event\ProductModelHandler::addPropertyMethods
+ * @see     \Lovata\PropertiesShopaholic\Classes\Event\Product\ProductModelHandler::addPropertyMethods
  * @property array                                                                                     $property
  *
  * @property \October\Rain\Database\Collection|\Lovata\PropertiesShopaholic\Models\PropertyValueLink[] $property_value
