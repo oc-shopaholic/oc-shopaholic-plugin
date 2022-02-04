@@ -36,6 +36,14 @@ tabs:
             span: left
             type: relation
             tab: 'lovata.toolbox::lang.tab.settings'
+        slug_alias:
+            label: 'lovata.toolbox::lang.field.slug_alias'
+            span: right
+            preset:
+                field: name
+                type: slug
+            type: text
+            tab: 'lovata.toolbox::lang.tab.settings'
         additional_category:
             label: 'lovata.shopaholic::lang.field.additional_category'
             type: relation

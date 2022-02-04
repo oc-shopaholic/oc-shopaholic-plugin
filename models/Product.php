@@ -30,6 +30,7 @@ use Lovata\Shopaholic\Classes\Import\ImportProductModelFromCSV;
  * @property bool                                                                                      $active
  * @property string                                                                                    $name
  * @property string                                                                                    $slug
+ * @property string                                                                                    $slug_alias
  * @property string                                                                                    $code
  * @property int                                                                                       $category_id
  * @property int                                                                                       $brand_id
@@ -152,14 +153,19 @@ class Product extends ImportModel
     public $rules = [
         'name' => 'required',
         'slug' => 'required|unique:lovata_shopaholic_products',
+        'slug_alias' => 'required|unique:lovata_shopaholic_products',
     ];
 
     public $attributeNames = [
         'name' => 'lovata.toolbox::lang.field.name',
         'slug' => 'lovata.toolbox::lang.field.slug',
+        'slug_alias' => 'lovata.toolbox::lang.field.slug_alias',
     ];
 
-    public $slugs = ['slug' => 'name'];
+    public $slugs = [
+        'slug' => 'name',
+        'slug_alias' => ''
+    ];
 
     public $attachOne = [
         'preview_image' => 'System\Models\File',
@@ -192,6 +198,7 @@ class Product extends ImportModel
         'active',
         'name',
         'slug',
+        'slug_alias',
         'code',
         'external_id',
         'preview_text',
@@ -205,6 +212,7 @@ class Product extends ImportModel
         'active',
         'name',
         'slug',
+        'slug_alias',
         'code',
         'category_id',
         'brand_id',

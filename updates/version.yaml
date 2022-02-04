@@ -140,3 +140,6 @@
     - 'Fixed bug with category tree in v2. Fixed bug in BrandCollection class. Added lovata/toolbox-plugin package in composer.json file.'
 1.30.4:
     - 'Small fix. Thanks for contribution Igor Tverdokhleb.'
+1.30.5:
+    - 'Add slug alias/synonym field to help with redirecting and product slug changes.'
+    - update_table_products_add_slug_alias_field.php

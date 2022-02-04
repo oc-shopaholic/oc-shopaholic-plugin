@@ -1,4 +1,6 @@
-<?php namespace Lovata\Shopaholic\Components;
+<?php
+
+namespace Lovata\Shopaholic\Components;
 
 use Event;
 use Lovata\Toolbox\Classes\Component\ElementPage;
@@ -59,11 +61,14 @@ class ProductPage extends ElementPage
 
         if ($this->isSlugTranslatable()) {
             $obElement = Product::active()->transWhere('slug', $sElementSlug)->first();
+            if (!$obElement) {
+                $obElement = Product::active()->transWhere('slug_alias', $sElementSlug)->first();
+            }
             if (!$this->checkTransSlug($obElement, $sElementSlug)) {
                 $obElement = null;
             }
         } else {
-            $obElement = Product::active()->getBySlug($sElementSlug)->first();
+            $obElement = Product::active()->where('slug', $sElementSlug)->orWhere('slug_alias', $sElementSlug)->first();
         }
         if (!empty($obElement)) {
             Event::fire('shopaholic.product.open', [$obElement]);
