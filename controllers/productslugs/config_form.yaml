@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Product Slug
+
+# Model Form Field configuration
+form: $/lovata/shopaholic/models/productslug/fields.yaml
+
+# Model Class name
+modelClass: Lovata\Shopaholic\Models\ProductSlug
+
+# Default redirect location
+defaultRedirect: lovata/shopaholic/productslugs
+
+# Create page
+create:
+    title: backend::lang.form.create_title
+    redirect: lovata/shopaholic/productslugs/update/:id
+    redirectClose: lovata/shopaholic/productslugs
+
+# Update page
+update:
+    title: backend::lang.form.update_title
+    redirect: lovata/shopaholic/productslugs
+    redirectClose: lovata/shopaholic/productslugs
+
+# Preview page
+preview:
+    title: backend::lang.form.preview_title

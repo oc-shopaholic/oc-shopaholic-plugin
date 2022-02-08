@@ -1,0 +1,13 @@
+columns:
+    source:
+        label: 'lovata.toolbox::lang.field.product_slug_source'
+        type: text
+        searchable: true
+        sortable: true
+    product:
+        label: 'lovata.toolbox::lang.field.product'
+        relation: product
+        select: name
+        searchable: true
+        sortable: true
+   

@@ -1,0 +1,11 @@
+columns:
+    source:
+        label: 'lovata.shopaholic::lang.field.product_slug_source'
+        type: text
+        searchable: true
+        sortable: true
+    slug:
+        label: 'lovata.toolbox::lang.field.slug'
+        type: text
+        searchable: false
+        sortable: true
