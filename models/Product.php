@@ -159,14 +159,19 @@ class Product extends ImportModel
         'slug' => 'lovata.toolbox::lang.field.slug',
     ];
 
-    public $slugs = ['slug' => 'name'];
+    public $slugs = [
+        'slug' => 'name',
+    ];
 
     public $attachOne = [
         'preview_image' => 'System\Models\File',
         'import_file'   => [\System\Models\File::class, 'public' => false],
     ];
     public $attachMany = ['images' => 'System\Models\File'];
-    public $hasMany = ['offer' => [Offer::class]];
+    public $hasMany = [
+        'offer' => [Offer::class],
+        'product_slug' => [ProductSlug::class]
+    ];
     public $belongsTo = [
         'category' => [Category::class],
         'brand'    => [Brand::class],

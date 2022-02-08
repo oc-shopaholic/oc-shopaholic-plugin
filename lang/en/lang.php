@@ -17,6 +17,8 @@
         'promo_block_type'              => 'Promo block with product list',
         'promo_block'                   => 'Promo block',
         'product_id'                    => 'Product ID',
+        'product_slug'                  => 'Slug Alias',
+        'product_slug_source'           => 'Source String',
         'rate'                          => 'Rate',
         'tax_is_global'                 => 'Tax will apply to all products',
         'tax_percent'                   => 'Tax percent',
@@ -87,7 +89,8 @@
         'taxes'          => 'Taxes',
         'import_setting' => 'Import',
         'dimensions'     => 'Dimensions and weight',
-        'page_settings'  => 'Page settings'
+        'page_settings'  => 'Page settings',
+        'product_slug'   => 'Slug Aliases'
     ],
     'category'    => [
         'name'         => 'category',
@@ -223,4 +226,7 @@
         'import_from_xml_files' => 'Import from XML',
         'import_from_csv_files' => 'Import from CSV',
     ],
+    'product_slug' => [
+        'name' => 'Slug Alias'
+    ]
 ];

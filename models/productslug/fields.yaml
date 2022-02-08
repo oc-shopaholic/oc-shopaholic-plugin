@@ -1,0 +1,15 @@
+fields:
+    source:
+        label: 'lovata.shopaholic::lang.field.product_slug_source'
+        span: left
+        required: 1
+        type: text
+    slug:
+        label: 'lovata.toolbox::lang.field.slug'
+        span: right
+        required: 1
+        preset:
+            field: source
+            type: slug
+        type: text
+

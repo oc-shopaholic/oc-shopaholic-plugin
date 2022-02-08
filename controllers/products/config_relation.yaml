@@ -13,3 +13,18 @@ offer:
         showSearch: true
         showSorting: true
         recordsPerPage: 10
+product_slug:
+    label: 'lovata.shopaholic::lang.product_slug.name'
+    manage:
+        list: $/lovata/shopaholic/models/productslug/columns.yaml
+        form: $/lovata/shopaholic/models/productslug/fields.yaml
+        showSearch: true
+        showSorting: true
+        recordsPerPage: 10
+    view:
+        list: $/lovata/shopaholic/models/productslug/columns.yaml
+        recordUrl: lovata/shopaholic/productslug/update/:id
+        toolbarButtons: 'create|delete'
+        showSearch: true
+        showSorting: true
+        recordsPerPage: 10
