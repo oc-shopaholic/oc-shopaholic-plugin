@@ -11,6 +11,8 @@ use Lovata\Shopaholic\Classes\Console\PreconfigureImportSettingsFromXML;
 
 //Event list
 use Lovata\Shopaholic\Classes\Event\ExtendMenuHandler;
+//API Events
+use Lovata\Shopaholic\Classes\Api\ExtendFrontendTypeClassList;
 //Brand events
 use Lovata\Shopaholic\Classes\Event\Brand\BrandModelHandler;
 //Category events
@@ -165,6 +167,8 @@ class Plugin extends PluginBase
     protected function addEventListener()
     {
         Event::subscribe(ExtendMenuHandler::class);
+        //API Events
+        Event::subscribe(ExtendFrontendTypeClassList::class);
         //Brand events
         Event::subscribe(BrandModelHandler::class);
         //Category events
