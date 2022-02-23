@@ -1,19 +1,14 @@
 <?php namespace Lovata\Shopaholic\Classes\Api\Item;
 
 use GraphQL\Type\Definition\Type;
-
 use Lovata\Shopaholic\Classes\Item\CategoryItem;
-
-use Lovata\Toolbox\Classes\Api\Item\AbstractItemType;
-use Lovata\Toolbox\Classes\Api\Type\Custom\Type as CustomType;
 
 /**
  * Class CategoryItemType
  * @package Lovata\Shopaholic\Classes\Api\Item
  */
-class CategoryItemType extends AbstractItemType
+class CategoryItemType extends CategoryItemShortType
 {
-    const ITEM_CLASS = CategoryItem::class;
     const TYPE_ALIAS = 'category';
 
     /* @var CategoryItemType */
@@ -26,95 +21,26 @@ class CategoryItemType extends AbstractItemType
      */
     protected function getFieldList(): array
     {
-        $arFieldList = [
-            'id'                        => Type::int(),
-            'name'                      => Type::string(),
-            'slug'                      => Type::string(),
-            'code'                      => Type::string(),
-            'nest_depth'                => Type::int(),
-            'parent_id'                 => Type::int(),
-            'product_count'             => Type::int(),
-            'preview_text'              => Type::string(),
-            'preview_image_url'         => [
-                'type'    => Type::string(),
+        $arParentFieldList = parent::getFieldList();
+
+        $arExtendedFieldList = [
+            'children' => [
+                'type'    => Type::listOf($this->getRelationType(CategoryItemShortType::TYPE_ALIAS)),
                 'resolve' => function ($obCategoryItem) {
                     /* @var CategoryItem $obCategoryItem */
-                    return $obCategoryItem->preview_image->getPath();
-                }
-            ],
-            'preview_image_title'       => [
-                'type'    => Type::string(),
-                'resolve' => function ($obCategoryItem) {
-                    /* @var CategoryItem $obCategoryItem */
-                    return data_get($obCategoryItem->preview_image, 'attributes.title');
+                    return $obCategoryItem->children;
                 },
             ],
-            'preview_image_description' => [
-                'type'    => Type::string(),
-                'resolve' => function ($obCategoryItem) {
-                    /* @var CategoryItem $obCategoryItem */
-                    return data_get($obCategoryItem->preview_image, 'attributes.description');
-                },
-            ],
-            'preview_image_file_name'   => [
-                'type'    => Type::string(),
-                'resolve' => function ($obCategoryItem) {
-                    /* @var CategoryItem $obCategoryItem */
-                    return data_get($obCategoryItem->preview_image, 'attributes.file_name');
-                },
-            ],
-            'icon_url'                  => [
-                'type'    => Type::string(),
-                'resolve' => function ($obCategoryItem) {
-                    /* @var CategoryItem $obCategoryItem */
-                    return $obCategoryItem->icon->getPath();
-                }
-            ],
-            'icon_title'                => [
-                'type'    => Type::string(),
-                'resolve' => function ($obCategoryItem) {
-                    /* @var CategoryItem $obCategoryItem */
-                    return data_get($obCategoryItem->icon, 'attributes.title');
-                },
-            ],
-            'icon_description'          => [
-                'type'    => Type::string(),
-                'resolve' => function ($obCategoryItem) {
-                    /* @var CategoryItem $obCategoryItem */
-                    return data_get($obCategoryItem->icon, 'attributes.description');
-                },
-            ],
-            'icon_file_name'            => [
-                'type'    => Type::string(),
-                'resolve' => function ($obCategoryItem) {
-                    /* @var CategoryItem $obCategoryItem */
-                    return data_get($obCategoryItem->icon, 'attributes.file_name');
-                },
-            ],
-            'description'               => Type::string(),
-            'images'                    => [
-                'type'    => CustomType::array(),
-                'resolve' => function ($obCategoryItem) {
-                    return $this->getImageList($obCategoryItem, 'images');
-                },
-            ],
-            'updated_at'                => Type::string(),
-            'parent'                    => [
-                'type'    => $this->getRelationType(CategoryItemSimpleType::TYPE_ALIAS),
+            'parent'   => [
+                'type'    => $this->getRelationType(CategoryItemShortType::TYPE_ALIAS),
                 'resolve' => function ($obCategoryItem) {
                     /* @var CategoryItem $obCategoryItem */
                     return $obCategoryItem->parent;
                 },
             ],
-            'children_id_list'          => CustomType::array(),
-            'children'                  => [
-                'type'    => Type::listOf($this->getRelationType(CategoryItemSimpleType::TYPE_ALIAS)),
-                'resolve' => function ($obCategoryItem) {
-                    /* @var CategoryItem $obCategoryItem */
-                    return $obCategoryItem->children;
-                },
-            ]
         ];
+
+        $arFieldList = array_merge($arParentFieldList, $arExtendedFieldList);
 
         return $arFieldList;
     }

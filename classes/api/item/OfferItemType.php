@@ -5,7 +5,6 @@ use GraphQL\Type\Definition\Type;
 use Lovata\Shopaholic\Classes\Api\Type\PriceDataType;
 use Lovata\Shopaholic\Classes\Item\OfferItem;
 
-use Lovata\Toolbox\Classes\Api\Type\Custom\Type as CustomType;
 use Lovata\Toolbox\Classes\Api\Item\AbstractItemType;
 
 /**
@@ -28,127 +27,97 @@ class OfferItemType extends AbstractItemType
     protected function getFieldList(): array
     {
         $arFieldList = [
-            'id'                        => Type::int(),
-            'active'                    => Type::boolean(),
-            'trashed'                   => Type::boolean(),
-            'name'                      => Type::string(),
-            'code'                      => Type::string(),
-            'product_id'                => Type::int(),
+            'id'                 => Type::int(),
+            'active'             => Type::boolean(),
+            'trashed'            => Type::boolean(),
+            'name'               => Type::string(),
+            'code'               => Type::string(),
+            'product_id'         => Type::int(),
             'product'            => [
-                'type'    => $this->getRelationType(ProductItemSimpleType::TYPE_ALIAS),
+                'type'    => $this->getRelationType(ProductItemShortType::TYPE_ALIAS),
                 'resolve' => function ($obOfferItem) {
                     /** @var OfferItem $obOfferItem */
                     return $obOfferItem->product;
                 },
             ],
-            'weight'                    => Type::float(),
-            'height'                    => Type::float(),
-            'length'                    => Type::float(),
-            'width'                     => Type::float(),
-            'quantity_in_unit'          => Type::float(),
-            'measure_id'                => Type::int(),
-            'measure'                   => [
+            'weight'             => Type::float(),
+            'height'             => Type::float(),
+            'length'             => Type::float(),
+            'width'              => Type::float(),
+            'quantity_in_unit'   => Type::float(),
+            'measure_id'         => Type::int(),
+            'measure'            => [
                 'type'    => $this->getRelationType(MeasureItemType::TYPE_ALIAS),
                 'resolve' => function ($obOfferItem) {
                     /** @var OfferItem $obOfferItem */
                     return $obOfferItem->measure;
                 },
             ],
-            'measure_of_unit_id'        => Type::int(),
-            'measure_of_unit'           => [
+            'measure_of_unit_id' => Type::int(),
+            'measure_of_unit'    => [
                 'type'    => $this->getRelationType(MeasureItemType::TYPE_ALIAS),
                 'resolve' => function ($obOfferItem) {
                     /** @var OfferItem $obOfferItem */
                     return $obOfferItem->measure_of_unit;
                 },
             ],
-            'dimensions_measure'        => [
+            'dimensions_measure' => [
                 'type'    => $this->getRelationType(MeasureItemType::TYPE_ALIAS),
                 'resolve' => function ($obOfferItem) {
                     /** @var OfferItem $obOfferItem */
                     return $obOfferItem->dimensions_measure;
                 },
             ],
-            'weight_measure'            => [
+            'weight_measure'     => [
                 'type'    => $this->getRelationType(MeasureItemType::TYPE_ALIAS),
                 'resolve' => function ($obOfferItem) {
                     /** @var OfferItem $obOfferItem */
                     return $obOfferItem->weight_measure;
                 },
             ],
-            'preview_text'              => Type::string(),
-            'preview_image_url'         => [
-                'type'    => Type::string(),
-                'resolve' => function ($obOfferItem) {
-                    /* @var OfferItem $obOfferItem */
-                    return $obOfferItem->preview_image->getPath();
-                }
-            ],
-            'preview_image_title'       => [
-                'type'    => Type::string(),
-                'resolve' => function ($obOfferItem) {
-                    /* @var OfferItem $obOfferItem */
-                    return data_get($obOfferItem->preview_image, 'attributes.title');
-                },
-            ],
-            'preview_image_description' => [
-                'type'    => Type::string(),
-                'resolve' => function ($obOfferItem) {
-                    /* @var OfferItem $obOfferItem */
-                    return data_get($obOfferItem->preview_image, 'attributes.description');
-                },
-            ],
-            'preview_image_file_name'   => [
-                'type'    => Type::string(),
-                'resolve' => function ($obOfferItem) {
-                    /* @var OfferItem $obOfferItem */
-                    return data_get($obOfferItem->preview_image, 'attributes.file_name');
-                },
-            ],
-            'description'               => Type::string(),
-            'images'                    => [
-                'type'    => CustomType::array(),
-                'resolve' => function ($obOfferItem) {
-                    return $this->getImageList($obOfferItem, 'images');
-                },
-            ],
-            'price_data'                => [
+            'preview_text'       => Type::string(),
+            'description'        => Type::string(),
+            'price_data'         => [
                 'type'    => $this->getRelationType(PriceDataType::TYPE_ALIAS),
                 'resolve' => function ($obOfferItem) {
                     /** @var OfferItem $obOfferItem */
                     return $obOfferItem;
                 },
             ],
-            'currency'                  => [
+            'currency'           => [
                 'type'    => Type::string(),
                 'resolve' => function ($obOfferItem) {
                     /** @var OfferItem $obOfferItem */
                     return $obOfferItem->currency;
                 },
             ],
-            'currency_code'             => [
+            'currency_code'      => [
                 'type'    => Type::string(),
                 'resolve' => function ($obOfferItem) {
                     /** @var OfferItem $obOfferItem */
                     return $obOfferItem->currency_code;
                 },
             ],
-            'tax_percent'               => [
+            'tax_percent'        => [
                 'type'    => Type::float(),
                 'resolve' => function ($obOfferItem) {
                     /** @var OfferItem $obOfferItem */
                     return $obOfferItem->tax_percent;
                 },
             ],
-            'tax_list'                  => [
+            'tax_list'           => [
                 'type'    => Type::listOf($this->getRelationType(TaxItemType::TYPE_ALIAS)),
                 'resolve' => function ($obOfferItem) {
                     /** @var OfferItem $obOfferItem */
                     return $obOfferItem->tax_list;
                 },
             ],
-            'quantity'                  => Type::int(),
+            'quantity'           => Type::int(),
         ];
+
+        $arPreviewImageFields = $this->getAttachOneFileFields('preview_image');
+        $arImagesFields = $this->getAttachManyFileFields('images');
+        $arFieldList = array_merge($arFieldList, $arPreviewImageFields, $arImagesFields);
 
         return $arFieldList;
     }

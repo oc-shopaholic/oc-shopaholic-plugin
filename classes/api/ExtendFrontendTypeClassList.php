@@ -4,12 +4,12 @@ use Lovata\Shopaholic\Classes\Api\Type\PriceDataType;
 use Lovata\Toolbox\Classes\Api\Type\FrontendTypeFactory;
 /** Item types */
 use Lovata\Shopaholic\Classes\Api\Item\BrandItemType;
-use Lovata\Shopaholic\Classes\Api\Item\CategoryItemSimpleType;
+use Lovata\Shopaholic\Classes\Api\Item\CategoryItemShortType;
 use Lovata\Shopaholic\Classes\Api\Item\CategoryItemType;
 use Lovata\Shopaholic\Classes\Api\Item\CurrencyItemType;
 use Lovata\Shopaholic\Classes\Api\Item\MeasureItemType;
 use Lovata\Shopaholic\Classes\Api\Item\OfferItemType;
-use Lovata\Shopaholic\Classes\Api\Item\ProductItemSimpleType;
+use Lovata\Shopaholic\Classes\Api\Item\ProductItemShortType;
 use Lovata\Shopaholic\Classes\Api\Item\ProductItemType;
 use Lovata\Shopaholic\Classes\Api\Item\PromoBlockItemType;
 use Lovata\Shopaholic\Classes\Api\Item\TaxItemType;
@@ -38,12 +38,12 @@ class ExtendFrontendTypeClassList
                 PriceDataType::class,
                 /** Item types */
                 BrandItemType::class,
-                CategoryItemSimpleType::class,
+                CategoryItemShortType::class,
                 CategoryItemType::class,
                 CurrencyItemType::class,
                 MeasureItemType::class,
                 OfferItemType::class,
-                ProductItemSimpleType::class,
+                ProductItemShortType::class,
                 ProductItemType::class,
                 PromoBlockItemType::class,
                 TaxItemType::class,
