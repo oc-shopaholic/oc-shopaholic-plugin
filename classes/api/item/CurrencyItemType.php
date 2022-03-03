@@ -24,7 +24,7 @@ class CurrencyItemType extends AbstractItemType
     protected function getFieldList(): array
     {
         $arFieldList = [
-            'id'         => Type::int(),
+            'id'         => Type::nonNull(Type::id()),
             'is_default' => Type::boolean(),
             'name'       => Type::string(),
             'code'       => Type::string(),

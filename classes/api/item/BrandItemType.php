@@ -25,7 +25,7 @@ class BrandItemType extends AbstractItemType
     protected function getFieldList(): array
     {
         $arFieldList = [
-            'id'           => Type::nonNull(Type::int()),
+            'id'           => Type::nonNull(Type::id()),
             'active'       => Type::boolean(),
             'name'         => Type::string(),
             'slug'         => Type::string(),

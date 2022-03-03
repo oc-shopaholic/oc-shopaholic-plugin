@@ -27,12 +27,12 @@ class OfferItemType extends AbstractItemType
     protected function getFieldList(): array
     {
         $arFieldList = [
-            'id'                 => Type::int(),
+            'id'                 => Type::nonNull(Type::id()),
             'active'             => Type::boolean(),
             'trashed'            => Type::boolean(),
             'name'               => Type::string(),
             'code'               => Type::string(),
-            'product_id'         => Type::int(),
+            'product_id'         => Type::id(),
             'product'            => [
                 'type'    => $this->getRelationType(ProductItemShortType::TYPE_ALIAS),
                 'resolve' => function ($obOfferItem) {
@@ -45,7 +45,7 @@ class OfferItemType extends AbstractItemType
             'length'             => Type::float(),
             'width'              => Type::float(),
             'quantity_in_unit'   => Type::float(),
-            'measure_id'         => Type::int(),
+            'measure_id'         => Type::id(),
             'measure'            => [
                 'type'    => $this->getRelationType(MeasureItemType::TYPE_ALIAS),
                 'resolve' => function ($obOfferItem) {
@@ -53,7 +53,7 @@ class OfferItemType extends AbstractItemType
                     return $obOfferItem->measure;
                 },
             ],
-            'measure_of_unit_id' => Type::int(),
+            'measure_of_unit_id' => Type::id(),
             'measure_of_unit'    => [
                 'type'    => $this->getRelationType(MeasureItemType::TYPE_ALIAS),
                 'resolve' => function ($obOfferItem) {

@@ -26,13 +26,13 @@ class ProductItemShortType extends AbstractItemType
     protected function getFieldList(): array
     {
         $arFieldList = [
-            'id'                     => Type::int(),
+            'id'                     => Type::nonNull(Type::id()),
             'active'                 => Type::boolean(),
             'trashed'                => Type::boolean(),
             'name'                   => Type::string(),
             'slug'                   => Type::string(),
             'code'                   => Type::string(),
-            'category_id'            => Type::int(),
+            'category_id'            => Type::id(),
             'additional_category_id' => CustomType::array(),
             'additional_category'    => [
                 'type'    => Type::listOf($this->getRelationType(CategoryItemType::TYPE_ALIAS)),
@@ -41,7 +41,7 @@ class ProductItemShortType extends AbstractItemType
                     return $obProductItem->additional_category;
                 },
             ],
-            'brand_id'               => Type::int(),
+            'brand_id'               => Type::id(),
             'brand'                  => [
                 'type'    => $this->getRelationType(BrandItemType::TYPE_ALIAS),
                 'resolve' => function ($obProductItem) {

@@ -24,9 +24,9 @@ class MeasureItemType extends AbstractItemType
     protected function getFieldList(): array
     {
         $arFieldList = [
-            'id'         => Type::int(),
-            'name'       => Type::string(),
-            'code'       => Type::string(),
+            'id'   => Type::nonNull(Type::id()),
+            'name' => Type::string(),
+            'code' => Type::string(),
         ];
 
         return $arFieldList;

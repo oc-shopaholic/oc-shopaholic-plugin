@@ -25,7 +25,7 @@ class PromoBlockItemType extends AbstractItemType
     protected function getFieldList(): array
     {
         $arFieldList = [
-            'id'           => Type::int(),
+            'id'           => Type::nonNull(Type::id()),
             'name'         => Type::string(),
             'slug'         => Type::string(),
             'code'         => Type::string(),

@@ -34,7 +34,7 @@ class ProductCollectionType extends AbstractCollectionType
         $arFieldList = parent::getFieldList();
         $arFieldList['list'] = Type::listOf(TypeFactory::instance()->get(ProductItemType::TYPE_ALIAS));
         $arFieldList['item'] = TypeFactory::instance()->get(OfferItemType::TYPE_ALIAS);
-        $arFieldList['id'] = Type::int();
+        $arFieldList['id'] = Type::id();
 
         return $arFieldList;
     }
@@ -46,14 +46,14 @@ class ProductCollectionType extends AbstractCollectionType
     protected function getArguments(): ?array
     {
         $arArgumentList = parent::getArguments();
-        $arArgumentList['brand'] = Type::int();
+        $arArgumentList['brand'] = Type::id();
         $arArgumentList['categoryList'] = CustomType::array();
         $arArgumentList['categoryWithChildren'] = Type::boolean();
-        $arArgumentList['priceTypeId'] = Type::int();
+        $arArgumentList['priceTypeId'] = Type::id();
         $arArgumentList['getOfferMaxPrice'] = Type::string();
         $arArgumentList['getOfferMinPrice'] = Type::string();
-        $arArgumentList['promo'] = Type::int();
-        $arArgumentList['promoBlock'] = Type::int();
+        $arArgumentList['promo'] = Type::id();
+        $arArgumentList['promoBlock'] = Type::id();
         $arArgumentList['sort'] = Type::string();
 
         return $arArgumentList;

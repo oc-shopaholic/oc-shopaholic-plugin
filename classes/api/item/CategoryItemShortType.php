@@ -27,12 +27,12 @@ class CategoryItemShortType extends AbstractItemType
     protected function getFieldList(): array
     {
         $arFieldList = [
-            'id'               => Type::int(),
+            'id'               => Type::nonNull(Type::id()),
             'name'             => Type::string(),
             'slug'             => Type::string(),
             'code'             => Type::string(),
             'nest_depth'       => Type::int(),
-            'parent_id'        => Type::int(),
+            'parent_id'        => Type::id(),
             'product_count'    => Type::int(),
             'preview_text'     => Type::string(),
             'description'      => Type::string(),

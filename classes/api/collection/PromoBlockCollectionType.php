@@ -30,7 +30,7 @@ class PromoBlockCollectionType extends AbstractCollectionType
         $arFieldList = parent::getFieldList();
         $arFieldList['list'] = Type::listOf(TypeFactory::instance()->get(PromoBlockItemType::TYPE_ALIAS));
         $arFieldList['item'] = TypeFactory::instance()->get(PromoBlockItemType::TYPE_ALIAS);
-        $arFieldList['id'] = Type::int();
+        $arFieldList['id'] = Type::id();
 
         return $arFieldList;
     }

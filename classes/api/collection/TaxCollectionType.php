@@ -30,7 +30,7 @@ class TaxCollectionType extends AbstractCollectionType
         $arFieldList = parent::getFieldList();
         $arFieldList['list'] = Type::listOf(TypeFactory::instance()->get(TaxItemType::TYPE_ALIAS));
         $arFieldList['item'] = TypeFactory::instance()->get(TaxItemType::TYPE_ALIAS);
-        $arFieldList['id'] = Type::int();
+        $arFieldList['id'] = Type::id();
 
         return $arFieldList;
     }

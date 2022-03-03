@@ -30,7 +30,7 @@ class OfferCollectionType extends AbstractCollectionType
         $arFieldList = parent::getFieldList();
         $arFieldList['list'] = Type::listOf(TypeFactory::instance()->get(OfferItemType::TYPE_ALIAS));
         $arFieldList['item'] = TypeFactory::instance()->get(OfferItemType::TYPE_ALIAS);
-        $arFieldList['id'] = Type::int();
+        $arFieldList['id'] = Type::id();
 
         return $arFieldList;
     }
@@ -42,7 +42,7 @@ class OfferCollectionType extends AbstractCollectionType
     protected function getArguments(): ?array
     {
         $arArgumentList = parent::getArguments();
-        $arArgumentList['priceTypeId'] = Type::int();
+        $arArgumentList['priceTypeId'] = Type::id();
         $arArgumentList['sort'] = Type::string();
 
         return $arArgumentList;

@@ -30,7 +30,7 @@ class BrandCollectionType extends AbstractCollectionType
         $arFieldList = parent::getFieldList();
         $arFieldList['list'] = Type::listOf(TypeFactory::instance()->get(BrandItemType::TYPE_ALIAS));
         $arFieldList['item'] = TypeFactory::instance()->get(BrandItemType::TYPE_ALIAS);
-        $arFieldList['id'] = Type::int();
+        $arFieldList['id'] = Type::id();
 
         return $arFieldList;
     }
@@ -42,7 +42,7 @@ class BrandCollectionType extends AbstractCollectionType
     protected function getArguments(): ?array
     {
         $arArgumentList = parent::getArguments();
-        $arArgumentList['category'] = Type::int();
+        $arArgumentList['category'] = Type::id();
         $arArgumentList['search'] = Type::string();
 
         return $arArgumentList;
