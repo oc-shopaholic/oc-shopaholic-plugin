@@ -23,13 +23,13 @@ class ListByCategoryStore extends AbstractStoreWithParam
     {
         $arElementIDList = (array) Product::getByCategory($this->sValue)
             ->where('brand_id', '>', 0)
-            ->lists('brand_id', 'id');
+            ->pluck('brand_id', 'id')->all();
 
         $obCategory = Category::find($this->sValue);
         if (!empty($obCategory)) {
             $arAdditionalElementIDList = (array) $obCategory->product_link()
                 ->where('brand_id', '>', 0)
-                ->lists('brand_id', 'id');
+                ->pluck('brand_id', 'id')->all();
 
             $arElementIDList = $arElementIDList + $arAdditionalElementIDList;
         }

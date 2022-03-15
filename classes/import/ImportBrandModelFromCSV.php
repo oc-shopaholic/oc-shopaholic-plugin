@@ -21,7 +21,7 @@ class ImportBrandModelFromCSV extends AbstractImportModelFromCSV
      */
     public function __construct()
     {
-        $this->arExistIDList = (array) Brand::whereNotNull('external_id')->lists('external_id', 'id');
+        $this->arExistIDList = (array) Brand::whereNotNull('external_id')->pluck('external_id', 'id')->all();
         $this->arExistIDList = array_filter($this->arExistIDList);
     }
 

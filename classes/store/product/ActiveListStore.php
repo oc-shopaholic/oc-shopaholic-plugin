@@ -22,7 +22,7 @@ class ActiveListStore extends AbstractStoreWithoutParam
     protected function getIDListFromDB() : array
     {
         //Get product ID list
-        $arProductIDList = (array) Product::active()->lists('id');
+        $arProductIDList = (array) Product::active()->pluck('id')->all();
         if (empty($arProductIDList)) {
             return [];
         }
@@ -30,7 +30,7 @@ class ActiveListStore extends AbstractStoreWithoutParam
         //Check active offers
         if (Settings::getValue('check_offer_active')) {
             //Get product list with active offers
-            $arProductIDListWithOffers = (array) Offer::active()->groupBy('product_id')->lists('product_id');
+            $arProductIDListWithOffers = (array) Offer::active()->groupBy('product_id')->pluck('product_id')->all();
             if (empty($arProductIDListWithOffers)) {
                 return [];
             }

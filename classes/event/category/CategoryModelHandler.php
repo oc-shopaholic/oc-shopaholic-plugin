@@ -100,7 +100,7 @@ class CategoryModelHandler extends ModelHandler
         CategoryListStore::instance()->top_level->clear();
 
         //Get category ID list
-        $arCategoryIDList = Category::lists('id');
+        $arCategoryIDList = Category::pluck('id')->all();
         if (empty($arCategoryIDList)) {
             return;
         }

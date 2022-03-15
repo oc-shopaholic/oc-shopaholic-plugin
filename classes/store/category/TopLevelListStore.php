@@ -25,7 +25,7 @@ class TopLevelListStore extends AbstractStoreWithoutParam
                 $obQuery->whereNull('parent_id')->orWhere('parent_id', 0);
             })
             ->orderBy('nest_left', 'asc')
-            ->lists('id');
+            ->pluck('id')->all();
 
         return $arElementIDList;
     }
