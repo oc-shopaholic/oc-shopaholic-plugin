@@ -81,7 +81,7 @@ class SortingListStore extends AbstractStoreWithParam
             ->where('lovata_shopaholic_prices.item_type', Offer::class)
             ->orderBy('lovata_shopaholic_prices.price', 'asc')
             ->join('lovata_shopaholic_offers', 'lovata_shopaholic_offers.id', '=', 'lovata_shopaholic_prices.item_id')
-            ->lists('id');
+            ->pluck('id')->all();
 
         return $arElementIDList;
     }
@@ -100,7 +100,7 @@ class SortingListStore extends AbstractStoreWithParam
             ->where('lovata_shopaholic_prices.item_type', Offer::class)
             ->orderBy('lovata_shopaholic_prices.price', 'desc')
             ->join('lovata_shopaholic_offers', 'lovata_shopaholic_offers.id', '=', 'lovata_shopaholic_prices.item_id')
-            ->lists('id');
+            ->pluck('id')->all();
 
         return $arElementIDList;
     }
@@ -119,7 +119,7 @@ class SortingListStore extends AbstractStoreWithParam
         $arElementIDList = (array) Price::getByItemType(Offer::class)
             ->getByPriceType($obPriceType->id)
             ->orderBy('price', 'asc')
-            ->lists('item_id');
+            ->pluck('item_id')->all();
 
         return $arElementIDList;
     }
@@ -138,7 +138,7 @@ class SortingListStore extends AbstractStoreWithParam
         $arElementIDList = (array) Price::getByItemType(Offer::class)
             ->getByPriceType($obPriceType->id)
             ->orderBy('price', 'desc')
-            ->lists('item_id');
+            ->pluck('item_id')->all();
 
         return $arElementIDList;
     }
@@ -149,7 +149,7 @@ class SortingListStore extends AbstractStoreWithParam
      */
     protected function getNewOfferList() : array
     {
-        $arElementIDList = (array) Offer::orderBy('id', 'desc')->lists('id');
+        $arElementIDList = (array) Offer::orderBy('id', 'desc')->pluck('id')->all();
 
         return $arElementIDList;
     }
@@ -160,7 +160,7 @@ class SortingListStore extends AbstractStoreWithParam
      */
     protected function getOfferList() : array
     {
-        $arElementIDList = (array) Offer::lists('id');
+        $arElementIDList = (array) Offer::pluck('id')->all();
 
         return $arElementIDList;
     }

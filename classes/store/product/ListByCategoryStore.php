@@ -32,10 +32,10 @@ class ListByCategoryStore extends AbstractStoreWithParam
      */
     protected function getIDListFromDB() : array
     {
-        $arElementIDList = (array) Product::getByCategory($this->sValue)->lists('id');
+        $arElementIDList = (array) Product::getByCategory($this->sValue)->pluck('id')->all();
 
         //Get product ID list for additional category relation
-        $arAdditionalElementIDList = (array) DB::table('lovata_shopaholic_additional_categories')->where('category_id', $this->sValue)->lists('product_id');
+        $arAdditionalElementIDList = (array) DB::table('lovata_shopaholic_additional_categories')->where('category_id', $this->sValue)->pluck('product_id')->all();
         $arElementIDList = array_merge($arElementIDList, $arAdditionalElementIDList);
         $arElementIDList = array_unique($arElementIDList);
 

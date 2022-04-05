@@ -28,7 +28,7 @@ class HiddenListStore extends AbstractStoreWithoutParam
      */
     protected function getIDListFromDB() : array
     {
-        $arElementIDList = (array) PromoBlock::hidden()->lists('id');
+        $arElementIDList = (array) PromoBlock::hidden()->pluck('id')->all();
 
         return $arElementIDList;
     }
