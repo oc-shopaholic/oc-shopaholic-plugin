@@ -27,7 +27,7 @@ class OfferItemType extends AbstractItemType
     protected function getFieldList(): array
     {
         $arFieldList = [
-            'id'                 => Type::nonNull(Type::id()),
+            'id'                 => Type::id(),
             'active'             => Type::boolean(),
             'trashed'            => Type::boolean(),
             'name'               => Type::string(),

@@ -23,7 +23,7 @@ class TaxItemType extends AbstractItemType
     protected function getFieldList(): array
     {
         $arFieldList = [
-            'id'               => Type::nonNull(Type::id()),
+            'id'               => Type::id(),
             'is_global'        => Type::boolean(),
             'name'             => Type::string(),
             'description'      => Type::string(),

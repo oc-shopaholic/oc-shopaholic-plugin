@@ -1,7 +1,6 @@
 <?php namespace Lovata\Shopaholic\Classes\Api\Item;
 
 use GraphQL\Type\Definition\Type;
-
 use Lovata\Shopaholic\Classes\Item\BrandItem;
 use Lovata\Toolbox\Classes\Api\Item\AbstractItemType;
 
@@ -25,7 +24,7 @@ class BrandItemType extends AbstractItemType
     protected function getFieldList(): array
     {
         $arFieldList = [
-            'id'           => Type::nonNull(Type::id()),
+            'id'           => Type::id(),
             'active'       => Type::boolean(),
             'name'         => Type::string(),
             'slug'         => Type::string(),
