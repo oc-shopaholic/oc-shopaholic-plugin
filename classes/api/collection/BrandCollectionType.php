@@ -43,7 +43,6 @@ class BrandCollectionType extends AbstractCollectionType
     {
         $arArgumentList = parent::getArguments();
         $arArgumentList['category'] = Type::id();
-        $arArgumentList['search'] = Type::string();
 
         return $arArgumentList;
     }
