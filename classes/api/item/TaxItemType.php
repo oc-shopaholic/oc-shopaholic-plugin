@@ -1,10 +1,8 @@
 <?php namespace Lovata\Shopaholic\Classes\Api\Item;
 
 use GraphQL\Type\Definition\Type;
-
 use Lovata\Shopaholic\Classes\Item\TaxItem;
 use Lovata\Toolbox\Classes\Api\Item\AbstractItemType;
-use Lovata\Toolbox\Classes\Api\Type\Custom\Type as CustomType;
 
 /**
  * Class TaxItemType
@@ -30,10 +28,10 @@ class TaxItemType extends AbstractItemType
             'name'             => Type::string(),
             'description'      => Type::string(),
             'percent'          => Type::float(),
-            'category_id_list' => CustomType::array(),
-            'product_id_list'  => CustomType::array(),
-            'country_id_list'  => CustomType::array(),
-            'state_id_list'    => CustomType::array(),
+            'category_id_list' => Type::listOf(Type::id()),
+            'product_id_list'  => Type::listOf(Type::id()),
+            'country_id_list'  => Type::listOf(Type::id()),
+            'state_id_list'    => Type::listOf(Type::id()),
         ];
 
         return $arFieldList;

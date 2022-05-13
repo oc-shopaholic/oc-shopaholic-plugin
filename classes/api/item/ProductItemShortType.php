@@ -1,10 +1,8 @@
 <?php namespace Lovata\Shopaholic\Classes\Api\Item;
 
 use GraphQL\Type\Definition\Type;
-
 use Lovata\Shopaholic\Classes\Item\ProductItem;
 use Lovata\Toolbox\Classes\Api\Item\AbstractItemType;
-use Lovata\Toolbox\Classes\Api\Type\Custom\Type as CustomType;
 
 /**
  * Class ProductItemShortType
@@ -33,7 +31,7 @@ class ProductItemShortType extends AbstractItemType
             'slug'                   => Type::string(),
             'code'                   => Type::string(),
             'category_id'            => Type::id(),
-            'additional_category_id' => CustomType::array(),
+            'additional_category_id' => Type::listOf(Type::id()),
             'additional_category'    => [
                 'type'    => Type::listOf($this->getRelationType(CategoryItemType::TYPE_ALIAS)),
                 'resolve' => function ($obProductItem) {
@@ -51,7 +49,7 @@ class ProductItemShortType extends AbstractItemType
             ],
             'preview_text'           => Type::string(),
             'description'            => Type::string(),
-            'offer_id_list'          => CustomType::array(),
+            'offer_id_list'          => Type::listOf(Type::id()),
             'category'               => [
                 'type'    => $this->getRelationType(CategoryItemType::TYPE_ALIAS),
                 'resolve' => function ($obProductItem) {

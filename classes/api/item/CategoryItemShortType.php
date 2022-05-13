@@ -1,11 +1,8 @@
 <?php namespace Lovata\Shopaholic\Classes\Api\Item;
 
 use GraphQL\Type\Definition\Type;
-
 use Lovata\Shopaholic\Classes\Item\CategoryItem;
-
 use Lovata\Toolbox\Classes\Api\Item\AbstractItemType;
-use Lovata\Toolbox\Classes\Api\Type\Custom\Type as CustomType;
 
 /**
  * Class CategoryItemShortType
@@ -37,7 +34,7 @@ class CategoryItemShortType extends AbstractItemType
             'preview_text'     => Type::string(),
             'description'      => Type::string(),
             'updated_at'       => Type::string(),
-            'children_id_list' => CustomType::array(),
+            'children_id_list' => Type::listOf(Type::id()),
         ];
 
         $arPreviewImageFields = $this->getAttachOneFileFields('preview_image');
