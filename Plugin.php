@@ -167,8 +167,6 @@ class Plugin extends PluginBase
     protected function addEventListener()
     {
         Event::subscribe(ExtendMenuHandler::class);
-        //API Events
-        Event::subscribe(ExtendFrontendTypeClassList::class);
         //Brand events
         Event::subscribe(BrandModelHandler::class);
         //Category events
@@ -192,6 +190,11 @@ class Plugin extends PluginBase
         Event::subscribe(TaxModelHandler::class);
         Event::subscribe(TaxRelationHandler::class);
         Event::subscribe(ExtendTaxFieldsHandler::class);
+
+        if (request()->is(config('lovata.toolbox::api_route_name'))) {
+            //API Events
+            Event::subscribe(ExtendFrontendTypeClassList::class);
+        }
     }
 
     /**
