@@ -21,6 +21,14 @@ use Lovata\Shopaholic\Classes\Api\Collection\OfferCollectionType;
 use Lovata\Shopaholic\Classes\Api\Collection\ProductCollectionType;
 use Lovata\Shopaholic\Classes\Api\Collection\PromoBlockCollectionType;
 use Lovata\Shopaholic\Classes\Api\Collection\TaxCollectionType;
+/** Query types */
+use Lovata\Shopaholic\Classes\Api\Query\CurrencyGetActiveQueryType;
+/** Mutation types */
+use Lovata\Shopaholic\Classes\Api\Mutation\CurrencySwitchActiveMutationType;
+/** Input types */
+use Lovata\Shopaholic\Classes\Api\Type\Input\CurrencySwitchActiveInputType;
+/** Payload types */
+use Lovata\Shopaholic\Classes\Api\Type\Payload\CurrencySwitchActivePayloadType;
 
 /**
  * ExtendFrontendTypeClassList
@@ -34,7 +42,33 @@ class ExtendFrontendTypeClassList
     public function subscribe()
     {
         FrontendTypeFactory::extend(function (FrontendTypeFactory $obTypeFactory) {
-            $arClassList = [
+            $arQueryClassList = [
+                /** Query types */
+                CurrencyGetActiveQueryType::class,
+                /** Item types */
+                BrandItemType::class,
+                CategoryItemShortType::class,
+                CategoryItemType::class,
+                CurrencyItemType::class,
+                MeasureItemType::class,
+                OfferItemType::class,
+                ProductItemShortType::class,
+                ProductItemType::class,
+                PromoBlockItemType::class,
+                TaxItemType::class,
+                /** Collection types */
+                BrandCollectionType::class,
+                CategoryCollectionType::class,
+                CurrencyCollectionType::class,
+                OfferCollectionType::class,
+                PromoBlockCollectionType::class,
+                ProductCollectionType::class,
+                TaxCollectionType::class,
+                /** Mutation types */
+                CurrencySwitchActiveMutationType::class,
+            ];
+
+            $arTypeClassList = [
                 PriceDataType::class,
                 /** Item types */
                 BrandItemType::class,
@@ -55,10 +89,14 @@ class ExtendFrontendTypeClassList
                 PromoBlockCollectionType::class,
                 ProductCollectionType::class,
                 TaxCollectionType::class,
+                /** Input types */
+                CurrencySwitchActiveInputType::class,
+                /** Payload types */
+                CurrencySwitchActivePayloadType::class,
             ];
 
-            $obTypeFactory->addTypeClass($arClassList);
-            $obTypeFactory->addQueryClass($arClassList);
+            $obTypeFactory->addQueryClass($arQueryClassList);
+            $obTypeFactory->addTypeClass($arTypeClassList);
         });
     }
 }
