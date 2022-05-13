@@ -13,7 +13,7 @@ class MeasureItemType extends AbstractItemType
     const ITEM_CLASS = MeasureItem::class;
     const TYPE_ALIAS = 'measure';
 
-    /* @var CurrencyItemType */
+    /* @var MeasureItemType */
     protected static $instance;
 
     /**
