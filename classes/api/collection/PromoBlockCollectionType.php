@@ -15,7 +15,7 @@ use Lovata\Toolbox\Classes\Api\Type\TypeFactory;
 class PromoBlockCollectionType extends AbstractCollectionType
 {
     const COLLECTION_CLASS = PromoBlockCollection::class;
-    const TYPE_ALIAS = 'promo_block_list';
+    const TYPE_ALIAS = 'promoBlockList';
 
     /** @var PromoBlockCollectionType */
     protected static $instance;

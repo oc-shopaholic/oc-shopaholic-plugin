@@ -11,7 +11,7 @@ use Lovata\Toolbox\Classes\Api\Item\AbstractItemType;
 class ProductItemShortType extends AbstractItemType
 {
     const ITEM_CLASS = ProductItem::class;
-    const TYPE_ALIAS = 'product_short';
+    const TYPE_ALIAS = 'productShort';
 
     /* @var ProductItemShortType */
     protected static $instance;

@@ -12,7 +12,7 @@ use Lovata\Toolbox\Classes\Api\Item\AbstractItemType;
 class PromoBlockItemType extends AbstractItemType
 {
     const ITEM_CLASS = PromoBlockItem::class;
-    const TYPE_ALIAS = 'promo_block';
+    const TYPE_ALIAS = 'promoBlock';
 
     /* @var CurrencyItemType */
     protected static $instance;

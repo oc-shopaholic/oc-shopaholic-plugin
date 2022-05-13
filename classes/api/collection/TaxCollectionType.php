@@ -15,7 +15,7 @@ use Lovata\Toolbox\Classes\Api\Type\TypeFactory;
 class TaxCollectionType extends AbstractCollectionType
 {
     const COLLECTION_CLASS = TaxCollection::class;
-    const TYPE_ALIAS = 'tax_list';
+    const TYPE_ALIAS = 'taxList';
 
     /** @var TaxCollectionType */
     protected static $instance;

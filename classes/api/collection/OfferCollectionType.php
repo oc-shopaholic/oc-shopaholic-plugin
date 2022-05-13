@@ -15,7 +15,7 @@ use Lovata\Toolbox\Classes\Api\Type\TypeFactory;
 class OfferCollectionType extends AbstractCollectionType
 {
     const COLLECTION_CLASS = OfferCollection::class;
-    const TYPE_ALIAS = 'offer_list';
+    const TYPE_ALIAS = 'offerList';
 
     /** @var OfferCollectionType */
     protected static $instance;

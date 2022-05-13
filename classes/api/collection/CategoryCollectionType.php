@@ -15,7 +15,7 @@ use Lovata\Toolbox\Classes\Api\Type\TypeFactory;
 class CategoryCollectionType extends AbstractCollectionType
 {
     const COLLECTION_CLASS = CategoryCollection::class;
-    const TYPE_ALIAS = 'category_list';
+    const TYPE_ALIAS = 'categoryList';
 
     /** @var CategoryCollectionType */
     protected static $instance;

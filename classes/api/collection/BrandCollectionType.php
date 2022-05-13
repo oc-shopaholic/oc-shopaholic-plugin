@@ -15,7 +15,7 @@ use Lovata\Toolbox\Classes\Api\Type\TypeFactory;
 class BrandCollectionType extends AbstractCollectionType
 {
     const COLLECTION_CLASS = BrandCollection::class;
-    const TYPE_ALIAS = 'brand_list';
+    const TYPE_ALIAS = 'brandList';
 
     /** @var BrandCollectionType */
     protected static $instance;

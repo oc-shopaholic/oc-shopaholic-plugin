@@ -15,7 +15,7 @@ use Lovata\Toolbox\Classes\Api\Type\TypeFactory;
 class CurrencyCollectionType extends AbstractCollectionType
 {
     const COLLECTION_CLASS = CurrencyCollection::class;
-    const TYPE_ALIAS = 'currency_list';
+    const TYPE_ALIAS = 'currencyList';
 
     /** @var CurrencyCollectionType */
     protected static $instance;

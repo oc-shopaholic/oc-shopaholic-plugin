@@ -19,7 +19,7 @@ use Lovata\Toolbox\Classes\Api\Type\TypeFactory;
 class ProductCollectionType extends AbstractCollectionType
 {
     const COLLECTION_CLASS = ProductCollection::class;
-    const TYPE_ALIAS = 'product_list';
+    const TYPE_ALIAS = 'productList';
 
     /** @var ProductCollectionType */
     protected static $instance;
