@@ -1,5 +1,6 @@
 <?php namespace Lovata\Shopaholic\Classes\Api\Item;
 
+use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 use Lovata\Shopaholic\Classes\Item\ProductItem;
 
@@ -26,7 +27,7 @@ class ProductItemType extends ProductItemShortType
         $arExtendedFieldList = [
             'offer' => [
                 'type'    => Type::listOf($this->getRelationType(OfferItemType::TYPE_ALIAS)),
-                'resolve' => function ($obProductItem) {
+                'resolve' => function ($obProductItem, $arArgumentList, $sContext, ResolveInfo $obResolveInfo) {
                     /* @var ProductItem $obProductItem */
                     return $obProductItem->offer;
                 },
@@ -36,5 +37,13 @@ class ProductItemType extends ProductItemShortType
         $arFieldList = array_merge($arParentFieldList, $arExtendedFieldList);
 
         return $arFieldList;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getDescription(): string
+    {
+        return 'Product data';
     }
 }

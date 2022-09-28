@@ -223,4 +223,18 @@
         'import_from_xml_files' => 'Import from XML',
         'import_from_csv_files' => 'Import from CSV',
     ],
+    'api_field_description' => [
+        'currency_code' => 'Currency code',
+    ],
+    'api_object_type_description' => [
+        'currency_switch_active_input'   => 'Currency switch active input data',
+        'currency_switch_active_payload' => 'Currency switch active payload',
+    ],
+    'api_query_type_description' => [
+        'currency_get_active'            => 'Returns active currency object',
+        'currency_switch_active_input'   => 'Currency switch active input data',
+    ],
+    'api_mutation_type_description' => [
+        'currency_switch_active' => 'Switch active currency',
+    ],
 ];

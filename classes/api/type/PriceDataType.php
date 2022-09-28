@@ -1,16 +1,15 @@
-<?php
-namespace Lovata\Shopaholic\Classes\Api\Type;
+<?php namespace Lovata\Shopaholic\Classes\Api\Type;
 
 use GraphQL\Type\Definition\Type;
 use Illuminate\Support\Arr;
-use Lovata\Toolbox\Classes\Api\Type\AbstractApiType;
+use Lovata\Toolbox\Classes\Api\Type\AbstractObjectType;
 use Lovata\Toolbox\Classes\Item\ElementItem;
 
 /**
  * Class PriceDataType
  * @package Lovata\Shopaholic\Classes\Api\Type
  */
-class PriceDataType extends AbstractApiType
+class PriceDataType extends AbstractObjectType
 {
     const TYPE_ALIAS = 'PriceData';
 

@@ -3,6 +3,7 @@
 use GraphQL\Type\Definition\Type;
 use Lovata\Shopaholic\Classes\Item\BrandItem;
 use Lovata\Toolbox\Classes\Api\Item\AbstractItemType;
+use Lovata\Toolbox\Classes\Api\Type\Custom\ImageFileType;
 
 /**
  * Class BrandItemType
@@ -24,20 +25,46 @@ class BrandItemType extends AbstractItemType
     protected function getFieldList(): array
     {
         $arFieldList = [
-            'id'           => Type::id(),
-            'active'       => Type::boolean(),
-            'name'         => Type::string(),
-            'slug'         => Type::string(),
-            'code'         => Type::string(),
-            'preview_text' => Type::string(),
-            'description'  => Type::string(),
+            'id'            => Type::id(),
+            'active'        => Type::boolean(),
+            'name'          => Type::string(),
+            'slug'          => Type::string(),
+            'code'          => Type::string(),
+            'preview_text'  => Type::string(),
+            'description'   => Type::string(),
+            'preview_image' => [
+                'type'    => $this->getRelationType(ImageFileType::TYPE_ALIAS),
+                'resolve' => function ($obBrandItem) {
+                    /* @var BrandItem $obBrandItem */
+                    return $obBrandItem->preview_image;
+                },
+            ],
+            'icon'          => [
+                'type'    => $this->getRelationType(ImageFileType::TYPE_ALIAS),
+                'resolve' => function ($obBrandItem) {
+                    /* @var BrandItem $obBrandItem */
+                    return $obBrandItem->icon;
+                },
+            ],
+            'images'        => [
+                'type'    => Type::listOf($this->getRelationType(ImageFileType::TYPE_ALIAS)),
+                'resolve' => function ($obBrandItem) {
+                    /* @var BrandItem $obBrandItem */
+                    return $obBrandItem->images;
+                },
+            ],
         ];
 
-        $arPreviewImageFields = $this->getAttachOneFileFields('preview_image');
-        $arIconFields = $this->getAttachOneFileFields('icon');
-        $arImagesFields = $this->getAttachManyFileFields('images');
-        $arFieldList = array_merge($arFieldList, $arPreviewImageFields, $arIconFields, $arImagesFields);
-
         return $arFieldList;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function extendResolveMethod($arArgumentList)
+    {
+        if (!$this->obItem->active) {
+            $this->obItem = null;
+        }
     }
 }

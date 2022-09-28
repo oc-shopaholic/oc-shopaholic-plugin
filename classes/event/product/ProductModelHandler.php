@@ -87,7 +87,7 @@ class ProductModelHandler extends ModelHandler
             ProductListStore::instance()->active->clear();
         }
 
-        $arAdditionalCategoryIDList = $this->obElement->additional_category->lists('id');
+        $arAdditionalCategoryIDList = $this->obElement->additional_category->pluck('id')->all();
         if (empty($arAdditionalCategoryIDList)) {
             return;
         }
@@ -119,7 +119,7 @@ class ProductModelHandler extends ModelHandler
             ProductListStore::instance()->active->clear();
         }
 
-        $arAdditionalCategoryIDList = $this->obElement->additional_category->lists('id');
+        $arAdditionalCategoryIDList = $this->obElement->additional_category->pluck('id')->all();
         if (empty($arAdditionalCategoryIDList)) {
             return;
         }
@@ -161,7 +161,7 @@ class ProductModelHandler extends ModelHandler
         $this->clearCategoryProductCount($this->obElement->category_id);
 
         //Get additional category ID list
-        $arAdditionalCategoryIDList = $this->obElement->additional_category->lists('id');
+        $arAdditionalCategoryIDList = $this->obElement->additional_category->pluck('id')->all();
         if (empty($arAdditionalCategoryIDList)) {
             return;
         }

@@ -15,6 +15,7 @@ use Lovata\Toolbox\Classes\Api\Type\TypeFactory;
 class TaxCollectionType extends AbstractCollectionType
 {
     const COLLECTION_CLASS = TaxCollection::class;
+    const RELATED_ITEM_TYPE_CLASS = TaxItemType::class;
     const TYPE_ALIAS = 'taxList';
 
     /** @var TaxCollectionType */
@@ -33,5 +34,13 @@ class TaxCollectionType extends AbstractCollectionType
         $arFieldList['id'] = Type::id();
 
         return $arFieldList;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function extendResolveMethod($arArgumentList)
+    {
+        $this->obList = $this->obList->active();
     }
 }

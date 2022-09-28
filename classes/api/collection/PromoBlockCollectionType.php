@@ -15,6 +15,7 @@ use Lovata\Toolbox\Classes\Api\Type\TypeFactory;
 class PromoBlockCollectionType extends AbstractCollectionType
 {
     const COLLECTION_CLASS = PromoBlockCollection::class;
+    const RELATED_ITEM_TYPE_CLASS = PromoBlockItemType::class;
     const TYPE_ALIAS = 'promoBlockList';
 
     /** @var PromoBlockCollectionType */
@@ -33,5 +34,13 @@ class PromoBlockCollectionType extends AbstractCollectionType
         $arFieldList['id'] = Type::id();
 
         return $arFieldList;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function extendResolveMethod($arArgumentList)
+    {
+        $this->obList = $this->obList->active();
     }
 }

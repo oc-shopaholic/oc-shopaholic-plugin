@@ -15,6 +15,7 @@ use Lovata\Toolbox\Classes\Api\Type\TypeFactory;
 class CurrencyCollectionType extends AbstractCollectionType
 {
     const COLLECTION_CLASS = CurrencyCollection::class;
+    const RELATED_ITEM_TYPE_CLASS = CurrencyItemType::class;
     const TYPE_ALIAS = 'currencyList';
 
     /** @var CurrencyCollectionType */
@@ -33,5 +34,13 @@ class CurrencyCollectionType extends AbstractCollectionType
         $arFieldList['id'] = Type::id();
 
         return $arFieldList;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function extendResolveMethod($arArgumentList)
+    {
+        $this->obList = $this->obList->active();
     }
 }

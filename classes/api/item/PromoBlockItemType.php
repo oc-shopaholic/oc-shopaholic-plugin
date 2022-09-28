@@ -4,6 +4,7 @@ use GraphQL\Type\Definition\Type;
 
 use Lovata\Shopaholic\Classes\Item\PromoBlockItem;
 use Lovata\Toolbox\Classes\Api\Item\AbstractItemType;
+use Lovata\Toolbox\Classes\Api\Type\Custom\ImageFileType;
 
 /**
  * Class PromoBlockItemType
@@ -41,13 +42,39 @@ class PromoBlockItemType extends AbstractItemType
                     return $obPromoBlockItem->product;
                 },
             ],
+            'preview_image'    => [
+                'type'    => $this->getRelationType(ImageFileType::TYPE_ALIAS),
+                'resolve' => function ($obPromoBlockItem) {
+                    /* @var PromoBlockItem $obPromoBlockItem */
+                    return $obPromoBlockItem->preview_image;
+                },
+            ],
+            'icon'             => [
+                'type'    => $this->getRelationType(ImageFileType::TYPE_ALIAS),
+                'resolve' => function ($obPromoBlockItem) {
+                    /* @var PromoBlockItem $obPromoBlockItem */
+                    return $obPromoBlockItem->icon;
+                },
+            ],
+            'images'           => [
+                'type'    => Type::listOf($this->getRelationType(ImageFileType::TYPE_ALIAS)),
+                'resolve' => function ($obPromoBlockItem) {
+                    /* @var PromoBlockItem $obPromoBlockItem */
+                    return $obPromoBlockItem->images;
+                },
+            ],
         ];
 
-        $arPreviewImageFields = $this->getAttachOneFileFields('preview_image');
-        $arIconFields = $this->getAttachOneFileFields('icon');
-        $arImagesFields = $this->getAttachManyFileFields('images');
-        $arFieldList = array_merge($arFieldList, $arPreviewImageFields, $arIconFields, $arImagesFields);
-
         return $arFieldList;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function extendResolveMethod($arArgumentList)
+    {
+        if (!$this->obItem->active) {
+            $this->obItem = null;
+        }
     }
 }

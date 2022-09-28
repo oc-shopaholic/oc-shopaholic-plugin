@@ -3,6 +3,7 @@
 use GraphQL\Type\Definition\Type;
 use Lovata\Shopaholic\Classes\Item\CategoryItem;
 use Lovata\Toolbox\Classes\Api\Item\AbstractItemType;
+use Lovata\Toolbox\Classes\Api\Type\Custom\ImageFileType;
 
 /**
  * Class CategoryItemShortType
@@ -35,13 +36,39 @@ class CategoryItemShortType extends AbstractItemType
             'description'      => Type::string(),
             'updated_at'       => Type::string(),
             'children_id_list' => Type::listOf(Type::id()),
+            'preview_image'    => [
+                'type'    => $this->getRelationType(ImageFileType::TYPE_ALIAS),
+                'resolve' => function ($obCategoryItem) {
+                    /* @var CategoryItem $obCategoryItem */
+                    return $obCategoryItem->preview_image;
+                },
+            ],
+            'icon'             => [
+                'type'    => $this->getRelationType(ImageFileType::TYPE_ALIAS),
+                'resolve' => function ($obCategoryItem) {
+                    /* @var CategoryItem $obCategoryItem */
+                    return $obCategoryItem->icon;
+                },
+            ],
+            'images'           => [
+                'type'    => Type::listOf($this->getRelationType(ImageFileType::TYPE_ALIAS)),
+                'resolve' => function ($obCategoryItem) {
+                    /* @var CategoryItem $obCategoryItem */
+                    return $obCategoryItem->images;
+                },
+            ],
         ];
 
-        $arPreviewImageFields = $this->getAttachOneFileFields('preview_image');
-        $arIconFields = $this->getAttachOneFileFields('icon');
-        $arImagesFields = $this->getAttachManyFileFields('images');
-        $arFieldList = array_merge($arFieldList, $arPreviewImageFields, $arIconFields, $arImagesFields);
-
         return $arFieldList;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function extendResolveMethod($arArgumentList)
+    {
+        if (!$this->obItem->active) {
+            $this->obItem = null;
+        }
     }
 }

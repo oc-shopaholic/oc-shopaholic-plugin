@@ -15,6 +15,7 @@ use Lovata\Toolbox\Classes\Api\Type\TypeFactory;
 class CategoryCollectionType extends AbstractCollectionType
 {
     const COLLECTION_CLASS = CategoryCollection::class;
+    const RELATED_ITEM_TYPE_CLASS = CategoryItemType::class;
     const TYPE_ALIAS = 'categoryList';
 
     /** @var CategoryCollectionType */
@@ -36,14 +37,10 @@ class CategoryCollectionType extends AbstractCollectionType
     }
 
     /**
-     * Get config for "args" attribute
-     * @return array|null
+     * @inheritDoc
      */
-    protected function getArguments(): ?array
+    protected function extendResolveMethod($arArgumentList)
     {
-        $arArgumentList = parent::getArguments();
-        $arArgumentList['search'] = Type::string();
-
-        return $arArgumentList;
+        $this->obList = $this->obList->active();
     }
 }

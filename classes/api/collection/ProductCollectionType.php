@@ -1,16 +1,10 @@
 <?php namespace Lovata\Shopaholic\Classes\Api\Collection;
 
-use Illuminate\Support\Arr;
-
-use GraphQL\Type\Definition\Type;
-
-use Lovata\Shopaholic\Classes\Api\Item\OfferItemType;
 use Lovata\Shopaholic\Classes\Api\Item\ProductItemType;
+use Lovata\Shopaholic\Classes\Api\Type\Enum\ProductCollectionSortingEnumType;
+use Lovata\Shopaholic\Classes\Api\Type\Input\FilterProductCollectionInputType;
 use Lovata\Shopaholic\Classes\Collection\ProductCollection;
-
 use Lovata\Toolbox\Classes\Api\Collection\AbstractCollectionType;
-use Lovata\Toolbox\Classes\Api\Type\Custom\Type as CustomType;
-use Lovata\Toolbox\Classes\Api\Type\TypeFactory;
 
 /**
  * Class ProductCollectionType
@@ -19,55 +13,58 @@ use Lovata\Toolbox\Classes\Api\Type\TypeFactory;
 class ProductCollectionType extends AbstractCollectionType
 {
     const COLLECTION_CLASS = ProductCollection::class;
+    const RELATED_ITEM_TYPE_CLASS = ProductItemType::class;
+
     const TYPE_ALIAS = 'productList';
 
     /** @var ProductCollectionType */
     protected static $instance;
 
-    /**
-     * Get type fields
-     * @return array
-     * @throws \GraphQL\Error\Error
-     */
-    protected function getFieldList(): array
-    {
-        $arFieldList = parent::getFieldList();
-        $arFieldList['list'] = Type::listOf(TypeFactory::instance()->get(ProductItemType::TYPE_ALIAS));
-        $arFieldList['item'] = TypeFactory::instance()->get(OfferItemType::TYPE_ALIAS);
-        $arFieldList['id'] = Type::id();
+    /** @var ProductCollection */
+    protected $obList;
 
-        return $arFieldList;
+    protected $sFilterInputTypeClass = FilterProductCollectionInputType::class;
+    protected $sSortEnumInputTypeClass = ProductCollectionSortingEnumType::class;
+
+    /**
+     * @inheritDoc
+     */
+    protected function extendResolveMethod($arArgumentList)
+    {
+        $this->obList->active();
+    }
+
+    //
+    // Filter methods
+    //
+
+    /**
+     * Filter by brand ID
+     * @param $iBrandId
+     * @return void
+     */
+    protected function filterByBrand($iBrandId)
+    {
+        $this->obList->brand($iBrandId);
     }
 
     /**
-     * Get config for "args" attribute
-     * @return array|null
+     * Filter by category ID list
+     * @param $arFilterInput
+     * @return void
      */
-    protected function getArguments(): ?array
+    protected function filterByCategory($arFilterInput)
     {
-        $arArgumentList = parent::getArguments();
-        $arArgumentList['brand'] = Type::id();
-        $arArgumentList['categoryList'] = CustomType::array();
-        $arArgumentList['categoryWithChildren'] = Type::boolean();
-        $arArgumentList['priceTypeId'] = Type::id();
-        $arArgumentList['getOfferMaxPrice'] = Type::string();
-        $arArgumentList['getOfferMinPrice'] = Type::string();
-        $arArgumentList['promo'] = Type::id();
-        $arArgumentList['promoBlock'] = Type::id();
-        $arArgumentList['sort'] = Type::string();
-
-        return $arArgumentList;
+        $this->obList->category($arFilterInput['categoryIdList'], $arFilterInput['includeChildren']);
     }
 
-    protected function getCategoryParam($arArgumentList)
+    /**
+     * Filter by promo block ID
+     * @param $iPromoBlockId
+     * @return void
+     */
+    protected function filterByPromoBlock($iPromoBlockId)
     {
-        $arResult = Arr::get($arArgumentList, 'categoryList');
-        $bWithChildren = (boolean) Arr::get($arArgumentList, 'categoryWithChildren');
-
-        if ($bWithChildren) {
-            $arResult[] = true;
-        }
-
-        return $arResult;
+        $this->obList->promoBlock($iPromoBlockId);
     }
 }

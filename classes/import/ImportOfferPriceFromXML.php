@@ -29,7 +29,7 @@ class ImportOfferPriceFromXML extends AbstractImportModelFromXML
      */
     public function __construct()
     {
-        $this->arExistIDList = (array) Offer::whereNotNull('external_id')->lists('external_id', 'id');
+        $this->arExistIDList = (array) Offer::whereNotNull('external_id')->pluck('external_id', 'id')->all();
         $this->arExistIDList = array_filter($this->arExistIDList);
 
         $this->prepareImportSettings();
@@ -52,7 +52,7 @@ class ImportOfferPriceFromXML extends AbstractImportModelFromXML
         ];
 
         //Get price types
-        $arPriceTypeList = (array) PriceType::lists('name', 'id');
+        $arPriceTypeList = (array) PriceType::pluck('name', 'id')->all();
         if (!empty($arPriceTypeList)) {
             foreach ($arPriceTypeList as $iPriceTypeID => $sName) {
                 $sKey = 'price_list.'.$iPriceTypeID;

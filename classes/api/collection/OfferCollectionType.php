@@ -15,6 +15,7 @@ use Lovata\Toolbox\Classes\Api\Type\TypeFactory;
 class OfferCollectionType extends AbstractCollectionType
 {
     const COLLECTION_CLASS = OfferCollection::class;
+    const RELATED_ITEM_TYPE_CLASS = OfferItemType::class;
     const TYPE_ALIAS = 'offerList';
 
     /** @var OfferCollectionType */
@@ -46,5 +47,13 @@ class OfferCollectionType extends AbstractCollectionType
         $arArgumentList['sort'] = Type::string();
 
         return $arArgumentList;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function extendResolveMethod($arArgumentList)
+    {
+        $this->obList = $this->obList->active();
     }
 }
