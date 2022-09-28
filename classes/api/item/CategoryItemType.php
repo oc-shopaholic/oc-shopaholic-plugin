@@ -44,4 +44,14 @@ class CategoryItemType extends CategoryItemShortType
 
         return $arFieldList;
     }
+
+    /**
+     * @inheritDoc
+     */
+    protected function extendResolveMethod($arArgumentList)
+    {
+        if (!$this->obItem->active) {
+            $this->obItem = null;
+        }
+    }
 }

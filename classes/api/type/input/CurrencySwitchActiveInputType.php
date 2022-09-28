@@ -2,7 +2,7 @@
 
 use Lang;
 use GraphQL\Type\Definition\Type;
-use Lovata\Toolbox\Classes\Api\Type\AbstractInputType;
+use Lovata\Toolbox\Classes\Api\Type\Input\AbstractInputType;
 
 /**
  * Class CurrencySwitchActiveInputType

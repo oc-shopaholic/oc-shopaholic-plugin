@@ -1,12 +1,11 @@
 <?php namespace Lovata\Shopaholic\Classes\Api\Collection;
 
-use GraphQL\Type\Definition\Type;
-
 use Lovata\Shopaholic\Classes\Api\Item\BrandItemType;
+use Lovata\Shopaholic\Classes\Api\Type\Enum\BrandCollectionSortingEnumType;
+use Lovata\Shopaholic\Classes\Api\Type\Input\FilterBrandCollectionInputType;
 use Lovata\Shopaholic\Classes\Collection\BrandCollection;
 
 use Lovata\Toolbox\Classes\Api\Collection\AbstractCollectionType;
-use Lovata\Toolbox\Classes\Api\Type\TypeFactory;
 
 /**
  * Class BrandCollectionType
@@ -15,35 +14,35 @@ use Lovata\Toolbox\Classes\Api\Type\TypeFactory;
 class BrandCollectionType extends AbstractCollectionType
 {
     const COLLECTION_CLASS = BrandCollection::class;
+    const RELATED_ITEM_TYPE_CLASS = BrandItemType::class;
+
     const TYPE_ALIAS = 'brandList';
 
     /** @var BrandCollectionType */
     protected static $instance;
 
-    /**
-     * Get type fields
-     * @return array
-     * @throws \GraphQL\Error\Error
-     */
-    protected function getFieldList(): array
-    {
-        $arFieldList = parent::getFieldList();
-        $arFieldList['list'] = Type::listOf(TypeFactory::instance()->get(BrandItemType::TYPE_ALIAS));
-        $arFieldList['item'] = TypeFactory::instance()->get(BrandItemType::TYPE_ALIAS);
-        $arFieldList['id'] = Type::id();
+    protected $sSortEnumInputTypeClass = BrandCollectionSortingEnumType::class;
+    protected $sFilterInputTypeClass = FilterBrandCollectionInputType::class;
 
-        return $arFieldList;
+    /**
+     * @inheritDoc
+     */
+    protected function extendResolveMethod($arArgumentList)
+    {
+        $this->obList = $this->obList->active();
     }
 
-    /**
-     * Get config for "args" attribute
-     * @return array|null
-     */
-    protected function getArguments(): ?array
-    {
-        $arArgumentList = parent::getArguments();
-        $arArgumentList['category'] = Type::id();
+    //
+    // Filter methods
+    //
 
-        return $arArgumentList;
+    /**
+     * Filter by category ID list
+     * @param $arFilterInput
+     * @return void
+     */
+    protected function filterByCategory($arFilterInput)
+    {
+        $this->obList->category($arFilterInput['categoryIdList'], $arFilterInput['includeChildren']);
     }
 }

@@ -4,6 +4,8 @@ use Event;
 use Backend;
 use System\Classes\PluginBase;
 
+use Lovata\Toolbox\Traits\Api\SubscribeApiEventsTrait;
+
 //Console command
 use Lovata\Shopaholic\Classes\Console\CheckTableIntegrity;
 use Lovata\Shopaholic\Classes\Console\ImportFromXML;
@@ -44,6 +46,8 @@ use Lovata\Shopaholic\Classes\Event\Tax\ExtendTaxFieldsHandler;
  */
 class Plugin extends PluginBase
 {
+    use SubscribeApiEventsTrait;
+
     /** @var array Plugin dependencies */
     public $require = ['Lovata.Toolbox'];
 
@@ -190,11 +194,8 @@ class Plugin extends PluginBase
         Event::subscribe(TaxModelHandler::class);
         Event::subscribe(TaxRelationHandler::class);
         Event::subscribe(ExtendTaxFieldsHandler::class);
-
-        if (request()->is(config('lovata.toolbox::api_route_name'))) {
-            //API Events
-            Event::subscribe(ExtendFrontendTypeClassList::class);
-        }
+        //API Events
+        $this->addApiEvent(ExtendFrontendTypeClassList::class);
     }
 
     /**

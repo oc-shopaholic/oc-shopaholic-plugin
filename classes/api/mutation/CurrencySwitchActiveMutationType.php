@@ -78,7 +78,7 @@ class CurrencySwitchActiveMutationType extends AbstractMutationType
         $arResult = [
             'record'   => $this->obActiveCurrensy,
             'recordId' => $this->obActiveCurrensy->id,
-            'status'   => $this->bStatus,
+            'status' => $this->bStatus,
         ];
 
         return $arResult;

@@ -3,14 +3,14 @@
 use Lang;
 use Lovata\Shopaholic\Classes\Api\Item\CurrencyItemType;
 use Lovata\Shopaholic\Classes\Helper\CurrencyHelper;
-use Lovata\Toolbox\Classes\Api\Type\AbstractApiType;
+use Lovata\Toolbox\Classes\Api\Type\AbstractObjectType;
 
 /**
  * Class CurrencyGetActiveQueryType
  * @package Lovata\Shopaholic\Classes\Api\Query
  * @author  Igor Tverdokhleb, i.tverdokhleb@lovata.com, LOVATA Group
  */
-class CurrencyGetActiveQueryType extends AbstractApiType
+class CurrencyGetActiveQueryType extends AbstractObjectType
 {
     const TYPE_ALIAS = 'currencyGetActive';
 

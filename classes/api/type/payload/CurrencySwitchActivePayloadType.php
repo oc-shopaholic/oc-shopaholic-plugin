@@ -2,7 +2,7 @@
 
 use Lang;
 use Lovata\Shopaholic\Classes\Api\Item\CurrencyItemType;
-use Lovata\Toolbox\Classes\Api\Type\AbstractMutationPayloadType;
+use Lovata\Toolbox\Classes\Api\Type\Payload\AbstractMutationPayloadType;
 
 /**
  * Class CurrencySwitchActivePayloadType
@@ -12,6 +12,7 @@ use Lovata\Toolbox\Classes\Api\Type\AbstractMutationPayloadType;
 class CurrencySwitchActivePayloadType extends AbstractMutationPayloadType
 {
     const TYPE_ALIAS = 'CurrencySwitchActivePayload';
+
     const RELATED_TYPE_ALIAS = CurrencyItemType::TYPE_ALIAS;
 
     /** @var CurrencySwitchActivePayloadType */

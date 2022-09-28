@@ -6,6 +6,7 @@ use Lovata\Shopaholic\Classes\Api\Type\PriceDataType;
 use Lovata\Shopaholic\Classes\Item\OfferItem;
 
 use Lovata\Toolbox\Classes\Api\Item\AbstractItemType;
+use Lovata\Toolbox\Classes\Api\Type\Custom\ImageFileType;
 
 /**
  * Class OfferItemType
@@ -38,6 +39,20 @@ class OfferItemType extends AbstractItemType
                 'resolve' => function ($obOfferItem) {
                     /** @var OfferItem $obOfferItem */
                     return $obOfferItem->product;
+                },
+            ],
+            'preview_image'      => [
+                'type'    => $this->getRelationType(ImageFileType::TYPE_ALIAS),
+                'resolve' => function ($obOfferItem) {
+                    /* @var OfferItem $obOfferItem */
+                    return $obOfferItem->preview_image;
+                },
+            ],
+            'images'             => [
+                'type'    => Type::listOf($this->getRelationType(ImageFileType::TYPE_ALIAS)),
+                'resolve' => function ($obOfferItem) {
+                    /* @var OfferItem $obOfferItem */
+                    return $obOfferItem->images;
                 },
             ],
             'weight'             => Type::float(),
@@ -115,10 +130,6 @@ class OfferItemType extends AbstractItemType
             'quantity'           => Type::int(),
         ];
 
-        $arPreviewImageFields = $this->getAttachOneFileFields('preview_image');
-        $arImagesFields = $this->getAttachManyFileFields('images');
-        $arFieldList = array_merge($arFieldList, $arPreviewImageFields, $arImagesFields);
-
         return $arFieldList;
     }
 
@@ -133,5 +144,15 @@ class OfferItemType extends AbstractItemType
         $arArgumentList['setActivePriceType'] = Type::int();
 
         return $arArgumentList;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function extendResolveMethod($arArgumentList)
+    {
+        if (!$this->obItem->active) {
+            $this->obItem = null;
+        }
     }
 }

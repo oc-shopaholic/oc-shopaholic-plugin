@@ -1,6 +1,5 @@
 <?php namespace Lovata\Shopaholic\Classes\Api;
 
-use Lovata\Shopaholic\Classes\Api\Type\PriceDataType;
 use Lovata\Toolbox\Classes\Api\Type\FrontendTypeFactory;
 /** Item types */
 use Lovata\Shopaholic\Classes\Api\Item\BrandItemType;
@@ -25,10 +24,18 @@ use Lovata\Shopaholic\Classes\Api\Collection\TaxCollectionType;
 use Lovata\Shopaholic\Classes\Api\Query\CurrencyGetActiveQueryType;
 /** Mutation types */
 use Lovata\Shopaholic\Classes\Api\Mutation\CurrencySwitchActiveMutationType;
+/** Enum types */
+use Lovata\Shopaholic\Classes\Api\Type\Enum\BrandCollectionSortingEnumType;
+use Lovata\Shopaholic\Classes\Api\Type\Enum\ProductCollectionSortingEnumType;
 /** Input types */
 use Lovata\Shopaholic\Classes\Api\Type\Input\CurrencySwitchActiveInputType;
+use Lovata\Shopaholic\Classes\Api\Type\Input\FilterByCategoryInputType;
+use Lovata\Shopaholic\Classes\Api\Type\Input\FilterProductCollectionInputType;
 /** Payload types */
 use Lovata\Shopaholic\Classes\Api\Type\Payload\CurrencySwitchActivePayloadType;
+/** Custom types */
+use Lovata\Shopaholic\Classes\Api\Type\PriceDataType;
+use Lovata\Shopaholic\Classes\Api\Type\ProductCollectionPaginationType;
 
 /**
  * ExtendFrontendTypeClassList
@@ -89,10 +96,17 @@ class ExtendFrontendTypeClassList
                 PromoBlockCollectionType::class,
                 ProductCollectionType::class,
                 TaxCollectionType::class,
+                /** Enum types */
+                BrandCollectionSortingEnumType::class,
+                ProductCollectionSortingEnumType::class,
                 /** Input types */
                 CurrencySwitchActiveInputType::class,
+                FilterProductCollectionInputType::class,
+                FilterByCategoryInputType::class,
                 /** Payload types */
                 CurrencySwitchActivePayloadType::class,
+                /** Types */
+                ProductCollectionPaginationType::class,
             ];
 
             $obTypeFactory->addQueryClass($arQueryClassList);

@@ -36,4 +36,14 @@ class TaxItemType extends AbstractItemType
 
         return $arFieldList;
     }
+
+    /**
+     * @inheritDoc
+     */
+    protected function extendResolveMethod($arArgumentList)
+    {
+        if (!$this->obItem->active) {
+            $this->obItem = null;
+        }
+    }
 }

@@ -1,8 +1,13 @@
 <?php namespace Lovata\Shopaholic\Classes\Api\Item;
 
+use Event;
+use Session;
+use Illuminate\Support\Arr;
+
 use GraphQL\Type\Definition\Type;
 use Lovata\Shopaholic\Classes\Item\ProductItem;
 use Lovata\Toolbox\Classes\Api\Item\AbstractItemType;
+use Lovata\Toolbox\Classes\Api\Type\Custom\ImageFileType;
 
 /**
  * Class ProductItemShortType
@@ -57,12 +62,71 @@ class ProductItemShortType extends AbstractItemType
                     return $obProductItem->category;
                 },
             ],
+            'preview_image'          => [
+                'type'    => $this->getRelationType(ImageFileType::TYPE_ALIAS),
+                'resolve' => function ($obProductItem) {
+                    /* @var ProductItem $obProductItem */
+                    return $obProductItem->preview_image;
+                },
+            ],
+            'images'                 => [
+                'type'    => Type::listOf($this->getRelationType(ImageFileType::TYPE_ALIAS)),
+                'resolve' => function ($obProductItem) {
+                    /* @var ProductItem $obProductItem */
+                    return $obProductItem->images;
+                },
+            ],
         ];
 
-        $arPreviewImageFields = $this->getAttachOneFileFields('preview_image');
-        $arImagesFields = $this->getAttachManyFileFields('images');
-        $arFieldList = array_merge($arFieldList, $arPreviewImageFields, $arImagesFields);
-
         return $arFieldList;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function extendResolveMethod($arArgumentList)
+    {
+        if (!$this->obItem->active) {
+            $this->obItem = null;
+
+            return;
+        }
+
+        // Set session id to catch viewed products for non-authorized users
+        $sSessionId = Arr::get($arArgumentList, 'sessionId');
+        if ($sSessionId) {
+            Session::setId($sSessionId);
+            Session::start();
+        }
+
+        // Fire event opening product for PopularityShopaholic plugin
+        Event::fire('shopaholic.product.open', [$this->obItem->getObject()]);
+
+        if ($sSessionId) {
+            Session::save();
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getArguments(): ?array
+    {
+        $arArgumentList = [
+            'sessionId' => [
+                'type' => Type::id(),
+                'description' => 'User session id. Set the value for non-authorized user to ',
+            ],
+        ];
+
+        return array_merge(parent::getArguments(), $arArgumentList);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getDescription(): string
+    {
+        return 'Product short data';
     }
 }
