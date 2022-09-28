@@ -107,8 +107,8 @@ class TaxItem extends ElementItem
         ];
 
         if (PluginManager::instance()->hasPlugin('RainLab.Location')) {
-            $arResult['country_id_list'] = $this->obElement->country()->lists('id');
-            $arResult['state_id_list'] = $this->obElement->state()->lists('id');
+            $arResult['country_id_list'] = $this->obElement->country()->pluck('id')->all();
+            $arResult['state_id_list'] = $this->obElement->state()->pluck('id')->all();
         }
 
         return $arResult;

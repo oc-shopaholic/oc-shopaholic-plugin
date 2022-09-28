@@ -110,7 +110,7 @@ class SortingListStore extends AbstractStoreWithParam
      */
     protected function getByDateBeginASC() : array
     {
-        $arElementIDList = (array) PromoBlock::orderBy('date_begin', 'asc')->lists('id');
+        $arElementIDList = (array) PromoBlock::orderBy('date_begin', 'asc')->pluck('id')->all();
 
         return $arElementIDList;
     }
@@ -121,7 +121,7 @@ class SortingListStore extends AbstractStoreWithParam
      */
     protected function getByDateBeginDESC() : array
     {
-        $arElementIDList = (array) PromoBlock::orderBy('date_begin', 'desc')->lists('id');
+        $arElementIDList = (array) PromoBlock::orderBy('date_begin', 'desc')->pluck('id')->all();
 
         return $arElementIDList;
     }
@@ -132,7 +132,7 @@ class SortingListStore extends AbstractStoreWithParam
      */
     protected function getByDateEndASC() : array
     {
-        $arElementIDList = (array) PromoBlock::orderBy('date_end', 'asc')->lists('id');
+        $arElementIDList = (array) PromoBlock::orderBy('date_end', 'asc')->pluck('id')->all();
 
         return $arElementIDList;
     }
@@ -143,7 +143,7 @@ class SortingListStore extends AbstractStoreWithParam
      */
     protected function getByDateEndDESC() : array
     {
-        $arElementIDList = (array) PromoBlock::orderBy('date_end', 'desc')->lists('id');
+        $arElementIDList = (array) PromoBlock::orderBy('date_end', 'desc')->pluck('id')->all();
 
         return $arElementIDList;
     }
@@ -154,7 +154,7 @@ class SortingListStore extends AbstractStoreWithParam
      */
     protected function getBySortOrder() :array
     {
-        $arElementIDList = (array) PromoBlock::orderBy('sort_order', 'asc')->lists('id');
+        $arElementIDList = (array) PromoBlock::orderBy('sort_order', 'asc')->pluck('id')->all();
 
         return $arElementIDList;
     }

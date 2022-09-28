@@ -19,7 +19,7 @@ class ActiveListStore extends AbstractStoreWithoutParam
      */
     protected function getIDListFromDB() : array
     {
-        $arElementIDList = (array) Brand::active()->lists('id');
+        $arElementIDList = (array) Brand::active()->pluck('id')->all();
 
         return $arElementIDList;
     }

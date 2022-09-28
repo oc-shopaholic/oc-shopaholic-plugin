@@ -19,11 +19,7 @@ fields:
         type: text
 tabs:
     lazy:
-        - 'lovata.toolbox::lang.tab.settings'
-        - 'lovata.toolbox::lang.tab.description'
-        - 'lovata.toolbox::lang.tab.images'
         - 'lovata.shopaholic::lang.tab.offer'
-        - 'lovata.toolbox::lang.tab.properties'
         - 'lovata.discountsshopaholic::lang.menu.discount'
         - 'lovata.couponsshopaholic::lang.menu.coupon_group'
         - 'lovata.relatedproductsshopaholic::lang.tab.related'

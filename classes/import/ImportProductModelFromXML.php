@@ -32,7 +32,7 @@ class ImportProductModelFromXML extends AbstractImportModelFromXML
      */
     public function __construct()
     {
-        $this->arExistIDList = (array) Product::whereNotNull('external_id')->lists('external_id', 'id');
+        $this->arExistIDList = (array) Product::whereNotNull('external_id')->pluck('external_id', 'id')->all();
         $this->arExistIDList = array_filter($this->arExistIDList);
 
         $this->prepareImportSettings();
@@ -185,7 +185,7 @@ class ImportProductModelFromXML extends AbstractImportModelFromXML
             return;
         }
 
-        $this->arAdditionalCategoryList = (array) Category::whereIn('external_id', $arCategoryIDList)->where('id', '!=', $iMainCategoryID)->lists('id');
+        $this->arAdditionalCategoryList = (array) Category::whereIn('external_id', $arCategoryIDList)->where('id', '!=', $iMainCategoryID)->pluck('id')->all();
     }
 
     /**

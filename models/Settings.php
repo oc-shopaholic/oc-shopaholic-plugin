@@ -24,7 +24,7 @@ class Settings extends CommonSettings
      */
     public function getDimensionsMeasureOptions()
     {
-        $arResult = (array) Measure::orderBy('name', 'asc')->lists('name', 'id');
+        $arResult = (array) Measure::orderBy('name', 'asc')->pluck('name', 'id')->all();
 
         return $arResult;
     }
@@ -35,7 +35,7 @@ class Settings extends CommonSettings
      */
     public function getWeightMeasureOptions()
     {
-        $arResult = (array) Measure::orderBy('name', 'asc')->lists('name', 'id');
+        $arResult = (array) Measure::orderBy('name', 'asc')->pluck('name', 'id')->all();
 
         return $arResult;
     }
@@ -46,7 +46,7 @@ class Settings extends CommonSettings
      */
     public function getMeasureOfUnitOptions()
     {
-        $arResult = (array) Measure::orderBy('name', 'asc')->lists('name', 'id');
+        $arResult = (array) Measure::orderBy('name', 'asc')->pluck('name', 'id')->all();
 
         return $arResult;
     }

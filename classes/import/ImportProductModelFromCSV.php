@@ -26,7 +26,7 @@ class ImportProductModelFromCSV extends AbstractImportModelFromCSV
      */
     public function __construct()
     {
-        $this->arExistIDList = (array) Product::whereNotNull('external_id')->lists('external_id', 'id');
+        $this->arExistIDList = (array) Product::whereNotNull('external_id')->pluck('external_id', 'id')->all();
         $this->arExistIDList = array_filter($this->arExistIDList);
     }
 
@@ -131,7 +131,7 @@ class ImportProductModelFromCSV extends AbstractImportModelFromCSV
             return;
         }
 
-        $this->arAdditionalCategoryList = (array) Category::whereIn('external_id', $arCategoryIDList)->lists('id');
+        $this->arAdditionalCategoryList = (array) Category::whereIn('external_id', $arCategoryIDList)->pluck('id')->all();
     }
 
     /**
