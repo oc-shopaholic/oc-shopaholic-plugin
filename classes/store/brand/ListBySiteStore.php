@@ -8,7 +8,7 @@ use Lovata\Shopaholic\Models\Brand;
  * @package Lovata\Shopaholic\Classes\Store\Brand
  * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
-class SiteListStore extends AbstractStoreWithParam
+class ListBySiteStore extends AbstractStoreWithParam
 {
     protected static $instance;
 

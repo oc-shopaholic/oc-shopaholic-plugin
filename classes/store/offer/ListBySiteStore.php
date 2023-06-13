@@ -1,14 +1,14 @@
-<?php namespace Lovata\Shopaholic\Classes\Store\Product;
+<?php namespace Lovata\Shopaholic\Classes\Store\Offer;
 
 use Lovata\Toolbox\Classes\Store\AbstractStoreWithParam;
 
-use Lovata\Shopaholic\Models\Product;
+use Lovata\Shopaholic\Models\Offer;
 
 /**
- * @package Lovata\Shopaholic\Classes\Store\Product
+ * @package Lovata\Shopaholic\Classes\Store\Offer
  * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  */
-class SiteListStore extends AbstractStoreWithParam
+class ListBySiteStore extends AbstractStoreWithParam
 {
     protected static $instance;
 
@@ -18,7 +18,7 @@ class SiteListStore extends AbstractStoreWithParam
      */
     protected function getIDListFromDB() : array
     {
-        $arElementIDList = (array) Product::getBySite($this->sValue)->pluck('id')->all();
+        $arElementIDList = (array) Offer::getBySite($this->sValue)->pluck('id')->all();
 
         return $arElementIDList;
     }
