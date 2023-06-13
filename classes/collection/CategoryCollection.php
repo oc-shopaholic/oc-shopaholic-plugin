@@ -1,5 +1,6 @@
 <?php namespace Lovata\Shopaholic\Classes\Collection;
 
+use Site;
 use Lovata\Toolbox\Classes\Collection\ElementCollection;
 
 use Lovata\Shopaholic\Classes\Item\CategoryItem;
@@ -35,6 +36,18 @@ class CategoryCollection extends ElementCollection
     public function active()
     {
         $arResultIDList = CategoryListStore::instance()->active->get();
+
+        return $this->intersect($arResultIDList);
+    }
+
+    /**
+     * Apply filter by site_list field
+     * @return $this
+     */
+    public function site($iSiteID = null): self
+    {
+        $iSiteID = empty($iSiteID) ? Site::getSiteIdFromContext() : $iSiteID;
+        $arResultIDList = CategoryListStore::instance()->site->get($iSiteID);
 
         return $this->intersect($arResultIDList);
     }

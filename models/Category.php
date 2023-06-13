@@ -1,5 +1,6 @@
 <?php namespace Lovata\Shopaholic\Models;
 
+use Lovata\Toolbox\Traits\Models\MultisiteHelperTrait;
 use Backend\Models\ImportModel;
 
 use Kharanenka\Scope\ActiveField;
@@ -31,6 +32,7 @@ use Lovata\Shopaholic\Classes\Import\ImportCategoryModelFromCSV;
  * @property string                                                                              $external_id
  * @property string                                                                              $preview_text
  * @property string                                                                              $description
+ * @property array                                                                               $site_list
  * @property \October\Rain\Argon\Argon                                                           $created_at
  * @property \October\Rain\Argon\Argon                                                           $updated_at
  *
@@ -96,6 +98,7 @@ class Category extends ImportModel
     use CodeField;
     use ExternalIDField;
     use TraitCached;
+    use MultisiteHelperTrait;
 
     public $table = 'lovata_shopaholic_categories';
 
@@ -160,6 +163,7 @@ class Category extends ImportModel
     ];
 
     public $dates = ['created_at', 'updated_at'];
+    public $jsonable = ['site_list'];
     public $casts = [];
 
     public $visible = [];

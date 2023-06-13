@@ -1,5 +1,6 @@
 <?php namespace Lovata\Shopaholic\Classes\Event\Product;
 
+use Site;
 use Lovata\Toolbox\Models\Settings;
 use Lovata\Toolbox\Classes\Event\ModelHandler;
 
@@ -63,6 +64,10 @@ class ProductModelHandler extends ModelHandler
         $this->checkBrandIDField();
 
         $this->checkActiveField();
+
+        if ($this->isFieldChanged('site_list')) {
+            $this->clearCachedListBySite();
+        }
     }
 
     /**
@@ -91,6 +96,7 @@ class ProductModelHandler extends ModelHandler
         if (empty($arAdditionalCategoryIDList)) {
             return;
         }
+        $this->clearCachedListBySite();
 
         foreach ($arAdditionalCategoryIDList as $iCategoryID) {
             $this->clearCategoryProductCount($iCategoryID);
@@ -236,6 +242,22 @@ class ProductModelHandler extends ModelHandler
         foreach ($obPriceTypeList as $obPriceType) {
             ProductListStore::instance()->sorting->clear(ProductListStore::SORT_PRICE_ASC.'|'.$obPriceType->code);
             ProductListStore::instance()->sorting->clear(ProductListStore::SORT_PRICE_DESC.'|'.$obPriceType->code);
+        }
+    }
+
+    /**
+     * Clear filtered products by site ID
+     */
+    protected function clearCachedListBySite()
+    {
+        /** @var \October\Rain\Database\Collection $obSiteList */
+        $obSiteList = Site::listEnabled();
+        if (empty($obSiteList) || $obSiteList->isEmpty()) {
+            return;
+        }
+
+        foreach ($obSiteList as $obSite) {
+            ProductListStore::instance()->site->clear($obSite->id);
         }
     }
 

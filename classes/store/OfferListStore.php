@@ -4,6 +4,7 @@ use Lovata\Toolbox\Classes\Store\AbstractListStore;
 
 use Lovata\Shopaholic\Classes\Store\Offer\ActiveListStore;
 use Lovata\Shopaholic\Classes\Store\Offer\SortingListStore;
+use Lovata\Shopaholic\Classes\Store\Offer\SiteListStore;
 
 /**
  * Class OfferListStore
@@ -12,6 +13,7 @@ use Lovata\Shopaholic\Classes\Store\Offer\SortingListStore;
  *
  * @property ActiveListStore  $active
  * @property SortingListStore $sorting
+ * @property SiteListStore    $site
  */
 class OfferListStore extends AbstractListStore
 {
@@ -29,5 +31,6 @@ class OfferListStore extends AbstractListStore
     {
         $this->addToStoreList('sorting', SortingListStore::class);
         $this->addToStoreList('active', ActiveListStore::class);
+        $this->addToStoreList('site', SiteListStore::class);
     }
 }

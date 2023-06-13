@@ -1,5 +1,6 @@
 <?php namespace Lovata\Shopaholic\Classes\Collection;
 
+use Site;
 use Lovata\Toolbox\Classes\Collection\ElementCollection;
 
 use Lovata\Shopaholic\Classes\Item\OfferItem;
@@ -63,5 +64,17 @@ class OfferCollection extends ElementCollection
         }
 
         return $iQuantityCount;
+    }
+
+    /**
+     * Apply filter by site_list field
+     * @return $this
+     */
+    public function site($iSiteID = null): self
+    {
+        $iSiteID = empty($iSiteID) ? Site::getSiteIdFromContext() : $iSiteID;
+        $arResultIDList = OfferListStore::instance()->site->get($iSiteID);
+
+        return $this->intersect($arResultIDList);
     }
 }

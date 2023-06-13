@@ -1,5 +1,6 @@
 <?php namespace Lovata\Shopaholic\Classes\Collection;
 
+use Site;
 use Lovata\Toolbox\Classes\Collection\ElementCollection;
 
 use Lovata\Shopaholic\Classes\Item\BrandItem;
@@ -61,6 +62,18 @@ class BrandCollection extends ElementCollection
                 $arResultIDList = array_unique($arResultIDList);
             }
         }
+
+        return $this->intersect($arResultIDList);
+    }
+
+    /**
+     * Apply filter by site_list field
+     * @return $this
+     */
+    public function site($iSiteID = null): self
+    {
+        $iSiteID = empty($iSiteID) ? Site::getSiteIdFromContext() : $iSiteID;
+        $arResultIDList = BrandListStore::instance()->site->get($iSiteID);
 
         return $this->intersect($arResultIDList);
     }

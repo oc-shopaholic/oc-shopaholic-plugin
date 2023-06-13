@@ -11,6 +11,7 @@ use Kharanenka\Scope\CodeField;
 use Kharanenka\Scope\ExternalIDField;
 use Kharanenka\Scope\NameField;
 
+use Lovata\Toolbox\Traits\Models\MultisiteHelperTrait;
 use Lovata\Toolbox\Classes\Helper\PriceHelper;
 use Lovata\Toolbox\Traits\Helpers\TraitCached;
 use Lovata\Toolbox\Traits\Helpers\PriceHelperTrait;
@@ -49,6 +50,7 @@ use Lovata\Shopaholic\Classes\Import\ImportOfferModelFromCSV;
  * @property int                                                                                           $measure_id
  * @property int                                                                                           $measure_of_unit_id
  * @property int                                                                                           $product_id
+ * @property array                                                                                         $site_list
  * @property \October\Rain\Argon\Argon                                                                     $created_at
  * @property \October\Rain\Argon\Argon                                                                     $updated_at
  * @property \October\Rain\Argon\Argon                                                                     $deleted_at
@@ -135,6 +137,7 @@ class Offer extends ImportModel
     use ExternalIDField;
     use PriceHelperTrait;
     use TraitCached;
+    use MultisiteHelperTrait;
 
     public $table = 'lovata_shopaholic_offers';
 
@@ -229,6 +232,7 @@ class Offer extends ImportModel
         'price_list',
     ];
     public $purgeable = [];
+    public $jsonable = ['site_list'];
     public $casts = [];
 
     public $arPriceField = ['price', 'old_price', 'discount_price'];

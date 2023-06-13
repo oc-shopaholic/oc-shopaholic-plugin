@@ -1,5 +1,6 @@
 <?php namespace Lovata\Shopaholic\Classes\Event\Offer;
 
+use Site;
 use Lovata\Shopaholic\Models\PriceType;
 use Lovata\Toolbox\Classes\Event\ModelHandler;
 
@@ -44,6 +45,10 @@ class OfferModelHandler extends ModelHandler
         $this->checkProductIDField();
 
         $this->checkActiveField();
+
+        if ($this->isFieldChanged('site_list')) {
+            $this->clearCachedListBySite();
+        }
     }
 
     /**
@@ -63,6 +68,7 @@ class OfferModelHandler extends ModelHandler
             //Clear sorting product list by offer price
             $this->clearProductSortingByPrice();
         }
+        $this->clearCachedListBySite();
 
         OfferListStore::instance()->sorting->clear(OfferListStore::SORT_NO);
         OfferListStore::instance()->sorting->clear(OfferListStore::SORT_NEW);
@@ -203,6 +209,22 @@ class OfferModelHandler extends ModelHandler
         foreach ($obPriceTypeList as $obPriceType) {
             ProductListStore::instance()->sorting->clear(ProductListStore::SORT_PRICE_ASC.'|'.$obPriceType->code);
             ProductListStore::instance()->sorting->clear(ProductListStore::SORT_PRICE_DESC.'|'.$obPriceType->code);
+        }
+    }
+
+    /**
+     * Clear filtered offers by site ID
+     */
+    protected function clearCachedListBySite()
+    {
+        /** @var \October\Rain\Database\Collection $obSiteList */
+        $obSiteList = Site::listEnabled();
+        if (empty($obSiteList) || $obSiteList->isEmpty()) {
+            return;
+        }
+
+        foreach ($obSiteList as $obSite) {
+            OfferListStore::instance()->site->clear($obSite->id);
         }
     }
 

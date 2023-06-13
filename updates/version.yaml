@@ -144,3 +144,8 @@
     - 'Change lists method to pluck method. Thanks for contribution Nick Khaetsky.'
 1.30.6:
     - 'Remove lazy params from product/fields config.'
+1.31.0:
+    - 'Added the ability to link categories, brands, products and offers to different sites. Added site() method to BrandCollection, CategoryCollection, ProductCollection, OfferCollection classes.'
+    - update_table_categories_add_site_list_field.php
+    - update_table_products_add_site_list_field.php
+    - update_table_offers_add_site_list_field.php

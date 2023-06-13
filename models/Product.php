@@ -16,6 +16,7 @@ use October\Rain\Database\Traits\Purgeable;
 use October\Rain\Database\Traits\Nullable;
 
 use Lovata\Toolbox\Traits\Helpers\TraitCached;
+use Lovata\Toolbox\Traits\Models\MultisiteHelperTrait;
 use Lovata\Shopaholic\Classes\Import\ImportProductModelFromCSV;
 
 /**
@@ -36,6 +37,7 @@ use Lovata\Shopaholic\Classes\Import\ImportProductModelFromCSV;
  * @property string                                                                                    $external_id
  * @property string                                                                                    $preview_text
  * @property string                                                                                    $description
+ * @property array                                                                                     $site_list
  * @property \October\Rain\Argon\Argon                                                                 $created_at
  * @property \October\Rain\Argon\Argon                                                                 $updated_at
  * @property \October\Rain\Argon\Argon                                                                 $deleted_at
@@ -139,6 +141,7 @@ class Product extends ImportModel
     use ExternalIDField;
     use TraitCached;
     use Nullable;
+    use MultisiteHelperTrait;
 
 
     public $table = 'lovata_shopaholic_products';
@@ -216,7 +219,7 @@ class Product extends ImportModel
 
     public $dates = ['created_at', 'updated_at', 'deleted_at'];
 
-    public $jsonable = [];
+    public $jsonable = ['site_list'];
 
     public $visible = [];
     public $hidden = [];

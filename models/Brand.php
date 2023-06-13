@@ -12,6 +12,7 @@ use October\Rain\Database\Traits\Sluggable;
 use October\Rain\Database\Traits\Validation;
 use October\Rain\Database\Traits\Sortable;
 
+use Lovata\Toolbox\Traits\Models\MultisiteHelperTrait;
 use Lovata\Toolbox\Traits\Helpers\TraitCached;
 use Lovata\Shopaholic\Classes\Import\ImportBrandModelFromCSV;
 
@@ -32,6 +33,7 @@ use Lovata\Shopaholic\Classes\Import\ImportBrandModelFromCSV;
  * @property string                                                                           $preview_text
  * @property string                                                                           $description
  * @property int                                                                              $sort_order
+ * @property array                                                                            $site_list
  * @property \October\Rain\Argon\Argon                                                        $created_at
  * @property \October\Rain\Argon\Argon                                                        $updated_at
  *
@@ -70,6 +72,7 @@ class Brand extends ImportModel
     use SlugField;
     use ExternalIDField;
     use TraitCached;
+    use MultisiteHelperTrait;
 
     public $table = 'lovata_shopaholic_brands';
 
@@ -103,6 +106,7 @@ class Brand extends ImportModel
     public $belongsTo = [];
 
     public $dates = ['created_at', 'updated_at'];
+    public $jsonable = ['site_list'];
 
     public $appends = [];
     public $purgeable = [];

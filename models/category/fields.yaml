@@ -36,6 +36,12 @@ tabs:
             span: left
             type: text
             tab: 'lovata.toolbox::lang.tab.settings'
+        site_list:
+            label: 'lovata.toolbox::lang.field.site_list'
+            span: left
+            type: checkboxlist
+            quickselect: true
+            tab: 'lovata.toolbox::lang.tab.settings'
         preview_text:
             label: 'lovata.toolbox::lang.field.preview_text'
             size: large

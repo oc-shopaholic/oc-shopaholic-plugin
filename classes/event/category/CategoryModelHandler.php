@@ -1,5 +1,6 @@
 <?php namespace Lovata\Shopaholic\Classes\Event\Category;
 
+use Site;
 use Lovata\Toolbox\Models\Settings;
 use Lovata\Toolbox\Classes\Event\ModelHandler;
 
@@ -53,6 +54,10 @@ class CategoryModelHandler extends ModelHandler
             $this->clearCategorySortingByTree();
         }
 
+        if ($this->isFieldChanged('site_list')) {
+            $this->clearCachedListBySite();
+        }
+
         $this->checkFieldChanges('active', CategoryListStore::instance()->active);
     }
 
@@ -63,6 +68,7 @@ class CategoryModelHandler extends ModelHandler
     {
         parent::afterDelete();
         CategoryListStore::instance()->top_level->clear();
+        $this->clearCachedListBySite();
 
         //Clear parent item cache
         if (!empty($this->obElement->parent_id)) {
@@ -108,6 +114,22 @@ class CategoryModelHandler extends ModelHandler
         //Clear cache for all categories
         foreach ($arCategoryIDList as $iCategoryID) {
             CategoryItem::clearCache($iCategoryID);
+        }
+    }
+
+    /**
+     * Clear filtered categories by site ID
+     */
+    protected function clearCachedListBySite()
+    {
+        /** @var \October\Rain\Database\Collection $obSiteList */
+        $obSiteList = Site::listEnabled();
+        if (empty($obSiteList) || $obSiteList->isEmpty()) {
+            return;
+        }
+
+        foreach ($obSiteList as $obSite) {
+            CategoryListStore::instance()->site->clear($obSite->id);
         }
     }
 }

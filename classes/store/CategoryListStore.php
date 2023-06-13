@@ -4,6 +4,7 @@ use Lovata\Toolbox\Classes\Store\AbstractListStore;
 
 use Lovata\Shopaholic\Classes\Store\Category\TopLevelListStore;
 use Lovata\Shopaholic\Classes\Store\Category\ActiveListStore;
+use Lovata\Shopaholic\Classes\Store\Category\SiteListStore;
 
 /**
  * Class CategoryListStore
@@ -11,7 +12,8 @@ use Lovata\Shopaholic\Classes\Store\Category\ActiveListStore;
  * @author  Andrey Kharanenka, a.khoronenko@lovata.com, LOVATA Group
  *
  * @property TopLevelListStore $top_level
- * @property ActiveListStore     $active
+ * @property ActiveListStore   $active
+ * @property SiteListStore     $site
  */
 class CategoryListStore extends AbstractListStore
 {
@@ -24,5 +26,6 @@ class CategoryListStore extends AbstractListStore
     {
         $this->addToStoreList('top_level', TopLevelListStore::class);
         $this->addToStoreList('active', ActiveListStore::class);
+        $this->addToStoreList('site', SiteListStore::class);
     }
 }

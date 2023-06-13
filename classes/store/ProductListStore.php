@@ -7,6 +7,7 @@ use Lovata\Shopaholic\Classes\Store\Product\ListByCategoryStore;
 use Lovata\Shopaholic\Classes\Store\Product\ListByBrandStore;
 use Lovata\Shopaholic\Classes\Store\Product\ListByPromoBlockStore;
 use Lovata\Shopaholic\Classes\Store\Product\SortingListStore;
+use Lovata\Shopaholic\Classes\Store\Product\SiteListStore;
 
 /**
  * Class ProductListStore
@@ -18,6 +19,7 @@ use Lovata\Shopaholic\Classes\Store\Product\SortingListStore;
  * @property ListByBrandStore      $brand
  * @property SortingListStore      $sorting
  * @property ListByPromoBlockStore $promo_block
+ * @property SiteListStore         $site
  */
 class ProductListStore extends AbstractListStore
 {
@@ -41,5 +43,6 @@ class ProductListStore extends AbstractListStore
         $this->addToStoreList('brand', ListByBrandStore::class);
         $this->addToStoreList('active', ActiveListStore::class);
         $this->addToStoreList('promo_block', ListByPromoBlockStore::class);
+        $this->addToStoreList('site', SiteListStore::class);
     }
 }

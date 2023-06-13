@@ -1,5 +1,6 @@
 <?php namespace Lovata\Shopaholic\Classes\Collection;
 
+use Site;
 use Event;
 use Lovata\Toolbox\Classes\Collection\ElementCollection;
 
@@ -232,6 +233,18 @@ class ProductCollection extends ElementCollection
         $obOfferItem = $obOfferCollection->sort($sSorting)->last();
 
         return $obOfferItem;
+    }
+
+    /**
+     * Apply filter by site_list field
+     * @return $this
+     */
+    public function site($iSiteID = null): self
+    {
+        $iSiteID = empty($iSiteID) ? Site::getSiteIdFromContext() : $iSiteID;
+        $arResultIDList = ProductListStore::instance()->site->get($iSiteID);
+
+        return $this->intersect($arResultIDList);
     }
 
     /**
