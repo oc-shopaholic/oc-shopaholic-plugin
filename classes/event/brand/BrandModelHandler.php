@@ -46,6 +46,7 @@ class BrandModelHandler extends ModelHandler
     {
         parent::afterCreate();
         $this->clearSortingList();
+        $this->clearCachedListBySite();
     }
 
     /**

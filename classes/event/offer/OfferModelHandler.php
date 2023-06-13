@@ -31,6 +31,8 @@ class OfferModelHandler extends ModelHandler
     {
         parent::afterCreate();
 
+        $this->clearCachedListBySite();
+
         OfferListStore::instance()->sorting->clear(OfferListStore::SORT_NO);
         OfferListStore::instance()->sorting->clear(OfferListStore::SORT_NEW);
     }

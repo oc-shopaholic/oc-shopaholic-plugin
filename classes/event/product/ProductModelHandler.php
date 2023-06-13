@@ -46,6 +46,8 @@ class ProductModelHandler extends ModelHandler
     {
         parent::afterCreate();
 
+        $this->clearCachedListBySite();
+
         ProductListStore::instance()->sorting->clear(ProductListStore::SORT_NEW);
         ProductListStore::instance()->sorting->clear(ProductListStore::SORT_NO);
     }

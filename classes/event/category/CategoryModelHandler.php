@@ -40,6 +40,14 @@ class CategoryModelHandler extends ModelHandler
     }
 
     /**
+     * After create event handler
+     */
+    protected function afterCreate()
+    {
+        $this->clearCachedListBySite();
+    }
+
+    /**
      * After save event handler
      */
     protected function afterSave()
