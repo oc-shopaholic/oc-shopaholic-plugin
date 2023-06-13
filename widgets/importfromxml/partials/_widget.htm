@@ -12,37 +12,37 @@ $bHidePropertyImport = \Lovata\Shopaholic\Models\Settings::getValue('hide_proper
     <h3><?= e(trans('lovata.shopaholic::lang.widget.import_from_xml_files')) ?></h3>
     <div class="form-group checkboxlist-field">
         <?php if (!$bHideProductImport) { ?>
-        <div class="checkbox custom-checkbox">
+        <div class="checkbox">
             <input checked="checked" id="import-products" name="import-products" value="1" type="checkbox">
             <label class="choice" for="import-products"><?= e(trans('lovata.shopaholic::lang.menu.product')) ?></label>
         </div>
         <?php } ?>
         <?php if (!$bHideOfferImport) { ?>
-        <div class="checkbox custom-checkbox">
+        <div class="checkbox">
             <input checked="checked" id="import-offers" name="import-offers" value="1" type="checkbox">
             <label class="choice" for="import-offers"><?= e(trans('lovata.shopaholic::lang.tab.offer')) ?></label>
         </div>
         <?php } ?>
         <?php if (!$bHidePriceImport) { ?>
-        <div class="checkbox custom-checkbox">
+        <div class="checkbox">
             <input id="import-prices" name="import-prices" value="1" type="checkbox">
             <label class="choice" for="import-prices"><?= e(trans('lovata.shopaholic::lang.tab.price')) ?></label>
         </div>
         <?php } ?>
         <?php if (!$bHideCategoryImport) { ?>
-        <div class="checkbox custom-checkbox">
+        <div class="checkbox">
             <input checked="checked" id="import-categories" name="import-categories" value="1" type="checkbox">
             <label class="choice" for="import-categories"><?= e(trans('lovata.shopaholic::lang.menu.categories')) ?></label>
         </div>
         <?php } ?>
         <?php if (!$bHideBrandImport) { ?>
-        <div class="checkbox custom-checkbox">
+        <div class="checkbox">
             <input checked="checked" id="import-brands" name="import-brands" value="1" type="checkbox">
             <label class="choice" for="import-brands"><?= e(trans('lovata.shopaholic::lang.menu.brands')) ?></label>
         </div>
         <?php } ?>
         <?php if (!$bHidePropertyImport) { ?>
-        <div class="checkbox custom-checkbox">
+        <div class="checkbox">
             <input checked="checked" id="import-brands" name="import-brands" value="1" type="checkbox">
             <label class="choice" for="import-brands"><?= e(trans('lovata.propertiesshopaholic::lang.menu.property')) ?></label>
         </div>
