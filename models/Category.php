@@ -1,6 +1,5 @@
 <?php namespace Lovata\Shopaholic\Models;
 
-use Lovata\Toolbox\Traits\Models\MultisiteHelperTrait;
 use Backend\Models\ImportModel;
 
 use Kharanenka\Scope\ActiveField;
@@ -12,8 +11,10 @@ use Kharanenka\Scope\SlugField;
 use October\Rain\Database\Traits\Sluggable;
 use October\Rain\Database\Traits\Validation;
 use October\Rain\Database\Traits\NestedTree;
+use System\Models\SiteDefinition;
 
 use Lovata\Toolbox\Traits\Helpers\TraitCached;
+use Lovata\Toolbox\Traits\Models\MultisiteHelperTrait;
 use Lovata\Shopaholic\Classes\Import\ImportCategoryModelFromCSV;
 
 /**
@@ -52,6 +53,9 @@ use Lovata\Shopaholic\Classes\Import\ImportCategoryModelFromCSV;
  *
  * @property \October\Rain\Database\Collection|Product[]                                         $product
  * @method \October\Rain\Database\Relations\HasMany|Product product()
+ *
+ * @property \October\Rain\Database\Collection|SiteDefinition[]                                  $site
+ * @method \October\Rain\Database\Relations\MorphToMany|SiteDefinition site()
  *
  * @property \October\Rain\Database\Collection|Product[]                                         $product_link
  * @method static \October\Rain\Database\Relations\BelongsToMany|Product product_link()
@@ -135,6 +139,14 @@ class Category extends ImportModel
         ],
     ];
     public $hasMany = ['product' => Product::class];
+    public $morphToMany = [
+        'site' => [
+            SiteDefinition::class,
+            'name'     => 'entity',
+            'table'    => 'lovata_shopaholic_entity_site_relation',
+            'otherKey' => 'site_id',
+        ],
+    ];
 
     public $appends = [];
     public $purgeable = [];
@@ -163,7 +175,6 @@ class Category extends ImportModel
     ];
 
     public $dates = ['created_at', 'updated_at'];
-    public $jsonable = ['site_list'];
     public $casts = [];
 
     public $visible = [];

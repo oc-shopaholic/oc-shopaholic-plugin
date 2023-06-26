@@ -18,7 +18,12 @@ class ListBySiteStore extends AbstractStoreWithParam
      */
     protected function getIDListFromDB() : array
     {
-        $arElementIDList = (array) Category::getBySite($this->sValue)->pluck('id')->all();
+        $arElementIDList = (array) Category::whereHas('site', function($obQuery) {
+            return $obQuery->where('id', $this->sValue);
+        })
+            ->orDoesntHave('site')
+            ->pluck('id')
+            ->all();
 
         return $arElementIDList;
     }

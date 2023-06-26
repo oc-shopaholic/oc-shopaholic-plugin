@@ -5,6 +5,7 @@ use Backend\Models\ImportModel;
 use October\Rain\Database\Traits\Validation;
 use October\Rain\Database\Traits\SoftDelete;
 use October\Rain\Database\Traits\Purgeable;
+use System\Models\SiteDefinition;
 
 use Kharanenka\Scope\ActiveField;
 use Kharanenka\Scope\CodeField;
@@ -68,6 +69,9 @@ use Lovata\Shopaholic\Classes\Import\ImportOfferModelFromCSV;
  *
  * @property \Lovata\Shopaholic\Models\Product                                                             $product
  * @method \October\Rain\Database\Relations\BelongsTo|Product product()
+ *
+ * @property \October\Rain\Database\Collection|SiteDefinition[]                                            $site
+ * @method \October\Rain\Database\Relations\BelongsToMany|SiteDefinition site()
  *
  * @property Measure                                                                                       $measure_of_unit
  * @method static \October\Rain\Database\Relations\BelongsTo|Measure measure_of_unit()
@@ -159,9 +163,9 @@ class Offer extends ImportModel
     ];
     public $attachMany = ['images' => 'System\Models\File'];
     public $belongsTo = [
-        'product'          => [Product::class],
+        'product'         => [Product::class],
         'measure_of_unit' => [Measure::class, 'key' => 'measure_of_unit_id', 'order' => 'name asc'],
-        'measure' => [Measure::class, 'order' => 'name asc'],
+        'measure'         => [Measure::class, 'order' => 'name asc'],
     ];
     public $morphMany = [
         'price_link' => [
@@ -177,7 +181,13 @@ class Offer extends ImportModel
             'conditions' => 'price_type_id is NULL',
         ],
     ];
-    public $belongsToMany = [];
+    public $belongsToMany = [
+        'site' => [
+            SiteDefinition::class,
+            'table'    => 'lovata_shopaholic_offer_site_relation',
+            'otherKey' => 'site_id',
+        ],
+    ];
 
     public $fillable = [
         'active',
@@ -232,7 +242,6 @@ class Offer extends ImportModel
         'price_list',
     ];
     public $purgeable = [];
-    public $jsonable = ['site_list'];
     public $casts = [];
 
     public $arPriceField = ['price', 'old_price', 'discount_price'];

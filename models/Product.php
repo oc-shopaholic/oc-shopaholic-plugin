@@ -14,6 +14,7 @@ use October\Rain\Database\Traits\SoftDelete;
 use October\Rain\Database\Traits\Validation;
 use October\Rain\Database\Traits\Purgeable;
 use October\Rain\Database\Traits\Nullable;
+use System\Models\SiteDefinition;
 
 use Lovata\Toolbox\Traits\Helpers\TraitCached;
 use Lovata\Toolbox\Traits\Models\MultisiteHelperTrait;
@@ -57,6 +58,9 @@ use Lovata\Shopaholic\Classes\Import\ImportProductModelFromCSV;
  *
  * @property \October\Rain\Database\Collection|Offer[]                                                 $offer
  * @method \October\Rain\Database\Relations\HasMany|Offer offer()
+ *
+ * @property \October\Rain\Database\Collection|SiteDefinition[]                                        $site
+ * @method \October\Rain\Database\Relations\BelongsToMany|SiteDefinition site()
  *
  * @method static $this getByBrand(int $iBrandID)
  *
@@ -184,6 +188,11 @@ class Product extends ImportModel
             'table'    => 'lovata_shopaholic_promo_block_relation',
             'otherKey' => 'promo_id',
         ],
+        'site'                => [
+            SiteDefinition::class,
+            'table'    => 'lovata_shopaholic_product_site_relation',
+            'otherKey' => 'site_id',
+        ],
     ];
 
     public $morphMany = [];
@@ -219,7 +228,7 @@ class Product extends ImportModel
 
     public $dates = ['created_at', 'updated_at', 'deleted_at'];
 
-    public $jsonable = ['site_list'];
+    public $jsonable = [];
 
     public $visible = [];
     public $hidden = [];
