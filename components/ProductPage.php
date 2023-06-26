@@ -65,6 +65,8 @@ class ProductPage extends ElementPage
         } else {
             $obElement = Product::active()->getBySlug($sElementSlug)->first();
         }
+
+        $obElement = $this->hasRelationWithSite($obElement) ? $obElement : null;
         if (!empty($obElement)) {
             Event::fire('shopaholic.product.open', [$obElement]);
         }

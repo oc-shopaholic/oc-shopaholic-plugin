@@ -51,6 +51,8 @@ class BrandPage extends ElementPage
         } else {
             $obElement = Brand::active()->getBySlug($sElementSlug)->first();
         }
+
+        $obElement = $this->hasRelationWithSite($obElement) ? $obElement : null;
         if (!empty($obElement)) {
             Event::fire('shopaholic.brand.open', [$obElement]);
         }

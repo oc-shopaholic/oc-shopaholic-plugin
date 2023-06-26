@@ -72,6 +72,7 @@ class CategoryPage extends ElementPage
         } else {
             $obElement = Category::active()->getBySlug($sElementSlug)->first();
         }
+        $obElement = $this->hasRelationWithSite($obElement) ? $obElement : null;
 
         return $obElement;
     }
