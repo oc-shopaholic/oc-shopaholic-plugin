@@ -41,6 +41,7 @@ tabs:
             span: left
             type: checkboxlist
             quickselect: true
+            context: [update, preview]
             tab: 'lovata.toolbox::lang.tab.settings'
         preview_text:
             label: 'lovata.toolbox::lang.field.preview_text'
