@@ -32,6 +32,7 @@ tabs:
             span: left
             type: checkboxlist
             quickselect: true
+            context: [update, preview]
             tab: 'lovata.toolbox::lang.tab.settings'
         price_list:
             span: left
