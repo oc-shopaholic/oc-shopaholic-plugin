@@ -47,6 +47,7 @@ class OfferModelHandler extends ModelHandler
         $this->checkProductIDField();
 
         $this->checkActiveField();
+        $this->checkSortingField();
 
         if ($this->isFieldChanged('site_list')) {
             $this->clearCachedListBySite();
@@ -160,6 +161,24 @@ class OfferModelHandler extends ModelHandler
         }
 
         $obCategoryItem->clearProductCount();
+    }
+
+    /**
+     * Check offer "sort_order" field, if it was changed, then clear cache
+     */
+    protected function checkSortingField()
+    {
+        //check offer "active" field
+        if (!$this->isFieldChanged('sort_order')) {
+            return;
+        }
+
+        $obProduct = $this->obElement->product;
+        if (empty($obProduct)) {
+            return;
+        }
+
+        $this->clearProductItemCache($this->obElement->product_id);
     }
 
     /**

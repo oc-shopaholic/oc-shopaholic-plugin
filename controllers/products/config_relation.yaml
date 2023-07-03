@@ -13,3 +13,6 @@ offer:
         showSearch: true
         showSorting: true
         recordsPerPage: 10
+    structure:
+        showTree: false
+        showReorder: true

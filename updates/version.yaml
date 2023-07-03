@@ -149,3 +149,6 @@
     - create_table_product_site_relation.php
     - create_table_offer_site_relation.php
     - create_table_entity_site_relation.php
+1.32.0:
+    - 'Added sorting offers'
+    - update_table_offers_add_sorting_field.php

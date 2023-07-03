@@ -198,7 +198,12 @@ class ProductItem extends ElementItem
     protected function getElementData()
     {
         $arResult = [
-            'offer_id_list'          => $this->obElement->offer->where('active', true)->pluck('id')->all(),
+            'offer_id_list'          => $this->obElement->offer
+                ->where('active', true)
+                ->sort(function($obPrevItem, $obNextItem) {
+                    return $obNextItem->sort_order > $obPrevItem->sort_order ? -1 : 1;
+                })->pluck('id')
+                ->all(),
             'additional_category_id' => $this->obElement->additional_category->pluck('id')->all(),
             'trashed'                => $this->obElement->trashed(),
         ];

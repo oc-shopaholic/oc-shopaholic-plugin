@@ -1,11 +1,13 @@
 <?php namespace Lovata\Shopaholic\Controllers;
 
+use Arr;
 use Lang;
 use Flash;
 use BackendMenu;
 use Backend\Classes\Controller;
 use Backend\Classes\BackendController;
 
+use Lovata\Shopaholic\Classes\Item\ProductItem;
 use Lovata\Shopaholic\Models\Product;
 use Lovata\Shopaholic\Classes\Helper\CurrencyHelper;
 use Lovata\Shopaholic\Classes\Import\ImportOfferModelFromXML;
@@ -106,5 +108,24 @@ class Products extends Controller
         Flash::info(Lang::get('lovata.toolbox::lang.message.import_from_xml_report', $arReportData));
 
         return $this->listRefresh();
+    }
+
+    /**
+     * @param string $sHandler
+     * @return boolean Returns true if the handler was found. Returns false otherwise.
+     */
+    protected function runAjaxHandler($sHandler)
+    {
+        $bResult = parent::runAjaxHandler($sHandler);
+        if ($sHandler !== 'relationOfferViewList::onReorder' || !$bResult) {
+            return $bResult;
+        }
+
+        $iProductID = Arr::get($this->params, '0');
+        if (!empty($iProductID)) {
+            ProductItem::clearCache($iProductID);
+        }
+
+        return $bResult;
     }
 }
