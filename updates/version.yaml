@@ -152,3 +152,5 @@
 1.32.0:
     - 'Added sorting offers'
     - update_table_offers_add_sorting_field.php
+1.32.1:
+    - 'Updated composer file'

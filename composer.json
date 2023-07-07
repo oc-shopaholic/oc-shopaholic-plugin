@@ -3,7 +3,7 @@
     "type": "october-plugin",
     "description": "eCommerce plugin for October CMS",
     "require": {
-        "lovata/toolbox-plugin": "^1.0",
+        "lovata/toolbox-plugin": "^2.1.0",
         "composer/installers": "~1.0"
     }
 }
