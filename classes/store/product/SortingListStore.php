@@ -32,9 +32,9 @@ class SortingListStore extends AbstractStoreWithParam
             $arElementIDList = $this->getNewProductList();
         } elseif ($this->sValue == ProductListStore::SORT_NO) {
             $arElementIDList = $this->getProductList();
-        } elseif (preg_match('%^'.ProductListStore::SORT_PRICE_ASC.'\|.+%', $this->sValue)) {
+        } elseif (strpos($this->sValue, ProductListStore::SORT_PRICE_ASC) !== false) {
             $arElementIDList = $this->getByPriceTypeASC();
-        } elseif (preg_match('%^'.ProductListStore::SORT_PRICE_DESC.'\|.+%', $this->sValue)) {
+        } elseif (strpos($this->sValue, ProductListStore::SORT_PRICE_DESC) !== false) {
             $arElementIDList = $this->getByPriceTypeDESC();
         } else {
             $arElementIDList = $this->getCustomSortingList();
