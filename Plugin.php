@@ -11,6 +11,8 @@ use Lovata\Shopaholic\Classes\Console\PreconfigureImportSettingsFromXML;
 
 //Event list
 use Lovata\Shopaholic\Classes\Event\ExtendMenuHandler;
+//API Events
+use Lovata\Shopaholic\Classes\Api\ExtendFrontendTypeClassList;
 //Brand events
 use Lovata\Shopaholic\Classes\Event\Brand\BrandModelHandler;
 //Category events
@@ -188,6 +190,11 @@ class Plugin extends PluginBase
         Event::subscribe(TaxModelHandler::class);
         Event::subscribe(TaxRelationHandler::class);
         Event::subscribe(ExtendTaxFieldsHandler::class);
+
+        if (request()->is(config('lovata.toolbox::api_route_name'))) {
+            //API Events
+            Event::subscribe(ExtendFrontendTypeClassList::class);
+        }
     }
 
     /**
