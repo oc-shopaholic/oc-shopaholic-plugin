@@ -25,8 +25,8 @@ use Lovata\Toolbox\Traits\Helpers\PriceHelperTrait;
  * @property string                              $old_price
  * @property float                               $old_price_value
  * @property int                                 $price_type_id
- * @property \October\Rain\Argon\Argon           $created_at
- * @property \October\Rain\Argon\Argon           $updated_at
+ * @property \Carbon\Carbon           $created_at
+ * @property \Carbon\Carbon           $updated_at
  *
  * @property \Lovata\Shopaholic\Models\PriceType $price_type
  * @method \October\Rain\Database\Relations\BelongsTo|PriceType price_type()

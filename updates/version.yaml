@@ -156,3 +156,5 @@
     - 'Updated composer file'
 1.32.2:
     - 'Fixed sorting by price based on the type of price. Thanks for contribution dblackCat'
+1.32.3:
+    - 'Fixed October v4 compatibility'

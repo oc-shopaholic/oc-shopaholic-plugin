@@ -34,8 +34,8 @@ use Lovata\Shopaholic\Classes\Import\ImportCategoryModelFromCSV;
  * @property string                                                                              $preview_text
  * @property string                                                                              $description
  * @property array                                                                               $site_list
- * @property \October\Rain\Argon\Argon                                                           $created_at
- * @property \October\Rain\Argon\Argon                                                           $updated_at
+ * @property \Carbon\Carbon                                                           $created_at
+ * @property \Carbon\Carbon                                                           $updated_at
  *
  * Nested tree properties
  * @property int                                                                                 $parent_id

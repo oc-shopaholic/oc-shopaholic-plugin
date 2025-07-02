@@ -29,9 +29,9 @@ use Lovata\Toolbox\Traits\Helpers\TraitCached;
  * @property string                                                               $description
  * @property float                                                                $percent
  * @property int                                                                  $sort_order
- * @property \October\Rain\Argon\Argon                                            $created_at
- * @property \October\Rain\Argon\Argon                                            $updated_at
- * @property \October\Rain\Argon\Argon                                            $deleted_at
+ * @property \Carbon\Carbon                                            $created_at
+ * @property \Carbon\Carbon                                            $updated_at
+ * @property \Carbon\Carbon                                            $deleted_at
  *
  * @property \October\Rain\Database\Collection|Category[]                         $category
  * @method static \October\Rain\Database\Relations\BelongsToMany|Category category()

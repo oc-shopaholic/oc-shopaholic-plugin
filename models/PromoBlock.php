@@ -33,10 +33,10 @@ use Lovata\Toolbox\Traits\Helpers\TraitCached;
  * @property string                                                                           $preview_text
  * @property string                                                                           $description
  * @property int                                                                              $sort_order
- * @property \October\Rain\Argon\Argon                                                        $date_begin
- * @property \October\Rain\Argon\Argon                                                        $date_end
- * @property \October\Rain\Argon\Argon                                                        $created_at
- * @property \October\Rain\Argon\Argon                                                        $updated_at
+ * @property \Carbon\Carbon                                                        $date_begin
+ * @property \Carbon\Carbon                                                        $date_end
+ * @property \Carbon\Carbon                                                        $created_at
+ * @property \Carbon\Carbon                                                        $updated_at
  *
  * Relations
  * @property \System\Models\File                                                              $preview_image

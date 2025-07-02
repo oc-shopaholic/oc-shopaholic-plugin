@@ -53,9 +53,9 @@ use Lovata\Shopaholic\Classes\Import\ImportOfferModelFromCSV;
  * @property int                                                                                           $measure_of_unit_id
  * @property int                                                                                           $product_id
  * @property array                                                                                         $site_list
- * @property \October\Rain\Argon\Argon                                                                     $created_at
- * @property \October\Rain\Argon\Argon                                                                     $updated_at
- * @property \October\Rain\Argon\Argon                                                                     $deleted_at
+ * @property \Carbon\Carbon                                                                     $created_at
+ * @property \Carbon\Carbon                                                                     $updated_at
+ * @property \Carbon\Carbon                                                                     $deleted_at
  *
  * @property float                                                                                         $tax_percent
  *

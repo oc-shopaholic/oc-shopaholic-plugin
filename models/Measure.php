@@ -16,8 +16,8 @@ use Lovata\Toolbox\Traits\Helpers\TraitCached;
  * @property int                                          $id
  * @property string                                       $name
  * @property string                                       $code
- * @property \October\Rain\Argon\Argon                    $created_at
- * @property \October\Rain\Argon\Argon                    $updated_at
+ * @property \Carbon\Carbon                    $created_at
+ * @property \Carbon\Carbon                    $updated_at
  */
 class Measure extends Model
 {

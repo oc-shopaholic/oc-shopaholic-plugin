@@ -19,8 +19,8 @@ use Lovata\Shopaholic\Classes\Collection\ProductCollection;
  * @property string                                                          $slug
  * @property string                                                          $code
  * @property string                                                          $type
- * @property \October\Rain\Argon\Argon                                       $date_begin
- * @property \October\Rain\Argon\Argon                                       $date_end
+ * @property \Carbon\Carbon                                       $date_begin
+ * @property \Carbon\Carbon                                       $date_end
  *
  * @property string                                                          $preview_text
  * @property \System\Models\File                                             $preview_image

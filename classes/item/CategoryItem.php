@@ -33,7 +33,7 @@ use Lovata\Shopaholic\Classes\Collection\CategoryCollection;
  * @property string                                                                                                                            $description
  * @property \October\Rain\Database\Collection|\System\Models\File[]                                                                           $images
  *
- * @property \October\Rain\Argon\Argon                                                                                                         $updated_at
+ * @property \Carbon\Carbon                                                                                                         $updated_at
  *
  * @property CategoryItem                                                                                                                      $parent
  *

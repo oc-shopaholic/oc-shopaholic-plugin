@@ -28,9 +28,9 @@ use Lovata\Toolbox\Traits\Helpers\TraitCached;
  * @property string                    $external_id
  * @property int                       $sort_order
  * @property int                       $currency_id
- * @property \October\Rain\Argon\Argon $created_at
- * @property \October\Rain\Argon\Argon $updated_at
- * @property \October\Rain\Argon\Argon $deleted_at
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
  *
  * @property \Lovata\Shopaholic\Models\Currency $currency
  * @method \October\Rain\Database\Relations\BelongsTo|Currency currency()
