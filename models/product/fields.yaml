@@ -30,7 +30,8 @@ tabs:
             nameFrom: name
             descriptionFrom: description
             span: left
-            type: relation
+            type: recordfinder
+            list: $/lovata/shopaholic/models/category/columns.yaml
             tab: 'lovata.toolbox::lang.tab.settings'
         additional_category:
             label: 'lovata.shopaholic::lang.field.additional_category'
@@ -44,7 +45,8 @@ tabs:
         brand:
             label: 'lovata.shopaholic::lang.field.brand'
             span: left
-            type: relation
+            type: recordfinder
+            list: $/lovata/shopaholic/models/brand/columns.yaml
             tab: 'lovata.toolbox::lang.tab.settings'
             emptyOption: 'lovata.toolbox::lang.field.empty'
         code:
