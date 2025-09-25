@@ -3,6 +3,8 @@
 use Lovata\Shopaholic\Classes\Helper\AllCategoriesMenuType;
 use Lovata\Shopaholic\Classes\Helper\CatalogMenuType;
 use Lovata\Shopaholic\Classes\Helper\CategoryMenuType;
+use Lovata\Shopaholic\Classes\Helper\BrandMenuType;
+use Lovata\Shopaholic\Classes\Helper\AllBrandsMenuType;
 
 /**
  * Class ExtendMenuHandler
@@ -28,6 +30,9 @@ class ExtendMenuHandler
                 CatalogMenuType::MENU_TYPE       => 'lovata.shopaholic::lang.menu.shop_catalog',
                 CategoryMenuType::MENU_TYPE      => 'lovata.shopaholic::lang.menu.shop_category',
                 AllCategoriesMenuType::MENU_TYPE => 'lovata.shopaholic::lang.menu.all_shop_categories',
+                BrandMenuType::MENU_TYPE      => 'lovata.shopaholic::lang.menu.shop_brand',
+                AllBrandsMenuType::MENU_TYPE => 'lovata.shopaholic::lang.menu.all_shop_brands',
+
             ];
 
             return $arResult;
@@ -64,6 +69,10 @@ class ExtendMenuHandler
                 return new  CatalogMenuType();
             case AllCategoriesMenuType::MENU_TYPE:
                 return new AllCategoriesMenuType();
+            case BrandMenuType::MENU_TYPE:
+                return new BrandMenuType();
+            case AllBrandsMenuType::MENU_TYPE:
+                return new AllBrandsMenuType();
             default:
                 return null;
         }
