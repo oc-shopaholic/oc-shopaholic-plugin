@@ -21,15 +21,19 @@ class ListByCategoryStore extends AbstractStoreWithParam
      */
     protected function getIDListFromDB() : array
     {
-        $arElementIDList = (array) Product::getByCategory($this->sValue)
+        $arElementIDList = Product::getByCategory($this->sValue)
+            ->toBase()
             ->where('brand_id', '>', 0)
-            ->pluck('brand_id', 'id')->all();
+            ->pluck('brand_id', 'id')
+            ->all();
 
         $obCategory = Category::find($this->sValue);
         if (!empty($obCategory)) {
-            $arAdditionalElementIDList = (array) $obCategory->product_link()
+            $arAdditionalElementIDList = $obCategory->product_link()
+                ->toBase()
                 ->where('brand_id', '>', 0)
-                ->pluck('brand_id', 'id')->all();
+                ->pluck('brand_id', 'id')
+                ->all();
 
             $arElementIDList = $arElementIDList + $arAdditionalElementIDList;
         }

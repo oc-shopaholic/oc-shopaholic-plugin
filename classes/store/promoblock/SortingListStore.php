@@ -110,7 +110,10 @@ class SortingListStore extends AbstractStoreWithParam
      */
     protected function getByDateBeginASC() : array
     {
-        $arElementIDList = (array) PromoBlock::orderBy('date_begin', 'asc')->pluck('id')->all();
+        $arElementIDList = PromoBlock::orderBy('date_begin', 'asc')
+            ->toBase()
+            ->pluck('id')
+            ->all();
 
         return $arElementIDList;
     }
@@ -121,7 +124,10 @@ class SortingListStore extends AbstractStoreWithParam
      */
     protected function getByDateBeginDESC() : array
     {
-        $arElementIDList = (array) PromoBlock::orderBy('date_begin', 'desc')->pluck('id')->all();
+        $arElementIDList = PromoBlock::orderBy('date_begin', 'desc')
+            ->toBase()
+            ->pluck('id')
+            ->all();
 
         return $arElementIDList;
     }
@@ -132,7 +138,10 @@ class SortingListStore extends AbstractStoreWithParam
      */
     protected function getByDateEndASC() : array
     {
-        $arElementIDList = (array) PromoBlock::orderBy('date_end', 'asc')->pluck('id')->all();
+        $arElementIDList = PromoBlock::orderBy('date_end', 'asc')
+            ->toBase()
+            ->pluck('id')
+            ->all();
 
         return $arElementIDList;
     }
@@ -143,7 +152,10 @@ class SortingListStore extends AbstractStoreWithParam
      */
     protected function getByDateEndDESC() : array
     {
-        $arElementIDList = (array) PromoBlock::orderBy('date_end', 'desc')->pluck('id')->all();
+        $arElementIDList = PromoBlock::orderBy('date_end', 'desc')
+            ->toBase()
+            ->pluck('id')
+            ->all();
 
         return $arElementIDList;
     }
@@ -154,7 +166,10 @@ class SortingListStore extends AbstractStoreWithParam
      */
     protected function getBySortOrder() :array
     {
-        $arElementIDList = (array) PromoBlock::orderBy('sort_order', 'asc')->pluck('id')->all();
+        $arElementIDList = PromoBlock::orderBy('sort_order', 'asc')
+            ->toBase()
+            ->pluck('id')
+            ->all();
 
         return $arElementIDList;
     }

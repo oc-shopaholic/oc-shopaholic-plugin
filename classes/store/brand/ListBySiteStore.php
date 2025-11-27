@@ -18,10 +18,11 @@ class ListBySiteStore extends AbstractStoreWithParam
      */
     protected function getIDListFromDB() : array
     {
-        $arElementIDList = (array) Brand::whereHas('site', function($obQuery) {
+        $arElementIDList = Brand::whereHas('site', function($obQuery) {
             return $obQuery->where('id', $this->sValue);
         })
             ->orDoesntHave('site')
+            ->toBase()
             ->pluck('id')
             ->all();
 

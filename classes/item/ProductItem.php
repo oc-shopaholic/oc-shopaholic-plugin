@@ -200,6 +200,7 @@ class ProductItem extends ElementItem
         $arResult = [
             'offer_id_list'          => $this->obElement->offer
                 ->where('active', true)
+                ->toBase()
                 ->sort(function($obPrevItem, $obNextItem) {
                     return $obNextItem->sort_order > $obPrevItem->sort_order ? -1 : 1;
                 })->pluck('id')

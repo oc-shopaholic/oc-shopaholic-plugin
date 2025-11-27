@@ -81,7 +81,8 @@ class SortingListStore extends AbstractStoreWithParam
             ->where('lovata_shopaholic_prices.item_type', Offer::class)
             ->orderBy('lovata_shopaholic_prices.price', 'asc')
             ->join('lovata_shopaholic_offers', 'lovata_shopaholic_offers.id', '=', 'lovata_shopaholic_prices.item_id')
-            ->pluck('id')->all();
+            ->pluck('id')
+            ->all();
 
         return $arElementIDList;
     }
@@ -100,7 +101,8 @@ class SortingListStore extends AbstractStoreWithParam
             ->where('lovata_shopaholic_prices.item_type', Offer::class)
             ->orderBy('lovata_shopaholic_prices.price', 'desc')
             ->join('lovata_shopaholic_offers', 'lovata_shopaholic_offers.id', '=', 'lovata_shopaholic_prices.item_id')
-            ->pluck('id')->all();
+            ->pluck('id')
+            ->all();
 
         return $arElementIDList;
     }
@@ -116,10 +118,12 @@ class SortingListStore extends AbstractStoreWithParam
             return $this->getByPriceASC();
         }
 
-        $arElementIDList = (array) Price::getByItemType(Offer::class)
+        $arElementIDList = Price::getByItemType(Offer::class)
             ->getByPriceType($obPriceType->id)
-            ->orderBy('price', 'asc')
-            ->pluck('item_id')->all();
+            ->toBase()
+            ->orderBy('price')
+            ->pluck('item_id')
+            ->all();
 
         return $arElementIDList;
     }
@@ -135,10 +139,12 @@ class SortingListStore extends AbstractStoreWithParam
             return $this->getByPriceDESC();
         }
 
-        $arElementIDList = (array) Price::getByItemType(Offer::class)
+        $arElementIDList = Price::getByItemType(Offer::class)
             ->getByPriceType($obPriceType->id)
+            ->toBase()
             ->orderBy('price', 'desc')
-            ->pluck('item_id')->all();
+            ->pluck('item_id')
+            ->all();
 
         return $arElementIDList;
     }
@@ -149,7 +155,10 @@ class SortingListStore extends AbstractStoreWithParam
      */
     protected function getNewOfferList() : array
     {
-        $arElementIDList = (array) Offer::orderBy('id', 'desc')->pluck('id')->all();
+        $arElementIDList = Offer::orderBy('id', 'desc')
+            ->toBase()
+            ->pluck('id')
+            ->all();
 
         return $arElementIDList;
     }
@@ -160,7 +169,7 @@ class SortingListStore extends AbstractStoreWithParam
      */
     protected function getOfferList() : array
     {
-        $arElementIDList = (array) Offer::pluck('id')->all();
+        $arElementIDList = Offer::toBase()->pluck('id')->all();
 
         return $arElementIDList;
     }

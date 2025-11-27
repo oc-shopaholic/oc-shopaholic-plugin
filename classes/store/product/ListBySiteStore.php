@@ -22,6 +22,7 @@ class ListBySiteStore extends AbstractStoreWithParam
             return $obQuery->where('id', $this->sValue);
         })
             ->orDoesntHave('site')
+            ->toBase()
             ->pluck('id')
             ->all();
 

@@ -19,7 +19,10 @@ class ListByBrandStore extends AbstractStoreWithParam
      */
     protected function getIDListFromDB() : array
     {
-        $arElementIDList = (array) Product::getByBrand($this->sValue)->pluck('id')->all();
+        $arElementIDList = Product::getByBrand($this->sValue)
+            ->toBase()
+            ->pluck('id')
+            ->all();
 
         return $arElementIDList;
     }

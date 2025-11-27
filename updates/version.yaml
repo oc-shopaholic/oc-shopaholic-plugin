@@ -158,3 +158,5 @@
     - 'Fixed sorting by price based on the type of price. Thanks for contribution dblackCat'
 1.32.3:
     - 'Fixed October v4 compatibility'
+1.33.0:
+    - 'Improve performance.'

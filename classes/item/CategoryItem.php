@@ -214,6 +214,7 @@ class CategoryItem extends ElementItem
         $arResult['children_id_list'] = $this->obElement->children()
             ->active()
             ->orderBy('nest_left', 'asc')
+            ->toBase()
             ->pluck('id')->all();
 
         return $arResult;

@@ -75,7 +75,7 @@ class SortingListStore extends AbstractStoreWithParam
     {
         //Get product ID list (sort by offer price)
         //We can not use groupBy() in this place
-        $arElementIDList = (array) DB::table('lovata_shopaholic_prices')
+        $arElementIDList = DB::table('lovata_shopaholic_prices')
             ->select('lovata_shopaholic_offers.product_id')
             ->whereNull('lovata_shopaholic_prices.price_type_id')
             ->where('lovata_shopaholic_offers.active', true)
@@ -83,7 +83,8 @@ class SortingListStore extends AbstractStoreWithParam
             ->where('lovata_shopaholic_prices.item_type', Offer::class)
             ->orderBy('lovata_shopaholic_prices.price', 'asc')
             ->join('lovata_shopaholic_offers', 'lovata_shopaholic_offers.id', '=', 'lovata_shopaholic_prices.item_id')
-            ->pluck('product_id')->all();
+            ->pluck('product_id')
+            ->all();
         $arElementIDList = array_unique($arElementIDList);
 
         return $arElementIDList;
@@ -97,7 +98,7 @@ class SortingListStore extends AbstractStoreWithParam
     {
         //Get product ID list (sort by offer price)
         //We can not use groupBy() in this place
-        $arElementIDList = (array) DB::table('lovata_shopaholic_prices')
+        $arElementIDList = DB::table('lovata_shopaholic_prices')
             ->select('lovata_shopaholic_offers.product_id')
             ->whereNull('lovata_shopaholic_prices.price_type_id')
             ->where('lovata_shopaholic_offers.active', true)
@@ -105,7 +106,8 @@ class SortingListStore extends AbstractStoreWithParam
             ->where('lovata_shopaholic_prices.item_type', Offer::class)
             ->orderBy('lovata_shopaholic_prices.price', 'desc')
             ->join('lovata_shopaholic_offers', 'lovata_shopaholic_offers.id', '=', 'lovata_shopaholic_prices.item_id')
-            ->pluck('product_id')->all();
+            ->pluck('product_id')
+            ->all();
         $arElementIDList = array_unique($arElementIDList);
 
         return $arElementIDList;
@@ -124,14 +126,15 @@ class SortingListStore extends AbstractStoreWithParam
 
         //Get product ID list (sort by offer price)
         //We can not use groupBy() in this place
-        $arElementIDList = (array) DB::table('lovata_shopaholic_prices')
+        $arElementIDList = DB::table('lovata_shopaholic_prices')
             ->select('lovata_shopaholic_offers.product_id')
             ->where('lovata_shopaholic_prices.price_type_id', $obPriceType->id)
             ->where('lovata_shopaholic_offers.active', true)
             ->where('lovata_shopaholic_prices.item_type', Offer::class)
             ->orderBy('lovata_shopaholic_prices.price', 'asc')
             ->join('lovata_shopaholic_offers', 'lovata_shopaholic_offers.id', '=', 'lovata_shopaholic_prices.item_id')
-            ->pluck('product_id')->all();
+            ->pluck('product_id')
+            ->all();
         $arElementIDList = array_unique($arElementIDList);
 
         return $arElementIDList;
@@ -150,14 +153,15 @@ class SortingListStore extends AbstractStoreWithParam
 
         //Get product ID list (sort by offer price)
         //We can not use groupBy() in this place
-        $arElementIDList = (array) DB::table('lovata_shopaholic_prices')
+        $arElementIDList = DB::table('lovata_shopaholic_prices')
             ->select('lovata_shopaholic_offers.product_id')
             ->where('lovata_shopaholic_prices.price_type_id', $obPriceType->id)
             ->where('lovata_shopaholic_offers.active', true)
             ->where('lovata_shopaholic_prices.item_type', Offer::class)
             ->orderBy('lovata_shopaholic_prices.price', 'desc')
             ->join('lovata_shopaholic_offers', 'lovata_shopaholic_offers.id', '=', 'lovata_shopaholic_prices.item_id')
-            ->pluck('product_id')->all();
+            ->pluck('product_id')
+            ->all();
         $arElementIDList = array_unique($arElementIDList);
 
         return $arElementIDList;
@@ -169,7 +173,10 @@ class SortingListStore extends AbstractStoreWithParam
      */
     protected function getNewProductList() : array
     {
-        $arElementIDList = (array) Product::orderBy('id', 'desc')->pluck('id')->all();
+        $arElementIDList = Product::orderBy('id', 'desc')
+            ->toBase()
+            ->pluck('id')
+            ->all();
 
         return $arElementIDList;
     }
@@ -180,7 +187,7 @@ class SortingListStore extends AbstractStoreWithParam
      */
     protected function getProductList() : array
     {
-        $arElementIDList = (array) Product::pluck('id')->all();
+        $arElementIDList = Product::toBase()->pluck('id')->all();
 
         return $arElementIDList;
     }
