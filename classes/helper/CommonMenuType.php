@@ -197,4 +197,31 @@ abstract class CommonMenuType
 
         return $arResult;
     }
+
+    /**
+     * Get array for menu item from brand item
+     * @param \Lovata\Shopaholic\Classes\Item\BrandItem $obBrandItem
+     * @param string $sPageCode
+     * @param string $sURL
+     *
+     * @return array
+     */
+    protected function getBrandMenuData($obBrandItem, $sPageCode, $sURL)
+    {
+        if (empty($obBrandItem)) {
+            return [];
+        }
+
+        $arMenuItem = [
+            'title'   => $obBrandItem->name,
+            'url'     => $obBrandItem->getPageUrl($sPageCode),
+            'mtime'   => $obBrandItem->updated_at,
+            'viewBag' => ['object' => $obBrandItem],
+        ];
+
+        $arMenuItem['isActive'] = $arMenuItem['url'] == $sURL;
+
+        return $arMenuItem;
+    }
+
 }
