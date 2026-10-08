@@ -56,7 +56,7 @@ class PromoBlockList extends SortingElementList
      *
      * @return PromoBlockCollection
      */
-    public function make($arElementIDList = null)
+    public function makeCollection($arElementIDList = null)
     {
         return PromoBlockCollection::make($arElementIDList);
     }

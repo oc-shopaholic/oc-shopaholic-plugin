@@ -27,7 +27,7 @@ class BrandList extends ComponentBase
      *
      * @return BrandCollection
      */
-    public function make($arElementIDList = null)
+    public function makeCollection($arElementIDList = null)
     {
         return BrandCollection::make($arElementIDList);
     }
