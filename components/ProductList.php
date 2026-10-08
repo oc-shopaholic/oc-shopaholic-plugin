@@ -82,7 +82,7 @@ class ProductList extends SortingElementList
      *
      * @return ProductCollection
      */
-    public function make($arElementIDList = null)
+    public function makeCollection($arElementIDList = null)
     {
         return ProductCollection::make($arElementIDList);
     }

@@ -29,7 +29,7 @@ class CurrencyList extends ComponentBase
      *
      * @return CurrencyCollection
      */
-    public function make($arElementIDList = null)
+    public function makeCollection($arElementIDList = null)
     {
         return CurrencyCollection::make($arElementIDList);
     }

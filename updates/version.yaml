@@ -160,3 +160,5 @@
     - 'Fixed October v4 compatibility'
 1.33.0:
     - 'Improve performance.'
+1.34.0:
+    - 'Renamed the non-static make() method of list components to makeCollection(). Fixes a fatal error on October CMS 4.4.2+. Theme call sites must be updated.'
