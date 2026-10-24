@@ -40,6 +40,7 @@ use Lovata\Shopaholic\Classes\Helper\PriceTypeHelper;
  *
  * @property string                                                                                                                      $description
  * @property \October\Rain\Database\Collection|\System\Models\File[]                                                                     $images
+ * @property array                                                                                                                       $image_sets Image sets in Toolbox format: [['profile' => ['id', 'name', 'width', 'media'], 'images' => \System\Models\File[]]]
  *
  * @property string                                                                                                                      $price
  * @property float                                                                                                                       $price_value
@@ -112,7 +113,14 @@ class OfferItem extends ElementItem
 
     const MODEL_CLASS = Offer::class;
 
-    public static $arQueryWith = ['preview_image', 'images', 'main_price', 'price_link'];
+    public static $arQueryWith = [
+        'preview_image',
+        'images',
+        'main_price',
+        'price_link',
+        'image_sets.images',
+        'image_sets.profile',
+    ];
 
     /** @var Offer */
     protected $obElement = null;

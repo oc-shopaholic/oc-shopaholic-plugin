@@ -13,6 +13,7 @@ use Kharanenka\Scope\CodeField;
 use Kharanenka\Scope\ExternalIDField;
 use Kharanenka\Scope\NameField;
 
+use Lovata\Toolbox\Models\ImageSet;
 use Lovata\Toolbox\Traits\Models\MultisiteHelperTrait;
 use Lovata\Toolbox\Classes\Helper\PriceHelper;
 use Lovata\Toolbox\Traits\Helpers\TraitCached;
@@ -62,6 +63,9 @@ use Lovata\Shopaholic\Classes\Import\ImportOfferModelFromCSV;
  * Relations
  * @property \System\Models\File                                                                           $preview_image
  * @property \October\Rain\Database\Collection|\System\Models\File[]                                       $images
+ *
+ * @property \October\Rain\Database\Collection|\Lovata\Toolbox\Models\ImageSet[]                           $image_sets
+ * @method \October\Rain\Database\Relations\MorphMany|\Lovata\Toolbox\Models\ImageSet image_sets()
  *
  * @property \October\Rain\Database\Collection|\Lovata\Shopaholic\Models\Price[]                           $price_link
  * @method \October\Rain\Database\Relations\MorphMany|Price price_link()
@@ -175,6 +179,7 @@ class Offer extends ImportModel
             'name'       => 'item',
             'conditions' => 'price_type_id is NOT NULL',
         ],
+        'image_sets' => [ImageSet::class, 'name' => 'imageable', 'delete' => true],
     ];
     public $morphOne = [
         'main_price' => [
@@ -222,6 +227,7 @@ class Offer extends ImportModel
         'preview_image',
         'description',
         'images',
+        'image_sets',
         'price_list',
         'quantity',
         'weight',

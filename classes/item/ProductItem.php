@@ -35,6 +35,7 @@ use Lovata\Shopaholic\Classes\Collection\OfferCollection;
  *
  * @property string                                                                                                                      $description
  * @property \October\Rain\Database\Collection|\System\Models\File[]                                                                     $images
+ * @property array                                                                                                                       $image_sets Image sets in Toolbox format: [['profile' => ['id', 'name', 'width', 'media'], 'images' => \System\Models\File[]]]
  *
  * @property array                                                                                                                       $offer_id_list
  * @property OfferCollection|OfferItem[]                                                                                                 $offer
@@ -98,7 +99,11 @@ class ProductItem extends ElementItem
         'offer.preview_image',
         'offer.images',
         'offer.main_price',
-        'offer.price_link'
+        'offer.price_link',
+        'image_sets.images',
+        'image_sets.profile',
+        'offer.image_sets.images',
+        'offer.image_sets.profile',
     ];
 
     /** @var Product */

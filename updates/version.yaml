@@ -160,3 +160,5 @@
     - 'Fixed October v4 compatibility'
 1.33.0:
     - 'Improve performance.'
+1.34.0:
+    - 'Added image sets by image profiles for products and offers. Requires Toolbox 2.4.0.'
