@@ -9,6 +9,9 @@ use Lovata\Shopaholic\Models\Brand;
 use Lovata\Shopaholic\Models\Category;
 use Lovata\Shopaholic\Models\Offer;
 use Lovata\Shopaholic\Models\Product;
+use Lovata\Shopaholic\Tests\Fixtures\ImageSetsTestTrait;
+use Lovata\Shopaholic\Tests\Fixtures\ImageSetsItemTestTrait;
+use Lovata\Toolbox\Models\ImageProfile;
 use Lovata\Toolbox\Tests\CommonTest;
 
 /**
@@ -20,6 +23,11 @@ use Lovata\Toolbox\Tests\CommonTest;
  */
 class ProductItemTest extends CommonTest
 {
+    use ImageSetsTestTrait;
+    use ImageSetsItemTestTrait;
+
+    protected $sImageSetsItemClass = ProductItem::class;
+
     /** @var  Product */
     protected $obElement;
 
@@ -70,6 +78,24 @@ class ProductItemTest extends CommonTest
         'nest_depth'   => 0,
         'parent_id'    => 0,
     ];
+
+    /**
+     * Set up test method
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->setUpImageSets();
+    }
+
+    /**
+     * Tear down test method
+     */
+    public function tearDown(): void
+    {
+        $this->tearDownImageSets();
+        parent::tearDown();
+    }
 
     /**
      * Check item fields
@@ -182,5 +208,40 @@ class ProductItemTest extends CommonTest
         $arCreateData = $this->arOfferData;
         $arCreateData['product_id'] = $this->obElement->id;
         $this->obOffer = Offer::create($arCreateData);
+    }
+
+    /**
+     * Image sets of offer are available from product Item
+     */
+    public function testOfferImageSetsInProductItem()
+    {
+        $this->createTestData();
+        $this->setSettings(true, ImageProfile::APPROACH_DESKTOP_FIRST);
+
+        $this->createImageSet($this->obElement, $this->createProfile('Tablet', 1024), ['product.jpg']);
+        $this->createImageSet($this->obOffer, $this->createProfile('Mobile', 480), ['offer.jpg']);
+
+        $obItem = ProductItem::make($this->obElement->id);
+        self::assertEquals([1024], $this->getWidthList($obItem));
+        self::assertEquals(['product.jpg'], $this->getFileNameList($obItem->image_sets[0]));
+
+        /** @var OfferItem $obOfferItem */
+        $obOfferItem = $obItem->offer->first();
+        self::assertEquals([480], $this->getWidthList($obOfferItem));
+        self::assertEquals(['offer.jpg'], $this->getFileNameList($obOfferItem->image_sets[0]));
+    }
+
+    /**
+     * Create element for image sets tests
+     * @param string $sName
+     * @return Product
+     */
+    protected function createImageSetsElement($sName = 'Element')
+    {
+        return Product::create([
+            'active' => true,
+            'name'   => $sName,
+            'slug'   => str_slug($sName),
+        ]);
     }
 }

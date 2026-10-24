@@ -4,6 +4,8 @@ use Lovata\Shopaholic\Classes\Item\OfferItem;
 use Lovata\Shopaholic\Classes\Item\ProductItem;
 use Lovata\Shopaholic\Models\Offer;
 use Lovata\Shopaholic\Models\Product;
+use Lovata\Shopaholic\Tests\Fixtures\ImageSetsTestTrait;
+use Lovata\Shopaholic\Tests\Fixtures\ImageSetsItemTestTrait;
 use Lovata\Toolbox\Classes\Helper\PriceHelper;
 use Lovata\Toolbox\Models\Settings;
 use Lovata\Toolbox\Tests\CommonTest;
@@ -17,6 +19,11 @@ use Lovata\Toolbox\Tests\CommonTest;
  */
 class OfferItemTest extends CommonTest
 {
+    use ImageSetsTestTrait;
+    use ImageSetsItemTestTrait;
+
+    protected $sImageSetsItemClass = OfferItem::class;
+
     /** @var  Offer */
     protected $obElement;
 
@@ -40,6 +47,24 @@ class OfferItemTest extends CommonTest
         'preview_text' => 'preview_text',
         'description'  => 'description',
     ];
+
+    /**
+     * Set up test method
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->setUpImageSets();
+    }
+
+    /**
+     * Tear down test method
+     */
+    public function tearDown(): void
+    {
+        $this->tearDownImageSets();
+        parent::tearDown();
+    }
 
     /**
      * Check item fields
@@ -138,5 +163,25 @@ class OfferItemTest extends CommonTest
         $arCreateData['product_id'] = $this->obProduct->id;
 
         $this->obElement = Offer::create($arCreateData);
+    }
+
+    /**
+     * Create element for image sets tests
+     * @param string $sName
+     * @return Offer
+     */
+    protected function createImageSetsElement($sName = 'Element')
+    {
+        $obProduct = Product::create([
+            'active' => true,
+            'name'   => $sName,
+            'slug'   => str_slug($sName),
+        ]);
+
+        return Offer::create([
+            'active'     => true,
+            'name'       => $sName,
+            'product_id' => $obProduct->id,
+        ]);
     }
 }

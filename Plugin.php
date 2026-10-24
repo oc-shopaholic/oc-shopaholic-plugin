@@ -22,11 +22,14 @@ use Lovata\Shopaholic\Classes\Event\Measure\MeasureModelHandler;
 //Offer events
 use Lovata\Shopaholic\Classes\Event\Offer\OfferModelHandler;
 use Lovata\Shopaholic\Classes\Event\Offer\ExtendOfferFieldsHandler;
+use Lovata\Shopaholic\Classes\Event\Offer\ExtendOfferImageSetsFieldHandler;
+use Lovata\Shopaholic\Classes\Event\Offer\ExtendOfferImageSetsInProductFieldHandler;
 //Price events
 use Lovata\Shopaholic\Classes\Event\Price\PriceModelHandler;
 //Product events
 use Lovata\Shopaholic\Classes\Event\Product\ProductModelHandler;
 use Lovata\Shopaholic\Classes\Event\Product\ProductRelationHandler;
+use Lovata\Shopaholic\Classes\Event\Product\ExtendProductImageSetsFieldHandler;
 //Promo block events
 use Lovata\Shopaholic\Classes\Event\PromoBlock\PromoBlockModelHandler;
 use Lovata\Shopaholic\Classes\Event\PromoBlock\PromoBlockRelationHandler;
@@ -176,11 +179,14 @@ class Plugin extends PluginBase
         //Offer events
         Event::subscribe(OfferModelHandler::class);
         Event::subscribe(ExtendOfferFieldsHandler::class);
+        Event::subscribe(ExtendOfferImageSetsFieldHandler::class);
+        Event::subscribe(ExtendOfferImageSetsInProductFieldHandler::class);
         //Price events
         Event::subscribe(PriceModelHandler::class);
         //Product events
         Event::subscribe(ProductModelHandler::class);
         Event::subscribe(ProductRelationHandler::class);
+        Event::subscribe(ExtendProductImageSetsFieldHandler::class);
         //Promo block events
         Event::subscribe(PromoBlockModelHandler::class);
         Event::subscribe(PromoBlockRelationHandler::class);

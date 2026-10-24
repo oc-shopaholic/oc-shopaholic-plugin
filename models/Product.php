@@ -16,6 +16,7 @@ use October\Rain\Database\Traits\Purgeable;
 use October\Rain\Database\Traits\Nullable;
 use System\Models\SiteDefinition;
 
+use Lovata\Toolbox\Models\ImageSet;
 use Lovata\Toolbox\Traits\Helpers\TraitCached;
 use Lovata\Toolbox\Traits\Models\MultisiteHelperTrait;
 use Lovata\Shopaholic\Classes\Import\ImportProductModelFromCSV;
@@ -46,6 +47,9 @@ use Lovata\Shopaholic\Classes\Import\ImportProductModelFromCSV;
  * Relations
  * @property \System\Models\File                                                                       $preview_image
  * @property \October\Rain\Database\Collection|\System\Models\File[]                                   $images
+ *
+ * @property \October\Rain\Database\Collection|\Lovata\Toolbox\Models\ImageSet[]                       $image_sets
+ * @method \October\Rain\Database\Relations\MorphMany|\Lovata\Toolbox\Models\ImageSet image_sets()
  *
  * @property Category                                                                                  $category
  * @method static \October\Rain\Database\Relations\BelongsTo|Category category()
@@ -195,7 +199,9 @@ class Product extends ImportModel
         ],
     ];
 
-    public $morphMany = [];
+    public $morphMany = [
+        'image_sets' => [ImageSet::class, 'name' => 'imageable', 'delete' => true],
+    ];
 
     public $appends = [];
     public $purgeable = [];
@@ -224,6 +230,7 @@ class Product extends ImportModel
         'preview_image',
         'description',
         'images',
+        'image_sets',
     ];
 
     public $dates = ['created_at', 'updated_at', 'deleted_at'];
